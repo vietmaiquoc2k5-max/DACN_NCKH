@@ -1,0 +1,12 @@
+# File cấu hình Dataset cho YOLOv8
+path: ./dataset 
+
+# Đường dẫn đến ảnh train và val (tương đối so với 'path')
+train: images/train/images
+val: images/train/images  # Tạm thời dùng chung với train nếu không có thư mục val riêng
+
+# Số lượng lớp và tên lớp
+nc: 2
+names:
+  0: fire
+  1: smoke
