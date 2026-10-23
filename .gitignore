@@ -1,0 +1,30 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Database & runtime alerts
+alerts.db
+alerts/
+
+# Training runs & temporary checkpoints
+runs/
+FireSmokeLabeler/runs/
+FireSmokeLabeler/visualized/
+
+# Environment files
+.env
+.env.*
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

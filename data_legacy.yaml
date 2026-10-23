@@ -1,0 +1,10 @@
+# Cấu hình Dataset Cũ (Roboflow Legacy - Lưu giữ an toàn, không ghi đè)
+path: ./dataset
+
+train: images/train/images
+val: images/train/images
+
+nc: 2
+names:
+  0: fire
+  1: smoke

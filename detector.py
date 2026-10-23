@@ -33,21 +33,59 @@ class FireDetector:
         # Load the model
         self.load_model()
 
-    def load_model(self):
-        """Loads the YOLO model (either custom best.pt or fallback yolov8n.pt)."""
+    def load_model(self, custom_path=None):
+        """Loads the YOLO model (custom model or fallback yolov8n.pt)."""
+        import os
+        if custom_path:
+            self.model_path = custom_path
+
+        # Danh sách các vị trí ứng viên để tìm model theo thứ tự ưu tiên
+        candidate_paths = [
+            self.model_path,
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), self.model_path),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "FireSmokeLabeler", "model", "best.pt"),
+            r"C:\FireSmokeLabeler\model\best.pt",
+            os.path.join("models", "fire_smoke_v2.pt"),
+        ]
+
+        found_path = None
+        for p in candidate_paths:
+            if p and os.path.exists(p):
+                found_path = p
+                break
+
         try:
-            import os
-            if os.path.exists(self.model_path):
-                self._log(f"Đang tải mô hình đã huấn luyện: {self.model_path}...")
-                self.model = YOLO(self.model_path)
-                self._log("Tải thành công mô hình custom best.pt!")
+            if found_path:
+                self._log(f"Đang tải mô hình đã huấn luyện: {found_path}...")
+                self.model = YOLO(found_path)
+                self.model_path = found_path
+                self._log(f"Tải thành công mô hình: {found_path} | Lớp: {self.model.names}")
             else:
-                self._log(f"Không tìm thấy '{self.model_path}'. Đang tải mô hình mặc định: {self.fallback_model_path}...")
+                self._log(f"Không tìm thấy model nào trong các vị trí cấu hình. Đang tải mô hình mặc định: {self.fallback_model_path}...")
                 self.model = YOLO(self.fallback_model_path)
                 self._log(f"Tải thành công mô hình mặc định {self.fallback_model_path} (Dùng để chạy thử nghiệm)!")
         except Exception as e:
             self._log(f"Lỗi khi tải mô hình YOLO: {str(e)}")
             self.model = None
+
+    def set_model(self, new_model_path):
+        """Thay đổi đường dẫn model và nạp lại mô hình mới."""
+        self._log(f"Đang chuyển đổi mô hình sang: {new_model_path}...")
+        self.load_model(custom_path=new_model_path)
+        return self.model is not None
+
+    def get_model_info(self):
+        """Trả về thông tin chi tiết về mô hình hiện tại."""
+        if self.model is None:
+            return {"loaded": False, "path": self.model_path, "names": {}, "is_simulation": True}
+        names = self.model.names
+        is_sim = not any(v.lower() in ["fire", "smoke", "chay", "khoi", "lửa", "khói"] for v in names.values())
+        return {
+            "loaded": True,
+            "path": self.model_path,
+            "names": names,
+            "is_simulation": is_sim
+        }
 
     def _log(self, text):
         """Helper to send log message to GUI."""

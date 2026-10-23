@@ -69,24 +69,63 @@ Dự án cung cấp 2 hình thức giao diện chuyên nghiệp:
 
 ---
 
-## ⚙️ 5. Chế Độ Hoạt Động & Hướng Dẫn Sử Dụng
+---
 
-### 🧪 Chế độ Mô Phỏng (Thử nghiệm)
-- Khi chưa có file `best.pt` ở thư mục gốc, phần mềm tự động tải mô hình **`yolov8n.pt`** và hoạt động ở **Chế độ Mô phỏng**.
-- Trong chế độ này, hệ thống sẽ nhận diện vật thể thử nghiệm (như camera, điện thoại, người...) để bạn thử nghiệm Pop-up cảnh báo nội bộ và còi hú báo động.
+## ⚙️ 5. Chế Độ Hoạt Động & Quản Lý Model AI
 
-### 🎯 Chế độ Thực Tế (Phát hiện Lửa & Khói)
-- Sau khi bạn huấn luyện mô hình và copy file **`best.pt`** vào thư mục gốc dự án, hệ thống sẽ tự động chuyển sang chế độ thực tế và chỉ cảnh báo khi thấy **Lửa** hoặc **Khói**.
+### 🎯 Mô Hình Hiện Hành:
+- Hệ thống sử dụng mô hình YOLOv8 tùy biến: **`best.pt`** (kích thước ~6.2MB, hash: `52c041957a0a81069a20a139b1bd8409`).
+- Mô hình hỗ trợ 2 lớp đối tượng chuẩn:
+  - **Class 0: `smoke` (Khói)**
+  - **Class 1: `fire` (Lửa)**
+- Cả 2 giao diện (Desktop & Web) đều hỗ trợ xem chi tiết và **chuyển đổi model linh hoạt** ngay trong tab Admin.
+
+### 🧪 Chế độ Dự Phòng (Fallback Simulation):
+- Nếu không tìm thấy model chuyên dụng ở các đường dẫn (`best.pt`, `FireSmokeLabeler/model/best.pt`, `models/fire_smoke_v2.pt`), hệ thống tự động nạp **`yolov8n.pt`** và hoạt động ở chế độ mô phỏng để kiểm thử luồng còi hú & thông báo.
 
 ---
 
-## 🏋️ 6. (Tùy Chọn) Huấn Luyện (Train) Mô Hình Dữ Liệu Riêng
+## 🏷️ 6. Bộ Công Cụ Tự Động Gắn Nhãn & Trực Quan Hóa (FireSmokeLabeler)
 
-Nếu muốn huấn luyện lại mô hình YOLOv8 với tập dữ liệu tùy chỉnh:
+Dự án đã tích hợp trọn vẹn module **`FireSmokeLabeler`**:
 
-1. **Chuẩn bị Dataset:** Tải bộ dữ liệu định dạng **YOLOv8** từ Roboflow, giải nén và đổi tên thư mục thành **`dataset`** nằm cùng cấp với file `train.py`.
-2. **Chạy huấn luyện:**
-   ```bash
-   .venv\Scripts\python.exe train.py
-   ```
-3. **Sử dụng trọng số mới:** Copy file **`best.pt`** từ `runs/detect/train_fire/weights/best.pt` ra thư mục gốc dự án.
+### 1. Trực quan hóa kiểm tra nhãn dự đoán (Khuyên dùng trước khi train):
+```bash
+.venv\Scripts\python.exe FireSmokeLabeler/visualize_labels.py
+```
+- Kết quả ảnh đã vẽ hộp bounding box và nhãn sẽ được lưu tại: `FireSmokeLabeler/visualized/`.
+
+### 2. Tự động gắn nhãn thêm video mới (nếu có):
+- Chép video (.avi / .mp4) vào thư mục `FireSmokeLabeler/videos/`.
+- Chạy lệnh:
+```bash
+.venv\Scripts\python.exe FireSmokeLabeler/create_fire_smoke_dataset.py
+```
+
+---
+
+## 🏋️ 7. Huấn Luyện (Train) & Đánh Giá Model Mới An Toàn
+
+### Bước 1: Kiểm tra tính toàn vẹn dataset (Không huấn luyện)
+```bash
+.venv\Scripts\python.exe train.py --validate-only
+```
+Lệnh này sẽ kiểm tra thư mục ảnh train/val, số lượng bounding box, phân bố class và xác nhận không có thư mục rỗng.
+
+### Bước 2: Chạy huấn luyện (Lưu trọng số mới riêng biệt)
+```bash
+.venv\Scripts\python.exe train.py --epochs 50 --batch 16
+```
+- Trọng số mới tốt nhất sẽ tự động được lưu an toàn tại: **`models/fire_smoke_v2.pt`**.
+- Model đang hoạt động `best.pt` được bảo vệ nguyên vẹn, **không bị ghi đè**.
+
+### Bước 3: Đánh giá & So sánh mô hình trên tập Validation:
+```bash
+.venv\Scripts\python.exe evaluate_model.py --model models/fire_smoke_v2.pt --compare best.pt
+```
+Lệnh sẽ hiển thị bảng so sánh trực quan các chỉ số: **mAP@50**, **mAP@50-95**, **Precision**, **Recall** giữa mô hình mới và mô hình cũ.
+
+### Bước 4: Chuyển sang mô hình mới (Khi đạt kết quả tốt hơn):
+- Trong giao diện **Desktop** (`app.py`): Vào tab **Admin** -> Mục 4 -> Nhấn "📁 Chọn Model" chọn `models/fire_smoke_v2.pt` -> Nhấn "🔄 Nạp Model".
+- Trong giao diện **Web** (`web_app.py`): Vào tab **Admin Quản Lý** -> Mục 5 -> Điền `models/fire_smoke_v2.pt` -> Nhấn "🔄 Nạp Lại Model".
+

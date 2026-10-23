@@ -513,3 +513,26 @@ elif app_mode == "⚙️ Admin Quản Lý":
                 st.session_state.detector.stop()
                 st.session_state.alert_manager.stop_alarm()
                 st.info("Đã dừng hệ thống giám sát!")
+
+        st.markdown("---")
+        st.markdown("### 5. Quản Lý Mô Hình AI (YOLO Model)")
+        model_info = st.session_state.detector.get_model_info()
+        st.write(f"• Đường dẫn mô hình hiện tại: `{model_info.get('path')}`")
+        st.write(f"• Các lớp nhận diện: `{model_info.get('names')}`")
+        if model_info.get("is_simulation"):
+            st.warning("⚠️ Đang ở chế độ mô phỏng (sử dụng model mặc định hoặc chưa nạp model Lửa/Khói).")
+        else:
+            st.success("✅ Mô hình chuyên dụng nhận diện Lửa & Khói đã sẵn sàng hoạt động.")
+
+        c_mpath, c_mbtn = st.columns([3, 1])
+        with c_mpath:
+            new_model_inp = st.text_input("Đường dẫn mô hình tùy chỉnh (.pt):", value=model_info.get("path", "best.pt"))
+        with c_mbtn:
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("🔄 Nạp Lại Model", use_container_width=True):
+                ok = st.session_state.detector.set_model(new_model_inp.strip())
+                if ok:
+                    st.success("Đã nạp thành công mô hình mới!")
+                    st.rerun()
+                else:
+                    st.error("Không thể nạp mô hình. Vui lòng kiểm tra lại đường dẫn!")

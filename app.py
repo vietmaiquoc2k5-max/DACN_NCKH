@@ -772,8 +772,45 @@ class FireAlarmApp(ctk.CTk):
         )
         self.mute_check.pack(anchor="w", pady=5)
         
-        # 4. Action Buttons (Start/Stop)
-        ctk.CTkLabel(form_frame, text="4. Điều Khiển Hệ Thống:", font=ctk.CTkFont(weight="bold", size=14), text_color="#F8FAFC").pack(anchor="w", pady=(20, 5))
+        # 4. YOLO AI Model Settings
+        ctk.CTkLabel(form_frame, text="4. Cấu Hình Mô Hình AI (YOLO Model):", font=ctk.CTkFont(weight="bold", size=14), text_color="#F8FAFC").pack(anchor="w", pady=(20, 5))
+        
+        model_row = ctk.CTkFrame(form_frame, fg_color="transparent")
+        model_row.pack(fill="x", pady=5)
+        
+        self.model_path_entry = ctk.CTkEntry(model_row, placeholder_text="Đường dẫn file .pt (VD: best.pt)")
+        info = self.detector.get_model_info()
+        self.model_path_entry.insert(0, info.get("path", "best.pt"))
+        self.model_path_entry.pack(side="left", fill="x", expand=True, padx=(0, 6))
+        
+        self.btn_browse_model = ctk.CTkButton(
+            model_row,
+            text="📁 Chọn Model",
+            width=110,
+            command=self.browse_model_file
+        )
+        self.btn_browse_model.pack(side="right", padx=(0, 6))
+        
+        self.btn_load_model = ctk.CTkButton(
+            model_row,
+            text="🔄 Nạp Model",
+            width=100,
+            fg_color="#0284C7",
+            hover_color="#0369A1",
+            command=self.on_reload_model
+        )
+        self.btn_load_model.pack(side="right")
+        
+        self.lbl_model_status = ctk.CTkLabel(
+            form_frame,
+            text=f"Mô hình: {info.get('path')} | Lớp: {list(info.get('names', {}).values())}",
+            font=ctk.CTkFont(size=11),
+            text_color="#10B981" if not info.get("is_simulation") else "#F59E0B"
+        )
+        self.lbl_model_status.pack(anchor="w", pady=(2, 5))
+
+        # 5. Action Buttons (Start/Stop)
+        ctk.CTkLabel(form_frame, text="5. Điều Khiển Hệ Thống:", font=ctk.CTkFont(weight="bold", size=14), text_color="#F8FAFC").pack(anchor="w", pady=(20, 5))
         
         btn_admin_action = ctk.CTkFrame(form_frame, fg_color="transparent")
         btn_admin_action.pack(fill="x", pady=10)
@@ -871,6 +908,30 @@ class FireAlarmApp(ctk.CTk):
         if filepath:
             self.source_entry.delete(0, tk.END)
             self.source_entry.insert(0, filepath)
+
+    def browse_model_file(self):
+        filepath = filedialog.askopenfilename(
+            filetypes=[("YOLO PyTorch Model", "*.pt"), ("All files", "*.*")]
+        )
+        if filepath:
+            self.model_path_entry.delete(0, tk.END)
+            self.model_path_entry.insert(0, filepath)
+
+    def on_reload_model(self):
+        new_path = self.model_path_entry.get().strip()
+        if not new_path:
+            return
+        ok = self.detector.set_model(new_path)
+        info = self.detector.get_model_info()
+        if ok:
+            status_color = "#10B981" if not info.get("is_simulation") else "#F59E0B"
+            self.lbl_model_status.configure(
+                text=f"Mô hình: {info.get('path')} | Lớp: {list(info.get('names', {}).values())}",
+                text_color=status_color
+            )
+            messagebox.showinfo("Thành Công", f"Đã nạp thành công mô hình:\n{new_path}\nLớp: {list(info.get('names', {}).values())}")
+        else:
+            messagebox.showerror("Lỗi Nạp Model", f"Không thể nạp mô hình từ:\n{new_path}")
 
     def on_conf_slider_change(self, val):
         self.conf_slider_val.configure(text=f"{int(float(val)*100)}%")

@@ -1,12 +1,14 @@
-# File cấu hình Dataset cho YOLOv8
-path: ./dataset 
+# Cấu hình Dataset chính cho YOLOv8
+# Hiện đang trỏ tới Dataset tích hợp từ FireSmokeLabeler (3.538 ảnh, 5.521 bboxes)
+# Thứ tự class chuẩn: 0: smoke, 1: fire (Đồng bộ với best.pt)
+path: FireSmokeLabeler/dataset 
 
 # Đường dẫn đến ảnh train và val (tương đối so với 'path')
-train: images/train/images
-val: images/train/images  # Tạm thời dùng chung với train nếu không có thư mục val riêng
+train: images/train
+val: images/val
 
 # Số lượng lớp và tên lớp
 nc: 2
 names:
-  0: fire
-  1: smoke
+  0: smoke
+  1: fire
