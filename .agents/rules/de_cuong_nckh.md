@@ -46,7 +46,7 @@ Tài liệu gốc: `DeCuong_NCKH_PhatHienChay_Camera.docx` (thư mục gốc d�
 - Bài báo Nested Learning chỉ là cơ sở lý thuyết cho thích nghi miền; không cài kiến trúc Hope/CMS
 - Báo cáo số liệu trung thực, kể cả khi không đạt chỉ tiêu
 
-## Hiện trạng code (cập nhật 23/10/2026 – sửa mục này khi có thay đổi)
-- Đã có: YOLO `best.pt` (smoke=0, fire=1); 1 luồng RTSP/webcam/file trong `app.py`, `web_app.py`; SQLite + snapshot trong `alert_manager.py`; dashboard Streamlit; `train.py`, `evaluate_model.py` (mAP khung hình)
+## Hiện trạng code (cập nhật 25/10/2026 – sửa mục này khi có thay đổi)
+- Đã có: YOLO `best.pt` (smoke=0, fire=1); 1 luồng RTSP/webcam/file trong `app.py`, `web_app.py`; SQLite + snapshot trong `alert_manager.py`; dashboard Streamlit; `train.py`, `evaluate_model.py` (mAP khung hình); khảo sát tài liệu IEEE `literature_survey.md`; chuẩn hóa tập D-Fire (21.527 ảnh, `data_dfire.yaml`); danh mục 60 video kiểm định (`video_dataset_list.csv`) gồm 24 POS chuẩn, 25 NEG chuẩn và 11 video Việt Nam (`videovietnam/`); trích xuất & kiểm duyệt hoàn tất 1.050 khung hình Việt Nam gán nhãn Ground Truth chia 60/20/20 theo video có làm mờ mặt/biển số (`datasets/vn_dataset/`, `data_vn.yaml`, `review_status.csv`); Baseline B1 (luật màu HSV/YCbCr + trừ nền MOG2 tại `baselines/baseline_b1.py`, đánh giá tại `baselines/evaluate_b1.py`, báo cáo `docs/baseline_b1_report.md`).
 - Xác nhận thời gian hiện chỉ là bộ đếm 10 khung liên tiếp trong `detector.py`
-- Chưa có: D-Fire, so sánh mô hình/baseline, ByteTrack + k/N + vùng loại trừ + 2 mức cảnh báo, event_eval, thích nghi miền, Telegram/email, ≥ 4 luồng, ONNX/OpenVINO, Docker, MediaMTX
+- Chưa có: Baseline B2 (MobileNetV3), huấn luyện các mô hình (YOLOv8n/s, YOLO11n/s, RT-DETR), ByteTrack + k/N + vùng loại trừ + 2 mức cảnh báo, event_eval, thích nghi miền, Telegram/email, ≥ 4 luồng, ONNX/OpenVINO, Docker, MediaMTX

@@ -13,6 +13,12 @@ ENV/
 alerts.db
 alerts/
 
+# Large datasets & raw archives
+datasets/
+videovietnam/
+*.zip
+*.tar.gz
+
 # Training runs & temporary checkpoints
 runs/
 FireSmokeLabeler/runs/

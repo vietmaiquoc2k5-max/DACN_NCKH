@@ -1,0 +1,8 @@
+# Cấu hình tập dữ liệu camera giám sát Việt Nam (MT1 & MT4)
+path: datasets/vn_dataset
+train: images/train
+val: images/val
+test: images/test
+
+nc: 2
+names: ['smoke', 'fire']

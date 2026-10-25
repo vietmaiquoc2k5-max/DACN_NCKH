@@ -70,9 +70,15 @@ def validate_dataset(data_yaml_path):
         print("   Quy tắc an toàn: Không tự động huấn luyện khi tập validation rỗng.")
         return False, None
 
-    # Kiểm tra thư mục labels tương ứng
-    labels_train = root_path / "labels" / "train"
-    labels_val = root_path / "labels" / "val"
+    # Kiểm tra thư mục labels tương ứng (tương thích chuẩn Ultralytics: thay 'images' bằng 'labels')
+    labels_train = Path(str(train_img_dir).replace("images", "labels"))
+    if not labels_train.exists():
+        labels_train = root_path / "labels" / "train"
+
+    labels_val = Path(str(val_img_dir).replace("images", "labels"))
+    if not labels_val.exists():
+        labels_val = root_path / "labels" / "val"
+
     train_labels = list(labels_train.glob("*.txt")) if labels_train.exists() else []
     val_labels = list(labels_val.glob("*.txt")) if labels_val.exists() else []
 
