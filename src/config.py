@@ -1,10 +1,22 @@
 """Cấu hình trung tâm cho ứng dụng Web Dashboard Phát hiện & Cảnh báo Cháy 9 Camera."""
 import os
+import re
 from pathlib import Path
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple, Any
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+# Danh sách các chế độ vận hành của hệ thống
+OPERATING_MODES: Dict[str, str] = {
+    "MULTI_CAMERA": "Nhiều Camera (Lưới 3×3 - Giám sát đồng thời)",
+    "VIDEO_TEST": "Video Kiểm Thử (VIDEO_TEST)",
+    "WEBCAM": "Camera Máy Tính (WEBCAM)",
+    "IP_CAMERA": "Camera Giám Sát IP/RTSP (IP_CAMERA)",
+}
+
+# Các loại nguồn đầu vào cho từng camera
+SOURCE_TYPES: List[str] = ["VIDEO_TEST", "WEBCAM", "IP_CAMERA"]
 
 # Danh sách các đường dẫn model đã huấn luyện của dự án (ưu tiên best.pt)
 CANDIDATE_MODEL_PATHS: List[str] = [
@@ -48,15 +60,50 @@ DEFAULT_USERS: Dict[str, Dict[str, str]] = {
 }
 
 
+def mask_rtsp_credentials(source: str) -> str:
+    """Ẩn mật khẩu xác thực trong URL RTSP/HTTP để không bao giờ lộ trên giao diện hoặc trong log.
+
+    Ví dụ:
+      'rtsp://admin:MySecret123@192.168.1.50:554/Streaming/Channels/101'
+      -> 'rtsp://admin:******@192.168.1.50:554/Streaming/Channels/101'
+    """
+    if not source:
+        return ""
+    s = str(source).strip()
+    return re.sub(r"((?:rtsp|rtsps|http|https|rtmp)://[^:/@\s]+:)([^@\s]+)(@)", r"\1******\3", s, flags=re.IGNORECASE)
+
+
+def infer_source_type(source: str) -> str:
+    """Tự động suy luận loại nguồn đầu vào từ chuỗi cấu hình."""
+    s = str(source).strip()
+    if s.isdigit():
+        return "WEBCAM"
+    if s.lower().startswith(("rtsp://", "rtsps://", "http://", "https://", "rtmp://")):
+        return "IP_CAMERA"
+    return "VIDEO_TEST"
+
+
 @dataclass
 class CameraConfig:
     """Cấu hình cho từng luồng camera trong lưới 3x3 (9 camera)."""
     cam_id: str
     name: str
     source: str
+    source_type: str = "VIDEO_TEST"  # "VIDEO_TEST" | "WEBCAM" | "IP_CAMERA"
+    webcam_index: int = 0
     enabled: bool = True
     loop_video: bool = True
+    auto_reconnect: bool = True
+    max_reconnect_attempts: int = 5
+    reconnect_interval_sec: float = 2.5
     exclusion_zones: List[Tuple[float, float, float, float]] = field(default_factory=list)
+
+    @property
+    def masked_source(self) -> str:
+        """Trả về chuỗi nguồn đã ẩn mật khẩu RTSP (an toàn để hiển thị và ghi log)."""
+        if self.source_type == "WEBCAM" or str(self.source).strip().isdigit():
+            return f"Webcam #{self.webcam_index}"
+        return mask_rtsp_credentials(self.source)
 
 
 def get_default_9_cameras() -> List[CameraConfig]:
@@ -94,13 +141,17 @@ def get_default_9_cameras() -> List[CameraConfig]:
             fb_rel = fallback_videos[idx % len(fallback_videos)]
             fb_full = PROJECT_ROOT / fb_rel
             src = fb_rel if fb_full.exists() else "0"
+        s_type = infer_source_type(src)
         configs.append(
             CameraConfig(
                 cam_id=cid,
                 name=cname,
                 source=src,
-                enabled=(idx < 4),  # Mặc định bật sẵn 4 luồng đầu theo MT5 để tiết kiệm tài nguyên, có thể bật cả 9
+                source_type=s_type,
+                webcam_index=int(src) if src.isdigit() else 0,
+                enabled=(idx < 4),
                 loop_video=True,
+                auto_reconnect=True,
             )
         )
     return configs
@@ -109,16 +160,19 @@ def get_default_9_cameras() -> List[CameraConfig]:
 @dataclass
 class SystemSettings:
     """Tham số vận hành và tối ưu hóa phần cứng toàn hệ thống."""
+    operating_mode: str = "MULTI_CAMERA"  # "MULTI_CAMERA" | "VIDEO_TEST" | "WEBCAM" | "IP_CAMERA"
     model_path: str = "best.pt"
     conf_threshold: float = 0.35
     iou_threshold: float = 0.45
-    imgsz: int = 640
-    target_fps_per_cam: int = 12
-    display_width: int = 480
-    frame_skip: int = 1
+    imgsz: int = 416
+    capture_width: int = 480
+    target_fps_per_cam: int = 24
+    display_width: int = 420
+    jpeg_quality: int = 72
+    ui_refresh_sec: float = 0.4
+    frame_skip: int = 2
     window_size_n: int = 10
     confirm_frames_k: int = 4
     suspect_frames_k: int = 2
     alert_cooldown_sec: float = 12.0
     mute_audio: bool = False
-

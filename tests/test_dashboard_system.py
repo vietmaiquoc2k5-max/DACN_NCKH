@@ -1,14 +1,19 @@
 """Bộ kiểm thử tự động toàn diện cho hệ thống Web Dashboard 9 Camera (`tests/test_dashboard_system.py`).
 
-Kiểm tra đầy đủ các tiêu chí nghiệm thu:
+Kiểm tra đầy đủ các tiêu chí nghiệm thu (bao gồm cả Mục 10 - Bổ sung chế độ Camera thực tế):
 1. Tích hợp model (`src/detector.py`): Nạp `best.pt` (SMOKE/FIRE), từ chối model không hợp lệ (`yolov8n.pt` COCO),
-   chạy phát hiện trên video thực tế và vẽ bounding box.
+   chạy phát hiện trên video thực tế và vẽ bounding box kèm tên camera.
 2. Xác minh theo chuỗi khung hình (`src/temporal_verifier.py`): Cửa sổ k/N, 2 mức SUSPECT/FIRE,
    lọc vùng loại trừ ROI và chống phát cảnh báo lặp (Cooldown).
 3. Cơ sở dữ liệu & Cảnh báo (`src/database.py`, `alert_manager.py`): Lưu SQLite, lọc theo ngày/camera/loại,
    xác nhận/bỏ qua sự kiện, phân biệt dữ liệu thật vs demo, xuất CSV.
-4. Quản lý 9 Camera (`src/camera_manager.py`): Hiển thị đủ 9 ô camera, camera lỗi/mất kết nối không làm dừng
-   các camera đang chạy video thực tế, đo FPS thực tế.
+4. Quản lý 9 Camera & Cô lập lỗi (`src/camera_manager.py`): Hiển thị đủ 9 ô camera, trạng thái chuẩn
+   (`CONNECTED`, `DISCONNECTED`, `RECONNECTING`, `ERROR`, `PAUSED`), tách biệt `capture_fps` và `inference_fps`,
+   camera lỗi/mất kết nối không làm dừng các camera khác và không tạo cảnh báo cháy giả.
+5. Chế độ Camera thực tế & Bảo mật RTSP (`VIDEO_TEST`, `WEBCAM`, `IP_CAMERA`, `MULTI_CAMERA`):
+   - Kiểm tra kết nối (`test_camera_connection`) trả về ảnh xem trước thật.
+   - Ẩn mật khẩu RTSP (`mask_rtsp_credentials`), tuyệt đối không lộ thông tin xác thực trong log hoặc snapshot.
+   - Hiển thị đúng trạng thái lỗi kết nối (`CONN_ERROR` / `STANDBY`) thay vì báo `SAFE` giả khi mất tín hiệu.
 """
 import os
 import sys
@@ -26,6 +31,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from src.config import mask_rtsp_credentials
 from src.detector import SharedFireSmokeDetector
 from src.temporal_verifier import TemporalVerifier, DetectionBox
 from src.database import EventDatabase
@@ -145,7 +151,7 @@ def test_database_and_alerts():
 
 
 def test_multi_camera_fault_isolation():
-    print("\n[TEST 4] Kiểm tra MultiCameraManager (9 camera & cô lập lỗi khi 1 camera mất kết nối)...")
+    print("\n[TEST 4] Kiểm tra MultiCameraManager (9 camera, CONNECTED/ERROR, FPS đọc & FPS suy luận độc lập)...")
     with tempfile.TemporaryDirectory() as tmpdir:
         db_file = os.path.join(tmpdir, "cam_test.db")
         mgr = MultiCameraManager(db_path=db_file, model_path="best.pt")
@@ -154,45 +160,111 @@ def test_multi_camera_fault_isolation():
         snaps = mgr.get_all_snapshots()
         assert len(snaps) == 9, f"Phải có đúng 9 camera (3x3), nhận được: {len(snaps)}"
 
-        # Cấu hình CAM-01 chạy video thật, CAM-02 cố tình trỏ tới đường dẫn không tồn tại
-        mgr.update_camera_source("CAM-02", "CAM 02 - Lỗi Kết Nối", "non_existent_video_stream.mp4", auto_restart=False)
+        # Cấu hình CAM-01 chạy video thật, CAM-02 cố tình trỏ tới đường dẫn không tồn tại (tắt auto_reconnect để kiểm tra ERROR ngay)
+        mgr.update_camera_source(
+            "CAM-02",
+            "CAM 02 - Lỗi Kết Nối",
+            "non_existent_video_stream.mp4",
+            source_type="VIDEO_TEST",
+            auto_reconnect=False,
+            auto_restart=False,
+        )
         mgr.start_camera("CAM-01")
         mgr.start_camera("CAM-02")
 
-        # Chờ một chút để các luồng xử lý
-        deadline = time.time() + 6.0
-        cam1_online = False
-        cam2_disconnected = False
+        deadline = time.time() + 10.0
+        cam1_connected = False
+        cam2_error = False
         while time.time() < deadline:
             s_list = {s["cam_id"]: s for s in mgr.get_all_snapshots()}
-            if s_list["CAM-01"]["status"] == "ONLINE" and s_list["CAM-01"]["fps"] > 0:
-                cam1_online = True
-            if s_list["CAM-02"]["status"] == "DISCONNECTED":
-                cam2_disconnected = True
-            if cam1_online and cam2_disconnected:
+            if (
+                s_list["CAM-01"]["status"] == "CONNECTED"
+                and s_list["CAM-01"]["capture_fps"] > 0
+                and s_list["CAM-01"]["inference_fps"] > 0
+            ):
+                cam1_connected = True
+            if s_list["CAM-02"]["status"] in ("ERROR", "RECONNECTING", "DISCONNECTED") and s_list["CAM-02"]["error_detail"]:
+                cam2_error = True
+            if cam1_connected and cam2_error:
                 break
             time.sleep(0.25)
 
         s_final = {s["cam_id"]: s for s in mgr.get_all_snapshots()}
+        metrics = mgr.get_system_metrics()
         mgr.stop_all()
 
-        assert cam2_disconnected, f"CAM-02 phải ở trạng thái DISCONNECTED, thực tế: {s_final['CAM-02']['status']}"
-        assert cam1_online, f"CAM-01 phải hoạt động ONLINE bình thường dù CAM-02 lỗi, thực tế: {s_final['CAM-01']['status']}"
-        print(
-            f"  ✅ Cô lập lỗi thành công: CAM-02={s_final['CAM-02']['status']} không ảnh hưởng "
-            f"CAM-01={s_final['CAM-01']['status']} (FPS thực tế CAM-01: {s_final['CAM-01']['fps']} FPS)."
+        assert cam2_error, f"CAM-02 phải báo lỗi kết nối (ERROR/RECONNECTING), thực tế: {s_final['CAM-02']['status']}"
+        assert cam1_connected, f"CAM-01 phải hoạt động CONNECTED bình thường dù CAM-02 lỗi, thực tế: {s_final['CAM-01']['status']}"
+        assert s_final["CAM-02"]["alert_level"] == "CONN_ERROR", (
+            f"Camera mất kết nối phải có alert_level='CONN_ERROR' (không báo cháy giả cũng không báo SAFE), "
+            f"nhận được: {s_final['CAM-02']['alert_level']}"
         )
+        assert len(metrics["error_cameras"]) >= 1, "Hệ thống phải ghi nhận camera đang bị lỗi kết nối"
+        print(
+            f"  ✅ Cô lập lỗi thành công: CAM-02={s_final['CAM-02']['status']} (alert_level={s_final['CAM-02']['alert_level']}) "
+            f"không ảnh hưởng CAM-01={s_final['CAM-01']['status']} (FPS đọc: {s_final['CAM-01']['capture_fps']} | "
+            f"FPS YOLO: {s_final['CAM-01']['inference_fps']})."
+        )
+
+
+def test_real_camera_features_and_rtsp_security():
+    print("\n[TEST 5] Kiểm tra Chế độ Camera thực tế, Kiểm tra kết nối & Bảo mật ẩn mật khẩu RTSP...")
+    # 1. Kiểm tra hàm mask_rtsp_credentials
+    raw_rtsp = "rtsp://admin:SuperSecretPass99!@192.168.1.108:554/cam/realmonitor?channel=1&subtype=0"
+    masked = mask_rtsp_credentials(raw_rtsp)
+    assert "SuperSecretPass99!" not in masked, f"Mật khẩu RTSP bị lộ trong chuỗi đã che: {masked}"
+    assert masked.startswith("rtsp://admin:******@192.168.1.108:554"), f"Định dạng che mật khẩu sai: {masked}"
+    print(f"  ✅ Ẩn mật khẩu RTSP an toàn: '{masked}'")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        db_file = os.path.join(tmpdir, "sec_test.db")
+        mgr = MultiCameraManager(db_path=db_file, model_path="best.pt")
+        mgr.settings.mute_audio = True
+
+        # 2. Khi chưa có camera nào kết nối, hệ thống phải ở trạng thái STANDBY (không báo SAFE giả)
+        m_init = mgr.get_system_metrics()
+        assert m_init["overall_level"] == "STANDBY", f"Khi 0 camera kết nối phải là STANDBY, nhận được: {m_init['overall_level']}"
+
+        # 3. Lưu cấu hình RTSP chứa mật khẩu và kiểm tra không lộ mật khẩu trong snapshot hay log
+        mgr.update_camera_source(
+            "CAM-03",
+            new_name="CAM 03 - Cổng Chính RTSP",
+            new_source=raw_rtsp,
+            source_type="IP_CAMERA",
+            enabled=True,
+            auto_reconnect=True,
+            auto_restart=False,
+        )
+        snap_cam3 = next(s for s in mgr.get_all_snapshots() if s["cam_id"] == "CAM-03")
+        assert "SuperSecretPass99!" not in snap_cam3["masked_source"], "Snapshot không được chứa mật khẩu RTSP dạng rõ!"
+        for log_line in mgr.get_recent_logs(20):
+            assert "SuperSecretPass99!" not in log_line, f"Log hệ thống làm lộ mật khẩu RTSP: {log_line}"
+        print("  ✅ Không lộ mật khẩu RTSP trong cấu hình hiển thị (Snapshot) và Nhật ký hệ thống (Logs).")
+
+        # 4. Kiểm tra nút 'Kiểm tra kết nối' (test_camera_connection) trên nguồn hợp lệ
+        ok, msg, preview = mgr.test_camera_connection("CAM-01")
+        assert ok is True and preview is not None and preview.ndim == 3, f"Kiểm tra kết nối CAM-01 thất bại: {msg}"
+        print(f"  ✅ Kiểm tra kết nối (Test Connection) thành công trên CAM-01: {msg}")
+
+        # 5. Kiểm tra chuyển đổi chế độ hoạt động (VIDEO_TEST, WEBCAM, IP_CAMERA, MULTI_CAMERA)
+        mgr.apply_operating_mode_preset("WEBCAM", webcam_index=0, auto_connect=False)
+        assert mgr.settings.operating_mode == "WEBCAM"
+        snap_after_mode = {s["cam_id"]: s for s in mgr.get_all_snapshots()}
+        assert snap_after_mode["CAM-01"]["source_type"] == "WEBCAM" and snap_after_mode["CAM-01"]["enabled"] is True
+        mgr.apply_operating_mode_preset("MULTI_CAMERA", auto_connect=False)
+        assert mgr.settings.operating_mode == "MULTI_CAMERA"
+        print("  ✅ Chuyển đổi linh hoạt giữa 4 chế độ VIDEO_TEST, WEBCAM, IP_CAMERA và MULTI_CAMERA.")
 
 
 if __name__ == "__main__":
     print("=" * 72)
-    print("🚀 BẮT ĐẦU CHẠY KIỂM THỬ HỆ THỐNG WEB DASHBOARD 9 CAMERA (3x3)")
+    print("🚀 BẮT ĐẦU CHẠY KIỂM THỬ HỆ THỐNG WEB DASHBOARD & CAMERA THỰC TẾ")
     print("=" * 72)
     test_detector_and_model_validation()
     test_temporal_verifier()
     test_database_and_alerts()
     test_multi_camera_fault_isolation()
+    test_real_camera_features_and_rtsp_security()
     print("\n" + "=" * 72)
-    print("🎉 TẤT CẢ 4 HẠNG MỤC KIỂM THỬ HỆ THỐNG 9 CAMERA ĐỀU PASS 100%!")
+    print("🎉 TẤT CẢ 5 HẠNG MỤC KIỂM THỬ HỆ THỐNG 9 CAMERA ĐỀU PASS 100%!")
     print("=" * 72)
-
