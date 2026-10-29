@@ -19,6 +19,7 @@ try:
 except ImportError:
     pygame = None
 
+
 class AlertManager:
     def __init__(self, sound_path="alarm.wav", db_path="alerts.db", alerts_dir="alerts"):
         self.sound_path = sound_path
@@ -26,21 +27,21 @@ class AlertManager:
         self.alerts_dir = alerts_dir
         self.alarm_playing = False
         self.mute_alarm = False
-        
+
         # Lock for DB operations across threads
         self.db_lock = threading.Lock()
-        
+
         # In-app notifications memory queue for live popups
         self.active_notifications = []
         self.notification_callback = None  # func(notification_dict)
-        
+
         # Initialize pygame mixer for audio playing
         if pygame:
             try:
                 pygame.mixer.init()
             except Exception as e:
                 print(f"Error initializing pygame mixer: {e}")
-            
+
         # Ensure default alarm sound exists and directories/DB are set up
         self.ensure_alarm_sound()
         self.ensure_alerts_dir()
@@ -49,10 +50,10 @@ class AlertManager:
     def ensure_alerts_dir(self):
         """Ensure local directory for alert snapshots exists."""
         if not os.path.exists(self.alerts_dir):
-            os.makedirs(self.alerts_dir)
+            os.makedirs(self.alerts_dir, exist_ok=True)
 
     def init_db(self):
-        """Initializes the SQLite database for storing in-app alert history and operator notes."""
+        """Initializes the SQLite database for storing in-app alert history, camera info, and operator notes."""
         with self.db_lock:
             try:
                 conn = sqlite3.connect(self.db_path)
@@ -61,24 +62,31 @@ class AlertManager:
                     CREATE TABLE IF NOT EXISTS alert_logs (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         timestamp TEXT NOT NULL,
+                        camera_name TEXT DEFAULT 'CAM-01',
                         label TEXT NOT NULL,
                         confidence REAL NOT NULL,
+                        alert_level TEXT DEFAULT 'FIRE',
                         image_path TEXT,
                         status TEXT DEFAULT 'UNREAD',
                         action_taken TEXT DEFAULT 'Chưa xử lý',
-                        operator_note TEXT DEFAULT ''
+                        operator_note TEXT DEFAULT '',
+                        is_demo INTEGER DEFAULT 0
                     )
                 """)
-                # Migrations for existing database files
-                try:
-                    cursor.execute("ALTER TABLE alert_logs ADD COLUMN action_taken TEXT DEFAULT 'Chưa xử lý'")
-                except Exception:
-                    pass
-                try:
-                    cursor.execute("ALTER TABLE alert_logs ADD COLUMN operator_note TEXT DEFAULT ''")
-                except Exception:
-                    pass
-                    
+                # Safe migrations for existing database files
+                migrations = [
+                    "ALTER TABLE alert_logs ADD COLUMN action_taken TEXT DEFAULT 'Chưa xử lý'",
+                    "ALTER TABLE alert_logs ADD COLUMN operator_note TEXT DEFAULT ''",
+                    "ALTER TABLE alert_logs ADD COLUMN camera_name TEXT DEFAULT 'CAM-01'",
+                    "ALTER TABLE alert_logs ADD COLUMN alert_level TEXT DEFAULT 'FIRE'",
+                    "ALTER TABLE alert_logs ADD COLUMN is_demo INTEGER DEFAULT 0",
+                ]
+                for sql in migrations:
+                    try:
+                        cursor.execute(sql)
+                    except Exception:
+                        pass
+
                 conn.commit()
                 conn.close()
             except Exception as e:
@@ -92,17 +100,17 @@ class AlertManager:
                 sample_rate = 44100
                 duration = 1.5  # seconds
                 num_samples = int(sample_rate * duration)
-                
-                with wave.open(self.sound_path, 'w') as wav_file:
+
+                with wave.open(self.sound_path, "w") as wav_file:
                     wav_file.setnchannels(1)  # Mono
                     wav_file.setsampwidth(2)  # 16-bit
                     wav_file.setframerate(sample_rate)
-                    
+
                     for i in range(num_samples):
                         t = i / sample_rate
                         freq = 950 if int(t * 4) % 2 == 0 else 650
                         val = int(16384 * math.sin(2 * math.pi * freq * t))
-                        data = struct.pack('<h', val)
+                        data = struct.pack("<h", val)
                         wav_file.writeframesraw(data)
             except Exception as e:
                 print(f"Failed to generate default alarm sound: {e}")
@@ -118,7 +126,7 @@ class AlertManager:
         if self.mute_alarm:
             self.stop_alarm()
             return
-            
+
         if not self.alarm_playing:
             self.alarm_playing = True
             threading.Thread(target=self._play_loop, daemon=True).start()
@@ -131,7 +139,7 @@ class AlertManager:
         try:
             if not os.path.exists(self.sound_path):
                 self.ensure_alarm_sound()
-                
+
             try:
                 if os.path.exists(self.sound_path):
                     with open(self.sound_path, "rb") as f:
@@ -139,6 +147,7 @@ class AlertManager:
                     if len(header) >= 4 and not header.startswith(b"RIFF"):
                         import uuid
                         import shutil
+
                         temp_path = f"temp_alarm_{uuid.uuid4().hex[:8]}.mp3"
                         shutil.copyfile(self.sound_path, temp_path)
                         play_path = temp_path
@@ -153,8 +162,8 @@ class AlertManager:
                     time.sleep(0.2)
             elif IS_WINDOWS:
                 winsound.PlaySound(
-                    play_path, 
-                    winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP
+                    play_path,
+                    winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP,
                 )
                 while self.alarm_playing and not self.mute_alarm:
                     time.sleep(0.2)
@@ -170,7 +179,7 @@ class AlertManager:
                     winsound.PlaySound(None, winsound.SND_PURGE)
             except Exception:
                 pass
-                
+
             if is_temp_file and temp_path and os.path.exists(temp_path):
                 try:
                     os.remove(temp_path)
@@ -188,17 +197,23 @@ class AlertManager:
         except Exception:
             pass
 
-    def save_alert_event(self, frame, label="LỬA", confidence=0.0):
-        """
-        Saves alert snapshot image to disk and inserts alert record into SQLite DB.
-        Triggers in-app notification popups.
-        """
+    def save_alert_event(
+        self,
+        frame,
+        label="FIRE",
+        confidence=0.0,
+        camera_name="CAM-01",
+        alert_level="FIRE",
+        is_demo=0,
+    ):
+        """Saves alert snapshot image to disk and inserts alert record into SQLite DB."""
         self.ensure_alerts_dir()
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
         file_timestamp = time.strftime("%Y%m%d_%H%M%S")
-        image_filename = f"alert_{file_timestamp}_{int(confidence*100)}.jpg"
+        safe_cam = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in str(camera_name))
+        image_filename = f"alert_{safe_cam}_{file_timestamp}_{int(float(confidence)*100)}.jpg"
         filepath = os.path.join(self.alerts_dir, image_filename)
-        
+
         # Save snapshot
         if frame is not None:
             try:
@@ -215,33 +230,48 @@ class AlertManager:
             try:
                 conn = sqlite3.connect(self.db_path)
                 cursor = conn.cursor()
-                cursor.execute("""
-                    INSERT INTO alert_logs (timestamp, label, confidence, image_path, status, action_taken, operator_note)
-                    VALUES (?, ?, ?, ?, 'UNREAD', 'Chưa xử lý', '')
-                """, (timestamp, label, float(confidence), filepath))
+                cursor.execute(
+                    """
+                    INSERT INTO alert_logs (
+                        timestamp, camera_name, label, confidence, alert_level,
+                        image_path, status, action_taken, operator_note, is_demo
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, 'UNREAD', 'Chưa xử lý', '', ?)
+                """,
+                    (
+                        timestamp,
+                        str(camera_name),
+                        str(label),
+                        float(confidence),
+                        str(alert_level),
+                        filepath,
+                        int(bool(is_demo)),
+                    ),
+                )
                 conn.commit()
                 alert_id = cursor.lastrowid
                 conn.close()
             except Exception as e:
                 print(f"Lỗi khi lưu cảnh báo vào CSDL: {e}")
 
-        # Build notification object
         noti_item = {
             "id": alert_id,
             "timestamp": timestamp,
-            "label": label,
-            "confidence": confidence,
+            "camera_name": str(camera_name),
+            "label": str(label),
+            "confidence": float(confidence),
+            "alert_level": str(alert_level),
             "image_path": filepath,
             "status": "UNREAD",
             "action_taken": "Chưa xử lý",
-            "operator_note": ""
+            "operator_note": "",
+            "is_demo": int(bool(is_demo)),
         }
 
         self.active_notifications.append(noti_item)
-        if len(self.active_notifications) > 50:
+        if len(self.active_notifications) > 100:
             self.active_notifications.pop(0)
 
-        # Trigger notification callback if registered
         if self.notification_callback:
             try:
                 self.notification_callback(noti_item)
@@ -250,57 +280,124 @@ class AlertManager:
 
         return noti_item
 
-    def update_alert_action(self, alert_id, action_taken="Báo động giả", operator_note=""):
+    def update_alert_action(
+        self, alert_id, action_taken="Đã xác nhận", operator_note="", status="ACKNOWLEDGED"
+    ):
         """Updates the incident action outcome and operator response note for an alert."""
         with self.db_lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 cursor = conn.cursor()
-                cursor.execute("""
+                cursor.execute(
+                    """
                     UPDATE alert_logs 
-                    SET action_taken = ?, operator_note = ?, status = 'ACKNOWLEDGED'
+                    SET action_taken = ?, operator_note = ?, status = ?
                     WHERE id = ?
-                """, (action_taken, operator_note, alert_id))
+                """,
+                    (action_taken, operator_note, status, alert_id),
+                )
                 conn.commit()
                 conn.close()
+                for item in self.active_notifications:
+                    if item.get("id") == alert_id:
+                        item["action_taken"] = action_taken
+                        item["operator_note"] = operator_note
+                        item["status"] = status
                 return True
             except Exception as e:
                 print(f"Lỗi cập nhật nhật ký xử lý vụ việc #{alert_id}: {e}")
                 return False
 
-    def get_all_alerts(self, limit=100, search_query=""):
-        """Retrieves alert history from SQLite database including operator notes."""
+    def get_all_alerts(
+        self,
+        limit=200,
+        search_query="",
+        camera_filter="",
+        label_filter="",
+        status_filter="",
+        start_date="",
+        end_date="",
+        include_demo=True,
+    ):
+        """Retrieves alert history from SQLite database with rich filtering."""
         results = []
         with self.db_lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 cursor = conn.cursor()
+
+                conditions = []
+                params = []
+
                 if search_query:
-                    cursor.execute("""
-                        SELECT id, timestamp, label, confidence, image_path, status, action_taken, operator_note
-                        FROM alert_logs
-                        WHERE label LIKE ? OR timestamp LIKE ? OR action_taken LIKE ?
-                        ORDER BY id DESC LIMIT ?
-                    """, (f"%{search_query}%", f"%{search_query}%", f"%{search_query}%", limit))
-                else:
-                    cursor.execute("""
-                        SELECT id, timestamp, label, confidence, image_path, status, action_taken, operator_note
-                        FROM alert_logs
-                        ORDER BY id DESC LIMIT ?
-                    """, (limit,))
+                    conditions.append(
+                        "(label LIKE ? OR timestamp LIKE ? OR action_taken LIKE ? OR camera_name LIKE ? OR operator_note LIKE ?)"
+                    )
+                    q = f"%{search_query}%"
+                    params.extend([q, q, q, q, q])
+
+                if camera_filter and camera_filter != "Tất cả":
+                    conditions.append("camera_name = ?")
+                    params.append(camera_filter)
+
+                if label_filter and label_filter != "Tất cả":
+                    conditions.append("UPPER(label) LIKE ?")
+                    params.append(f"%{label_filter.upper()}%")
+
+                if status_filter and status_filter != "Tất cả":
+                    if status_filter == "Đã xác nhận":
+                        conditions.append("status = 'ACKNOWLEDGED'")
+                    elif status_filter == "Chưa xác nhận":
+                        conditions.append("status = 'UNREAD'")
+                    else:
+                        conditions.append("action_taken = ?")
+                        params.append(status_filter)
+
+                if start_date:
+                    conditions.append(" substr(timestamp, 1, 10) >= ? ")
+                    params.append(str(start_date)[:10])
+
+                if end_date:
+                    conditions.append(" substr(timestamp, 1, 10) <= ? ")
+                    params.append(str(end_date)[:10])
+
+                if not include_demo:
+                    conditions.append("COALESCE(is_demo, 0) = 0")
+
+                where_clause = f"WHERE {' AND '.join(conditions)}" if conditions else ""
+                sql = f"""
+                    SELECT id, timestamp, COALESCE(camera_name, 'CAM-01'), label, confidence,
+                           COALESCE(alert_level, 'FIRE'), image_path, status,
+                           COALESCE(action_taken, 'Chưa xử lý'), COALESCE(operator_note, ''),
+                           COALESCE(is_demo, 0)
+                    FROM alert_logs
+                    {where_clause}
+                    ORDER BY id DESC LIMIT ?
+                """
+                params.append(limit)
+                cursor.execute(sql, tuple(params))
                 rows = cursor.fetchall()
                 conn.close()
                 for row in rows:
-                    results.append({
-                        "id": row[0],
-                        "timestamp": row[1],
-                        "label": row[2],
-                        "confidence": row[3],
-                        "image_path": row[4],
-                        "status": row[5],
-                        "action_taken": row[6] if len(row) > 6 and row[6] else "Chưa xử lý",
-                        "operator_note": row[7] if len(row) > 7 and row[7] else ""
-                    })
+                    label_str = str(row[3])
+                    is_demo_flag = int(row[10]) if row[10] is not None else 0
+                    if "MÔ PHỎNG" in label_str.upper() or "TEST" in label_str.upper() or "DEMO" in label_str.upper():
+                        is_demo_flag = 1
+                    results.append(
+                        {
+                            "id": row[0],
+                            "timestamp": row[1],
+                            "camera_name": row[2] or "CAM-01",
+                            "label": label_str,
+                            "confidence": float(row[4]),
+                            "alert_level": row[5] or "FIRE",
+                            "image_path": row[6] or "",
+                            "status": row[7] or "UNREAD",
+                            "action_taken": row[8] or "Chưa xử lý",
+                            "operator_note": row[9] or "",
+                            "is_demo": is_demo_flag,
+                        }
+                    )
             except Exception as e:
                 print(f"Lỗi truy vấn CSDL lịch sử cảnh báo: {e}")
         return results
@@ -321,6 +418,9 @@ class AlertManager:
                 cursor.execute("DELETE FROM alert_logs WHERE id = ?", (alert_id,))
                 conn.commit()
                 conn.close()
+                self.active_notifications = [
+                    x for x in self.active_notifications if x.get("id") != alert_id
+                ]
                 return True
             except Exception as e:
                 print(f"Lỗi khi xóa bản ghi cảnh báo: {e}")
@@ -349,23 +449,43 @@ class AlertManager:
                 print(f"Lỗi khi xóa toàn bộ lịch sử cảnh báo: {e}")
                 return False
 
-    def export_csv(self, filepath):
-        """Exports all alert records including incident response notes to a CSV file."""
-        alerts = self.get_all_alerts(limit=1000)
+    def export_csv(self, filepath, alerts_list=None):
+        """Exports alert records including camera name and incident response notes to a CSV file."""
+        alerts = alerts_list if alerts_list is not None else self.get_all_alerts(limit=5000)
         try:
             with open(filepath, mode="w", newline="", encoding="utf-8-sig") as csv_file:
                 writer = csv.writer(csv_file)
-                writer.writerow(["ID", "Thời Gian", "Loại Cảnh Báo", "Độ Tin Cậy (%)", "Kết Quả Xử Lý Ca Trực", "Ghi Chú Chi Tiết", "Đường Dẫn Ảnh"])
+                writer.writerow(
+                    [
+                        "ID",
+                        "Thời Gian",
+                        "Camera",
+                        "Loại Phát Hiện",
+                        "Mức Cảnh Báo",
+                        "Độ Tin Cậy (%)",
+                        "Trạng Thái Xác Nhận",
+                        "Kết Quả Xử Lý Ca Trực",
+                        "Ghi Chú Chi Tiết",
+                        "Đường Dẫn Ảnh",
+                        "Phân Loại Dữ Liệu",
+                    ]
+                )
                 for a in alerts:
-                    writer.writerow([
-                        a["id"],
-                        a["timestamp"],
-                        a["label"],
-                        f"{int(a['confidence'] * 100)}%",
-                        a.get("action_taken", "Chưa xử lý"),
-                        a.get("operator_note", ""),
-                        a["image_path"]
-                    ])
+                    writer.writerow(
+                        [
+                            a["id"],
+                            a["timestamp"],
+                            a.get("camera_name", "CAM-01"),
+                            a["label"],
+                            a.get("alert_level", "FIRE"),
+                            f"{float(a['confidence']) * 100:.1f}%",
+                            "Đã xác nhận" if a.get("status") == "ACKNOWLEDGED" else "Chưa xác nhận",
+                            a.get("action_taken", "Chưa xử lý"),
+                            a.get("operator_note", ""),
+                            a.get("image_path", ""),
+                            "Dữ liệu Demo/Test" if a.get("is_demo") else "Dữ liệu Thực tế",
+                        ]
+                    )
             return True, f"Đã xuất {len(alerts)} bản ghi ra file: {filepath}"
         except Exception as e:
             return False, f"Lỗi khi xuất file CSV: {e}"
