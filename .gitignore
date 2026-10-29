@@ -13,8 +13,10 @@ ENV/
 alerts.db
 alerts/
 
-# Large datasets & raw archives
-datasets/
+# Large datasets & raw archives (keep datasets/vn_dataset tracked on Git)
+datasets/*
+!datasets/vn_dataset/
+**/*.cache
 videovietnam/
 downloads/
 *.zip
