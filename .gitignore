@@ -21,8 +21,15 @@ downloads/
 *.tar.gz
 *.whl
 
-# Training runs & temporary checkpoints
-runs/
+# Training runs & temporary checkpoints (keep benchmark results.csv, args.yaml, plots & best.pt)
+runs/*
+!runs/detect/
+runs/detect/*
+!runs/detect/runs/
+runs/detect/runs/*
+!runs/detect/runs/benchmarks/
+runs/detect/runs/benchmarks/**/weights/epoch*.pt
+runs/detect/runs/benchmarks/**/weights/last.pt
 FireSmokeLabeler/runs/
 FireSmokeLabeler/visualized/
 
