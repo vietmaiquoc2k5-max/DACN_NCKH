@@ -16,8 +16,10 @@ alerts/
 # Large datasets & raw archives
 datasets/
 videovietnam/
+downloads/
 *.zip
 *.tar.gz
+*.whl
 
 # Training runs & temporary checkpoints
 runs/
