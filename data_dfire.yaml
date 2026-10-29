@@ -1,6 +1,7 @@
 path: datasets/dfire
 train: train/images
-val: test/images
+val: val/images
+test: test/images
 nc: 2
 names:
   0: smoke

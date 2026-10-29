@@ -33,10 +33,11 @@ def benchmark_single_model(
     model_path: str,
     data_yaml: str = "data_dfire.yaml",
     imgsz: int = 640,
-    device: str = "cpu"
+    device: str = "cpu",
+    split: str = "val"
 ) -> Dict[str, Any]:
     """Chạy validation đo mAP, Params, FLOPs và Latency cho một mô hình."""
-    print(f"\n🔍 Đang đánh giá mô hình: {model_path} trên thiết bị {device.upper()}...")
+    print(f"\n🔍 Đang đánh giá mô hình: {model_path} trên tập {split.upper()} (Thiết bị: {device.upper()})...")
     p = Path(model_path)
     model_name = p.stem
 
@@ -52,32 +53,39 @@ def benchmark_single_model(
         except Exception:
             gflops = 0.0
 
-    # Chạy validation chính thức của Ultralytics trên split='val' (tập test của D-Fire)
+    # Chạy validation chính thức của Ultralytics trên split chỉ định
     t0 = time.time()
     val_results = model.val(
         data=data_yaml,
         imgsz=imgsz,
         device=device,
-        split="val",
+        split=split,
         verbose=False,
         save=False,
         plots=False
     )
     val_time = time.time() - t0
 
-    # Trích xuất metrics
+    # Trích xuất metrics tổng thể và chi tiết từng lớp (smoke: 0, fire: 1)
     res_dict = val_results.results_dict
     map50 = res_dict.get("metrics/mAP50(B)", 0.0)
     map50_95 = res_dict.get("metrics/mAP50-95(B)", 0.0)
     precision = res_dict.get("metrics/precision(B)", 0.0)
     recall = res_dict.get("metrics/recall(B)", 0.0)
 
-    # Lấy mAP riêng từng class (0: smoke, 1: fire)
-    map50_smoke = 0.0
-    map50_fire = 0.0
-    if hasattr(val_results, "maps") and len(val_results.maps) >= 2:
-        map50_smoke = float(val_results.maps[0])
-        map50_fire = float(val_results.maps[1])
+    # Trích xuất per-class metrics chính xác từ val_results.class_result
+    p_smoke, r_smoke, map50_smoke, map50_95_smoke = 0.0, 0.0, 0.0, 0.0
+    p_fire, r_fire, map50_fire, map50_95_fire = 0.0, 0.0, 0.0, 0.0
+
+    try:
+        if hasattr(val_results, "class_result"):
+            p_smoke, r_smoke, map50_smoke, map50_95_smoke = val_results.class_result(0)
+            p_fire, r_fire, map50_fire, map50_95_fire = val_results.class_result(1)
+        elif hasattr(val_results, "box") and hasattr(val_results.box, "class_result"):
+            p_smoke, r_smoke, map50_smoke, map50_95_smoke = val_results.box.class_result(0)
+            p_fire, r_fire, map50_fire, map50_95_fire = val_results.box.class_result(1)
+    except Exception as e:
+        print(f"⚠️ Không trích xuất được per-class chi tiết: {e}")
 
     # Đo latency suy luận thuần túy (Inference latency ms)
     speed = val_results.speed
@@ -89,22 +97,29 @@ def benchmark_single_model(
         "weights_path": str(p),
         "params_m": round(params, 2),
         "gflops": round(gflops, 1) if gflops > 0 else "N/A",
-        "map50": round(map50, 4),
-        "map50_95": round(map50_95, 4),
-        "precision": round(precision, 4),
-        "recall": round(recall, 4),
-        "map50_smoke": round(map50_smoke, 4),
-        "map50_fire": round(map50_fire, 4),
-        "latency_ms": round(infer_ms, 2),
-        "fps": round(fps, 1),
+        "map50": round(float(map50), 4),
+        "map50_95": round(float(map50_95), 4),
+        "precision": round(float(precision), 4),
+        "recall": round(float(recall), 4),
+        "p_smoke": round(float(p_smoke), 4),
+        "r_smoke": round(float(r_smoke), 4),
+        "map50_smoke": round(float(map50_smoke), 4),
+        "map50_95_smoke": round(float(map50_95_smoke), 4),
+        "p_fire": round(float(p_fire), 4),
+        "r_fire": round(float(r_fire), 4),
+        "map50_fire": round(float(map50_fire), 4),
+        "map50_95_fire": round(float(map50_95_fire), 4),
+        "latency_ms": round(float(infer_ms), 2),
+        "fps": round(float(fps), 1),
         "device": device
     }
 
     print(
-        f"  -> {model_name}: mAP@0.5={metrics['map50']*100:.2f}%, "
-        f"mAP@0.5:0.95={metrics['map50_95']*100:.2f}%, "
-        f"Latency={metrics['latency_ms']} ms ({metrics['fps']} FPS), "
-        f"Params={metrics['params_m']}M"
+        f"  -> {model_name} (Overall): mAP@0.5={metrics['map50']*100:.2f}%, "
+        f"Precision={metrics['precision']*100:.2f}%, Recall={metrics['recall']*100:.2f}%\n"
+        f"     • Khói (Smoke): P={metrics['p_smoke']*100:.2f}%, R={metrics['r_smoke']*100:.2f}%, mAP50={metrics['map50_smoke']*100:.2f}%\n"
+        f"     • Lửa (Fire)  : P={metrics['p_fire']*100:.2f}%, R={metrics['r_fire']*100:.2f}%, mAP50={metrics['map50_fire']*100:.2f}%\n"
+        f"     • Tốc độ       : {metrics['latency_ms']} ms ({metrics['fps']} FPS) | Params: {metrics['params_m']}M"
     )
     return metrics
 
@@ -120,10 +135,11 @@ def generate_benchmark_markdown_report(
     for m in detector_metrics:
         meet_target = "✅ Đạt (>=0.75)" if m["map50"] >= 0.75 else "⚠️ Chưa đạt"
         rows += (
-            f"| **{m['model_name']}** | {m['params_m']} | {m['gflops']} | "
-            f"**{m['map50']*100:.2f}%** | {m['map50_95']*100:.2f}% | "
-            f"{m['precision']*100:.2f}% | {m['recall']*100:.2f}% | "
-            f"{m['latency_ms']} ms | **{m['fps']}** | {meet_target} |\n"
+            f"| **{m['model_name']}** | {m['params_m']}M | "
+            f"**{m['map50']*100:.2f}%** | {m['precision']*100:.2f}% / {m['recall']*100:.2f}% | "
+            f"{m.get('p_smoke', 0)*100:.2f}% / {m.get('r_smoke', 0)*100:.2f}% ({m.get('map50_smoke', 0)*100:.2f}%) | "
+            f"{m.get('p_fire', 0)*100:.2f}% / {m.get('r_fire', 0)*100:.2f}% ({m.get('map50_fire', 0)*100:.2f}%) | "
+            f"{m['latency_ms']} ms ({m['fps']} FPS) | {meet_target} |\n"
         )
 
     content = f"""# Báo Cáo Đối Sánh Thực Nghiệm Các Bộ Phát Hiện & Baseline (MT2)
@@ -138,8 +154,8 @@ def generate_benchmark_markdown_report(
 
 ## 1. BẢNG TỔNG HỢP ĐỐI SÁNH HIỆU NĂNG CÁC BỘ PHÁT HIỆN TRÊN D-FIRE
 
-| Mô hình | Params (M) | FLOPs (G) | mAP@0.5 | mAP@0.5:0.95 | Precision | Recall | Latency (ms) | Throughput (FPS) | Chỉ tiêu MT2 |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Mô hình | Params | mAP@0.5 (Chung) | P / R (Chung) | Khói: P / R (mAP50) | Lửa: P / R (mAP50) | Tốc độ suy luận | Chỉ tiêu MT2 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 {rows}
 ---
 
@@ -195,13 +211,14 @@ def main():
     parser.add_argument("--data", default="data_dfire.yaml", help="File yaml dataset")
     parser.add_argument("--imgsz", type=int, default=640, help="Kích thước ảnh")
     parser.add_argument("--device", default="cpu", help="Thiết bị ('cpu' hoặc '0')")
+    parser.add_argument("--split", default="val", choices=["val", "test"], help="Tập đánh giá (val hoặc test)")
     parser.add_argument("--report", default="docs/benchmark_detectors_dfire.md", help="Đường dẫn file báo cáo")
     args = parser.parse_args()
 
     results = []
     for m in args.models:
         if Path(m).exists():
-            res = benchmark_single_model(m, data_yaml=args.data, imgsz=args.imgsz, device=args.device)
+            res = benchmark_single_model(m, data_yaml=args.data, imgsz=args.imgsz, device=args.device, split=args.split)
             results.append(res)
         else:
             print(f"⚠️ Không tìm thấy file model: {m}")
