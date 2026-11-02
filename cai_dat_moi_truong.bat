@@ -55,3 +55,4 @@ echo     1. chay_giao_dien_web.bat     (Giao dien Web 9 Camera)
 echo     2. chay_giao_dien_desktop.bat (Giao dien Desktop)
 echo ====================================================================
 pause
+
