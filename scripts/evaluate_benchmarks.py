@@ -203,7 +203,7 @@ def generate_benchmark_markdown_report(
 | Mô hình (Tập đánh giá) | Params | mAP@0.5 (Chung) | mAP@0.5:0.95 | P / R (Chung) | Khói: P / R (mAP50) | Lửa: P / R (mAP50) | Tốc độ suy luận | Chỉ tiêu MT2 |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 {rows}{summary_section}
-> **Ghi chú minh bạch tiến độ:** Bảng trên ghi nhận số liệu **đo thực tế** từ các mô hình đã hoàn tất 50 epochs (trọn bộ 3 seeds `42`, `123`, `456` của `YOLOv8n`). Các kiến trúc còn lại (`yolov8s`, `yolo11n`, `yolo11s`, `rtdetr-l`) đang tiếp tục huấn luyện và sẽ tự động tổng hợp vào bảng trên sau khi hoàn tất.
+> **Ghi chú minh bạch tiến độ:** Bảng trên ghi nhận số liệu **đo thực tế** từ các mô hình đã hoàn tất 50 epochs (trọn bộ 3 seeds `42`, `123`, `456` của `YOLOv8n` và 2 seeds `123`, `456` của `YOLO11n`). Các lượt huấn luyện còn lại (`yolo11n_seed42`, `yolov8s`, `yolo11s`, `rtdetr-l`) đang tiếp tục huấn luyện và sẽ tự động tổng hợp vào bảng trên sau khi hoàn tất.
 
 ---
 
@@ -251,6 +251,9 @@ def main():
             "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
             "runs/detect/runs/benchmarks/yolov8n_seed123/weights/best.pt",
             "runs/detect/runs/benchmarks/yolov8n_seed456/weights/best.pt",
+            "runs/detect/runs/benchmarks/yolo11n_seed42/weights/best.pt",
+            "runs/detect/runs/benchmarks/yolo11n_seed123/weights/best.pt",
+            "runs/detect/runs/benchmarks/yolo11n_seed456/weights/best.pt",
         ],
         help="Danh sách file trọng số các model cần đánh giá"
     )
