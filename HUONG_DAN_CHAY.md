@@ -28,24 +28,20 @@ Hệ thống chia làm 2 cấp quyền sử dụng:
 
 ---
 
-## 📋 3. Môi Trường & Yêu Cầu Cài Đặt
+## 📋 3. Hướng Dẫn Chạy Trên Máy Tính Mới (Clone / Tải Về Lần Đầu)
 
-### Yêu cầu tiên quyết:
-- **Python**: Phiên bản khuyên dùng **3.9 - 3.11**.
-- **Môi trường ảo (.venv)** đã được khởi tạo trong dự án.
+Khi tải code về máy tính khác từ GitHub, người dùng chỉ cần thực hiện:
 
-### Các bước cài đặt thư viện phụ thuộc:
-Mở **Terminal / Command Prompt** tại thư mục dự án và chạy các lệnh sau:
+### Bước 1: Cài đặt tự động môi trường (Chỉ làm 1 lần đầu)
+- **Điều kiện duy nhất:** Máy tính đã cài đặt Python (phiên bản 3.9 - 3.11) và có tích chọn *"Add python.exe to PATH"*.
+- **Cách làm:** Nhấp đúp chuột vào file:
+  👉 **`cai_dat_moi_truong.bat`**
+  *(File sẽ tự động tạo môi trường ảo `.venv` và cài đặt đầy đủ các thư viện trong `requirements.txt`)*.
 
-```bash
-# Kích hoạt môi trường ảo
-.venv\Scripts\activate
-
-# Cài đặt các thư viện phụ thuộc
-pip install -r requirements.txt
-```
-
-*(Hoặc chạy trực tiếp bằng pip của môi trường ảo: `.venv\Scripts\pip.exe install -r requirements.txt`)*
+### Bước 2: Khởi chạy ứng dụng
+Sau khi cài xong, chỉ cần nhấp đúp file `.bat` tương ứng:
+- **`chay_giao_dien_web.bat`**: Mở hệ thống Web Dashboard giám sát 9 camera AI trên trình duyệt.
+- **`chay_giao_dien_desktop.bat`**: Mở phần mềm desktop Dark Mode trên máy tính.
 
 ---
 
