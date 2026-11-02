@@ -35,7 +35,7 @@ from src.config import (
     get_available_model_choices,
     mask_rtsp_credentials,
 )
-from src.camera_manager import MultiCameraManager
+from src.camera_manager import MultiCameraManager, list_system_cameras
 
 # ==============================================================================
 # 1. CẤU HÌNH TRANG & GIAO DIỆN DARK MODE PCCC CHUYÊN NGHIỆP
@@ -464,13 +464,28 @@ def render_quick_mode_selector():
                     st.rerun()
 
         elif mode == "WEBCAM":
-            c1, c2, c3, c4 = st.columns([1.3, 1.3, 1.8, 1.2])
+            detected_cams = list_system_cameras(max_check=4)
+            cam_options = {c["label"]: c["index"] for c in detected_cams}
+            # Ưu tiên chọn webcam vật lý hoạt động tốt nhất (chỉ số 2 nếu có)
+            default_choice_idx = 0
+            for idx_c, c_info in enumerate(detected_cams):
+                if c_info["index"] == 2 and c_info["active"]:
+                    default_choice_idx = idx_c
+                    break
+
+            c1, c2, c3, c4 = st.columns([1.1, 2.2, 1.5, 1.2])
             with c1:
                 target_cam = st.selectbox("Gán vào ô Camera:", [c.cam_id for c in cam_system.camera_configs], key="qm_web_cam")
             with c2:
-                web_idx = st.number_input("Chỉ số thiết bị Webcam (0, 1, 2...):", min_value=0, max_value=10, value=0, step=1, key="qm_web_idx")
+                chosen_webcam_label = st.selectbox(
+                    "Chọn Camera / Phần mềm Camera phát hiện trên máy:",
+                    options=list(cam_options.keys()),
+                    index=default_choice_idx,
+                    key="qm_web_select"
+                )
+                web_idx = cam_options[chosen_webcam_label]
             with c3:
-                cam_label = st.text_input("Tên hiển thị Camera:", value=f"{target_cam} - Webcam Thực Tế #{web_idx}", key="qm_web_name")
+                cam_label = st.text_input("Tên hiển thị Camera:", value=f"{target_cam} - {chosen_webcam_label.split('[')[0].strip()}", key="qm_web_name")
             with c4:
                 st.markdown("<br>", unsafe_allow_html=True)
                 if st.button("🔌 Kết nối Webcam", type="primary", use_container_width=True, key="qm_web_btn"):
@@ -889,17 +904,24 @@ elif nav_tab == "⚙️ Cấu Hình Nguồn Camera & RTSP":
                         )
 
                 elif new_stype == "WEBCAM":
-                    new_webcam_idx = int(
-                        st.number_input(
-                            "Chỉ số thiết bị Webcam máy tính (0 = Webcam mặc định, 1 = Webcam USB...):",
-                            min_value=0,
-                            max_value=10,
-                            value=int(cfg.webcam_index),
-                            step=1,
-                            key=f"cwebidx_{cid}",
-                        )
+                    detected_cams = list_system_cameras(max_check=4)
+                    cam_map = {c["label"]: c["index"] for c in detected_cams}
+                    
+                    cur_sel_idx = 0
+                    for c_i, c_obj in enumerate(detected_cams):
+                        if c_obj["index"] == int(cfg.webcam_index):
+                            cur_sel_idx = c_i
+                            break
+
+                    chosen_label = st.selectbox(
+                        "Chọn Camera / Phần mềm Camera phát hiện trên máy:",
+                        options=list(cam_map.keys()),
+                        index=cur_sel_idx,
+                        key=f"cweb_pick_{cid}"
                     )
+                    new_webcam_idx = int(cam_map[chosen_label])
                     new_source_val = str(new_webcam_idx)
+                    st.caption(f"Đã chọn: **{chosen_label}** (Chỉ số thiết bị: `{new_webcam_idx}`)")
 
                 elif new_stype == "IP_CAMERA":
                     st.caption(f"URL RTSP đang lưu (đã che mật khẩu): `{cfg.masked_source}`")

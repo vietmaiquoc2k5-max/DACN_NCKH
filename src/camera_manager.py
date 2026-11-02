@@ -134,13 +134,74 @@ def create_status_placeholder_rgb(
     return img
 
 
+def list_system_cameras(max_check: int = 4) -> List[Dict[str, Any]]:
+    """Tự động dò quét danh sách các camera và phần mềm camera (Iriun, EOS, USB UVC...) trên máy tính."""
+    cams = []
+    # Bản đồ tên gợi nhớ theo thiết bị phần cứng thực tế dò được
+    device_hints = {
+        0: "Webcam #0 - EOS Webcam Utility / Virtual",
+        1: "Webcam #1 - USB2.0 HD UVC WebCam (MSMF)",
+        2: "Webcam #2 - USB2.0 HD WebCam Máy Tính (Khuyên dùng)",
+        3: "Webcam #3 - Iriun Webcam (Camera Điện Thoại)",
+    }
+    for idx in range(max_check):
+        cap = None
+        is_ok = False
+        res_str = ""
+        backend_used = "CAP_ANY"
+        for backend_name, b_val in [("CAP_MSMF", getattr(cv2, "CAP_MSMF", None)), ("CAP_ANY", cv2.CAP_ANY), ("CAP_DSHOW", getattr(cv2, "CAP_DSHOW", None))]:
+            if b_val is None:
+                continue
+            try:
+                cap = cv2.VideoCapture(idx, b_val)
+                if cap is not None and cap.isOpened():
+                    ret, frame = cap.read()
+                    if ret and frame is not None:
+                        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+                        h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                        res_str = f"{w}x{h}"
+                        backend_used = backend_name
+                        is_ok = True
+                        break
+            except Exception:
+                pass
+            finally:
+                if cap is not None:
+                    try:
+                        cap.release()
+                    except Exception:
+                        pass
+
+        name = device_hints.get(idx, f"Webcam #{idx}")
+        if is_ok:
+            cams.append({
+                "index": idx,
+                "label": f"{name} [{res_str}] ({backend_used})",
+                "backend": backend_used,
+                "resolution": res_str,
+                "active": True
+            })
+        else:
+            cams.append({
+                "index": idx,
+                "label": f"{name} (Chưa sẵn sàng)",
+                "backend": "CAP_ANY",
+                "resolution": "N/A",
+                "active": False
+            })
+    return cams
+
+
 def open_opencv_capture(
     source: str,
     source_type: str = "VIDEO_TEST",
     webcam_index: int = 0,
     capture_width: int = 480,
+    preferred_backend: Optional[str] = None,
 ) -> Tuple[Optional[cv2.VideoCapture], bool, str]:
     """Mở nguồn video/webcam/RTSP bằng OpenCV VideoCapture với cấu hình giảm trễ (buffer=1).
+
+    Hỗ trợ tự động fallback giữa CAP_MSMF, CAP_ANY, CAP_DSHOW để tương thích mọi phần mềm camera.
 
     Returns:
         (cap, is_file_source, error_message_masked)
@@ -152,20 +213,34 @@ def open_opencv_capture(
         idx = int(raw_src) if raw_src.isdigit() else int(webcam_index)
         try:
             cap = None
-            if sys.platform == "win32":
+            # Ưu tiên các backend an toàn trên Windows: CAP_MSMF -> CAP_ANY -> CAP_DSHOW
+            backend_candidates = []
+            if preferred_backend == "CAP_DSHOW" and hasattr(cv2, "CAP_DSHOW"):
+                backend_candidates.append(cv2.CAP_DSHOW)
+            if hasattr(cv2, "CAP_MSMF"):
+                backend_candidates.append(cv2.CAP_MSMF)
+            backend_candidates.append(cv2.CAP_ANY)
+            if hasattr(cv2, "CAP_DSHOW"):
+                backend_candidates.append(cv2.CAP_DSHOW)
+
+            last_err = ""
+            for b in backend_candidates:
                 try:
-                    cap = cv2.VideoCapture(idx, cv2.CAP_DSHOW)
-                except Exception:
-                    cap = None
-                if cap is None or not cap.isOpened():
-                    try:
-                        cap = cv2.VideoCapture(idx)
-                    except Exception:
-                        cap = None
-            else:
-                try:
-                    cap = cv2.VideoCapture(idx)
-                except Exception:
+                    cap = cv2.VideoCapture(idx, b)
+                    if cap is not None and cap.isOpened():
+                        ret, test_f = cap.read()
+                        if ret and test_f is not None:
+                            break
+                        else:
+                            cap.release()
+                            cap = None
+                except Exception as ex:
+                    last_err = str(ex)
+                    if cap:
+                        try:
+                            cap.release()
+                        except Exception:
+                            pass
                     cap = None
 
             if cap is None or not cap.isOpened():
@@ -174,7 +249,7 @@ def open_opencv_capture(
                         cap.release()
                     except Exception:
                         pass
-                return None, False, f"Không tìm thấy thiết bị Webcam chỉ số #{idx}"
+                return None, False, f"Không tìm thấy tín hiệu hình ảnh từ Webcam chỉ số #{idx} ({last_err or 'Thiết bị đang bận hoặc chưa bật'})"
 
             if capture_width > 0:
                 cap.set(cv2.CAP_PROP_FRAME_WIDTH, float(capture_width))
