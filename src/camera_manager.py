@@ -799,6 +799,19 @@ class MultiCameraManager:
         with self.log_lock:
             return list(self.logs)[:limit]
 
+    def switch_model(self, model_path: str) -> Dict[str, Any]:
+        """Chuyển đổi trực tiếp mô hình YOLO đang sử dụng cho toàn bộ 9 luồng camera."""
+        self.settings.model_path = model_path
+        ok = self.detector.load_model(model_path)
+        info = self.detector.get_model_info()
+        if ok:
+            self.add_log(
+                f"Đã chuyển sang model: {info['path']} trên {info.get('device', 'CPU')}"
+            )
+        else:
+            self.add_log(f"⚠️ Lỗi khi nạp model '{model_path}': {info.get('error')}")
+        return info
+
     def set_camera_enabled(self, cam_id: str, enabled: bool):
         """Bật hoặc tắt quyền kích hoạt của một camera độc lập."""
         if cam_id in self.workers:

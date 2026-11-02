@@ -32,6 +32,7 @@ from src.config import (
     DEFAULT_USERS,
     OPERATING_MODES,
     SOURCE_TYPES,
+    get_available_model_choices,
     mask_rtsp_credentials,
 )
 from src.camera_manager import MultiCameraManager
@@ -327,6 +328,31 @@ with st.sidebar:
     if st.button("🔄 Thử Kết Nối Lại Tất Cả (Reconnect)", use_container_width=True):
         cam_system.reconnect_all()
         st.rerun()
+
+    st.markdown("---")
+    st.markdown("#### 🧠 CHỌN MÔ HÌNH YOLO (CHECKPOINT MT2)")
+    model_choices = get_available_model_choices()
+    choice_labels = list(model_choices.keys())
+    curr_model_path = str(Path(cam_system.detector.model_path).resolve()) if cam_system.detector.model_path else ""
+    curr_idx = 0
+    for idx_m, lbl_m in enumerate(choice_labels):
+        if str(Path(model_choices[lbl_m]).resolve()) == curr_model_path:
+            curr_idx = idx_m
+            break
+    selected_model_label = st.selectbox(
+        "Checkpoint đang chạy trên luồng Camera:",
+        options=choice_labels,
+        index=curr_idx,
+        key="sb_model_select",
+    )
+    chosen_model_path = model_choices[selected_model_label]
+    if str(Path(chosen_model_path).resolve()) != curr_model_path:
+        cam_system.switch_model(chosen_model_path)
+        st.rerun()
+    m_info = cam_system.detector.get_model_info()
+    st.caption(
+        f"Thiết bị: `{m_info.get('device', 'CPU')}` | Lớp: `{m_info.get('names', {})}`"
+    )
 
     st.markdown("---")
     st.markdown("#### 🚀 TỐI ƯU FPS & HIỆU NĂNG CPU/GPU")

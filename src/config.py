@@ -21,12 +21,33 @@ SOURCE_TYPES: List[str] = ["VIDEO_TEST", "WEBCAM", "IP_CAMERA"]
 # Danh sách các đường dẫn model đã huấn luyện của dự án (ưu tiên best.pt)
 CANDIDATE_MODEL_PATHS: List[str] = [
     str(PROJECT_ROOT / "best.pt"),
+    str(PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks" / "yolo11n_seed123" / "weights" / "best.pt"),
+    str(PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks" / "yolo11n_seed456" / "weights" / "best.pt"),
     str(PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks" / "yolov8n_seed123" / "weights" / "best.pt"),
     str(PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks" / "yolov8n_seed42" / "weights" / "best.pt"),
     str(PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks" / "yolov8n_seed456" / "weights" / "best.pt"),
     str(PROJECT_ROOT / "FireSmokeLabeler" / "model" / "best.pt"),
     str(PROJECT_ROOT / "models" / "fire_smoke_v2.pt"),
 ]
+
+
+def get_available_model_choices() -> Dict[str, str]:
+    """Liệt kê tất cả các checkpoint mô hình có sẵn trong dự án (bao gồm các lượt benchmark MT2)."""
+    choices: Dict[str, str] = {}
+    root_best = PROJECT_ROOT / "best.pt"
+    if root_best.exists():
+        choices["best.pt (Model Mặc Định)"] = str(root_best)
+
+    bench_dir = PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks"
+    if bench_dir.exists():
+        for run_dir in sorted(bench_dir.iterdir()):
+            w_path = run_dir / "weights" / "best.pt"
+            if w_path.exists():
+                choices[f"{run_dir.name} (Benchmark MT2)"] = str(w_path)
+
+    if not choices:
+        choices["best.pt"] = str(root_best)
+    return choices
 
 # Chuẩn hóa tên lớp theo dataset thực tế của dự án (0: smoke, 1: fire)
 EXPECTED_CLASSES: Dict[int, str] = {

@@ -1,0 +1,302 @@
+[
+  {
+    "run_name": "yolo11n_seed123",
+    "weights_path": "runs/detect/runs/benchmarks/yolo11n_seed123/weights/best.pt",
+    "weights_md5": "681aaa144a37fb85974da09d9caa2c6f",
+    "weights_size_mb": 5.23,
+    "device": "GPU: NVIDIA GeForce RTX 3050 Laptop GPU (FP16)",
+    "class_names": {
+      "0": "SMOKE",
+      "1": "FIRE"
+    },
+    "load_and_warmup_ms": 3215.9,
+    "concurrent_streams": 4,
+    "avg_capture_fps_per_cam": 23.7,
+    "total_capture_fps_4cam": 94.8,
+    "avg_inference_fps": 69.4,
+    "avg_inference_latency_ms": 91.13,
+    "sqlite_events_recorded": 3,
+    "negative_cam04_false_alarms": 0,
+    "rtsp_credential_mask_verified": true,
+    "cam01_evidence_image": "docs/deployment_evidence/yolo11n_seed123_cam01.jpg",
+    "grid_4cam_evidence_image": "docs/deployment_evidence/yolo11n_seed123_grid_4cam.jpg",
+    "camera_final_states": [
+      {
+        "cam_id": "CAM-01",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.872,
+        "capture_fps": 23.6,
+        "inference_fps": 93.8
+      },
+      {
+        "cam_id": "CAM-02",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.578,
+        "capture_fps": 23.4,
+        "inference_fps": 84.1
+      },
+      {
+        "cam_id": "CAM-03",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.732,
+        "capture_fps": 23.6,
+        "inference_fps": 78.8
+      },
+      {
+        "cam_id": "CAM-04",
+        "status": "CONNECTED",
+        "alert_level": "SAFE",
+        "primary_label": "",
+        "max_confidence": 0.0,
+        "capture_fps": 23.4,
+        "inference_fps": 105.0
+      }
+    ]
+  },
+  {
+    "run_name": "yolo11n_seed456",
+    "weights_path": "runs/detect/runs/benchmarks/yolo11n_seed456/weights/best.pt",
+    "weights_md5": "7443d429f128307e2b3a6fce542c4569",
+    "weights_size_mb": 5.23,
+    "device": "GPU: NVIDIA GeForce RTX 3050 Laptop GPU (FP16)",
+    "class_names": {
+      "0": "SMOKE",
+      "1": "FIRE"
+    },
+    "load_and_warmup_ms": 169.3,
+    "concurrent_streams": 4,
+    "avg_capture_fps_per_cam": 23.6,
+    "total_capture_fps_4cam": 94.4,
+    "avg_inference_fps": 66.5,
+    "avg_inference_latency_ms": 82.11,
+    "sqlite_events_recorded": 3,
+    "negative_cam04_false_alarms": 0,
+    "rtsp_credential_mask_verified": true,
+    "cam01_evidence_image": "docs/deployment_evidence/yolo11n_seed456_cam01.jpg",
+    "grid_4cam_evidence_image": "docs/deployment_evidence/yolo11n_seed456_grid_4cam.jpg",
+    "camera_final_states": [
+      {
+        "cam_id": "CAM-01",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.89,
+        "capture_fps": 23.6,
+        "inference_fps": 78.9
+      },
+      {
+        "cam_id": "CAM-02",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.532,
+        "capture_fps": 23.5,
+        "inference_fps": 83.4
+      },
+      {
+        "cam_id": "CAM-03",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.724,
+        "capture_fps": 23.5,
+        "inference_fps": 81.9
+      },
+      {
+        "cam_id": "CAM-04",
+        "status": "CONNECTED",
+        "alert_level": "SAFE",
+        "primary_label": "",
+        "max_confidence": 0.0,
+        "capture_fps": 23.5,
+        "inference_fps": 89.8
+      }
+    ]
+  },
+  {
+    "run_name": "yolov8n_seed123",
+    "weights_path": "runs/detect/runs/benchmarks/yolov8n_seed123/weights/best.pt",
+    "weights_md5": "c640564009cd11a21fd612912a9d7884",
+    "weights_size_mb": 6.19,
+    "device": "GPU: NVIDIA GeForce RTX 3050 Laptop GPU (FP16)",
+    "class_names": {
+      "0": "SMOKE",
+      "1": "FIRE"
+    },
+    "load_and_warmup_ms": 280.3,
+    "concurrent_streams": 4,
+    "avg_capture_fps_per_cam": 23.7,
+    "total_capture_fps_4cam": 94.8,
+    "avg_inference_fps": 104.3,
+    "avg_inference_latency_ms": 33.15,
+    "sqlite_events_recorded": 3,
+    "negative_cam04_false_alarms": 0,
+    "rtsp_credential_mask_verified": true,
+    "cam01_evidence_image": "docs/deployment_evidence/yolov8n_seed123_cam01.jpg",
+    "grid_4cam_evidence_image": "docs/deployment_evidence/yolov8n_seed123_grid_4cam.jpg",
+    "camera_final_states": [
+      {
+        "cam_id": "CAM-01",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.897,
+        "capture_fps": 23.5,
+        "inference_fps": 117.6
+      },
+      {
+        "cam_id": "CAM-02",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.566,
+        "capture_fps": 23.5,
+        "inference_fps": 119.2
+      },
+      {
+        "cam_id": "CAM-03",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.76,
+        "capture_fps": 23.4,
+        "inference_fps": 89.1
+      },
+      {
+        "cam_id": "CAM-04",
+        "status": "CONNECTED",
+        "alert_level": "SAFE",
+        "primary_label": "",
+        "max_confidence": 0.0,
+        "capture_fps": 23.5,
+        "inference_fps": 140.1
+      }
+    ]
+  },
+  {
+    "run_name": "yolov8n_seed42",
+    "weights_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "weights_md5": "292acfbd662bc43eb924320de19b4d0a",
+    "weights_size_mb": 5.96,
+    "device": "GPU: NVIDIA GeForce RTX 3050 Laptop GPU (FP16)",
+    "class_names": {
+      "0": "SMOKE",
+      "1": "FIRE"
+    },
+    "load_and_warmup_ms": 168.5,
+    "concurrent_streams": 4,
+    "avg_capture_fps_per_cam": 23.8,
+    "total_capture_fps_4cam": 95.2,
+    "avg_inference_fps": 110.3,
+    "avg_inference_latency_ms": 20.88,
+    "sqlite_events_recorded": 3,
+    "negative_cam04_false_alarms": 0,
+    "rtsp_credential_mask_verified": true,
+    "cam01_evidence_image": "docs/deployment_evidence/yolov8n_seed42_cam01.jpg",
+    "grid_4cam_evidence_image": "docs/deployment_evidence/yolov8n_seed42_grid_4cam.jpg",
+    "camera_final_states": [
+      {
+        "cam_id": "CAM-01",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.871,
+        "capture_fps": 23.4,
+        "inference_fps": 90.6
+      },
+      {
+        "cam_id": "CAM-02",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.712,
+        "capture_fps": 23.4,
+        "inference_fps": 134.9
+      },
+      {
+        "cam_id": "CAM-03",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.746,
+        "capture_fps": 23.5,
+        "inference_fps": 119.5
+      },
+      {
+        "cam_id": "CAM-04",
+        "status": "CONNECTED",
+        "alert_level": "SAFE",
+        "primary_label": "",
+        "max_confidence": 0.0,
+        "capture_fps": 23.4,
+        "inference_fps": 136.4
+      }
+    ]
+  },
+  {
+    "run_name": "yolov8n_seed456",
+    "weights_path": "runs/detect/runs/benchmarks/yolov8n_seed456/weights/best.pt",
+    "weights_md5": "71d17094c691e5cb131ad9daa126fefd",
+    "weights_size_mb": 6.19,
+    "device": "GPU: NVIDIA GeForce RTX 3050 Laptop GPU (FP16)",
+    "class_names": {
+      "0": "SMOKE",
+      "1": "FIRE"
+    },
+    "load_and_warmup_ms": 156.5,
+    "concurrent_streams": 4,
+    "avg_capture_fps_per_cam": 23.7,
+    "total_capture_fps_4cam": 94.8,
+    "avg_inference_fps": 103.6,
+    "avg_inference_latency_ms": 33.63,
+    "sqlite_events_recorded": 3,
+    "negative_cam04_false_alarms": 0,
+    "rtsp_credential_mask_verified": true,
+    "cam01_evidence_image": "docs/deployment_evidence/yolov8n_seed456_cam01.jpg",
+    "grid_4cam_evidence_image": "docs/deployment_evidence/yolov8n_seed456_grid_4cam.jpg",
+    "camera_final_states": [
+      {
+        "cam_id": "CAM-01",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.886,
+        "capture_fps": 23.5,
+        "inference_fps": 99.1
+      },
+      {
+        "cam_id": "CAM-02",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.523,
+        "capture_fps": 23.5,
+        "inference_fps": 125.6
+      },
+      {
+        "cam_id": "CAM-03",
+        "status": "CONNECTED",
+        "alert_level": "FIRE",
+        "primary_label": "FIRE",
+        "max_confidence": 0.729,
+        "capture_fps": 23.4,
+        "inference_fps": 113.7
+      },
+      {
+        "cam_id": "CAM-04",
+        "status": "CONNECTED",
+        "alert_level": "SAFE",
+        "primary_label": "",
+        "max_confidence": 0.0,
+        "capture_fps": 23.5,
+        "inference_fps": 140.3
+      }
+    ]
+  }
+]
