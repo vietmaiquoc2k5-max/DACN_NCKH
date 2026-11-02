@@ -489,6 +489,23 @@ class FireAlarmApp(ctk.CTk):
         self.user_source_entry_label = ctk.CTkLabel(self.user_source_input_frame, text="Đường dẫn file / RTSP:")
         self.user_source_entry = ctk.CTkEntry(self.user_source_input_frame, placeholder_text="Nhập file hoặc link RTSP...", height=32, corner_radius=6)
         self.btn_user_browse = ctk.CTkButton(self.user_source_input_frame, text="Chọn File", width=70, height=32, corner_radius=6, command=self.browse_user_video_file)
+
+        # Quick Model Selector for User Testing
+        ctk.CTkLabel(ctrl_card, text="🧠 Chọn Checkpoint AI (MT2):", font=ctk.CTkFont(size=11, weight="bold"), text_color="#CBD5E1").pack(anchor="w", padx=15, pady=(4, 2))
+        from src.config import get_available_model_choices
+        self.available_models_map = get_available_model_choices()
+        model_display_names = list(self.available_models_map.keys())
+        self.user_model_var = ctk.StringVar(value=model_display_names[0] if model_display_names else "best.pt")
+        self.user_model_menu = ctk.CTkOptionMenu(
+            ctrl_card,
+            values=model_display_names,
+            variable=self.user_model_var,
+            height=34,
+            corner_radius=8,
+            fg_color="#0D9488",
+            command=self.on_quick_model_change
+        )
+        self.user_model_menu.pack(fill="x", padx=15, pady=(0, 4))
         
         btn_user_action = ctk.CTkFrame(ctrl_card, fg_color="transparent")
         btn_user_action.pack(fill="x", padx=15, pady=(6, 12))
@@ -578,6 +595,26 @@ class FireAlarmApp(ctk.CTk):
         if filepath:
             self.user_source_entry.delete(0, tk.END)
             self.user_source_entry.insert(0, filepath)
+
+    def on_quick_model_change(self, display_name):
+        """Chuyển đổi trực tiếp checkpoint YOLO từ menu chọn nhanh ngoài màn hình giám sát."""
+        if hasattr(self, "available_models_map") and display_name in self.available_models_map:
+            chosen_path = self.available_models_map[display_name]
+            ok = self.detector.set_model(chosen_path)
+            info = self.detector.get_model_info()
+            if hasattr(self, "model_path_entry"):
+                self.model_path_entry.delete(0, tk.END)
+                self.model_path_entry.insert(0, chosen_path)
+            if hasattr(self, "lbl_model_status"):
+                status_color = "#10B981" if not info.get("is_simulation") else "#F59E0B"
+                self.lbl_model_status.configure(
+                    text=f"Mô hình: {info.get('path')} | Lớp: {list(info.get('names', {}).values())}",
+                    text_color=status_color
+                )
+            if ok:
+                self.add_log(f"Đã chuyển sang model: {display_name} ({chosen_path})")
+            else:
+                self.add_log(f"⚠️ Không thể nạp model: {chosen_path}")
 
     # -------------------------------------------------------------
     # 3. TAB 2: ALERT HISTORY DATABASE VIEW (CẦN QUYỀN ADMIN)
@@ -775,6 +812,23 @@ class FireAlarmApp(ctk.CTk):
         # 4. YOLO AI Model Settings
         ctk.CTkLabel(form_frame, text="4. Cấu Hình Mô Hình AI (YOLO Model):", font=ctk.CTkFont(weight="bold", size=14), text_color="#F8FAFC").pack(anchor="w", pady=(20, 5))
         
+        # Admin Quick Dropdown for Benchmarks
+        admin_model_names = list(self.available_models_map.keys()) if hasattr(self, "available_models_map") else []
+        if admin_model_names:
+            admin_quick_row = ctk.CTkFrame(form_frame, fg_color="transparent")
+            admin_quick_row.pack(fill="x", pady=(0, 4))
+            ctk.CTkLabel(admin_quick_row, text="Chọn nhanh Checkpoint MT2:").pack(side="left")
+            self.admin_quick_menu = ctk.CTkOptionMenu(
+                admin_quick_row,
+                values=admin_model_names,
+                variable=self.user_model_var if hasattr(self, "user_model_var") else None,
+                height=32,
+                corner_radius=6,
+                fg_color="#0D9488",
+                command=self.on_quick_model_change
+            )
+            self.admin_quick_menu.pack(side="right", fill="x", expand=True, padx=(10, 0))
+
         model_row = ctk.CTkFrame(form_frame, fg_color="transparent")
         model_row.pack(fill="x", pady=5)
         
