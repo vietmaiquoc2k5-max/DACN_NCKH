@@ -333,7 +333,8 @@ with st.sidebar:
     st.markdown("#### 🧠 CHỌN MÔ HÌNH YOLO (CHECKPOINT MT2)")
     model_choices = get_available_model_choices()
     choice_labels = list(model_choices.keys())
-    curr_model_path = str(Path(cam_system.detector.model_path).resolve()) if cam_system.detector.model_path else ""
+    active_path = getattr(cam_system.detector, "resolved_path", None) or getattr(cam_system.detector, "requested_path", None) or cam_system.settings.model_path
+    curr_model_path = str(Path(active_path).resolve()) if active_path else ""
     curr_idx = 0
     for idx_m, lbl_m in enumerate(choice_labels):
         if str(Path(model_choices[lbl_m]).resolve()) == curr_model_path:
