@@ -31,7 +31,10 @@ def auto_detect_timestamps(prefix=None, only_unassigned=True, force=False):
     if prefix:
         pos_mask &= df["video_id"].astype(str).str.startswith(prefix)
     if only_unassigned and not force:
-        pos_mask &= (df["fire_start_sec"] < 0) | (df["smoke_start_sec"] < 0)
+        pos_mask &= (
+            df["notes"].astype(str).str.contains("CHUA_GAN_MOC")
+            | ((df["fire_start_sec"] < 0) & (df["smoke_start_sec"] < 0))
+        )
 
     pos_df = df[pos_mask]
     if len(pos_df) == 0:
@@ -57,21 +60,25 @@ def auto_detect_timestamps(prefix=None, only_unassigned=True, force=False):
         consec_smoke = 0
         frame_idx = 0
 
-        # Bước nhảy 2 khung hình để tăng tốc tối đa
-        stride = 2
+        # Bước nhảy ~5 khung hình/giây để vừa chính xác tới 0.2s vừa quét nhanh video dài
+        stride = max(1, int(round(fps / 5.0)))
+        first_any_hit_sec = -1.0
 
         while cap.isOpened():
-            ret, frame = cap.read()
+            ret = cap.grab()
             if not ret:
                 break
             frame_idx += 1
             if frame_idx % stride != 0:
                 continue
+            ret, frame = cap.retrieve()
+            if not ret or frame is None:
+                continue
 
             sec = round(frame_idx / fps, 1)
 
             # Dự đoán với YOLO trên GPU (hoặc CPU nếu không có CUDA)
-            results = model.predict(frame, conf=0.3, verbose=False, device=DEVICE)[0]
+            results = model.predict(frame, conf=0.3, imgsz=416, verbose=False, device=DEVICE)[0]
             boxes = results.boxes
 
             has_fire_in_frame = False
@@ -90,6 +97,8 @@ def auto_detect_timestamps(prefix=None, only_unassigned=True, force=False):
                 consec_smoke += 1
                 if consec_smoke >= 2 and smoke_detected_sec < 0:
                     smoke_detected_sec = sec
+                    if first_any_hit_sec < 0:
+                        first_any_hit_sec = sec
             else:
                 consec_smoke = max(0, consec_smoke - 1)
 
@@ -98,11 +107,18 @@ def auto_detect_timestamps(prefix=None, only_unassigned=True, force=False):
                 consec_fire += 1
                 if consec_fire >= 2 and fire_detected_sec < 0:
                     fire_detected_sec = sec
+                    if first_any_hit_sec < 0:
+                        first_any_hit_sec = sec
             else:
                 consec_fire = max(0, consec_fire - 1)
 
-            # Nếu cả 2 đều đã phát hiện thì có thể dừng sớm nếu muốn, hoặc chạy hết video
+            # Nếu cả 2 đều đã phát hiện thì dừng sớm
             if fire_detected_sec >= 0 and smoke_detected_sec >= 0:
+                break
+            # Nếu đã phát hiện 1 loại và đã quét thêm 45s sau đó, hoặc đã quét hết 120s đầu của video dài thì dừng
+            if first_any_hit_sec >= 0 and (sec - first_any_hit_sec) >= 45.0:
+                break
+            if sec >= 120.0:
                 break
 
         cap.release()

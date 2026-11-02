@@ -1,4 +1,4 @@
-﻿video_id,file_name,relative_path,category,resolution,fps,total_frames,duration_sec,duration_formatted,fire_start_sec,smoke_start_sec,notes,source_url
+video_id,file_name,relative_path,category,resolution,fps,total_frames,duration_sec,duration_formatted,fire_start_sec,smoke_start_sec,notes,source_url
 POS_01,posVideo1.868.avi,datasets/test_videos/pos/posVideo1.868.avi,fire_pos,352x288,10.0,293,29.3,00:00:29,2.4,6.8,Dataset chuẩn fire_pos,
 POS_02,posVideo10.869.avi,datasets/test_videos/pos/posVideo10.869.avi,fire_pos,400x256,29.97,235,7.84,00:00:07,0.1,0.1,Dataset chuẩn fire_pos,
 POS_03,posVideo11.870.avi,datasets/test_videos/pos/posVideo11.870.avi,fire_pos,400x256,15.0,178,11.87,00:00:11,0.3,-1.0,Dataset chuẩn fire_pos,
@@ -59,3 +59,15 @@ VN_POS_07,VN_POS_07.mp4,videovietnam/VN_POS_07.mp4,vn_pos,1280x720,25.0,1847,73.
 VN_POS_08,VN_POS_08.mp4,videovietnam/VN_POS_08.mp4,vn_pos,720x1280,29.98,321,10.71,00:00:10,-1.0,0.1,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh,
 VN_POS_09,VN_POS_09.mp4,videovietnam/VN_POS_09.mp4,vn_pos,720x1280,30.01,305,10.16,00:00:10,-1.0,0.7,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh,
 VN_POS_10,VN_POS_10.mp4,videovietnam/VN_POS_10.mp4,vn_pos,1280x720,30.0,3925,130.83,00:02:10,5.7,8.9,Video Viet Nam; AI_GOI_Y_MOC,
+VN_NEG_03,VN_NEG_03.mp4,videovietnam/VN_NEG_03.mp4,vn_neg,1280x720,30.0,1053,35.1,00:00:35,-1.0,-1.0,Video Viet Nam,
+VN_NEG_04,VN_NEG_04.mp4,videovietnam/VN_NEG_04.mp4,vn_neg,1280x720,30.0,165480,5516.0,01:31:56,-1.0,-1.0,Video Viet Nam,
+VN_POS_11,VN_POS_11.mp4,videovietnam/VN_POS_11.mp4,vn_pos,1280x720,29.97,2678,89.36,00:01:29,2.8,2.0,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_12,VN_POS_12.mp4,videovietnam/VN_POS_12.mp4,vn_pos,1920x1080,50.0,3674,73.48,00:01:13,0.4,7.8,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_13,VN_POS_13.mp4,videovietnam/VN_POS_13.mp4,vn_pos,856x480,30.0,9072,302.4,00:05:02,64.8,-1.0,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_14,VN_POS_14.mp4,videovietnam/VN_POS_14.mp4,vn_pos,3840x2160,30.0,2219,73.97,00:01:13,31.8,45.0,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_15,VN_POS_15.mp4,videovietnam/VN_POS_15.mp4,vn_pos,1280x720,25.0,3409,136.36,00:02:16,13.2,5.2,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_16,VN_POS_16.mp4,videovietnam/VN_POS_16.mp4,vn_pos,1280x720,25.0,2846,113.84,00:01:53,14.4,15.6,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_17,VN_POS_17.mp4,videovietnam/VN_POS_17.mp4,vn_pos,1280x720,25.0,37511,1500.44,00:25:00,48.4,31.2,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_18,VN_POS_18.mp4,videovietnam/VN_POS_18.mp4,vn_pos,1280x720,30.0,132750,4425.0,01:13:45,-1.0,40.6,Video Viet Nam; AI_GOI_Y_MOC,
+VN_POS_19,VN_POS_19.mp4,videovietnam/VN_POS_19.mp4,vn_pos,720x1560,30.0,2036,67.87,00:01:07,-1.0,0.4,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh,
+VN_POS_20,VN_POS_20.mp4,videovietnam/VN_POS_20.mp4,vn_pos,1920x1080,25.0,1938,77.52,00:01:17,0.4,0.4,Video Viet Nam; AI_GOI_Y_MOC,
