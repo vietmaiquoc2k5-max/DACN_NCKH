@@ -151,16 +151,29 @@ def open_opencv_capture(
     if s_type == "WEBCAM" or raw_src.isdigit():
         idx = int(raw_src) if raw_src.isdigit() else int(webcam_index)
         try:
+            cap = None
             if sys.platform == "win32":
-                cap = cv2.VideoCapture(idx, cv2.CAP_DSHOW)
-                if not cap.isOpened():
-                    cap = cv2.VideoCapture(idx)
+                try:
+                    cap = cv2.VideoCapture(idx, cv2.CAP_DSHOW)
+                except Exception:
+                    cap = None
+                if cap is None or not cap.isOpened():
+                    try:
+                        cap = cv2.VideoCapture(idx)
+                    except Exception:
+                        cap = None
             else:
-                cap = cv2.VideoCapture(idx)
+                try:
+                    cap = cv2.VideoCapture(idx)
+                except Exception:
+                    cap = None
 
-            if not cap or not cap.isOpened():
+            if cap is None or not cap.isOpened():
                 if cap:
-                    cap.release()
+                    try:
+                        cap.release()
+                    except Exception:
+                        pass
                 return None, False, f"Không tìm thấy thiết bị Webcam chỉ số #{idx}"
 
             if capture_width > 0:
