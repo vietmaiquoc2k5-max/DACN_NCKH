@@ -45,3 +45,7 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
+
+# Private Agent Skills and Memory
+.agent/skills/
+.agent/memory/
