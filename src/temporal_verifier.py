@@ -172,8 +172,54 @@ class TemporalVerifier:
 
         return valid_boxes
 
-    def update(self, detections: List[DetectionBox]) -> Dict[str, Any]:
+    def _record_external_tracks(self, valid_boxes: List[DetectionBox]) -> List[DetectionBox]:
+        """Ghi nhận và cập nhật lịch sử track khi track_id đã được gán bởi ByteTrack bên ngoài."""
+        for box in valid_boxes:
+            tid = box.track_id
+            if tid <= 0:
+                continue
+            area = max(1, (box.xyxy[2] - box.xyxy[0]) * (box.xyxy[3] - box.xyxy[1]))
+            if tid in self.tracks:
+                trk = self.tracks[tid]
+                trk.last_xyxy = box.xyxy
+                trk.last_seen_frame = self.frame_idx
+                trk.areas.append(area)
+                trk.confidences.append(box.confidence)
+                trk.hits += 1
+            else:
+                new_trk = TrackState(
+                    track_id=tid,
+                    label=box.label,
+                    last_xyxy=box.xyxy,
+                    last_seen_frame=self.frame_idx,
+                    hits=1,
+                )
+                new_trk.areas.append(area)
+                new_trk.confidences.append(box.confidence)
+                self.tracks[tid] = new_trk
+
+        # Dọn các track đã biến mất quá window_size_n khung hình
+        stale_tids = [
+            tid
+            for tid, trk in self.tracks.items()
+            if (self.frame_idx - trk.last_seen_frame) > self.window_size_n
+        ]
+        for tid in stale_tids:
+            del self.tracks[tid]
+
+        return valid_boxes
+
+    def update(
+        self,
+        detections: List[DetectionBox],
+        tracks_assigned: bool = False,
+    ) -> Dict[str, Any]:
         """Cập nhật kết quả phát hiện của khung hình hiện tại và trả về quyết định xác minh.
+
+        Args:
+            detections: Danh sách DetectionBox từ detector hoặc ByteTrack.
+            tracks_assigned: Nếu True, sử dụng track_id do ByteTrack bên ngoài cung cấp
+                thay vì chạy bộ ghép cặp IoU nội bộ.
 
         Returns:
             dict gồm:
@@ -190,8 +236,12 @@ class TemporalVerifier:
         # 1. Lọc bỏ các box nằm trong vùng loại trừ ROI
         valid_boxes = [b for b in detections if not self._is_in_exclusion_zone(b.norm_xywh)]
 
-        # 2. Gán Track ID theo thời gian
-        valid_boxes = self._update_tracks(valid_boxes)
+        # 2. Gán Track ID theo thời gian (dùng ByteTrack nếu tracks_assigned=True hoặc đã có track_id)
+        if tracks_assigned or any(b.track_id > 0 for b in valid_boxes):
+            valid_boxes = self._record_external_tracks(valid_boxes)
+        else:
+            valid_boxes = self._update_tracks(valid_boxes)
+
 
         has_detection = len(valid_boxes) > 0
         self.frame_history.append(1 if has_detection else 0)
