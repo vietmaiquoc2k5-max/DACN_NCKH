@@ -246,6 +246,94 @@ class Week4EvaluationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             frame_detections_to_events(frames, 0.5, 2, 3)
 
+    def test_negative_video_pipeline_and_far_calculation(self) -> None:
+        """9. Kiểm thử luồng xử lý video âm tính và tính toán FAR/giờ chính xác."""
+        neg_frames = [
+            FrameDetection("neg-1", "CAM-01", 1.0, ({"label": "FIRE", "confidence": 0.85, "track_id": 1, "temporal_score": 0.08},)),
+            FrameDetection("neg-1", "CAM-01", 1.5, ({"label": "FIRE", "confidence": 0.88, "track_id": 1, "temporal_score": 0.09},)),
+            FrameDetection("neg-1", "CAM-01", 2.0, ({"label": "FIRE", "confidence": 0.90, "track_id": 1, "temporal_score": 0.10},)),
+            FrameDetection("neg-2", "CAM-02", 5.0, ({"label": "SMOKE", "confidence": 0.80, "track_id": 2, "temporal_score": 0.01},)),
+        ]
+        base_events, temp_events = frame_detections_to_events(
+            neg_frames, confidence_threshold=0.5, window_n=5, confirm_k=3, feature_threshold=0.05
+        )
+        self.assertEqual(len(base_events), 2, "Baseline nhận cả 2 sự kiện giả trên 2 video âm tính")
+        self.assertEqual(len(temp_events), 1, "Temporal K/N + Feature gate lọc sạch neg-2, chỉ còn 1 sự kiện lọt qua trên neg-1")
+
+        # Đánh giá FAR trên 2 video âm tính với tổng thời lượng 2.0 giờ
+        report_temp = evaluate(
+            ground_truth=[],
+            predictions=temp_events,
+            positive_video_ids={"dummy-pos"},
+            negative_video_ids={"neg-1", "neg-2"},
+            negative_hours=2.0,
+            allow_missing_negative=False,
+        )
+        self.assertEqual(report_temp["counts"]["negative_false_alarms"], 1)
+        self.assertEqual(report_temp["metrics"]["false_alarms_per_hour"], 0.5)
+
+    def test_feature_gate_on_off_behavior(self) -> None:
+        """10. Kiểm thử tách biệt rõ ràng khi Feature Gate BẬT vs TẮT."""
+        static_frames = [
+            FrameDetection("neg-static", "CAM-01", 1.0, ({"label": "FIRE", "confidence": 0.90, "track_id": 10, "temporal_score": 0.01},)),
+            FrameDetection("neg-static", "CAM-01", 1.5, ({"label": "FIRE", "confidence": 0.90, "track_id": 10, "temporal_score": 0.01},)),
+            FrameDetection("neg-static", "CAM-01", 2.0, ({"label": "FIRE", "confidence": 0.90, "track_id": 10, "temporal_score": 0.01},)),
+        ]
+        # Gate TẮT (feature_threshold = 0.0) -> Báo động
+        _, events_gate_off = frame_detections_to_events(
+            static_frames, confidence_threshold=0.5, window_n=5, confirm_k=3, feature_threshold=0.0
+        )
+        self.assertEqual(len(events_gate_off), 1, "Gate TẮT phải cho phép kích hoạt khi đủ K/N")
+
+        # Gate BẬT (feature_threshold = 0.05 > 0.01) -> Bị chặn
+        _, events_gate_on = frame_detections_to_events(
+            static_frames, confidence_threshold=0.5, window_n=5, confirm_k=3, feature_threshold=0.05
+        )
+        self.assertEqual(len(events_gate_on), 0, "Gate BẬT phải lọc bỏ hoàn toàn đối tượng tĩnh có temporal_score thấp")
+
+    def test_grid_search_compares_baseline_at_same_confidence(self) -> None:
+        """11. Kiểm thử Grid Search so sánh ứng viên với baseline tại cùng confidence threshold."""
+        frames = [
+            FrameDetection("pos-1", "CAM-01", 1.0, ({"label": "FIRE", "confidence": 0.40, "track_id": 1, "temporal_score": 0.08},)),
+            FrameDetection("pos-1", "CAM-01", 1.5, ({"label": "FIRE", "confidence": 0.40, "track_id": 1, "temporal_score": 0.08},)),
+            FrameDetection("pos-1", "CAM-01", 2.0, ({"label": "FIRE", "confidence": 0.40, "track_id": 1, "temporal_score": 0.08},)),
+        ]
+        gt = [Event("pos-1", "CAM-01", "FIRE", 1.0, 5.0)]
+        rows = grid_search(
+            frames,
+            gt,
+            positive_video_ids={"pos-1"},
+            negative_video_ids={"neg-1"},
+            negative_hours=1.0,
+            confidence_thresholds=[0.35, 0.50],
+            k_values=[2],
+            n_values=[3],
+            feature_thresholds=[0.0],
+            cooldown_values=[0.0],
+        )
+        cand_35 = next(r for r in rows if r["confidence_threshold"] == 0.35)
+        cand_50 = next(r for r in rows if r["confidence_threshold"] == 0.50)
+
+        # Tại conf=0.35, baseline bắt được (conf 0.40 >= 0.35)
+        self.assertEqual(cand_35["baseline_video_event_recall"], 1.0)
+        # Tại conf=0.50, baseline không bắt được (conf 0.40 < 0.50)
+        self.assertEqual(cand_50["baseline_video_event_recall"], 0.0)
+
+    def test_validation_and_test_split_disjoint(self) -> None:
+        """12. Kiểm thử Validation Set và Test Set tách biệt 100% không bị trộn."""
+        from scripts.benchmark_week4_bytetrack import load_dataset_catalog
+        csv_path = Path("data/video_dataset_list.csv")
+        catalog = load_dataset_catalog(csv_path)
+        avail_pos = catalog["available_positive"]
+        val_videos = [v for idx, v in enumerate(avail_pos) if idx % 2 == 0]
+        test_videos = [v for idx, v in enumerate(avail_pos) if idx % 2 == 1]
+        val_ids = {v["video_id"] for v in val_videos}
+        test_ids = {v["video_id"] for v in test_videos}
+
+        self.assertEqual(len(val_ids), 12)
+        self.assertEqual(len(test_ids), 12)
+        self.assertTrue(val_ids.isdisjoint(test_ids), "Validation và Test không được có video trùng lặp")
+
 
 if __name__ == "__main__":
     unittest.main()

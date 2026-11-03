@@ -522,25 +522,24 @@ def grid_search(
     2. Video-level Event Recall giảm không quá 5 điểm phần trăm (<= 0.05).
     3. Mean Detection Delay <= 10.0 giây.
     """
-    min_conf = min(confidence_thresholds) if confidence_thresholds else 0.0
-    baseline_events, _ = frame_detections_to_events(
-        frames,
-        confidence_threshold=min_conf,
-        window_n=1,
-        confirm_k=1,
-        max_event_gap_sec=max_event_gap_sec,
-    )
-    baseline = evaluate(
-        ground_truth,
-        baseline_events,
-        positive_video_ids,
-        negative_video_ids,
-        negative_hours,
-        tolerance_sec,
-        allow_missing_negative=allow_missing_negative,
-    )
-    baseline_far = baseline["metrics"]["false_alarms_per_hour"]
-    baseline_recall = baseline["metrics"]["video_event_recall"]
+    baselines_by_conf: dict[float, dict[str, Any]] = {}
+    for conf in sorted(set(confidence_thresholds)):
+        b_events, _ = frame_detections_to_events(
+            frames,
+            confidence_threshold=conf,
+            window_n=1,
+            confirm_k=1,
+            max_event_gap_sec=max_event_gap_sec,
+        )
+        baselines_by_conf[conf] = evaluate(
+            ground_truth,
+            b_events,
+            positive_video_ids,
+            negative_video_ids,
+            negative_hours,
+            tolerance_sec,
+            allow_missing_negative=allow_missing_negative,
+        )
 
     results: list[dict[str, Any]] = []
     for confidence, n, k, feat_thr, cooldown in itertools.product(
@@ -548,6 +547,10 @@ def grid_search(
     ):
         if n < 1 or k < 1 or k > n:
             continue
+        baseline = baselines_by_conf[confidence]
+        baseline_far = baseline["metrics"]["false_alarms_per_hour"]
+        baseline_recall = baseline["metrics"]["video_event_recall"]
+
         _, temporal_events = frame_detections_to_events(
             frames,
             confidence_threshold=confidence,
@@ -594,6 +597,8 @@ def grid_search(
             "n": n,
             "feature_threshold": feat_thr,
             "cooldown_sec": cooldown,
+            "baseline_video_event_recall": baseline_recall,
+            "baseline_far_per_hour": baseline_far,
             "metrics": metrics,
             "counts": report["counts"],
             "far_reduction_vs_frame_baseline": far_reduction,
@@ -680,6 +685,8 @@ def export_grid_search_csv(candidates: Sequence[dict[str, Any]], path: Path) -> 
         "n",
         "feature_threshold",
         "cooldown_sec",
+        "baseline_video_event_recall",
+        "baseline_far_per_hour",
         "video_event_recall",
         "event_instance_recall",
         "event_precision",
@@ -704,6 +711,14 @@ def export_grid_search_csv(candidates: Sequence[dict[str, Any]], path: Path) -> 
                 "n": c.get("n"),
                 "feature_threshold": c.get("feature_threshold", 0.0),
                 "cooldown_sec": c.get("cooldown_sec", 0.0),
+                "baseline_video_event_recall": (
+                    round(c["baseline_video_event_recall"], 4)
+                    if c.get("baseline_video_event_recall") is not None else "N/A"
+                ),
+                "baseline_far_per_hour": (
+                    round(c["baseline_far_per_hour"], 4)
+                    if c.get("baseline_far_per_hour") is not None else "UNAVAILABLE"
+                ),
                 "video_event_recall": round(m["video_event_recall"], 4) if m.get("video_event_recall") is not None else "N/A",
                 "event_instance_recall": round(m["event_instance_recall"], 4) if m.get("event_instance_recall") is not None else "N/A",
                 "event_precision": round(m["event_precision"], 4) if m.get("event_precision") is not None else "N/A",
