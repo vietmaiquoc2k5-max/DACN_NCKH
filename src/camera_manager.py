@@ -579,20 +579,27 @@ class CameraStreamWorker:
 
             # 2. Cập nhật Temporal Visual Features cho từng track
             now_ts = time.time()
+            feature_map = {}
             for b in tracked_boxes:
                 if b.track_id > 0:
                     try:
-                        self.features_extractor.update(
+                        feat_res = self.features_extractor.update(
                             track_id=b.track_id,
                             frame_bgr=infer_input,
                             xyxy=b.xyxy,
                             timestamp_sec=now_ts,
                         )
+                        feature_map[b.track_id] = feat_res
                     except Exception:
                         pass
 
-            # 3. TemporalVerifier (K/N cửa sổ trượt, exclusion zones, cooldown)
-            ver_res = self.verifier.update(tracked_boxes, tracks_assigned=True)
+            # 3. TemporalVerifier (K/N cửa sổ trượt, temporal features, exclusion zones, cooldown)
+            ver_res = self.verifier.update(
+                tracked_boxes,
+                tracks_assigned=True,
+                feature_map=feature_map,
+                timestamp_sec=now_ts,
+            )
             valid_boxes = ver_res["valid_boxes"]
             if new_infer_ms > 0:
                 infer_fps_win.append(1000.0 / new_infer_ms)

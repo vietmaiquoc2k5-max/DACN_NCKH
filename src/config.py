@@ -186,7 +186,7 @@ class ByteTrackSettings:
     new_track_thresh: float = 0.6
     track_buffer: int = 30
     match_thresh: float = 0.8
-    fuse_score: bool = True
+    fuse_score: bool = False
 
 
 @dataclass
@@ -207,6 +207,7 @@ class SystemSettings:
     confirm_frames_k: int = 4
     suspect_frames_k: int = 2
     alert_cooldown_sec: float = 12.0
+    feature_threshold: float = 0.0
     mute_audio: bool = False
     bytetrack: ByteTrackSettings = field(default_factory=ByteTrackSettings)
 
