@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-11-06 11:27:32",
+  "status": "BLOCKED_BY_NEGATIVE_DATA",
+  "proposal_required_negative_hours": 5.0,
+  "catalog_negative_videos_count": 28,
+  "catalog_negative_hours": 2.8648,
+  "available_negative_videos_on_disk": 0,
+  "evaluated_negative_hours": 0.0,
+  "additional_negative_hours_needed": 5.0,
+  "empirical_negative_far_summary": {
+    "pipeline_a_frame_level_baseline": {
+      "false_alarm_events_count": 0,
+      "false_alarms_per_hour": null,
+      "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
+    },
+    "pipeline_b1_bytetrack_no_gate": {
+      "false_alarm_events_count": 0,
+      "false_alarms_per_hour": null,
+      "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
+    },
+    "pipeline_b2_bytetrack_feature_gate": {
+      "false_alarm_events_count": 0,
+      "false_alarms_per_hour": null,
+      "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
+    },
+    "pipeline_c_legacy_iou": {
+      "false_alarm_events_count": 0,
+      "false_alarms_per_hour": null,
+      "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
+    }
+  },
+  "evaluated_negative_videos_details": [],
+  "missing_negative_videos_manifest_file": "missing_negative_videos_manifest.csv",
+  "notes": "Tuyệt đối không gán FAR = 0 khi chưa có video âm tính thực nghiệm. Trạng thái giữ nguyên BLOCKED_BY_NEGATIVE_DATA cho đến khi nạp đủ >= 5 giờ video âm tính."
+}

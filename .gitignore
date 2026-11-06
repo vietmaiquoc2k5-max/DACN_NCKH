@@ -25,6 +25,7 @@ downloads/
 
 # Training runs & temporary checkpoints (keep benchmark results.csv, args.yaml, plots & best.pt)
 runs/*
+!runs/benchmarks/
 !runs/detect/
 runs/detect/*
 !runs/detect/runs/

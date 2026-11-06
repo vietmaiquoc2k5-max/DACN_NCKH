@@ -300,6 +300,59 @@ class TestTemporalVerifierByteTrack(unittest.TestCase):
         res = self.verifier.update([box], timestamp_sec=1.0)
         self.assertGreater(res["valid_boxes"][0].track_id, 0)
 
+    def test_feature_gate_rejects_missing_or_corrupt_features_when_gate_on(self):
+        """12. Kiểm tra Feature Gate BẬT từ chối xác nhận FIRE khi feature extractor lỗi/thiếu điểm, nhưng Gate TẮT vẫn cho qua."""
+        # A. Gate BẬT (feature_threshold = 0.05)
+        verifier_gate_on = TemporalVerifier(
+            window_size_n=5,
+            confirm_frames_k=3,
+            suspect_frames_k=2,
+            cooldown_sec=2.0,
+            feature_threshold=0.05,
+        )
+        box = DetectionBox(
+            cls_id=1,
+            label="FIRE",
+            confidence=0.90,
+            xyxy=(100, 100, 150, 150),
+            norm_xywh=(0.2, 0.2, 0.1, 0.1),
+            track_id=99,
+        )
+
+        # Mô phỏng feature extractor gặp lỗi hoặc trả về None / không có điểm
+        corrupt_feature_map = {99: None}
+        for t in (1.0, 1.2, 1.4):
+            res_gate_on = verifier_gate_on.update(
+                [box],
+                tracks_assigned=True,
+                feature_map=corrupt_feature_map,
+                timestamp_sec=t,
+            )
+
+        # Do Gate BẬT và feature_score không hợp lệ (0.0 < 0.05) nên không được xác nhận FIRE
+        self.assertNotEqual(res_gate_on["alert_level"], "FIRE")
+        self.assertFalse(res_gate_on["should_trigger_db_alert"])
+
+        # B. Gate TẮT (feature_threshold = 0.0) với cùng dữ liệu lỗi
+        verifier_gate_off = TemporalVerifier(
+            window_size_n=5,
+            confirm_frames_k=3,
+            suspect_frames_k=2,
+            cooldown_sec=2.0,
+            feature_threshold=0.0,
+        )
+        for t in (1.0, 1.2, 1.4):
+            res_gate_off = verifier_gate_off.update(
+                [box],
+                tracks_assigned=True,
+                feature_map=corrupt_feature_map,
+                timestamp_sec=t,
+            )
+
+        # Do Gate TẮT, chỉ cần K/N (3/5) là được xác nhận FIRE
+        self.assertEqual(res_gate_off["alert_level"], "FIRE")
+        self.assertTrue(res_gate_off["should_trigger_db_alert"])
+
 
 if __name__ == "__main__":
     unittest.main()

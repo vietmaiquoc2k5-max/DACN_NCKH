@@ -1188,9 +1188,15 @@ def main() -> int:
     pb2_full = full_summary["pipeline_b2_bytetrack_feature_gate"]
     pc_full = full_summary["pipeline_c_legacy_iou_temporal"]
 
+    pa_val = val_summary["pipeline_a_frame_level_baseline"]
+    pb1_val = val_summary["pipeline_b1_bytetrack_no_gate"]
+    pb2_val = val_summary["pipeline_b2_bytetrack_feature_gate"]
+    pc_val = val_summary["pipeline_c_legacy_iou_temporal"]
+
     pa_test = test_summary["pipeline_a_frame_level_baseline"]
     pb1_test = test_summary["pipeline_b1_bytetrack_no_gate"]
     pb2_test = test_summary["pipeline_b2_bytetrack_feature_gate"]
+    pc_test = test_summary["pipeline_c_legacy_iou_temporal"]
 
     report_md = f"""# Báo Cáo Thực Nghiệm & Nghiệm Thu Tuần 4: Frame-Level Baseline vs. ByteTrack + Temporal Verification
 
@@ -1242,7 +1248,33 @@ Cấu hình điểm vận hành đánh giá: `confidence_threshold = {default_co
 
 ---
 
-## 3. Kết Quả Quét Lưới Tham Số (Grid Search) Trên Validation Set & Đánh Giá Trên Test Set
+## 3. Bảng Đối Sánh 4 Pipeline Trên Tập Validation (12 Video Lẻ - `val_12_positive`)
+
+| Chỉ số thực nghiệm | Pipeline A: Frame Baseline | Pipeline B1: ByteTrack (No Gate) | Pipeline B2: ByteTrack + Feature Gate | Pipeline C: Legacy IoU |
+| :--- | :---: | :---: | :---: | :---: |
+| **Tổng cảnh báo phát ra** | **{pa_val["raw_frame_alarm_count"]}** frame alarms | **{pb1_val["db_alert_trigger_count"]}** DB alerts (**-{pb1_val["alarm_reduction_vs_raw_frame_alarms_pct"]:.2f}%**) | **{pb2_val["db_alert_trigger_count"]}** DB alerts (**-{pb2_val["alarm_reduction_vs_raw_frame_alarms_pct"]:.2f}%**) | **{pc_val["db_alert_trigger_count"]}** DB alerts |
+| **Số sự kiện sau gộp (gap=2.0s)** | **{pa_val["merged_event_count"]}** events | **{pb1_val["merged_event_count"]}** events | **{pb2_val["merged_event_count"]}** events | **{pc_val["merged_event_count"]}** events |
+| **Video Recall (Strict Match)** | `{pa_val["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | `{pb1_val["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | `{pb2_val["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | `{pc_val["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` |
+| **Event Precision** | `{pa_val["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | `{pb1_val["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | **`{pb2_val["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%`** | `{pc_val["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` |
+| **Event F1-Score** | `{pa_val["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | `{pb1_val["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | **`{pb2_val["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%`** | `{pc_val["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` |
+| **Mean Detection Delay** | `{pa_val["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` | `{pb1_val["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` | `{pb2_val["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` | `{pc_val["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` |
+
+---
+
+## 4. Bảng Đối Sánh 4 Pipeline Trên Tập Test Độc Lập (12 Video Chẵn - `test_12_positive`)
+
+| Chỉ số thực nghiệm | Pipeline A: Frame Baseline | Pipeline B1: ByteTrack (No Gate) | Pipeline B2: ByteTrack + Feature Gate | Pipeline C: Legacy IoU |
+| :--- | :---: | :---: | :---: | :---: |
+| **Tổng cảnh báo phát ra** | **{pa_test["raw_frame_alarm_count"]}** frame alarms | **{pb1_test["db_alert_trigger_count"]}** DB alerts (**-{pb1_test["alarm_reduction_vs_raw_frame_alarms_pct"]:.2f}%**) | **{pb2_test["db_alert_trigger_count"]}** DB alerts (**-{pb2_test["alarm_reduction_vs_raw_frame_alarms_pct"]:.2f}%**) | **{pc_test["db_alert_trigger_count"]}** DB alerts |
+| **Số sự kiện sau gộp (gap=2.0s)** | **{pa_test["merged_event_count"]}** events | **{pb1_test["merged_event_count"]}** events | **{pb2_test["merged_event_count"]}** events | **{pc_test["merged_event_count"]}** events |
+| **Video Recall (Strict Match)** | `{pa_test["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | `{pb1_test["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | `{pb2_test["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | `{pc_test["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` |
+| **Event Precision** | `{pa_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | `{pb1_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | **`{pb2_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%`** | `{pc_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` |
+| **Event F1-Score** | `{pa_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | `{pb1_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | **`{pb2_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%`** | `{pc_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` |
+| **Mean Detection Delay** | `{pa_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` | `{pb1_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` | `{pb2_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` | `{pc_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f} s` |
+
+---
+
+## 5. Kết Quả Quét Lưới Tham Số (Grid Search) Trên Validation Set & Đánh Giá Trên Test Set
 
 - **Validation Set (12 video lẻ):** `POS_01, POS_03, POS_05, POS_07, POS_09, POS_11, POS_13, POS_15, POS_17, POS_19, POS_21, POS_23` (`456.65s`).
 - **Test Set khóa cố định (12 video chẵn):** `POS_02, POS_04, POS_06, POS_08, POS_10, POS_12, POS_14, POS_16, POS_18, POS_20, POS_22, POS_24` (`407.33s`).
@@ -1251,10 +1283,7 @@ Cấu hình điểm vận hành đánh giá: `confidence_threshold = {default_co
 - **Tổng số cấu hình đã quét:** `{len(grid_candidates_val)}` tổ hợp (`confidence_threshold` ∈ {{0.25, 0.35, 0.45}}, $K$ ∈ {{2, 3, 4, 5}}, $N$ ∈ {{5, 8, 10, 12}}, `feature_threshold` ∈ {{0.0, 0.01, 0.02}}, `cooldown_sec` ∈ {{0.0, 5.0, 12.0}}).
 - **Kết luận chọn điểm vận hành:** `{operating_point_selection["status"]}`
   - Lý do: {operating_point_selection["reason"]}
-- **Kết quả trên Test Set (12 video độc lập) tại điểm vận hành `conf={default_conf}, K={default_k}, N={default_n}`:**
-  - **Pipeline A (Frame-level baseline):** `{pa_test["raw_frame_alarm_count"]}` raw frame alarms → `{pa_test["merged_event_count"]}` merged events | Strict Video Recall = `{pa_test["strict_class_evaluation"]["metrics"]["video_event_recall"]*100:.2f}%` | Primary Video Recall = `{pa_test["video_primary_evaluation"]["any_class_video_recall"]*100:.2f}%` | Event Precision = `{pa_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | Event F1 = `{pa_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | Strict Delay = `{pa_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f}s`.
-  - **Pipeline B1 (ByteTrack không feature gate):** `{pb1_test["db_alert_trigger_count"]}` DB alert triggers (**giảm `{pb1_test["alarm_reduction_vs_raw_frame_alarms_pct"]:.2f}%` số lần báo lặp**) → `{pb1_test["merged_event_count"]}` merged events | Event Precision = `{pb1_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | Event F1 = `{pb1_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | Strict Delay = `{pb1_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f}s`.
-  - **Pipeline B2 (ByteTrack + Temporal Feature Gate):** `{pb2_test["db_alert_trigger_count"]}` DB alert triggers (**giảm `{pb2_test["alarm_reduction_vs_raw_frame_alarms_pct"]:.2f}%` số lần báo lặp**) → `{pb2_test["merged_event_count"]}` merged events | Event Precision = `{pb2_test["strict_class_evaluation"]["metrics"]["event_precision"]*100:.2f}%` | Event F1 = `{pb2_test["strict_class_evaluation"]["metrics"]["event_f1"]*100:.2f}%` | Strict Delay = `{pb2_test["strict_class_evaluation"]["metrics"]["mean_detection_delay_sec"]:.2f}s`.
+- **Cấu hình Provisional tối ưu trên Validation Set:** `conf={default_conf}, K={default_k}, N={default_n}, feat_thr={default_feat_thr}, cooldown={default_cooldown}s`.
 """
     (out_dir / "benchmark_report.md").write_text(report_md, encoding="utf-8")
 
