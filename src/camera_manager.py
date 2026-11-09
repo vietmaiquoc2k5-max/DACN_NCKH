@@ -33,6 +33,8 @@ from src.config import (
 )
 from src.detector import SharedFireSmokeDetector
 from src.temporal_verifier import TemporalVerifier, DetectionBox
+from src.bytetrack_adapter import ByteTrackAdapter
+from src.temporal_feature_extractor import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
 
@@ -327,6 +329,8 @@ class CameraStreamWorker:
             cooldown_sec=settings.alert_cooldown_sec,
             exclusion_zones=config.exclusion_zones,
         )
+        self.tracker = ByteTrackAdapter(frame_rate=settings.target_fps_per_cam)
+        self.feature_extractor = TemporalFeatureExtractor()
 
         # Trạng thái chuẩn: "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
         self.status: str = "DISCONNECTED"
@@ -394,6 +398,8 @@ class CameraStreamWorker:
             self.error_detail = f"Đang kết nối tới {self.config.masked_source}..."
             self._set_placeholder("RECONNECTING", self.error_detail)
             self.verifier.reset()
+            self.tracker.reset()
+            self.feature_extractor.reset()
             self.infer_event.clear()
             self.thread = threading.Thread(target=self._run_loop, daemon=True)
             self.infer_thread = threading.Thread(target=self._infer_loop, daemon=True)
@@ -562,7 +568,16 @@ class CameraStreamWorker:
             if raw_boxes is None or not self.running:
                 continue
 
-            ver_res = self.verifier.update(raw_boxes)
+            # Bước 1: Theo dõi đối tượng qua ByteTrack độc lập
+            tracked_boxes = self.tracker.update(raw_boxes)
+
+            # Bước 2: Phân tích biến động hình học
+            for b in tracked_boxes:
+                if b.track_id > 0:
+                    self.feature_extractor.update(b.track_id, b.label, b.xyxy)
+
+            # Bước 3: Xác minh theo thời gian (k/N + ROI exclusion + Cooldown)
+            ver_res = self.verifier.update(tracked_boxes)
             valid_boxes = ver_res["valid_boxes"]
             if new_infer_ms > 0:
                 infer_fps_win.append(1000.0 / new_infer_ms)
@@ -1041,6 +1056,38 @@ class MultiCameraManager:
                     auto_restart=auto_connect,
                 )
         self.add_log(f"Đã chuyển chế độ hoạt động hệ thống sang: {mode}")
+
+    def set_active_camera_selection(self, selected_cam_ids: List[str], auto_start: bool = True):
+        """Áp dụng danh sách camera được chọn (Dynamic Camera Selection: 1, 4, 6, 9 hoặc custom).
+
+        Quy tắc quản lý nghiêm ngặt:
+        1. Camera không được chọn: dừng worker, giải phóng VideoCapture, không tốn GPU/CPU.
+        2. Camera được thêm: khởi tạo và chạy worker.
+        3. Camera giữ nguyên: tiếp tục chạy bình thường, KHÔNG reset tracker hay verifier.
+        """
+        target_ids = set(selected_cam_ids)
+        for cfg in self.camera_configs:
+            cid = cfg.cam_id
+            w = self.workers[cid]
+            if cid in target_ids:
+                cfg.enabled = True
+                w.config.enabled = True
+                if auto_start and not w.running:
+                    w.start()
+            else:
+                cfg.enabled = False
+                w.config.enabled = False
+                if w.running:
+                    w.stop()
+
+        self.add_log(f"Đã cập nhật danh sách camera giám sát: {sorted(list(target_ids))}")
+
+    def get_selected_snapshots(self, selected_cam_ids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
+        """Lấy trạng thái chỉ của các camera đang được chọn."""
+        if selected_cam_ids is None:
+            return [w.get_snapshot() for w in self.workers.values() if w.config.enabled]
+        s_set = set(selected_cam_ids)
+        return [self.workers[cfg.cam_id].get_snapshot() for cfg in self.camera_configs if cfg.cam_id in s_set]
 
     def get_all_snapshots(self) -> List[Dict[str, Any]]:
         """Lấy trạng thái thời gian thực của cả 9 camera theo đúng thứ tự CAM-01..CAM-09."""

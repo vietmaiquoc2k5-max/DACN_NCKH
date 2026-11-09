@@ -96,3 +96,4 @@ flowchart TD
 - [ ] `[ ]` **Check 9:** Đạt chỉ tiêu **Giảm $\ge 50\%$ số lần báo động giả/giờ** so với cảnh báo từng khung.
 - [ ] `[ ]` **Check 10:** Đạt chỉ tiêu **Event Recall giảm không quá 5 điểm %** và **Độ trễ TB $\le 10$ giây**.
 - [ ] `[ ]` **Check 11:** Hoàn thiện báo cáo khoa học `docs/temporal_verification_report.md`.
+

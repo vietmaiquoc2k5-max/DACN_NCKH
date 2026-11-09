@@ -156,10 +156,20 @@ class AlertManager:
                 print(f"Error detecting file headers: {ex}")
 
             if pygame and pygame.mixer and pygame.mixer.get_init():
-                pygame.mixer.music.load(play_path)
-                pygame.mixer.music.play(-1)
-                while self.alarm_playing and not self.mute_alarm:
-                    time.sleep(0.2)
+                try:
+                    pygame.mixer.music.load(play_path)
+                    pygame.mixer.music.play(-1)
+                    while self.alarm_playing and not self.mute_alarm:
+                        time.sleep(0.2)
+                except Exception as ex_pyg:
+                    print(f"Pygame playback error, falling back to winsound: {ex_pyg}")
+                    if IS_WINDOWS:
+                        winsound.PlaySound(
+                            play_path,
+                            winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP,
+                        )
+                        while self.alarm_playing and not self.mute_alarm:
+                            time.sleep(0.2)
             elif IS_WINDOWS:
                 winsound.PlaySound(
                     play_path,

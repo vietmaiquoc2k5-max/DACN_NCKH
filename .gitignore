@@ -12,6 +12,7 @@ ENV/
 # Database & runtime alerts
 alerts.db
 alerts/
+temp_alarm_*.mp3
 
 # Large datasets & raw archives (keep datasets/vn_dataset tracked on Git)
 datasets/*
