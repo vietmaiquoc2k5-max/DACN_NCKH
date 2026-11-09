@@ -1,0 +1,38 @@
+[
+  {
+    "model": "yolov8n",
+    "seed": 42,
+    "status": "dry_run_success",
+    "weights": "yolov8n.pt"
+  },
+  {
+    "model": "yolov8n",
+    "seed": 123,
+    "status": "dry_run_success",
+    "weights": "yolov8n.pt"
+  },
+  {
+    "model": "yolov8n",
+    "seed": 456,
+    "status": "dry_run_success",
+    "weights": "yolov8n.pt"
+  },
+  {
+    "model": "yolo11n",
+    "seed": 42,
+    "status": "dry_run_success",
+    "weights": "yolo11n.pt"
+  },
+  {
+    "model": "yolo11n",
+    "seed": 123,
+    "status": "dry_run_success",
+    "weights": "yolo11n.pt"
+  },
+  {
+    "model": "yolo11n",
+    "seed": 456,
+    "status": "dry_run_success",
+    "weights": "yolo11n.pt"
+  }
+]
