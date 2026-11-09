@@ -1,18 +1,30 @@
-# Python bytecode & cache
+# Python cache and test artifacts
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
 
-# Virtual Environment
+# Virtual environments
 .venv/
-env/
 venv/
+env/
 ENV/
 
-# Database & runtime alerts
+# IDE and editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Runtime data
 alerts.db
 alerts/
-temp_alarm_*.mp3
 
 # Large datasets & raw archives (keep datasets/vn_dataset tracked on Git)
 datasets/*
@@ -24,25 +36,40 @@ downloads/
 *.tar.gz
 *.whl
 
-# Training runs & temporary checkpoints (keep benchmark results.csv, args.yaml, plots & best.pt)
+# Graphify generated files
+graphify-out/
+.graphify/
+**/graphify-out/
+
+# Training outputs
 runs/*
+!runs/benchmarks/
 !runs/detect/
 runs/detect/*
 !runs/detect/runs/
 runs/detect/runs/*
 !runs/detect/runs/benchmarks/
+!runs/detect/runs/benchmarks/**
 runs/detect/runs/benchmarks/**/weights/epoch*.pt
 runs/detect/runs/benchmarks/**/weights/last.pt
+runs/detect/runs/benchmarks/**/train_batch*.jpg
+runs/detect/runs/benchmarks/**/val_batch*.jpg
+runs/detect/runs/benchmarks/**/labels.jpg
 FireSmokeLabeler/runs/
 FireSmokeLabeler/visualized/
 
-# Environment files
+# Environment and secrets
 .env
 .env.*
+!.env.example
 
-# OS generated files
+# Agent local state
+.agent/skills/
+.agent/memory/
+
+# OS files
+.DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-.DS_Store

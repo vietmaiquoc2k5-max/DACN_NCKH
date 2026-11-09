@@ -1,0 +1,29 @@
+video_id,file_name,catalog_relative_path,exists_on_disk,category,duration_sec,resolution,fps,notes
+NEG_25,negsVideo1.858.avi,datasets/test_videos/neg/negsVideo1.858.avi,False,fire_neg,189.12,640x480,24.0,Dataset chuẩn fire_neg
+NEG_26,negsVideo10.1072.avi,datasets/test_videos/neg/negsVideo10.1072.avi,False,fire_neg,9.84,360x288,25.0,Dataset chuẩn fire_neg
+NEG_27,negsVideo11.1073.avi,datasets/test_videos/neg/negsVideo11.1073.avi,False,fire_neg,7.2,320x240,25.0,Dataset chuẩn fire_neg
+NEG_28,negsVideo12.1074.avi,datasets/test_videos/neg/negsVideo12.1074.avi,False,fire_neg,26.11,1600x1200,19.69,Dataset chuẩn fire_neg
+NEG_29,negsVideo13.1075.avi,datasets/test_videos/neg/negsVideo13.1075.avi,False,fire_neg,11.08,352x288,24.46,Dataset chuẩn fire_neg
+NEG_30,negsVideo14.1076.avi,datasets/test_videos/neg/negsVideo14.1076.avi,False,fire_neg,1.87,352x288,24.06,Dataset chuẩn fire_neg
+NEG_31,negsVideo15.1078.avi,datasets/test_videos/neg/negsVideo15.1078.avi,False,fire_neg,2.95,1600x1200,19.69,Dataset chuẩn fire_neg
+NEG_32,negsVideo16.1077.avi,datasets/test_videos/neg/negsVideo16.1077.avi,False,fire_neg,10.59,1600x1200,18.51,Dataset chuẩn fire_neg
+NEG_33,negsVideo2.859.avi,datasets/test_videos/neg/negsVideo2.859.avi,False,fire_neg,15.5,320x240,10.0,Dataset chuẩn fire_neg
+NEG_34,negsVideo3.860.avi,datasets/test_videos/neg/negsVideo3.860.avi,False,fire_neg,16.0,320x240,10.0,Dataset chuẩn fire_neg
+NEG_35,negsVideo4.861.avi,datasets/test_videos/neg/negsVideo4.861.avi,False,fire_neg,64.37,640x368,30.0,Dataset chuẩn fire_neg
+NEG_36,negsVideo5.862.avi,datasets/test_videos/neg/negsVideo5.862.avi,False,fire_neg,14.63,480x368,30.0,Dataset chuẩn fire_neg
+NEG_37,negsVideo6.863.avi,datasets/test_videos/neg/negsVideo6.863.avi,False,fire_neg,45.68,640x480,25.0,Dataset chuẩn fire_neg
+NEG_38,negsVideo7.864.avi,datasets/test_videos/neg/negsVideo7.864.avi,False,fire_neg,18.03,640x368,30.0,Dataset chuẩn fire_neg
+NEG_39,negsVideo8.865.avi,datasets/test_videos/neg/negsVideo8.865.avi,False,fire_neg,125.49,640x352,29.97,Dataset chuẩn fire_neg
+NEG_40,negsVideo9.866.avi,datasets/test_videos/neg/negsVideo9.866.avi,False,fire_neg,25.8,640x480,25.0,Dataset chuẩn fire_neg
+NEG_41,testneg01.807.avi,datasets/test_videos/neg/testneg01.807.avi,False,smoke_neg,10.04,352x288,25.0,Dataset chuẩn smoke_neg
+NEG_42,testneg02.808.avi,datasets/test_videos/neg/testneg02.808.avi,False,smoke_neg,45.12,320x240,25.0,Dataset chuẩn smoke_neg
+NEG_43,testneg03.809.avi,datasets/test_videos/neg/testneg03.809.avi,False,smoke_neg,24.93,640x480,30.0,Dataset chuẩn smoke_neg
+NEG_44,testneg04.810.avi,datasets/test_videos/neg/testneg04.810.avi,False,smoke_neg,113.6,704x576,25.0,Dataset chuẩn smoke_neg
+NEG_45,testneg05.811.avi,datasets/test_videos/neg/testneg05.811.avi,False,smoke_neg,10.04,352x288,25.0,Dataset chuẩn smoke_neg
+NEG_46,testneg06.812.avi,datasets/test_videos/neg/testneg06.812.avi,False,smoke_neg,10.04,352x288,25.0,Dataset chuẩn smoke_neg
+NEG_47,testneg07.813.avi,datasets/test_videos/neg/testneg07.813.avi,False,smoke_neg,31.04,352x288,25.0,Dataset chuẩn smoke_neg
+NEG_48,testneg08.814.avi,datasets/test_videos/neg/testneg08.814.avi,False,smoke_neg,30.04,352x288,25.0,Dataset chuẩn smoke_neg
+NEG_49,testneg09.815.avi,datasets/test_videos/neg/testneg09.815.avi,False,smoke_neg,28.92,352x288,25.0,Dataset chuẩn smoke_neg
+VN_NEG_01,VN_NEG_01.mp4,videovietnam/VN_NEG_01.mp4,False,vn_neg,3874.03,1280x720,60.0,Video Viet Nam; URL suy ra tu ten goc - can xac nhan
+VN_NEG_03,VN_NEG_03.mp4,videovietnam/VN_NEG_03.mp4,False,vn_neg,35.1,1280x720,30.0,Video Viet Nam
+VN_NEG_04,VN_NEG_04.mp4,videovietnam/VN_NEG_04.mp4,False,vn_neg,5516.0,1280x720,30.0,Video Viet Nam

@@ -33,8 +33,6 @@ from src.config import (
 )
 from src.detector import SharedFireSmokeDetector
 from src.temporal_verifier import TemporalVerifier, DetectionBox
-from src.bytetrack_adapter import ByteTrackAdapter
-from src.temporal_feature_extractor import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
 
@@ -329,8 +327,6 @@ class CameraStreamWorker:
             cooldown_sec=settings.alert_cooldown_sec,
             exclusion_zones=config.exclusion_zones,
         )
-        self.tracker = ByteTrackAdapter(frame_rate=settings.target_fps_per_cam)
-        self.feature_extractor = TemporalFeatureExtractor()
 
         # Trạng thái chuẩn: "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
         self.status: str = "DISCONNECTED"
@@ -398,8 +394,6 @@ class CameraStreamWorker:
             self.error_detail = f"Đang kết nối tới {self.config.masked_source}..."
             self._set_placeholder("RECONNECTING", self.error_detail)
             self.verifier.reset()
-            self.tracker.reset()
-            self.feature_extractor.reset()
             self.infer_event.clear()
             self.thread = threading.Thread(target=self._run_loop, daemon=True)
             self.infer_thread = threading.Thread(target=self._infer_loop, daemon=True)
@@ -442,6 +436,9 @@ class CameraStreamWorker:
             self.active_hits = 0
             self.error_detail = "Đã ngắt kết nối"
             self._set_placeholder("DISCONNECTED", self.error_detail)
+            self.verifier.reset()
+            self.tracker.reset()
+            self.features_extractor.reset()
         self._log("Đã ngắt kết nối và giải phóng VideoCapture.")
 
     def reconnect(self):
@@ -568,16 +565,7 @@ class CameraStreamWorker:
             if raw_boxes is None or not self.running:
                 continue
 
-            # Bước 1: Theo dõi đối tượng qua ByteTrack độc lập
-            tracked_boxes = self.tracker.update(raw_boxes)
-
-            # Bước 2: Phân tích biến động hình học
-            for b in tracked_boxes:
-                if b.track_id > 0:
-                    self.feature_extractor.update(b.track_id, b.label, b.xyxy)
-
-            # Bước 3: Xác minh theo thời gian (k/N + ROI exclusion + Cooldown)
-            ver_res = self.verifier.update(tracked_boxes)
+            ver_res = self.verifier.update(raw_boxes)
             valid_boxes = ver_res["valid_boxes"]
             if new_infer_ms > 0:
                 infer_fps_win.append(1000.0 / new_infer_ms)
@@ -679,6 +667,9 @@ class CameraStreamWorker:
                             break
 
                     self.reconnect_attempts = 0
+                    self.verifier.reset()
+                    self.tracker.reset()
+                    self.features_extractor.reset()
                     with self.lock:
                         self.status = "CONNECTED"
                         self.error_detail = ""
