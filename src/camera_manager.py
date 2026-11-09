@@ -33,6 +33,8 @@ from src.config import (
 )
 from src.detector import SharedFireSmokeDetector
 from src.temporal_verifier import TemporalVerifier, DetectionBox
+from src.bytetrack_adapter import ByteTrackAdapter
+from src.temporal_features import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
 
@@ -327,6 +329,11 @@ class CameraStreamWorker:
             cooldown_sec=settings.alert_cooldown_sec,
             exclusion_zones=config.exclusion_zones,
         )
+        self.tracker = ByteTrackAdapter(
+            settings=getattr(settings, "bytetrack", None),
+            per_class=True,
+        )
+        self.features_extractor = TemporalFeatureExtractor(history_size=12)
 
         # Trạng thái chuẩn: "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
         self.status: str = "DISCONNECTED"
@@ -394,6 +401,8 @@ class CameraStreamWorker:
             self.error_detail = f"Đang kết nối tới {self.config.masked_source}..."
             self._set_placeholder("RECONNECTING", self.error_detail)
             self.verifier.reset()
+            self.tracker.reset()
+            self.features_extractor.reset()
             self.infer_event.clear()
             self.thread = threading.Thread(target=self._run_loop, daemon=True)
             self.infer_thread = threading.Thread(target=self._infer_loop, daemon=True)
@@ -436,6 +445,9 @@ class CameraStreamWorker:
             self.active_hits = 0
             self.error_detail = "Đã ngắt kết nối"
             self._set_placeholder("DISCONNECTED", self.error_detail)
+            self.verifier.reset()
+            self.tracker.reset()
+            self.features_extractor.reset()
         self._log("Đã ngắt kết nối và giải phóng VideoCapture.")
 
     def reconnect(self):
@@ -562,7 +574,32 @@ class CameraStreamWorker:
             if raw_boxes is None or not self.running:
                 continue
 
-            ver_res = self.verifier.update(raw_boxes)
+            # 1. ByteTrack Association (gán track_id ổn định 2 giai đoạn)
+            tracked_boxes = self.tracker.update(raw_boxes, frame=infer_input)
+
+            # 2. Cập nhật Temporal Visual Features cho từng track
+            now_ts = time.time()
+            feature_map = {}
+            for b in tracked_boxes:
+                if b.track_id > 0:
+                    try:
+                        feat_res = self.features_extractor.update(
+                            track_id=b.track_id,
+                            frame_bgr=infer_input,
+                            xyxy=b.xyxy,
+                            timestamp_sec=now_ts,
+                        )
+                        feature_map[b.track_id] = feat_res
+                    except Exception:
+                        pass
+
+            # 3. TemporalVerifier (K/N cửa sổ trượt, temporal features, exclusion zones, cooldown)
+            ver_res = self.verifier.update(
+                tracked_boxes,
+                tracks_assigned=True,
+                feature_map=feature_map,
+                timestamp_sec=now_ts,
+            )
             valid_boxes = ver_res["valid_boxes"]
             if new_infer_ms > 0:
                 infer_fps_win.append(1000.0 / new_infer_ms)
@@ -664,6 +701,9 @@ class CameraStreamWorker:
                             break
 
                     self.reconnect_attempts = 0
+                    self.verifier.reset()
+                    self.tracker.reset()
+                    self.features_extractor.reset()
                     with self.lock:
                         self.status = "CONNECTED"
                         self.error_detail = ""

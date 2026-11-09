@@ -179,6 +179,17 @@ def get_default_9_cameras() -> List[CameraConfig]:
 
 
 @dataclass
+class ByteTrackSettings:
+    """Cấu hình tham số cho thuật toán theo dõi ByteTrack chính thức."""
+    track_high_thresh: float = 0.5
+    track_low_thresh: float = 0.1
+    new_track_thresh: float = 0.6
+    track_buffer: int = 30
+    match_thresh: float = 0.8
+    fuse_score: bool = False
+
+
+@dataclass
 class SystemSettings:
     """Tham số vận hành và tối ưu hóa phần cứng toàn hệ thống."""
     operating_mode: str = "MULTI_CAMERA"  # "MULTI_CAMERA" | "VIDEO_TEST" | "WEBCAM" | "IP_CAMERA"
@@ -196,4 +207,7 @@ class SystemSettings:
     confirm_frames_k: int = 4
     suspect_frames_k: int = 2
     alert_cooldown_sec: float = 12.0
+    feature_threshold: float = 0.0
     mute_audio: bool = False
+    bytetrack: ByteTrackSettings = field(default_factory=ByteTrackSettings)
+
