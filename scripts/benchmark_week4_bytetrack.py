@@ -69,6 +69,7 @@ from src.event_eval import (
     extract_frame_level_alarms,
     frame_detections_to_events,
     grid_search,
+    load_ground_truth_events,
     merge_frame_alarms_to_events,
     select_best_operating_point,
 )
@@ -840,9 +841,9 @@ def main() -> int:
         else:
             test_tracked_frames.extend(r["tracked_frame_detections"])
 
-    gt_all = build_ground_truth_events(avail_pos)
-    gt_val = build_ground_truth_events(val_videos)
-    gt_test = build_ground_truth_events(test_videos)
+    gt_all = load_ground_truth_events(catalog_videos=avail_pos, video_ids=set(v["video_id"] for v in avail_pos))
+    gt_val = load_ground_truth_events(catalog_videos=val_videos, video_ids=val_ids)
+    gt_test = load_ground_truth_events(catalog_videos=test_videos, video_ids=test_ids)
 
     print("\n🔍 Đang quét lưới tham số (Grid Search) TRÊN TẬP VALIDATION...")
     grid_candidates_val = grid_search(

@@ -1,0 +1,1244 @@
+{
+  "metadata": {
+    "evaluation_name": "Locked Test Set Evaluation (Week 4 Final)",
+    "created_at_utc": "2026-11-09T19:19:41.558954+00:00",
+    "positive_test_videos": [
+      "POS_02",
+      "POS_04",
+      "POS_06",
+      "POS_08",
+      "POS_10",
+      "POS_12",
+      "POS_14",
+      "POS_16",
+      "POS_18",
+      "POS_20",
+      "POS_22",
+      "POS_24"
+    ],
+    "negative_test_videos_available": [],
+    "negative_test_hours_available": 0.0,
+    "ground_truth_source": "data/ground_truth/events.jsonl",
+    "frame_detections_source": "runs/benchmarks/week4_final/tracked_frame_detections.jsonl",
+    "total_test_frames": 2023,
+    "total_test_gt_events": 18
+  },
+  "operating_point_decision": {
+    "status": "NO_FEASIBLE_OPERATING_POINT",
+    "feasible": false,
+    "blocked_by_negative_data": true,
+    "selected_operating_point": null,
+    "provisional_operating_point": {
+      "name": "provisional_recommended",
+      "parameters": {
+        "confidence_threshold": 0.35,
+        "k": 3,
+        "n": 8,
+        "feature_threshold": 0.02,
+        "cooldown_sec": 5.0
+      },
+      "summary": "Đạt Video Event Recall 100% (12/12 video test), Event Instance Recall 72.2% (13/18 events), Precision 76.5%, Độ trễ phát hiện trung bình 2.89s (<= 10.0s). Cần tối thiểu 5.0 giờ video âm tính độc lập để kiểm chứng FAR và giảm >= 50% báo giả trước khi nghiệm thu MT3."
+    },
+    "scientific_rationale": "Theo tiêu chuẩn khoa học và đề cương NCKH MT3, điểm vận hành chỉ được nghiệm thu chính thức khi chứng minh được tỷ lệ báo giả FAR giảm >= 50% trên tập dữ liệu âm tính độc lập. Do chưa có file video âm tính thực tế trên ổ đĩa, hệ thống trung thực từ chối cấp nhãn FEASIBLE và duy trì trạng thái BLOCKED_BY_NEGATIVE_DATA."
+  },
+  "frame_level_baselines": {
+    "frame_level_baseline_conf_0.25": {
+      "confidence_threshold": 0.25,
+      "counts": {
+        "ground_truth_events": 18,
+        "predicted_events": 23,
+        "matched_events": 14,
+        "unmatched_gt_events": 4,
+        "unmatched_predicted_events": 9,
+        "positive_unmatched_alerts": 9,
+        "unmatched_positive_predictions": 9,
+        "recalled_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 0,
+        "negative_false_alarms": null
+      },
+      "metrics": {
+        "video_event_recall": 1.0,
+        "event_instance_recall": 0.7777777777777778,
+        "event_precision": 0.6086956521739131,
+        "event_f1": 0.6829268292682927,
+        "false_alarms_per_hour": null,
+        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
+        "mean_detection_delay_sec": 2.5257,
+        "negative_video_hours": null,
+        "temporal_tolerance_sec": 10.0
+      }
+    },
+    "frame_level_baseline_conf_0.35": {
+      "confidence_threshold": 0.35,
+      "counts": {
+        "ground_truth_events": 18,
+        "predicted_events": 26,
+        "matched_events": 14,
+        "unmatched_gt_events": 4,
+        "unmatched_predicted_events": 12,
+        "positive_unmatched_alerts": 12,
+        "unmatched_positive_predictions": 12,
+        "recalled_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 0,
+        "negative_false_alarms": null
+      },
+      "metrics": {
+        "video_event_recall": 1.0,
+        "event_instance_recall": 0.7777777777777778,
+        "event_precision": 0.5384615384615384,
+        "event_f1": 0.6363636363636364,
+        "false_alarms_per_hour": null,
+        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
+        "mean_detection_delay_sec": 2.618557142857143,
+        "negative_video_hours": null,
+        "temporal_tolerance_sec": 10.0
+      }
+    }
+  },
+  "evaluated_candidates": [
+    {
+      "name": "provisional_recommended",
+      "description": "Cấu hình cân bằng khuyến nghị triển khai tạm thời (conf=0.35, K=3, N=8, feat=0.02, cooldown=5.0s)",
+      "parameters": {
+        "confidence_threshold": 0.35,
+        "k": 3,
+        "n": 8,
+        "feature_threshold": 0.02,
+        "cooldown_sec": 5.0
+      },
+      "status": "BLOCKED_BY_NEGATIVE_DATA",
+      "metrics": {
+        "video_event_recall": 1.0,
+        "event_instance_recall": 0.7222222222222222,
+        "event_precision": 0.7647058823529411,
+        "event_f1": 0.7428571428571428,
+        "false_alarms_per_hour": null,
+        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
+        "mean_detection_delay_sec": 2.8904230769230774,
+        "negative_video_hours": null,
+        "temporal_tolerance_sec": 10.0
+      },
+      "counts": {
+        "ground_truth_events": 18,
+        "predicted_events": 17,
+        "matched_events": 13,
+        "unmatched_gt_events": 5,
+        "unmatched_predicted_events": 4,
+        "positive_unmatched_alerts": 4,
+        "unmatched_positive_predictions": 4,
+        "recalled_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 0,
+        "negative_false_alarms": null
+      },
+      "targets": {
+        "mean_delay_le_10s": true,
+        "has_valid_negative_data": false,
+        "overall_pass": false
+      },
+      "matches": [
+        {
+          "ground_truth": {
+            "video_id": "POS_16",
+            "camera_id": "BENCH_POS_16",
+            "label": "SMOKE",
+            "start_sec": 1.7,
+            "end_sec": 109.58,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_16",
+            "camera_id": "BENCH_POS_16",
+            "label": "SMOKE",
+            "start_sec": 1.7056,
+            "end_sec": 4.6903,
+            "confidence": 0.6704
+          },
+          "delay_sec": 0.005600000000000049
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "FIRE",
+            "start_sec": 0.4,
+            "end_sec": 25.8,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "FIRE",
+            "start_sec": 0.6,
+            "end_sec": 25.6,
+            "confidence": 0.8177
+          },
+          "delay_sec": 0.19999999999999996
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_20",
+            "camera_id": "BENCH_POS_20",
+            "label": "SMOKE",
+            "start_sec": 0.1,
+            "end_sec": 27.6,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_20",
+            "camera_id": "BENCH_POS_20",
+            "label": "SMOKE",
+            "start_sec": 0.4,
+            "end_sec": 27.4,
+            "confidence": 0.8792
+          },
+          "delay_sec": 0.30000000000000004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_02",
+            "camera_id": "BENCH_POS_02",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 7.84,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_02",
+            "camera_id": "BENCH_POS_02",
+            "label": "FIRE",
+            "start_sec": 0.4004,
+            "end_sec": 7.8078,
+            "confidence": 0.7738
+          },
+          "delay_sec": 0.3004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_06",
+            "camera_id": "BENCH_POS_06",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 55.22,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_06",
+            "camera_id": "BENCH_POS_06",
+            "label": "FIRE",
+            "start_sec": 0.4004,
+            "end_sec": 55.055,
+            "confidence": 0.8916
+          },
+          "delay_sec": 0.3004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_24",
+            "camera_id": "BENCH_POS_24",
+            "label": "SMOKE",
+            "start_sec": 0.1,
+            "end_sec": 15.48,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_24",
+            "camera_id": "BENCH_POS_24",
+            "label": "SMOKE",
+            "start_sec": 0.4004,
+            "end_sec": 8.8088,
+            "confidence": 0.88
+          },
+          "delay_sec": 0.3004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_12",
+            "camera_id": "BENCH_POS_12",
+            "label": "SMOKE",
+            "start_sec": 1.2,
+            "end_sec": 16.96,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_12",
+            "camera_id": "BENCH_POS_12",
+            "label": "SMOKE",
+            "start_sec": 1.6667,
+            "end_sec": 16.875,
+            "confidence": 0.879
+          },
+          "delay_sec": 0.4667000000000001
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_10",
+            "camera_id": "BENCH_POS_10",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 17.12,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_10",
+            "camera_id": "BENCH_POS_10",
+            "label": "FIRE",
+            "start_sec": 0.6006,
+            "end_sec": 17.017,
+            "confidence": 0.8515
+          },
+          "delay_sec": 0.5006
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "SMOKE",
+            "start_sec": 8.8,
+            "end_sec": 25.8,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "SMOKE",
+            "start_sec": 9.6,
+            "end_sec": 12.6,
+            "confidence": 0.6716
+          },
+          "delay_sec": 0.7999999999999989
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_22",
+            "camera_id": "BENCH_POS_22",
+            "label": "SMOKE",
+            "start_sec": 0.6,
+            "end_sec": 27.12,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_22",
+            "camera_id": "BENCH_POS_22",
+            "label": "SMOKE",
+            "start_sec": 1.4,
+            "end_sec": 4.2,
+            "confidence": 0.7513
+          },
+          "delay_sec": 0.7999999999999999
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_04",
+            "camera_id": "BENCH_POS_04",
+            "label": "FIRE",
+            "start_sec": 0.3,
+            "end_sec": 17.02,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_04",
+            "camera_id": "BENCH_POS_04",
+            "label": "FIRE",
+            "start_sec": 1.4014,
+            "end_sec": 1.8018,
+            "confidence": 0.5962
+          },
+          "delay_sec": 1.1014
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_14",
+            "camera_id": "BENCH_POS_14",
+            "label": "SMOKE",
+            "start_sec": 1.3,
+            "end_sec": 21.47,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_14",
+            "camera_id": "BENCH_POS_14",
+            "label": "SMOKE",
+            "start_sec": 2.8,
+            "end_sec": 3.8,
+            "confidence": 0.61
+          },
+          "delay_sec": 1.4999999999999998
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_18",
+            "camera_id": "BENCH_POS_18",
+            "label": "SMOKE",
+            "start_sec": 11.2,
+            "end_sec": 70.1,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_18",
+            "camera_id": "BENCH_POS_18",
+            "label": "SMOKE",
+            "start_sec": 42.2,
+            "end_sec": 42.4,
+            "confidence": 0.4845
+          },
+          "delay_sec": 31.000000000000004
+        }
+      ],
+      "unmatched_ground_truth": [
+        {
+          "video_id": "POS_02",
+          "camera_id": "BENCH_POS_02",
+          "label": "SMOKE",
+          "start_sec": 0.1,
+          "end_sec": 7.84,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_04",
+          "camera_id": "BENCH_POS_04",
+          "label": "SMOKE",
+          "start_sec": 4.2,
+          "end_sec": 17.02,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_06",
+          "camera_id": "BENCH_POS_06",
+          "label": "SMOKE",
+          "start_sec": 34.6,
+          "end_sec": 55.22,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_12",
+          "camera_id": "BENCH_POS_12",
+          "label": "FIRE",
+          "start_sec": 13.2,
+          "end_sec": 16.96,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_14",
+          "camera_id": "BENCH_POS_14",
+          "label": "FIRE",
+          "start_sec": 12.9,
+          "end_sec": 21.47,
+          "confidence": 1.0
+        }
+      ],
+      "unmatched_predictions": [
+        {
+          "video_id": "POS_04",
+          "camera_id": "BENCH_POS_04",
+          "label": "FIRE",
+          "start_sec": 11.011,
+          "end_sec": 15.8158,
+          "confidence": 0.789,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_08",
+          "camera_id": "BENCH_POS_08",
+          "label": "SMOKE",
+          "start_sec": 23.4,
+          "end_sec": 25.6,
+          "confidence": 0.6765,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_18",
+          "camera_id": "BENCH_POS_18",
+          "label": "SMOKE",
+          "start_sec": 65.0,
+          "end_sec": 70.0,
+          "confidence": 0.6307,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_24",
+          "camera_id": "BENCH_POS_24",
+          "label": "SMOKE",
+          "start_sec": 12.012,
+          "end_sec": 15.4154,
+          "confidence": 0.8583,
+          "is_negative_video": false,
+          "is_positive_video": true
+        }
+      ]
+    },
+    {
+      "name": "provisional_validation_top1",
+      "description": "Cấu hình đạt F1 cao nhất trên tập Validation (conf=0.25, K=5, N=12, feat=0.0, cooldown=0.0s)",
+      "parameters": {
+        "confidence_threshold": 0.25,
+        "k": 5,
+        "n": 12,
+        "feature_threshold": 0.0,
+        "cooldown_sec": 0.0
+      },
+      "status": "BLOCKED_BY_NEGATIVE_DATA",
+      "metrics": {
+        "video_event_recall": 1.0,
+        "event_instance_recall": 0.7222222222222222,
+        "event_precision": 0.7222222222222222,
+        "event_f1": 0.7222222222222222,
+        "false_alarms_per_hour": null,
+        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
+        "mean_detection_delay_sec": 3.2144692307692306,
+        "negative_video_hours": null,
+        "temporal_tolerance_sec": 10.0
+      },
+      "counts": {
+        "ground_truth_events": 18,
+        "predicted_events": 18,
+        "matched_events": 13,
+        "unmatched_gt_events": 5,
+        "unmatched_predicted_events": 5,
+        "positive_unmatched_alerts": 5,
+        "unmatched_positive_predictions": 5,
+        "recalled_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 0,
+        "negative_false_alarms": null
+      },
+      "targets": {
+        "mean_delay_le_10s": true,
+        "has_valid_negative_data": false,
+        "overall_pass": false
+      },
+      "matches": [
+        {
+          "ground_truth": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "SMOKE",
+            "start_sec": 8.8,
+            "end_sec": 25.8,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "SMOKE",
+            "start_sec": 8.8,
+            "end_sec": 13.0,
+            "confidence": 0.6716
+          },
+          "delay_sec": 0.0
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "FIRE",
+            "start_sec": 0.4,
+            "end_sec": 25.8,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "FIRE",
+            "start_sec": 1.0,
+            "end_sec": 25.6,
+            "confidence": 0.8177
+          },
+          "delay_sec": 0.6
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_20",
+            "camera_id": "BENCH_POS_20",
+            "label": "SMOKE",
+            "start_sec": 0.1,
+            "end_sec": 27.6,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_20",
+            "camera_id": "BENCH_POS_20",
+            "label": "SMOKE",
+            "start_sec": 0.8,
+            "end_sec": 27.4,
+            "confidence": 0.8792
+          },
+          "delay_sec": 0.7000000000000001
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_02",
+            "camera_id": "BENCH_POS_02",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 7.84,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_02",
+            "camera_id": "BENCH_POS_02",
+            "label": "FIRE",
+            "start_sec": 0.8008,
+            "end_sec": 7.8078,
+            "confidence": 0.7738
+          },
+          "delay_sec": 0.7008
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_06",
+            "camera_id": "BENCH_POS_06",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 55.22,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_06",
+            "camera_id": "BENCH_POS_06",
+            "label": "FIRE",
+            "start_sec": 0.8008,
+            "end_sec": 55.055,
+            "confidence": 0.8916
+          },
+          "delay_sec": 0.7008
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_24",
+            "camera_id": "BENCH_POS_24",
+            "label": "SMOKE",
+            "start_sec": 0.1,
+            "end_sec": 15.48,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_24",
+            "camera_id": "BENCH_POS_24",
+            "label": "SMOKE",
+            "start_sec": 0.8008,
+            "end_sec": 9.4094,
+            "confidence": 0.88
+          },
+          "delay_sec": 0.7008
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_16",
+            "camera_id": "BENCH_POS_16",
+            "label": "SMOKE",
+            "start_sec": 1.7,
+            "end_sec": 109.58,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_16",
+            "camera_id": "BENCH_POS_16",
+            "label": "SMOKE",
+            "start_sec": 0.8528,
+            "end_sec": 5.7563,
+            "confidence": 0.6704
+          },
+          "delay_sec": 0.0
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_12",
+            "camera_id": "BENCH_POS_12",
+            "label": "SMOKE",
+            "start_sec": 1.2,
+            "end_sec": 16.96,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_12",
+            "camera_id": "BENCH_POS_12",
+            "label": "SMOKE",
+            "start_sec": 2.0833,
+            "end_sec": 16.875,
+            "confidence": 0.879
+          },
+          "delay_sec": 0.8833
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_10",
+            "camera_id": "BENCH_POS_10",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 17.12,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_10",
+            "camera_id": "BENCH_POS_10",
+            "label": "FIRE",
+            "start_sec": 1.001,
+            "end_sec": 17.017,
+            "confidence": 0.862
+          },
+          "delay_sec": 0.9009999999999999
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_04",
+            "camera_id": "BENCH_POS_04",
+            "label": "FIRE",
+            "start_sec": 0.3,
+            "end_sec": 17.02,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_04",
+            "camera_id": "BENCH_POS_04",
+            "label": "FIRE",
+            "start_sec": 1.4014,
+            "end_sec": 2.6026,
+            "confidence": 0.5962
+          },
+          "delay_sec": 1.1014
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_22",
+            "camera_id": "BENCH_POS_22",
+            "label": "SMOKE",
+            "start_sec": 0.6,
+            "end_sec": 27.12,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_22",
+            "camera_id": "BENCH_POS_22",
+            "label": "SMOKE",
+            "start_sec": 1.8,
+            "end_sec": 27.0,
+            "confidence": 0.8917
+          },
+          "delay_sec": 1.2000000000000002
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_14",
+            "camera_id": "BENCH_POS_14",
+            "label": "SMOKE",
+            "start_sec": 1.3,
+            "end_sec": 21.47,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_14",
+            "camera_id": "BENCH_POS_14",
+            "label": "SMOKE",
+            "start_sec": 4.6,
+            "end_sec": 5.2,
+            "confidence": 0.7465
+          },
+          "delay_sec": 3.3
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_18",
+            "camera_id": "BENCH_POS_18",
+            "label": "SMOKE",
+            "start_sec": 11.2,
+            "end_sec": 70.1,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_18",
+            "camera_id": "BENCH_POS_18",
+            "label": "SMOKE",
+            "start_sec": 42.2,
+            "end_sec": 43.0,
+            "confidence": 0.4845
+          },
+          "delay_sec": 31.000000000000004
+        }
+      ],
+      "unmatched_ground_truth": [
+        {
+          "video_id": "POS_02",
+          "camera_id": "BENCH_POS_02",
+          "label": "SMOKE",
+          "start_sec": 0.1,
+          "end_sec": 7.84,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_04",
+          "camera_id": "BENCH_POS_04",
+          "label": "SMOKE",
+          "start_sec": 4.2,
+          "end_sec": 17.02,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_06",
+          "camera_id": "BENCH_POS_06",
+          "label": "SMOKE",
+          "start_sec": 34.6,
+          "end_sec": 55.22,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_12",
+          "camera_id": "BENCH_POS_12",
+          "label": "FIRE",
+          "start_sec": 13.2,
+          "end_sec": 16.96,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_14",
+          "camera_id": "BENCH_POS_14",
+          "label": "FIRE",
+          "start_sec": 12.9,
+          "end_sec": 21.47,
+          "confidence": 1.0
+        }
+      ],
+      "unmatched_predictions": [
+        {
+          "video_id": "POS_04",
+          "camera_id": "BENCH_POS_04",
+          "label": "FIRE",
+          "start_sec": 10.4104,
+          "end_sec": 16.2162,
+          "confidence": 0.789,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_08",
+          "camera_id": "BENCH_POS_08",
+          "label": "SMOKE",
+          "start_sec": 19.4,
+          "end_sec": 19.6,
+          "confidence": 0.351,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_08",
+          "camera_id": "BENCH_POS_08",
+          "label": "SMOKE",
+          "start_sec": 23.4,
+          "end_sec": 25.6,
+          "confidence": 0.6765,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_18",
+          "camera_id": "BENCH_POS_18",
+          "label": "SMOKE",
+          "start_sec": 65.0,
+          "end_sec": 70.0,
+          "confidence": 0.6307,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_24",
+          "camera_id": "BENCH_POS_24",
+          "label": "SMOKE",
+          "start_sec": 12.4124,
+          "end_sec": 15.4154,
+          "confidence": 0.8583,
+          "is_negative_video": false,
+          "is_positive_video": true
+        }
+      ]
+    },
+    {
+      "name": "ablation_no_feat_no_cooldown",
+      "description": "Ablation: ByteTrack + K/N thuần túy không dùng Feature Gate và không Cooldown (conf=0.35, K=3, N=8)",
+      "parameters": {
+        "confidence_threshold": 0.35,
+        "k": 3,
+        "n": 8,
+        "feature_threshold": 0.0,
+        "cooldown_sec": 0.0
+      },
+      "status": "BLOCKED_BY_NEGATIVE_DATA",
+      "metrics": {
+        "video_event_recall": 1.0,
+        "event_instance_recall": 0.7222222222222222,
+        "event_precision": 0.7222222222222222,
+        "event_f1": 0.7222222222222222,
+        "false_alarms_per_hour": null,
+        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
+        "mean_detection_delay_sec": 2.889992307692308,
+        "negative_video_hours": null,
+        "temporal_tolerance_sec": 10.0
+      },
+      "counts": {
+        "ground_truth_events": 18,
+        "predicted_events": 18,
+        "matched_events": 13,
+        "unmatched_gt_events": 5,
+        "unmatched_predicted_events": 5,
+        "positive_unmatched_alerts": 5,
+        "unmatched_positive_predictions": 5,
+        "recalled_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 0,
+        "negative_false_alarms": null
+      },
+      "targets": {
+        "mean_delay_le_10s": true,
+        "has_valid_negative_data": false,
+        "overall_pass": false
+      },
+      "matches": [
+        {
+          "ground_truth": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "FIRE",
+            "start_sec": 0.4,
+            "end_sec": 25.8,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "FIRE",
+            "start_sec": 0.6,
+            "end_sec": 25.6,
+            "confidence": 0.8177
+          },
+          "delay_sec": 0.19999999999999996
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_20",
+            "camera_id": "BENCH_POS_20",
+            "label": "SMOKE",
+            "start_sec": 0.1,
+            "end_sec": 27.6,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_20",
+            "camera_id": "BENCH_POS_20",
+            "label": "SMOKE",
+            "start_sec": 0.4,
+            "end_sec": 27.4,
+            "confidence": 0.8792
+          },
+          "delay_sec": 0.30000000000000004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_02",
+            "camera_id": "BENCH_POS_02",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 7.84,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_02",
+            "camera_id": "BENCH_POS_02",
+            "label": "FIRE",
+            "start_sec": 0.4004,
+            "end_sec": 7.8078,
+            "confidence": 0.7738
+          },
+          "delay_sec": 0.3004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_06",
+            "camera_id": "BENCH_POS_06",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 55.22,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_06",
+            "camera_id": "BENCH_POS_06",
+            "label": "FIRE",
+            "start_sec": 0.4004,
+            "end_sec": 55.055,
+            "confidence": 0.8916
+          },
+          "delay_sec": 0.3004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_24",
+            "camera_id": "BENCH_POS_24",
+            "label": "SMOKE",
+            "start_sec": 0.1,
+            "end_sec": 15.48,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_24",
+            "camera_id": "BENCH_POS_24",
+            "label": "SMOKE",
+            "start_sec": 0.4004,
+            "end_sec": 8.8088,
+            "confidence": 0.88
+          },
+          "delay_sec": 0.3004
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_12",
+            "camera_id": "BENCH_POS_12",
+            "label": "SMOKE",
+            "start_sec": 1.2,
+            "end_sec": 16.96,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_12",
+            "camera_id": "BENCH_POS_12",
+            "label": "SMOKE",
+            "start_sec": 1.6667,
+            "end_sec": 16.875,
+            "confidence": 0.879
+          },
+          "delay_sec": 0.4667000000000001
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_10",
+            "camera_id": "BENCH_POS_10",
+            "label": "FIRE",
+            "start_sec": 0.1,
+            "end_sec": 17.12,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_10",
+            "camera_id": "BENCH_POS_10",
+            "label": "FIRE",
+            "start_sec": 0.6006,
+            "end_sec": 17.017,
+            "confidence": 0.862
+          },
+          "delay_sec": 0.5006
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "SMOKE",
+            "start_sec": 8.8,
+            "end_sec": 25.8,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_08",
+            "camera_id": "BENCH_POS_08",
+            "label": "SMOKE",
+            "start_sec": 9.6,
+            "end_sec": 12.6,
+            "confidence": 0.6716
+          },
+          "delay_sec": 0.7999999999999989
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_22",
+            "camera_id": "BENCH_POS_22",
+            "label": "SMOKE",
+            "start_sec": 0.6,
+            "end_sec": 27.12,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_22",
+            "camera_id": "BENCH_POS_22",
+            "label": "SMOKE",
+            "start_sec": 1.4,
+            "end_sec": 27.0,
+            "confidence": 0.8917
+          },
+          "delay_sec": 0.7999999999999999
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_04",
+            "camera_id": "BENCH_POS_04",
+            "label": "FIRE",
+            "start_sec": 0.3,
+            "end_sec": 17.02,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_04",
+            "camera_id": "BENCH_POS_04",
+            "label": "FIRE",
+            "start_sec": 1.4014,
+            "end_sec": 1.8018,
+            "confidence": 0.5962
+          },
+          "delay_sec": 1.1014
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_16",
+            "camera_id": "BENCH_POS_16",
+            "label": "SMOKE",
+            "start_sec": 1.7,
+            "end_sec": 109.58,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_16",
+            "camera_id": "BENCH_POS_16",
+            "label": "SMOKE",
+            "start_sec": 0.4264,
+            "end_sec": 4.6903,
+            "confidence": 0.6704
+          },
+          "delay_sec": 0.0
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_14",
+            "camera_id": "BENCH_POS_14",
+            "label": "SMOKE",
+            "start_sec": 1.3,
+            "end_sec": 21.47,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_14",
+            "camera_id": "BENCH_POS_14",
+            "label": "SMOKE",
+            "start_sec": 2.8,
+            "end_sec": 6.2,
+            "confidence": 0.7465
+          },
+          "delay_sec": 1.4999999999999998
+        },
+        {
+          "ground_truth": {
+            "video_id": "POS_18",
+            "camera_id": "BENCH_POS_18",
+            "label": "SMOKE",
+            "start_sec": 11.2,
+            "end_sec": 70.1,
+            "confidence": 1.0
+          },
+          "prediction": {
+            "video_id": "POS_18",
+            "camera_id": "BENCH_POS_18",
+            "label": "SMOKE",
+            "start_sec": 42.2,
+            "end_sec": 42.4,
+            "confidence": 0.4845
+          },
+          "delay_sec": 31.000000000000004
+        }
+      ],
+      "unmatched_ground_truth": [
+        {
+          "video_id": "POS_02",
+          "camera_id": "BENCH_POS_02",
+          "label": "SMOKE",
+          "start_sec": 0.1,
+          "end_sec": 7.84,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_04",
+          "camera_id": "BENCH_POS_04",
+          "label": "SMOKE",
+          "start_sec": 4.2,
+          "end_sec": 17.02,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_06",
+          "camera_id": "BENCH_POS_06",
+          "label": "SMOKE",
+          "start_sec": 34.6,
+          "end_sec": 55.22,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_12",
+          "camera_id": "BENCH_POS_12",
+          "label": "FIRE",
+          "start_sec": 13.2,
+          "end_sec": 16.96,
+          "confidence": 1.0
+        },
+        {
+          "video_id": "POS_14",
+          "camera_id": "BENCH_POS_14",
+          "label": "FIRE",
+          "start_sec": 12.9,
+          "end_sec": 21.47,
+          "confidence": 1.0
+        }
+      ],
+      "unmatched_predictions": [
+        {
+          "video_id": "POS_04",
+          "camera_id": "BENCH_POS_04",
+          "label": "FIRE",
+          "start_sec": 11.011,
+          "end_sec": 15.8158,
+          "confidence": 0.789,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_08",
+          "camera_id": "BENCH_POS_08",
+          "label": "SMOKE",
+          "start_sec": 23.4,
+          "end_sec": 25.6,
+          "confidence": 0.6765,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_16",
+          "camera_id": "BENCH_POS_16",
+          "label": "SMOKE",
+          "start_sec": 83.36,
+          "end_sec": 84.426,
+          "confidence": 0.5966,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_18",
+          "camera_id": "BENCH_POS_18",
+          "label": "SMOKE",
+          "start_sec": 65.0,
+          "end_sec": 70.0,
+          "confidence": 0.6307,
+          "is_negative_video": false,
+          "is_positive_video": true
+        },
+        {
+          "video_id": "POS_24",
+          "camera_id": "BENCH_POS_24",
+          "label": "SMOKE",
+          "start_sec": 12.012,
+          "end_sec": 15.4154,
+          "confidence": 0.8583,
+          "is_negative_video": false,
+          "is_positive_video": true
+        }
+      ]
+    }
+  ]
+}

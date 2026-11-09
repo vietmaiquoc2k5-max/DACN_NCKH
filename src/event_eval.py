@@ -92,13 +92,85 @@ def load_events(path: Path) -> list[Event]:
     for row in load_jsonl(path):
         events.append(Event(
             video_id=str(row["video_id"]),
-            camera_id=str(row["camera_id"]),
+            camera_id=str(row.get("camera_id", f"BENCH_{row['video_id']}")),
             label=str(row["label"]).upper(),
             start_sec=float(row["start_sec"]),
             end_sec=float(row["end_sec"]),
             confidence=float(row.get("confidence", 1.0)),
         ))
     return events
+
+
+DEFAULT_GT_PATH = Path(__file__).resolve().parent.parent / "data" / "ground_truth" / "events.jsonl"
+
+
+def load_ground_truth_events(
+    events_path: Path | str | None = None,
+    catalog_videos: Sequence[dict[str, Any]] | None = None,
+    video_ids: set[str] | None = None,
+    only_verified: bool = False,
+) -> list[Event]:
+    """Nạp danh sách sự kiện Ground Truth độc lập từ tệp JSONL hoặc danh mục video.
+
+    Ưu tiên đọc từ `events_path` (mặc định data/ground_truth/events.jsonl nếu tồn tại).
+    Nếu không tìm thấy tệp JSONL và có cung cấp `catalog_videos`, sẽ tự động fallback
+    tạo GT từ thông số fire_start_sec và smoke_start_sec của catalog.
+
+    Args:
+        events_path: Đường dẫn tệp events.jsonl (hoặc None để dùng đường dẫn mặc định).
+        catalog_videos: Danh sách video từ catalog (dùng cho fallback).
+        video_ids: Bộ lọc video_id nếu chỉ muốn nạp một tập con video.
+        only_verified: Nếu True, chỉ nạp các event có verification_status == 'verified'.
+
+    Returns:
+        Danh sách Event đã được chuẩn hóa.
+    """
+    target_path = Path(events_path) if events_path is not None else DEFAULT_GT_PATH
+    if target_path.exists():
+        records = load_jsonl(target_path)
+        events: list[Event] = []
+        for row in records:
+            vid = str(row["video_id"])
+            if video_ids is not None and vid not in video_ids:
+                continue
+            if only_verified and str(row.get("verification_status", "")).lower() != "verified":
+                continue
+            events.append(Event(
+                video_id=vid,
+                camera_id=str(row.get("camera_id", f"BENCH_{vid}")),
+                label=str(row["label"]).upper(),
+                start_sec=float(row["start_sec"]),
+                end_sec=float(row["end_sec"]),
+                confidence=float(row.get("confidence", 1.0)),
+            ))
+        return events
+
+    # Fallback to catalog_videos if JSONL not found
+    if catalog_videos is not None:
+        fallback_events: list[Event] = []
+        for v in catalog_videos:
+            is_pos = v.get("is_positive", True)
+            if not is_pos:
+                continue
+            vid = str(v["video_id"])
+            if video_ids is not None and vid not in video_ids:
+                continue
+            cam_id = str(v.get("camera_id", f"BENCH_{vid}"))
+            dur = float(v.get("duration_sec", 0.0))
+            f_start = float(v.get("fire_start_sec", -1.0))
+            s_start = float(v.get("smoke_start_sec", -1.0))
+            if f_start >= 0 and s_start >= 0:
+                fallback_events.append(Event(vid, cam_id, "FIRE", f_start, dur, 1.0))
+                fallback_events.append(Event(vid, cam_id, "SMOKE", s_start, dur, 1.0))
+            elif f_start >= 0:
+                fallback_events.append(Event(vid, cam_id, "FIRE", f_start, dur, 1.0))
+            elif s_start >= 0:
+                fallback_events.append(Event(vid, cam_id, "SMOKE", s_start, dur, 1.0))
+        return fallback_events
+
+    raise FileNotFoundError(
+        f"Không tìm thấy tệp Ground Truth tại {target_path} và không có catalog_videos fallback."
+    )
 
 
 def load_frame_detections(path: Path) -> list[FrameDetection]:
