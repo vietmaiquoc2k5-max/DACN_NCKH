@@ -69,6 +69,7 @@ def validate_single_jsonl(
     confidence_errors: List[str] = []
     track_id_errors: List[str] = []
     label_errors: List[str] = []
+    bbox_errors: List[str] = []
 
     per_video_frame_counts: Dict[str, int] = {}
     per_video_durations: Dict[str, float] = {}
@@ -163,13 +164,27 @@ def validate_single_jsonl(
                         if tid is not None:
                             track_id_errors.append(f"Dòng {line_no} detection {d_idx}: Raw detection không được gán track_id khác null: {tid}")
 
+                    bbox = d.get("xyxy")
+                    if bbox is not None:
+                        if not isinstance(bbox, (list, tuple)) or len(bbox) != 4:
+                            bbox_errors.append(f"Dòng {line_no} detection {d_idx}: xyxy phải là list 4 tọa độ [x1, y1, x2, y2]")
+                        else:
+                            try:
+                                x1, y1, x2, y2 = float(bbox[0]), float(bbox[1]), float(bbox[2]), float(bbox[3])
+                                if x1 < 0 or y1 < 0 or x2 <= x1 or y2 <= y1:
+                                    bbox_errors.append(f"Dòng {line_no} detection {d_idx}: Tọa độ bbox không hợp lệ: [{x1}, {y1}, {x2}, {y2}]")
+                            except (TypeError, ValueError):
+                                bbox_errors.append(f"Dòng {line_no} detection {d_idx}: Tọa độ bbox không phải số")
+
     all_errors = (
         syntax_errors
         + schema_errors
         + timestamp_inversion_errors
+        + duplicate_timestamp_errors
         + confidence_errors
         + track_id_errors
         + label_errors
+        + bbox_errors
     )
     is_pass = len(all_errors) == 0 and total_lines > 0
 
@@ -203,9 +218,78 @@ def validate_single_jsonl(
             "confidence_errors_count": len(confidence_errors),
             "track_id_errors_count": len(track_id_errors),
             "label_errors_count": len(label_errors),
+            "bbox_errors_count": len(bbox_errors),
             "sample_error_details": all_errors[:15],
         },
     }
+
+
+def check_frame_identities_alignment(raw_path: Path, trk_path: Path) -> Tuple[bool, List[str], Dict[str, Any]]:
+    """Kiểm tra từng khung hình khớp 100% định danh (video_id, camera_id, timestamp_sec).
+
+    Quy định: Không coi 2 tệp là tương đương chỉ vì cùng số dòng/video. Phải đối soát từng frame identity.
+    """
+    import itertools
+    errors: List[str] = []
+    total_checked = 0
+    mismatches = 0
+    raw_frame_set: Set[Tuple[str, str, float]] = set()
+    trk_frame_set: Set[Tuple[str, str, float]] = set()
+    raw_duplicates: List[str] = []
+    trk_duplicates: List[str] = []
+
+    with raw_path.open("r", encoding="utf-8") as rf, trk_path.open("r", encoding="utf-8") as tf:
+        for line_no, (r_line, t_line) in enumerate(itertools.zip_longest(rf, tf), 1):
+            if r_line is None:
+                errors.append(f"Dòng {line_no}: tracked JSONL nhiều hơn raw JSONL.")
+                break
+            if t_line is None:
+                errors.append(f"Dòng {line_no}: raw JSONL nhiều hơn tracked JSONL.")
+                break
+
+            total_checked += 1
+            try:
+                r_obj = json.loads(r_line)
+                t_obj = json.loads(t_line)
+            except Exception as exc:
+                errors.append(f"Dòng {line_no}: Lỗi decode JSON khi so sánh: {exc}")
+                continue
+
+            r_id = (str(r_obj["video_id"]), str(r_obj["camera_id"]), round(float(r_obj["timestamp_sec"]), 4))
+            t_id = (str(t_obj["video_id"]), str(t_obj["camera_id"]), round(float(t_obj["timestamp_sec"]), 4))
+
+            if r_id in raw_frame_set:
+                raw_duplicates.append(f"Dòng {line_no}: Trùng lặp frame identity trong raw {r_id}")
+            raw_frame_set.add(r_id)
+
+            if t_id in trk_frame_set:
+                trk_duplicates.append(f"Dòng {line_no}: Trùng lặp frame identity trong tracked {t_id}")
+            trk_frame_set.add(t_id)
+
+            if r_id != t_id:
+                mismatches += 1
+                if len(errors) < 10:
+                    errors.append(f"Dòng {line_no}: Lệch định danh khung hình: raw={r_id} vs tracked={t_id}")
+
+    missing_in_trk = [f"{v}_{c}_{t}" for v, c, t in sorted(raw_frame_set - trk_frame_set)]
+    missing_in_raw = [f"{v}_{c}_{t}" for v, c, t in sorted(trk_frame_set - raw_frame_set)]
+    if missing_in_trk:
+        errors.append(f"Có {len(missing_in_trk)} frame identities có trong raw nhưng thiếu trong tracked.")
+    if missing_in_raw:
+        errors.append(f"Có {len(missing_in_raw)} frame identities có trong tracked nhưng thiếu trong raw.")
+
+    is_aligned = (mismatches == 0) and (len(errors) == 0) and (total_checked > 0)
+    details = {
+        "total_frames_aligned": total_checked,
+        "mismatches_count": mismatches,
+        "raw_unique_frames": len(raw_frame_set),
+        "tracked_unique_frames": len(trk_frame_set),
+        "missing_in_tracked_count": len(missing_in_trk),
+        "missing_in_raw_count": len(missing_in_raw),
+        "raw_duplicates_count": len(raw_duplicates),
+        "tracked_duplicates_count": len(trk_duplicates),
+    }
+    return is_aligned, errors, details
 
 
 def validate_both_jsonl(
@@ -220,17 +304,17 @@ def validate_both_jsonl(
     raw_res = validate_single_jsonl(raw_path, is_tracked=False)
     trk_res = validate_single_jsonl(trk_path, is_tracked=True)
 
-    # Kiểm tra tính khớp nối giữa 2 tệp (phải cùng số dòng, cùng số frame)
+    aligned, align_errors, align_details = check_frame_identities_alignment(raw_path, trk_path)
+
     cross_check_passed = (
         raw_res["status"] == "PASS"
         and trk_res["status"] == "PASS"
-        and raw_res["metrics"]["total_lines"] == trk_res["metrics"]["total_lines"]
-        and raw_res["metrics"]["total_videos"] == trk_res["metrics"]["total_videos"]
+        and aligned
     )
     cross_check_note = (
-        "Khớp nối 100% về số dòng và số video giữa raw và tracked JSONL."
+        "Khớp nối 100% về định danh khung hình (video_id, camera_id, timestamp_sec) và số lượng phát hiện."
         if cross_check_passed
-        else "Không khớp dòng hoặc có tệp không đạt tiêu chuẩn."
+        else f"Không khớp định danh hoặc có tệp không đạt tiêu chuẩn ({len(align_errors)} lỗi alignment)."
     )
 
     combined_status = "PASS" if cross_check_passed else "FAIL"
@@ -238,6 +322,7 @@ def validate_both_jsonl(
         "status": combined_status,
         "cross_check_matched": cross_check_passed,
         "cross_check_note": cross_check_note,
+        "frame_alignment": align_details,
         "raw_detections_validation": raw_res,
         "tracked_detections_validation": trk_res,
     }

@@ -1,6 +1,6 @@
 # Báo Cáo Thực Nghiệm & Nghiệm Thu Tuần 4: Frame-Level Baseline vs. ByteTrack + Temporal Verification
 
-- **Thời gian thực thi:** `2026-11-06 11:27:42`
+- **Thời gian thực thi:** `2026-11-10 02:52:26`
 - **Model Checkpoint:** `runs\detect\runs\benchmarks\yolov8n_seed42\weights\best.pt` (mAP@0.5 = 76.78% trên D-Fire Test)
 - **Tần số lấy mẫu khung hình:** `5.0 FPS` (`imgsz = 416`, `seed = 42`)
 - **Trạng thái nghiệm thu Tuần 4:** **`PARTIAL (BLOCKED_BY_NEGATIVE_DATA)`**
@@ -27,24 +27,24 @@ Cấu hình điểm vận hành đánh giá: `confidence_threshold = 0.35`, `K =
 | :--- | :---: | :---: | :---: | :---: |
 | **Tổng cảnh báo phát ra (Raw Alarms / DB Triggers)** | **2938** frame alarms | **129** DB alerts (**-95.61%**) | **128** DB alerts (**-95.64%**) | **128** DB alerts |
 | **Số khoảng sự kiện sau khi gộp (`gap = 2.0s`)** | **53** events | **32** events | **31** events | **33** events |
-| **Video-level Event Recall (Strict Match)** | `95.83%` | `95.83%` | `95.83%` | `95.83%` |
+| **Video-level Event Recall (Strict Match)** | `100.00%` | `100.00%` | `100.00%` | `100.00%` |
 | **Video-level Primary Recall (Any Class)** | `95.83%` (23/24) | `95.83%` (23/24) | `95.83%` (23/24) | `95.83%` (23/24) |
-| **Event-instance Recall** | `80.00%` | `71.43%` | `71.43%` | `74.29%` |
-| **Event Precision** | `52.83%` | `78.12%` | **`80.65%`** | `78.79%` |
-| **Event F1-Score** | `63.64%` | `74.63%` | **`75.76%`** | `76.47%` |
-| **Mean Detection Delay (Strict Class Match)** | `1.02 s` | `2.09 s` | `2.13 s` (≤ 10 s) | `2.19 s` |
+| **Event-instance Recall** | `81.82%` | `72.73%` | `72.73%` | `72.73%` |
+| **Event Precision** | `16.98%` | `25.00%` | **`25.81%`** | `24.24%` |
+| **Event F1-Score** | `28.12%` | `37.21%` | **`38.10%`** | `36.36%` |
+| **Mean Detection Delay (Strict Class Match)** | `0.60 s` | `0.50 s` | `0.52 s` (≤ 10 s) | `0.47 s` |
 | **Mean Detection Delay (Từ mốc khởi phát sớm)** | `0.97 s` | `1.85 s` | `1.87 s` (≤ 10 s) | `1.79 s` |
 | **Cảnh báo nổ ra trước mốc cháy (`pre_event_alarms`)** | `3` | `0` | **`0`** | `0` |
-| **Sự kiện không khớp GT (`unmatched_positive`)** | `25` | `7` | **`6`** | `7` |
+| **Sự kiện không khớp GT (`unmatched_positive`)** | `44` | `24` | **`23`** | `25` |
 | **Negative False Alarms per Hour (FAR/giờ)** | `UNAVAILABLE` | `UNAVAILABLE` | `UNAVAILABLE` | `UNAVAILABLE` |
-| **Detector-only Latency / FPS (CPU)** | `17.27 ms` (`57.9 FPS`) | `17.27 ms` (`57.9 FPS`) | `17.27 ms` (`57.9 FPS`) | `17.27 ms` (`57.9 FPS`) |
-| **End-to-End Pipeline Latency / FPS (CPU)** | `17.27 ms` (`57.9 FPS`) | `17.85 ms` (`56.0 FPS`) | **`18.10 ms` (`55.2 FPS`)** | `17.30 ms` (`57.8 FPS`) |
+| **Detector-only Latency / FPS (CPU)** | `18.30 ms` (`54.6 FPS`) | `18.30 ms` (`54.6 FPS`) | `18.30 ms` (`54.6 FPS`) | `18.30 ms` (`54.6 FPS`) |
+| **End-to-End Pipeline Latency / FPS (CPU)** | `18.30 ms` (`54.6 FPS`) | `18.89 ms` (`52.9 FPS`) | **`19.14 ms` (`52.2 FPS`)** | `18.33 ms` (`54.5 FPS`) |
 
 > **Phân rã chi phí tính toán tăng thêm (Overhead) của Pipeline B2 trên CPU:**
-> - `ByteTrackAdapter.update`: `0.550 ms/frame`
-> - `TemporalFeatureExtractor.update`: `0.269 ms/frame`
+> - `ByteTrackAdapter.update`: `0.561 ms/frame`
+> - `TemporalFeatureExtractor.update`: `0.262 ms/frame`
 > - `TemporalVerifier.update`: `0.017 ms/frame`
-> - **Tổng Overhead toàn pipeline:** `0.836 ms/frame`
+> - **Tổng Overhead toàn pipeline:** `0.840 ms/frame`
 
 ---
 
@@ -54,10 +54,10 @@ Cấu hình điểm vận hành đánh giá: `confidence_threshold = 0.35`, `K =
 | :--- | :---: | :---: | :---: | :---: |
 | **Tổng cảnh báo phát ra** | **1920** frame alarms | **79** DB alerts (**-95.89%**) | **79** DB alerts (**-95.89%**) | **78** DB alerts |
 | **Số sự kiện sau gộp (gap=2.0s)** | **26** events | **16** events | **16** events | **17** events |
-| **Video Recall (Strict Match)** | `91.67%` | `91.67%` | `91.67%` | `91.67%` |
-| **Event Precision** | `53.85%` | `81.25%` | **`81.25%`** | `82.35%` |
-| **Event F1-Score** | `65.12%` | `78.79%` | **`78.79%`** | `82.35%` |
-| **Mean Detection Delay** | `0.19 s` | `1.19 s` | `1.27 s` | `1.53 s` |
+| **Video Recall (Strict Match)** | `100.00%` | `100.00%` | `100.00%` | `100.00%` |
+| **Event Precision** | `11.54%` | `18.75%` | **`18.75%`** | `17.65%` |
+| **Event F1-Score** | `20.69%` | `31.58%` | **`31.58%`** | `30.00%` |
+| **Mean Detection Delay** | `0.00 s` | `0.43 s` | `0.50 s` | `0.43 s` |
 
 ---
 
@@ -68,9 +68,9 @@ Cấu hình điểm vận hành đánh giá: `confidence_threshold = 0.35`, `K =
 | **Tổng cảnh báo phát ra** | **1018** frame alarms | **50** DB alerts (**-95.09%**) | **49** DB alerts (**-95.19%**) | **50** DB alerts |
 | **Số sự kiện sau gộp (gap=2.0s)** | **27** events | **16** events | **15** events | **16** events |
 | **Video Recall (Strict Match)** | `100.00%` | `100.00%` | `100.00%` | `100.00%` |
-| **Event Precision** | `51.85%` | `75.00%` | **`80.00%`** | `75.00%` |
-| **Event F1-Score** | `62.22%` | `70.59%` | **`72.73%`** | `70.59%` |
-| **Mean Detection Delay** | `1.85 s` | `3.06 s` | `3.06 s` | `2.96 s` |
+| **Event Precision** | `22.22%` | `31.25%` | **`33.33%`** | `31.25%` |
+| **Event F1-Score** | `34.29%` | `41.67%` | **`43.48%`** | `41.67%` |
+| **Mean Detection Delay** | `0.89 s` | `0.53 s` | `0.53 s` | `0.49 s` |
 
 ---
 

@@ -96,22 +96,23 @@ def validate_ground_truth(
                 continue
 
             # Kiểm tra trường bắt buộc
-            for req_field in ("video_id", "camera_id", "label", "start_sec", "end_sec"):
+            for req_field in ("video_id", "camera_id", "label", "start_sec", "end_sec", "confidence", "annotator_id", "verification_status"):
                 if req_field not in record:
-                    errors.append(f"Dòng {line_no}: Thiếu trường '{req_field}'")
+                    errors.append(f"Dòng {line_no}: Thiếu trường bắt buộc '{req_field}'")
 
             vid = str(record.get("video_id", "")).strip()
             cam_id = str(record.get("camera_id", "")).strip()
             label = str(record.get("label", "")).upper()
-            annotator = str(record.get("annotator_id", "unspecified")).strip()
-            status = str(record.get("verification_status", "pending_verification")).lower()
+            annotator = str(record.get("annotator_id", "")).strip()
+            status = str(record.get("verification_status", "")).lower().strip()
 
             if not vid or not cam_id:
                 errors.append(f"Dòng {line_no}: video_id hoặc camera_id rỗng")
                 continue
 
             videos_with_gt.add(vid)
-            annotator_set.add(annotator)
+            if annotator:
+                annotator_set.add(annotator)
 
             # Kiểm tra nhãn
             if label not in {"FIRE", "SMOKE"}:
@@ -121,9 +122,19 @@ def validate_ground_truth(
             elif label == "SMOKE":
                 smoke_count += 1
 
-            # Kiểm tra trạng thái xác minh
-            if "verif" in status and "pend" not in status:
+            # Kiểm tra trạng thái xác minh và annotator_id
+            if status not in {"verified", "pending_verification"}:
+                errors.append(
+                    f"Dòng {line_no} video {vid}: verification_status '{status}' không hợp lệ "
+                    "(chỉ chấp nhận 'verified' hoặc 'pending_verification')"
+                )
+            elif status == "verified":
                 verified_count += 1
+                if not annotator or annotator.lower() in {"unspecified", "annotator_pending", "none"}:
+                    errors.append(
+                        f"Dòng {line_no} video {vid}: Bản ghi verified bắt buộc phải có annotator_id hợp lệ "
+                        f"(tìm thấy: '{annotator}')"
+                    )
             else:
                 pending_count += 1
 
@@ -162,9 +173,14 @@ def validate_ground_truth(
             except (TypeError, ValueError):
                 errors.append(f"Dòng {line_no} video {vid}: confidence không phải số hợp lệ")
 
-    is_pass = len(errors) == 0 and total_events > 0
+    schema_valid = len(errors) == 0 and total_events > 0
+    annotation_complete = schema_valid and (pending_count == 0)
+
     report = {
-        "status": "PASS" if is_pass else "FAIL",
+        "status": "PASS" if schema_valid else "FAIL",
+        "schema_valid": schema_valid,
+        "annotation_complete": annotation_complete,
+        "annotation_status": "COMPLETE" if annotation_complete else "INCOMPLETE_PENDING_ANNOTATIONS",
         "ground_truth_file": str(gt_path),
         "metrics": {
             "total_events": total_events,
@@ -179,7 +195,7 @@ def validate_ground_truth(
         "errors": errors[:20],
     }
 
-    LOGGER.info("Kết quả xác thực Ground Truth: %s", report["status"])
+    LOGGER.info("Kết quả xác thực Ground Truth: %s (Schema Valid: %s, Complete: %s)", report["status"], schema_valid, annotation_complete)
     LOGGER.info(
         "Tổng cộng %d events trên %d videos (FIRE: %d, SMOKE: %d | Verified: %d, Pending: %d)",
         total_events, len(videos_with_gt), fire_count, smoke_count, verified_count, pending_count

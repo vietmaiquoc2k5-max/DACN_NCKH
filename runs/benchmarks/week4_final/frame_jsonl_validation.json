@@ -1,7 +1,17 @@
 {
   "status": "PASS",
   "cross_check_matched": true,
-  "cross_check_note": "Khớp nối 100% về số dòng và số video giữa raw và tracked JSONL.",
+  "cross_check_note": "Khớp nối 100% về định danh khung hình (video_id, camera_id, timestamp_sec) và số lượng phát hiện.",
+  "frame_alignment": {
+    "total_frames_aligned": 4289,
+    "mismatches_count": 0,
+    "raw_unique_frames": 4289,
+    "tracked_unique_frames": 4289,
+    "missing_in_tracked_count": 0,
+    "missing_in_raw_count": 0,
+    "raw_duplicates_count": 0,
+    "tracked_duplicates_count": 0
+  },
   "raw_detections_validation": {
     "file": "frame_level_detections.jsonl",
     "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\frame_level_detections.jsonl",
@@ -123,6 +133,7 @@
       "confidence_errors_count": 0,
       "track_id_errors_count": 0,
       "label_errors_count": 0,
+      "bbox_errors_count": 0,
       "sample_error_details": []
     }
   },
@@ -247,6 +258,7 @@
       "confidence_errors_count": 0,
       "track_id_errors_count": 0,
       "label_errors_count": 0,
+      "bbox_errors_count": 0,
       "sample_error_details": []
     }
   }
