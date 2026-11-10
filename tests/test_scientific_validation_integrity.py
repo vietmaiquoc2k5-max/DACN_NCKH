@@ -74,6 +74,46 @@ class TestScientificValidationIntegrity(unittest.TestCase):
         self.assertNotIn("SecretToken99", masked_rtsps)
         self.assertIn("viewer:******@", masked_rtsps)
 
+    def test_negative_audit_duration_accounting_reconciliation(self):
+        """5. Kiểm tra tính rạch ròi giữa thời lượng vật lý trên đĩa và thời lượng thực tế đưa vào đánh giá."""
+        audit_path = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "negative_dataset_audit.json"
+        self.assertTrue(audit_path.exists(), "Tệp negative_dataset_audit.json phải tồn tại.")
+
+        import json
+        with audit_path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        phys = data.get("physical_dataset_inventory", {})
+        eval_recon = data.get("evaluation_reconciliation", {})
+
+        self.assertAlmostEqual(phys.get("total_physical_duration_hours", 0.0), 3.4263, places=2)
+        self.assertGreater(eval_recon.get("total_duration_evaluated_hours", 0.0), 0.0)
+        self.assertLess(
+            eval_recon.get("total_duration_evaluated_hours", 0.0),
+            phys.get("total_physical_duration_hours", 0.0),
+            "Thời lượng đánh giá thực tế phải được phân tách rõ ràng với tổng thời lượng lưu trữ trên đĩa.",
+        )
+        self.assertIn("discrepancy_explanation", eval_recon)
+
+    def test_poisson_rule_of_three_on_zero_false_alarms(self):
+        """6. Khi số sự kiện báo giả bằng 0, phải áp dụng quy tắc Rule of Three Poisson thay vì tuyên bố FAR=0 tuyệt đối."""
+        far_json_path = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "far_evaluation_final.json"
+        self.assertTrue(far_json_path.exists(), "Tệp far_evaluation_final.json phải tồn tại.")
+
+        import json
+        with far_json_path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        pipe_b2 = data.get("aggregate_metrics", {}).get("pipeline_b2_bytetrack_with_gate", {})
+        self.assertEqual(pipe_b2.get("total_event_fas"), 0)
+        self.assertEqual(pipe_b2.get("far_point_estimate"), 0.0)
+
+        ci = pipe_b2.get("poisson_95_ci", [])
+        self.assertEqual(len(ci), 2)
+        self.assertEqual(ci[0], 0.0)
+        self.assertGreater(ci[1], 0.0, "Giới hạn trên khoảng tin cậy Poisson 95% phải > 0 khi thời lượng hữu hạn.")
+        self.assertIn("statistical_note", pipe_b2)
+
 
 if __name__ == "__main__":
     unittest.main()
