@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "evaluation_name": "Reconciled Locked Test Evaluation with Physical Negative Data",
+    "git_branch": "fix",
+    "timestamp_utc": "2026-11-10T09:33:14.876346+00:00",
+    "total_negative_hours_available": 3.4263,
+    "required_negative_hours": 5.0,
+    "missing_negative_hours": 1.5737,
+    "status": "PARTIAL / BLOCKED_BY_NEGATIVE_DATA",
+    "scientific_rationale": "Theo đề cương NCKH MT3, hệ thống yêu cầu tối thiểu 5.0 giờ video âm tính. Hiện tại ổ đĩa đã có 3.4263 giờ video âm tính thực tế (đạt 68.5% chỉ tiêu), còn thiếu 1.5737 giờ để nghiệm thu toàn phần.",
+    "ground_truth_verified_events": 35
+  },
+  "mt3_criteria_check": {
+    "far_reduction_percent": 83.33,
+    "far_reduction_target_met": true,
+    "event_recall_drop_percent": 0.0,
+    "recall_drop_target_met": true,
+    "mean_detection_delay_sec": 0.55,
+    "delay_target_met": true,
+    "negative_duration_hours": 3.43,
+    "duration_target_met": false
+  },
+  "pipelines_comparison": {
+    "pipeline_a_frame_baseline": {
+      "video_event_recall": 0.9166666666666666,
+      "split_video_event_recall": 0.9166666666666666,
+      "event_instance_recall": 0.7222222222222222,
+      "event_precision": 0.19117647058823528,
+      "event_f1": 0.3023255813953488,
+      "false_alarms_per_hour": 27.237354085603112,
+      "far_status": "VERIFIED",
+      "mean_detection_delay_sec": 0.527676923076923,
+      "negative_video_hours": 1.542,
+      "temporal_tolerance_sec": 10.0
+    },
+    "pipeline_b1_bytetrack_no_gate": {
+      "video_event_recall": 0.75,
+      "split_video_event_recall": 0.75,
+      "event_instance_recall": 0.5555555555555556,
+      "event_precision": 0.5,
+      "event_f1": 0.5263157894736842,
+      "false_alarms_per_hour": 3.8910505836575875,
+      "far_status": "VERIFIED",
+      "mean_detection_delay_sec": 0.85871,
+      "negative_video_hours": 1.542,
+      "temporal_tolerance_sec": 10.0
+    },
+    "pipeline_b2_bytetrack_with_gate": {
+      "video_event_recall": 0.9166666666666666,
+      "split_video_event_recall": 0.9166666666666666,
+      "event_instance_recall": 0.6666666666666666,
+      "event_precision": 0.5,
+      "event_f1": 0.5714285714285715,
+      "false_alarms_per_hour": 4.539559014267185,
+      "far_status": "VERIFIED",
+      "mean_detection_delay_sec": 0.5479583333333332,
+      "negative_video_hours": 1.542,
+      "temporal_tolerance_sec": 10.0
+    }
+  }
+}

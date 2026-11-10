@@ -80,7 +80,7 @@ flowchart TD
 
 - **Kiểm tra tính hợp lệ của tệp Ground Truth:**
   ```powershell
-  .\.venv\Scripts\python.exe scripts/validate_ground_truth.py --input data/ground_truth/events.jsonl
+  .\.venv\Scripts\python.exe scripts/validate_ground_truth.py --input data/ground_truth/events.jsonl --catalog data/video_dataset_list.csv
   ```
 - **Nạp Ground Truth trong code đánh giá:**
   ```python
@@ -88,4 +88,14 @@ flowchart TD
   
   gt_events = load_ground_truth_events(Path("data/ground_truth/events.jsonl"))
   ```
+
+---
+
+## 5. Phiên Bản & Toàn Vẹn Dữ Liệu (Snapshot & Checksums)
+
+- **Phiên bản hiện tại:** `v1.0-verified` (Ngày hoàn thiện: 10/11/2026).
+- **Trạng thái:** 35/35 events `verified` trên 24 video vật lý `POS_01` -> `POS_24` (16 FIRE, 19 SMOKE | 0 pending).
+- **Bản lưu trữ đóng băng (Frozen Snapshot):** [`data/ground_truth/events_v1.0_snapshot.jsonl`](file:///d:/workspace/DACN_NCKH/data/ground_truth/events_v1.0_snapshot.jsonl)
+- **Mã băm toàn vẹn:** Được ghi nhận tại [`data/ground_truth/checksums.sha256`](file:///d:/workspace/DACN_NCKH/data/ground_truth/checksums.sha256) (SHA256: `1271a9badf316813d44ca4abccb959fb6c59bd088da2c6e462c7b09573da1133`).
+
 

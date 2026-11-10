@@ -71,3 +71,8 @@ VN_POS_17,VN_POS_17.mp4,videovietnam/VN_POS_17.mp4,vn_pos,1280x720,25.0,37511,15
 VN_POS_18,VN_POS_18.mp4,videovietnam/VN_POS_18.mp4,vn_pos,1280x720,30.0,132750,4425.0,01:13:45,-1.0,40.6,Video Viet Nam; AI_GOI_Y_MOC,
 VN_POS_19,VN_POS_19.mp4,videovietnam/VN_POS_19.mp4,vn_pos,720x1560,30.0,2036,67.87,00:01:07,-1.0,0.4,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh,
 VN_POS_20,VN_POS_20.mp4,videovietnam/VN_POS_20.mp4,vn_pos,1920x1080,25.0,1938,77.52,00:01:17,0.4,0.4,Video Viet Nam; AI_GOI_Y_MOC,
+REAL_NEG_01,NHIỄU 1.mp4,datasets/negative_videos/NHIỄU 1.mp4,negative_noise,1280x720,30.0,201836,6727.87,01:52:07,-1,-1,"[VAL] Video cảnh nhiễu thực tế (đèn đường, xe cộ, ánh sáng thay đổi) - Tập Val",
+REAL_NEG_02,NHIỄU 2.mp4,datasets/negative_videos/NHIỄU 2.mp4,negative_noise,1920x1080,30.0,618,20.6,00:00:20,-1,-1,[VAL] Video cảnh nhiễu chuyển động và đèn xe ban đêm - Tập Val,
+REAL_NEG_03,NHIỄU 3.mp4,datasets/negative_videos/NHIỄU 3.mp4,negative_noise,1280x720,30.0,1054,35.13,00:00:35,-1,-1,[VAL] Video cảnh nhiễu ánh nắng phản chiếu bề mặt - Tập Val,
+REAL_NEG_04,NHIỄU 4.mp4,datasets/negative_videos/NHIỄU 4.mp4,negative_noise,1280x720,30.0,1053,35.1,00:00:35,-1,-1,[TEST] Video cảnh nhiễu ánh sáng ban ngày ngoài trời - Tập Test,
+REAL_NEG_05,NHIỄU 5.mp4,datasets/negative_videos/NHIỄU 5.mp4,negative_noise,1280x720,30.0,165480,5516.0,01:31:56,-1,-1,[TEST] Video cảnh nhiễu camera giám sát thời lượng dài - Tập Test,
