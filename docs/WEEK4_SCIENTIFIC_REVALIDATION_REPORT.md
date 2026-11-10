@@ -201,3 +201,4 @@ Theo đề cương NCKH, Tuần 5 (16–22/11) tập trung vào việc thích ng
 - **Căn cứ khoa học:**
   - Về mặt thuật toán: Cơ chế kết hợp **ByteTrack + Cửa sổ trượt K/N + Cổng biến động đặc trưng màu sắc & diện tích** đã chứng minh tính hiệu quả vượt bậc: loại bỏ $100\%$ báo động giả do phản quang/đèn xe trên dữ liệu thực nghiệm âm tính, duy trì độ trễ cực thấp $0.53\text{s}$, và đạt $100\%$ Video Event Recall.
   - Về mặt liêm chính học thuật: Dự án từ chối tuyên bố nghiệm thu toàn phần (Full Acceptance) khi điều kiện tiên quyết về khối lượng dữ liệu âm tính (5.0 giờ) và môi trường mạng RTSP thực tế chưa được đáp ứng trọn vẹn. Báo cáo này ghi nhận chính xác, khách quan mọi kết quả thực nghiệm làm cơ sở vững chắc cho các công bố khoa học tiếp theo.
+
