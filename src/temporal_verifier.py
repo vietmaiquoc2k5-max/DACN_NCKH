@@ -102,6 +102,7 @@ class TemporalVerifier:
         self.tracks: Dict[int, TrackState] = {}
         self.next_track_id: int = 1
         self.frame_idx: int = 0
+        self.last_alert_timestamps: Dict[str, float] = {}  # {label: last_alert_timestamp_sec}
         self.last_alert_timestamp: Optional[float] = None
         self.current_level: str = "SAFE"  # "SAFE" | "SUSPECT" | "FIRE"
 
@@ -134,6 +135,7 @@ class TemporalVerifier:
         self.tracks.clear()
         self.next_track_id = 1
         self.frame_idx = 0
+        self.last_alert_timestamps.clear()
         self.last_alert_timestamp = None
         self.current_level = "SAFE"
 
@@ -375,16 +377,36 @@ class TemporalVerifier:
             peak_conf = frame_max_conf
             best_temporal_score = max((self._track_temporal_score(t) for t in active_tracks), default=0.0)
 
-        # 4. Kiểm tra điều kiện lưu sự kiện vào CSDL (Cooldown nhân quả, không làm mất sự kiện mới sau Cooldown)
+        # 4. Kiểm tra điều kiện lưu sự kiện vào CSDL (Per-Class Cooldown nhân quả, không chặn chéo giữa FIRE và SMOKE)
         should_trigger_db_alert = False
+        triggered_labels: List[str] = []
+        triggered_alerts: List[Dict[str, Any]] = []
         now = float(timestamp_sec) if timestamp_sec is not None else time.time()
-        confirmed_in_current_frame = any(
-            t.last_seen_frame == self.frame_idx for t in confirmed_tracks
-        )
-        if self.current_level == "FIRE" and confirmed_in_current_frame:
-            if self.last_alert_timestamp is None or (now - self.last_alert_timestamp) >= self.cooldown_sec:
+
+        active_confirmed_by_label: Dict[str, List[TrackState]] = {}
+        for t in confirmed_tracks:
+            if t.last_seen_frame == self.frame_idx:
+                lbl = str(t.label).upper()
+                active_confirmed_by_label.setdefault(lbl, []).append(t)
+
+        for lbl in sorted(active_confirmed_by_label.keys(), key=lambda x: 0 if x == "FIRE" else 1):
+            trks = active_confirmed_by_label[lbl]
+            last_ts = self.last_alert_timestamps.get(lbl)
+            if last_ts is None or (now - last_ts) >= self.cooldown_sec:
+                self.last_alert_timestamps[lbl] = now
                 self.last_alert_timestamp = now
-                should_trigger_db_alert = True
+                triggered_labels.append(lbl)
+                best_label_trk = max(trks, key=lambda t: max(t.confidences) if t.confidences else 0.0)
+                conf_val = max(best_label_trk.confidences) if best_label_trk.confidences else frame_max_conf
+                triggered_alerts.append({
+                    "label": lbl,
+                    "confidence": round(float(conf_val), 4),
+                    "track_id": best_label_trk.track_id,
+                    "temporal_score": round(float(self._track_temporal_score(best_label_trk)), 4),
+                })
+
+        if triggered_labels:
+            should_trigger_db_alert = True
 
         return {
             "valid_boxes": valid_boxes,
@@ -393,7 +415,9 @@ class TemporalVerifier:
             "confirm_k": self.confirm_frames_k,
             "alert_level": self.current_level,
             "should_trigger_db_alert": should_trigger_db_alert,
-            "primary_label": dominant_label or frame_primary_label,
+            "primary_label": ("FIRE" if "FIRE" in triggered_labels else (triggered_labels[0] if triggered_labels else dominant_label)) or frame_primary_label,
+            "triggered_labels": triggered_labels,
+            "triggered_alerts": triggered_alerts,
             "max_confidence": round(float(peak_conf if peak_conf > 0 else frame_max_conf), 4),
             "temporal_score": round(float(best_temporal_score), 4),
             "confirmed_track_id": confirmed_tracks[0].track_id if confirmed_tracks else None,

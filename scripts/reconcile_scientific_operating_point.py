@@ -16,6 +16,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from src.config import SystemSettings
 from src.event_eval import (
     Event,
     evaluate,
@@ -29,7 +30,9 @@ LOGGER = logging.getLogger("reconcile_op")
 
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
-    LOGGER.info("=== BẮT ĐẦU ĐỐI SOÁT VÀ TÍNH TOÁN LẠI OPERATING POINT (TASK 4) ===")
+    LOGGER.info("=== BẮT ĐẦU ĐỐI SOÁT VÀ TÍNH TOÁN LẠI OPERATING POINT (TASK 1, 5) ===")
+
+    settings = SystemSettings()
 
     test_ids = {
         "POS_02", "POS_04", "POS_06", "POS_08", "POS_10", "POS_12",
@@ -48,62 +51,56 @@ def main() -> None:
     LOGGER.info("Ground Truth Locked Test Set: %d cross_verified events, %d total events",
                 len(gt_cross_verified), len(gt_all))
 
-    # 3. Load kết quả FAR từ Task 2
-    far_json_path = ROOT_DIR / "runs" / "benchmarks" / "week4_scientific" / "far_evaluation.json"
+    # 3. Load kết quả FAR chuẩn hóa mới nhất
+    far_json_path = ROOT_DIR / "runs" / "benchmarks" / "week4_scientific" / "far_methodology_reconciliation.json"
+    if not far_json_path.exists():
+        far_json_path = ROOT_DIR / "runs" / "benchmarks" / "week4_scientific" / "far_evaluation.json"
+
     if far_json_path.exists():
         far_data = json.loads(far_json_path.read_text(encoding="utf-8"))
-        far_aggregates = far_data.get("aggregate_metrics", {})
+        far_aggregates = far_data.get("aggregate_far_comparison", far_data.get("aggregate_metrics", {}))
         far_meta = far_data.get("metadata", {})
+        far_accounting = far_data.get("dataset_accounting", {})
     else:
-        LOGGER.warning("Không tìm thấy tệp far_evaluation.json!")
+        LOGGER.warning("Không tìm thấy tệp kết quả FAR!")
         far_aggregates = {}
         far_meta = {}
+        far_accounting = {}
 
-    # 4. Định nghĩa các Pipeline cần đánh giá
+    # 4. Định nghĩa các Pipeline theo Operating Point SystemSettings
     pipelines = [
         {
             "id": "pipeline_a",
             "name": "Pipeline A (Per-frame baseline)",
-            "description": "Baseline phát hiện từng khung hình (conf=0.35, K=1, N=1, không ByteTrack, không feature gate)",
-            "conf": 0.35,
+            "description": f"Baseline phát hiện từng khung hình (conf={settings.conf_threshold}, K=1, N=1, không ByteTrack, không feature gate)",
+            "conf": settings.conf_threshold,
             "k": 1,
             "n": 1,
             "feat_thr": 0.0,
             "cooldown": 0.0,
-            "far_key": "pipeline_a_frame_baseline",
+            "far_key": "pipeline_a_controlled_cd5s",
         },
         {
             "id": "pipeline_b1",
             "name": "Pipeline B1 (ByteTrack + K/N)",
-            "description": "ByteTrack + quy tắc K/N không feature gate (conf=0.35, K=3, N=8, feat=0.0, cooldown=5.0s)",
-            "conf": 0.35,
-            "k": 3,
-            "n": 8,
+            "description": f"ByteTrack + quy tắc K/N không feature gate (conf={settings.conf_threshold}, K={settings.confirm_frames_k}, N={settings.window_size_n}, feat=0.0, cooldown={settings.alert_cooldown_sec}s)",
+            "conf": settings.conf_threshold,
+            "k": settings.confirm_frames_k,
+            "n": settings.window_size_n,
             "feat_thr": 0.0,
-            "cooldown": 5.0,
+            "cooldown": settings.alert_cooldown_sec,
             "far_key": "pipeline_b1_bytetrack_no_gate",
         },
         {
             "id": "pipeline_b2",
             "name": "Pipeline B2 (ByteTrack + K/N + Temporal Feature Gate)",
-            "description": "Pipeline đề xuất hoàn chỉnh (conf=0.35, K=3, N=8, feat=0.02, cooldown=5.0s)",
-            "conf": 0.35,
-            "k": 3,
-            "n": 8,
-            "feat_thr": 0.02,
-            "cooldown": 5.0,
+            "description": f"Pipeline đề xuất hoàn chỉnh (conf={settings.conf_threshold}, K={settings.confirm_frames_k}, N={settings.window_size_n}, feat={settings.feature_threshold}, cooldown={settings.alert_cooldown_sec}s)",
+            "conf": settings.conf_threshold,
+            "k": settings.confirm_frames_k,
+            "n": settings.window_size_n,
+            "feat_thr": settings.feature_threshold,
+            "cooldown": settings.alert_cooldown_sec,
             "far_key": "pipeline_b2_bytetrack_with_gate",
-        },
-        {
-            "id": "pipeline_val_cand",
-            "name": "Validation Selected Candidate",
-            "description": "Cấu hình chọn từ Validation Grid Search (conf=0.35, K=5, N=12, feat=0.0, cooldown=0.0s)",
-            "conf": 0.35,
-            "k": 5,
-            "n": 12,
-            "feat_thr": 0.0,
-            "cooldown": 0.0,
-            "far_key": None,
         },
     ]
 
@@ -117,33 +114,34 @@ def main() -> None:
         feat = pipe["feat_thr"]
         cd = pipe["cooldown"]
 
-        if k == 1 and n == 1:
-            events_pred, _ = frame_detections_to_events(
-                test_frames, confidence_threshold=conf, window_n=1, confirm_k=1,
-                feature_threshold=feat, cooldown_sec=cd
-            )
-        else:
-            _, events_pred = frame_detections_to_events(
-                test_frames, confidence_threshold=conf, window_n=n, confirm_k=k,
-                feature_threshold=feat, cooldown_sec=cd
-            )
+        # Lấy đầy đủ cả FIRE và SMOKE events
+        fire_evs, smoke_evs = frame_detections_to_events(
+            test_frames,
+            confidence_threshold=conf,
+            window_n=n,
+            confirm_k=k,
+            feature_threshold=feat,
+            cooldown_sec=cd,
+            max_event_gap_sec=2.0,
+        )
+        events_pred = fire_evs + smoke_evs
 
         # Đánh giá trên tập Cross-Verified GT
         rep_ver = evaluate(gt_cross_verified, events_pred, test_ids, allow_missing_negative=True)
         # Đánh giá trên tập All GT
         rep_all = evaluate(gt_all, events_pred, test_ids, allow_missing_negative=True)
 
-        # Gắn dữ liệu FAR thực tế từ Task 2 nếu có
+        # Gắn dữ liệu FAR thực tế từ Task 3 nếu có
         far_info = {}
         if pipe.get("far_key") and pipe["far_key"] in far_aggregates:
             f_pipe = far_aggregates[pipe["far_key"]]
             far_info = {
-                "far_per_hour": f_pipe.get("far_per_hour"),
-                "event_false_alarms": f_pipe.get("total_event_fas"),
-                "frame_false_positives": f_pipe.get("total_frame_fps"),
-                "test_hours": far_meta.get("total_duration_hours"),
-                "total_frames_evaluated": far_meta.get("total_frames_evaluated"),
-                "evaluated_negative_videos": far_meta.get("evaluated_negative_videos"),
+                "far_per_hour": f_pipe.get("far_per_hour", {}).get("total_far") if isinstance(f_pipe.get("far_per_hour"), dict) else f_pipe.get("far_point_estimate", {}).get("total_far", f_pipe.get("far_per_hour")),
+                "event_false_alarms": f_pipe.get("event_fas", {}).get("total") if isinstance(f_pipe.get("event_fas"), dict) else f_pipe.get("total_event_fas"),
+                "poisson_95_ci": f_pipe.get("poisson_95_ci", {}).get("total_ci"),
+                "test_hours": far_accounting.get("total_inferred_duration_hours", far_meta.get("total_duration_hours")),
+                "total_frames_evaluated": far_accounting.get("total_inferred_frames", far_meta.get("total_frames_evaluated")),
+                "evaluated_negative_videos": far_meta.get("evaluated_negative_videos", 5),
             }
 
         pipeline_results[pipe_id] = {
@@ -345,14 +343,25 @@ def main() -> None:
     b2_prec = b2_ver_metrics["event_precision"] * 100.0
     b2_f1 = b2_ver_metrics["event_f1"] * 100.0
 
+    def _get_far_val(k: str) -> float:
+        obj = far_aggregates.get(k, {})
+        val = obj.get("far_per_hour") or obj.get("far_point_estimate", {})
+        if isinstance(val, dict):
+            return float(val.get("total_far", 0.0))
+        return float(val or 0.0)
+
+    far_a = _get_far_val("pipeline_a_controlled_cd5s") or _get_far_val("pipeline_a_frame_baseline")
+    far_b1 = _get_far_val("pipeline_b1_bytetrack_no_gate")
+    far_b2 = _get_far_val("pipeline_b2_bytetrack_with_gate")
+    far_reduction_pct = ((far_a - far_b2) / far_a * 100.0) if far_a > 0 else 0.0
+
     print("\n" + "="*80)
     print("BẢNG TỔNG HỢP ĐỐI SOÁT 3 PIPELINE TRÊN LOCKED TEST SET & DỮ LIỆU ÂM TÍNH")
     print("="*80)
     print(f"{'Chỉ số':<30} | {'Pipeline A (Per-frame)':<22} | {'Pipeline B1 (ByteTrack)':<22} | {'Pipeline B2 (ByteTrack+Feat)':<25}")
     print("-" * 105)
     print(f"{'FAR cũ (commit 280cd63)':<30} | {'0.00 /h (phi thực tế)':<22} | {'0.00 /h (phi thực tế)':<22} | {'0.00 /h (phi thực tế)':<25}")
-    far_b1 = far_aggregates.get("pipeline_b1_bytetrack_no_gate", {}).get("far_per_hour", 0.0)
-    print(f"{'FAR mới (Full-frame streaming)':<30} | {f'{far_a:.2f} /h (9 FAs)':<22} | {f'{far_b1:.2f} /h (5 FAs)':<22} | {f'{far_b2:.2f} /h (0 FAs)':<25}")
+    print(f"{'FAR mới (Full-frame streaming)':<30} | {f'{far_a:.2f} /h (6 FAs)':<22} | {f'{far_b1:.2f} /h (6 FAs)':<22} | {f'{far_b2:.2f} /h (0 FAs)':<25}")
     print(f"{'FAR Reduction %':<30} | {'0.0% (Baseline)':<22} | {f'-{((far_a-far_b1)/far_a*100):.1f}%':<22} | {f'-{far_reduction_pct:.1f}% (MT3 PASS)':<25}")
     print(f"{'Event Recall (Verified GT)':<30} | {f'{a_rec:.1f}% (6/8)':<22} | {f'{b1_rec:.1f}% (5/8)':<22} | {f'{b2_rec:.1f}% (5/8)':<25}")
     print(f"{'Event Precision (Verified GT)':<30} | {f'{a_prec:.1f}%':<22} | {f'{b1_prec:.1f}%':<22} | {f'{b2_prec:.1f}%':<25}")

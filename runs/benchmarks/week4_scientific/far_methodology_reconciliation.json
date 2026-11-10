@@ -1,18 +1,22 @@
 {
   "metadata": {
-    "title": "Unified False Alarm Rate & Methodology Reconciliation (Task 1, 2, 3, 4)",
-    "git_branch": "fix/week4-scientific-validation",
-    "timestamp_utc": "2026-11-10T10:58:24.814757+00:00",
-    "elapsed_seconds": 133.45,
-    "model_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "title": "Unified False Alarm Rate & Methodology Reconciliation (Tasks 1, 2, 3, 4)",
+    "benchmark_run_id": "FAR_RUN_20261110_111636",
+    "git_commit": "e2bce46b122e3a03e48f8cb75d37f2ff6c577217",
+    "timestamp_utc": "2026-11-10T11:16:36.749371+00:00",
+    "elapsed_seconds": 125.45,
+    "model_path": "runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
+    "model_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "dataset_manifest_hash": "840fb690cad691d3d2854d20605ee3e57113e9ff5b2cade3b4b97bd0c4cb8fa8",
     "evaluation_mode": "bounded_sample",
-    "parameters": {
+    "operating_point": {
       "confidence_threshold": 0.35,
-      "confirm_k": 3,
+      "confirm_k": 2,
       "window_n": 8,
       "feature_threshold": 0.02,
       "cooldown_sec": 5.0
-    }
+    },
+    "cooldown_policy": "Per-class independent causal cooldown per camera (FIRE and SMOKE isolated; simultaneous supported)"
   },
   "dataset_accounting": {
     "total_physical_videos_on_disk": 5,
@@ -24,7 +28,7 @@
     "total_decode_errors": 0,
     "overall_processing_coverage_pct": 1.82,
     "mt1_requirement_hours": 5.0,
-    "deficit_hours_to_reach_5h": 1.5737,
+    "deficit_hours_to_reach_5h": 4.9377,
     "target_hours_met": false,
     "status": "BLOCKED_BY_NEGATIVE_DATA"
   },
@@ -46,7 +50,7 @@
       }
     },
     "3_false_alarm_events": {
-      "description": "Số sự kiện cảnh báo giả độc lập sau temporal confirmation, event merging và cooldown",
+      "description": "Số sự kiện cảnh báo sai độc lập sau temporal confirmation, event merging và per-class cooldown",
       "counts": {
         "pipeline_a_controlled_cd5": {
           "fire": 2,
@@ -59,9 +63,9 @@
           "total": 11
         },
         "pipeline_b1_bytetrack_no_gate": {
-          "fire": 0,
+          "fire": 2,
           "smoke": 4,
-          "total": 4
+          "total": 6
         },
         "pipeline_b2_bytetrack_with_gate": {
           "fire": 0,
@@ -99,21 +103,21 @@
       }
     },
     "pipeline_b1_bytetrack_no_gate": {
-      "name": "Pipeline B1 (ByteTrack + K/N, Cooldown 5.0s, feat=0.0)",
+      "name": "Pipeline B1 (ByteTrack + K=2/N=8, Cooldown 5.0s, feat=0.0)",
       "event_fas": {
-        "fire": 0,
+        "fire": 2,
         "smoke": 4,
-        "total": 4
+        "total": 6
       },
       "far_per_hour": {
-        "fire_far": 0.0,
+        "fire_far": 32.12,
         "smoke_far": 64.24,
-        "total_far": 64.24
+        "total_far": 96.36
       },
-      "far_reduction_vs_a_ctrl_pct": 33.33
+      "far_reduction_vs_a_ctrl_pct": 0.0
     },
     "pipeline_b2_bytetrack_with_gate": {
-      "name": "Pipeline B2 (ByteTrack + K/N + Temporal Feature Gate, Cooldown 5.0s, feat=0.02)",
+      "name": "Pipeline B2 (ByteTrack + K=2/N=8 + Temporal Feature Gate, Cooldown 5.0s, feat=0.02)",
       "event_fas": {
         "fire": 0,
         "smoke": 0,
@@ -247,9 +251,9 @@
           "total": 2
         },
         "pipeline_b1_bytetrack_no_gate": {
-          "fire": 0,
+          "fire": 1,
           "smoke": 0,
-          "total": 0
+          "total": 1
         },
         "pipeline_b2_bytetrack_with_gate": {
           "fire": 0,
@@ -269,9 +273,9 @@
           "total": 204.93
         },
         "pipeline_b1_bytetrack_no_gate": {
-          "fire": 0.0,
+          "fire": 102.47,
           "smoke": 0.0,
-          "total": 0.0
+          "total": 102.47
         },
         "pipeline_b2_bytetrack_with_gate": {
           "fire": 0.0,
@@ -317,9 +321,9 @@
           "total": 9
         },
         "pipeline_b1_bytetrack_no_gate": {
-          "fire": 0,
+          "fire": 1,
           "smoke": 4,
-          "total": 4
+          "total": 5
         },
         "pipeline_b2_bytetrack_with_gate": {
           "fire": 0,
@@ -339,9 +343,9 @@
           "total": 923.08
         },
         "pipeline_b1_bytetrack_no_gate": {
-          "fire": 0.0,
+          "fire": 102.56,
           "smoke": 410.26,
-          "total": 410.26
+          "total": 512.82
         },
         "pipeline_b2_bytetrack_with_gate": {
           "fire": 0.0,

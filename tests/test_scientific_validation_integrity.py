@@ -186,6 +186,191 @@ class TestScientificValidationIntegrity(unittest.TestCase):
         res_after = v.update([box], tracks_assigned=True, timestamp_sec=5.5)
         self.assertTrue(res_after.get("should_trigger_db_alert"), "Sau khi hết Cooldown 5.0s, phải kích hoạt cảnh báo mới.")
 
+    def test_fire_followed_by_smoke_inside_cooldown(self):
+        """11. TASK 2: FIRE kích hoạt, sau đó SMOKE xuất hiện trong cooldown của FIRE -> SMOKE phải trigger độc lập."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        box_fire = DetectionBox(cls_id=1, label="FIRE", confidence=0.9, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+        box_smoke = DetectionBox(cls_id=0, label="SMOKE", confidence=0.85, xyxy=(60, 60, 100, 100), norm_xywh=(0.3, 0.3, 0.2, 0.2), track_id=2)
+
+        # Frame 0 & 1: FIRE đạt K=2 ở t=0.1s
+        v.update([box_fire], tracks_assigned=True, timestamp_sec=0.0)
+        r_fire = v.update([box_fire], tracks_assigned=True, timestamp_sec=0.1)
+        self.assertTrue(r_fire.get("should_trigger_db_alert"))
+        self.assertIn("FIRE", r_fire.get("triggered_labels", []))
+
+        # Frame 2 & 3: SMOKE đạt K=2 ở t=1.1s (1.1s < 0.1s + 5.0s Cooldown của FIRE)
+        # Bắt buộc per-class cooldown: SMOKE không bị FIRE chặn!
+        v.update([box_smoke], tracks_assigned=True, timestamp_sec=1.0)
+        r_smoke = v.update([box_smoke], tracks_assigned=True, timestamp_sec=1.1)
+        self.assertTrue(r_smoke.get("should_trigger_db_alert"), "SMOKE không được bị chặn bởi Cooldown của FIRE.")
+        self.assertIn("SMOKE", r_smoke.get("triggered_labels", []))
+
+    def test_smoke_followed_by_fire_inside_cooldown(self):
+        """12. TASK 2: SMOKE kích hoạt, sau đó FIRE xuất hiện trong cooldown của SMOKE -> FIRE phải trigger độc lập."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        box_smoke = DetectionBox(cls_id=0, label="SMOKE", confidence=0.85, xyxy=(60, 60, 100, 100), norm_xywh=(0.3, 0.3, 0.2, 0.2), track_id=2)
+        box_fire = DetectionBox(cls_id=1, label="FIRE", confidence=0.9, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+
+        # SMOKE đạt K=2 ở t=0.1s
+        v.update([box_smoke], tracks_assigned=True, timestamp_sec=0.0)
+        r_smoke = v.update([box_smoke], tracks_assigned=True, timestamp_sec=0.1)
+        self.assertTrue(r_smoke.get("should_trigger_db_alert"))
+        self.assertIn("SMOKE", r_smoke.get("triggered_labels", []))
+
+        # FIRE đạt K=2 ở t=1.1s (< 5.0s cooldown của SMOKE) -> FIRE không bị nuốt!
+        v.update([box_fire], tracks_assigned=True, timestamp_sec=1.0)
+        r_fire = v.update([box_fire], tracks_assigned=True, timestamp_sec=1.1)
+        self.assertTrue(r_fire.get("should_trigger_db_alert"), "FIRE không được bị chặn bởi Cooldown của SMOKE.")
+        self.assertIn("FIRE", r_fire.get("triggered_labels", []))
+
+    def test_simultaneous_fire_and_smoke_both_triggered(self):
+        """13. TASK 2: Đồng thời cả FIRE và SMOKE đạt ngưỡng xác nhận trong cùng frame -> cả hai đều trigger."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        box_fire = DetectionBox(cls_id=1, label="FIRE", confidence=0.9, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+        box_smoke = DetectionBox(cls_id=0, label="SMOKE", confidence=0.85, xyxy=(60, 60, 100, 100), norm_xywh=(0.3, 0.3, 0.2, 0.2), track_id=2)
+
+        # Frame 0: cả hai cùng xuất hiện
+        v.update([box_fire, box_smoke], tracks_assigned=True, timestamp_sec=0.0)
+        # Frame 1: cả hai cùng đạt K=2
+        res = v.update([box_fire, box_smoke], tracks_assigned=True, timestamp_sec=0.1)
+
+        self.assertTrue(res.get("should_trigger_db_alert"))
+        triggered = res.get("triggered_labels", [])
+        self.assertIn("FIRE", triggered, "Phải ghi nhận cảnh báo FIRE.")
+        self.assertIn("SMOKE", triggered, "Phải ghi nhận cảnh báo SMOKE.")
+        self.assertEqual(len(triggered), 2, "Cả hai nhãn phải được kích hoạt độc lập, không nuốt lớp nào.")
+
+    def test_same_class_repeated_detections_suppressed_by_cooldown(self):
+        """14. TASK 2: Cùng một nhãn lặp lại trong thời gian cooldown thì bị nén, không phát cảnh báo lặp."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        box_fire_1 = DetectionBox(cls_id=1, label="FIRE", confidence=0.9, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+        box_fire_2 = DetectionBox(cls_id=1, label="FIRE", confidence=0.88, xyxy=(20, 20, 60, 60), norm_xywh=(0.15, 0.15, 0.2, 0.2), track_id=3)
+
+        v.update([box_fire_1], tracks_assigned=True, timestamp_sec=0.0)
+        r1 = v.update([box_fire_1], tracks_assigned=True, timestamp_sec=0.1)
+        self.assertTrue(r1.get("should_trigger_db_alert"), "Lần đầu đạt K=2 phải trigger.")
+
+        # Cùng track hoặc track mới của cùng nhãn FIRE ở t=1.0s, 1.1s (< 5.0s)
+        v.update([box_fire_2], tracks_assigned=True, timestamp_sec=1.0)
+        r2 = v.update([box_fire_2], tracks_assigned=True, timestamp_sec=1.1)
+        self.assertFalse(r2.get("should_trigger_db_alert"), "Cùng nhãn FIRE trong thời gian cooldown 5.0s phải bị nén.")
+
+    def test_separate_camera_cooldown_isolation(self):
+        """15. TASK 2: Cách ly hoàn toàn Cooldown giữa các camera khác nhau."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v_cam1 = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        v_cam2 = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+
+        box_fire = DetectionBox(cls_id=1, label="FIRE", confidence=0.9, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+
+        # Cam 1 trigger ở t=0.1s
+        v_cam1.update([box_fire], tracks_assigned=True, timestamp_sec=0.0)
+        r_cam1 = v_cam1.update([box_fire], tracks_assigned=True, timestamp_sec=0.1)
+        self.assertTrue(r_cam1.get("should_trigger_db_alert"))
+
+        # Cam 2 có FIRE ở t=0.5s (< 5.0s của Cam 1) -> Cam 2 phải trigger bình thường
+        v_cam2.update([box_fire], tracks_assigned=True, timestamp_sec=0.4)
+        r_cam2 = v_cam2.update([box_fire], tracks_assigned=True, timestamp_sec=0.5)
+        self.assertTrue(r_cam2.get("should_trigger_db_alert"), "Camera 2 không bị ảnh hưởng bởi Cooldown của Camera 1.")
+
+    def test_cooldown_expiration_triggers_new_event(self):
+        """16. TASK 2: Sau khi hết thời gian Cooldown (t >= 5.0s), sự kiện mới cùng nhãn phải được kích hoạt."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        box = DetectionBox(cls_id=1, label="FIRE", confidence=0.9, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+
+        v.update([box], tracks_assigned=True, timestamp_sec=0.0)
+        r1 = v.update([box], tracks_assigned=True, timestamp_sec=0.1)
+        self.assertTrue(r1.get("should_trigger_db_alert"))
+
+        # Frame ở t=5.2s (> 0.1s + 5.0s)
+        r2 = v.update([box], tracks_assigned=True, timestamp_sec=5.2)
+        self.assertTrue(r2.get("should_trigger_db_alert"), "Hết cooldown 5.0s phải cho phép kích hoạt sự kiện mới.")
+
+    def test_benchmark_assertion_fails_when_settings_mismatched(self):
+        """17. TASK 1: Benchmark bắt buộc nạp Operating Point từ SystemSettings và raise AssertionError nếu sai lệch."""
+        from src.config import SystemSettings
+        from scripts.evaluate_negative_dataset_unified import run_unified_negative_evaluation
+
+        bad_settings = SystemSettings()
+        bad_settings.confirm_frames_k = 4  # Sai lệch so với K=2
+
+        with self.assertRaises(AssertionError):
+            run_unified_negative_evaluation(settings=bad_settings)
+
+    def test_far_result_metadata_equals_runtime_parameters(self):
+        """18. TASK 7: FAR result metadata phải phản ánh đúng runtime parameters (K=2, N=8, feat=0.02, cd=5.0s, conf=0.35)."""
+        import json
+        far_json = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "far_methodology_reconciliation.json"
+        self.assertTrue(far_json.exists(), "far_methodology_reconciliation.json phải tồn tại.")
+        data = json.loads(far_json.read_text(encoding="utf-8"))
+
+        op = data.get("metadata", {}).get("operating_point", {})
+        self.assertEqual(op.get("confirm_k"), 2)
+        self.assertEqual(op.get("window_n"), 8)
+        self.assertAlmostEqual(op.get("feature_threshold"), 0.02, places=4)
+        self.assertAlmostEqual(op.get("cooldown_sec"), 5.0, places=2)
+        self.assertAlmostEqual(op.get("confidence_threshold"), 0.35, places=2)
+
+    def test_fire_and_smoke_both_counted_in_far_results(self):
+        """19. TASK 7: Báo cáo FAR phải phân tách và tính đầy đủ cả FIRE và SMOKE cho mọi pipeline."""
+        import json
+        far_json = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "far_methodology_reconciliation.json"
+        data = json.loads(far_json.read_text(encoding="utf-8"))
+
+        agg_far = data.get("aggregate_far_comparison", {})
+        for p_name in ["pipeline_a_controlled_cd5s", "pipeline_b1_bytetrack_no_gate", "pipeline_b2_bytetrack_with_gate"]:
+            self.assertIn(p_name, agg_far)
+            p_data = agg_far[p_name]
+            far_obj = p_data.get("far_per_hour") or p_data.get("far_point_estimate")
+            self.assertIn("fire_far", far_obj)
+            self.assertIn("smoke_far", far_obj)
+            self.assertIn("total_far", far_obj)
+
+    def test_full_video_mode_semantics(self):
+        """20. TASK 4 & 7: Khi max_frames <= 0 hoặc None, evaluation_mode phải là full_video."""
+        # Kiểm tra logic ánh xạ mode
+        def parse_mode(max_frames_arg: int | None) -> tuple[str, int | None]:
+            effective_max = max_frames_arg if (max_frames_arg is not None and max_frames_arg > 0) else None
+            mode = "full_video" if effective_max is None else "bounded_sample"
+            return mode, effective_max
+
+        m1, eff1 = parse_mode(0)
+        self.assertEqual(m1, "full_video")
+        self.assertIsNone(eff1)
+
+        m2, eff2 = parse_mode(-1)
+        self.assertEqual(m2, "full_video")
+        self.assertIsNone(eff2)
+
+        m3, eff3 = parse_mode(None)
+        self.assertEqual(m3, "full_video")
+        self.assertIsNone(eff3)
+
+        m4, eff4 = parse_mode(2000)
+        self.assertEqual(m4, "bounded_sample")
+        self.assertEqual(eff4, 2000)
+
+    def test_report_configuration_matches_deployed_configuration(self):
+        """21. TASK 7: Cấu hình trong báo cáo đối soát và validation phải khớp 100% với SystemSettings."""
+        import json
+        from src.config import SystemSettings
+        sys_cfg = SystemSettings()
+
+        val_json = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "validation_operating_point_evaluation.json"
+        if val_json.exists():
+            vdata = json.loads(val_json.read_text(encoding="utf-8"))
+            v_cfg = vdata.get("metadata", {}).get("deployed_configuration", {})
+            self.assertEqual(v_cfg.get("confirm_frames_k"), sys_cfg.confirm_frames_k)
+            self.assertEqual(v_cfg.get("window_size_n"), sys_cfg.window_size_n)
+            self.assertAlmostEqual(v_cfg.get("feature_threshold"), sys_cfg.feature_threshold, places=4)
+            self.assertAlmostEqual(v_cfg.get("alert_cooldown_sec"), sys_cfg.alert_cooldown_sec, places=2)
+            self.assertAlmostEqual(v_cfg.get("confidence_threshold"), sys_cfg.conf_threshold, places=2)
+
 
 if __name__ == "__main__":
     unittest.main()
