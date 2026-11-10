@@ -114,6 +114,78 @@ class TestScientificValidationIntegrity(unittest.TestCase):
         self.assertGreater(ci[1], 0.0, "Giới hạn trên khoảng tin cậy Poisson 95% phải > 0 khi thời lượng hữu hạn.")
         self.assertIn("statistical_note", pipe_b2)
 
+    def test_b1_b2_accounts_both_fire_and_smoke(self):
+        """7. Cả 3 pipeline phải tính đầy đủ cả FIRE và SMOKE false alarms, không được bỏ qua SMOKE."""
+        recon_path = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "far_methodology_reconciliation.json"
+        self.assertTrue(recon_path.exists(), "Tệp far_methodology_reconciliation.json phải tồn tại.")
+
+        import json
+        with recon_path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        comp = data.get("aggregate_far_comparison", {})
+        for p_key in ["pipeline_a_controlled_cd5s", "pipeline_b1_bytetrack_no_gate", "pipeline_b2_bytetrack_with_gate"]:
+            self.assertIn(p_key, comp)
+            fas = comp[p_key]["event_fas"]
+            self.assertIn("fire", fas)
+            self.assertIn("smoke", fas)
+            self.assertIn("total", fas)
+            self.assertEqual(fas["total"], fas["fire"] + fas["smoke"])
+
+        # Kiểm tra cụ thể B1 bắt được SMOKE false alarms
+        b1_fas = comp["pipeline_b1_bytetrack_no_gate"]["event_fas"]
+        self.assertGreater(b1_fas["smoke"], 0, "B1 phải ghi nhận SMOKE false alarms từ video âm tính.")
+
+    def test_frame_fp_different_from_detection_fp(self):
+        """8. Phân tách rạch ròi giữa false_positive_detections (boxes) và false_positive_frames."""
+        recon_path = PROJECT_ROOT / "runs" / "benchmarks" / "week4_scientific" / "far_methodology_reconciliation.json"
+        import json
+        with recon_path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        sep = data.get("three_metrics_separation", {})
+        self.assertIn("1_false_positive_detections", sep)
+        self.assertIn("2_false_positive_frames", sep)
+        self.assertIn("3_false_alarm_events", sep)
+
+        det_counts = sep["1_false_positive_detections"]["counts"]
+        frame_counts = sep["2_false_positive_frames"]["counts"]
+        self.assertIn("fire", det_counts)
+        self.assertIn("smoke", det_counts)
+        self.assertIn("fire", frame_counts)
+        self.assertIn("smoke", frame_counts)
+
+    def test_operating_point_system_settings_consistency(self):
+        """9. Cấu hình SystemSettings trong src/config.py phải trùng khớp 100% với Operating Point đề xuất."""
+        from src.config import SystemSettings
+        cfg = SystemSettings()
+        self.assertEqual(cfg.conf_threshold, 0.35)
+        self.assertEqual(cfg.window_size_n, 8)
+        self.assertEqual(cfg.confirm_frames_k, 2)
+        self.assertEqual(cfg.alert_cooldown_sec, 5.0)
+        self.assertEqual(cfg.feature_threshold, 0.02)
+        self.assertEqual(cfg.bytetrack.track_high_thresh, 0.35)
+
+    def test_cooldown_causal_no_duplicate_counting(self):
+        """10. Cơ chế Cooldown nhân quả: không sinh báo động trùng lặp trong thời gian cooldown."""
+        from src.temporal_verifier import TemporalVerifier, DetectionBox
+        v = TemporalVerifier(window_size_n=8, confirm_frames_k=2, feature_threshold=0.0, cooldown_sec=5.0)
+        box = DetectionBox(cls_id=1, label="FIRE", confidence=0.85, xyxy=(10, 10, 50, 50), norm_xywh=(0.1, 0.1, 0.2, 0.2), track_id=1)
+
+        # 10 khung hình liên tục cách nhau 0.2s (tổng 1.8s < 5.0s cooldown)
+        triggered_count = 0
+        for i in range(10):
+            ts = float(i) * 0.2
+            res = v.update([box], tracks_assigned=True, timestamp_sec=ts)
+            if res.get("should_trigger_db_alert"):
+                triggered_count += 1
+
+        self.assertEqual(triggered_count, 1, "Chỉ được phát đúng 1 cảnh báo ban đầu, trong thời gian cooldown không được phát lặp.")
+
+        # Khung hình sau khi hết cooldown (ts = 5.5s > 5.0s)
+        res_after = v.update([box], tracks_assigned=True, timestamp_sec=5.5)
+        self.assertTrue(res_after.get("should_trigger_db_alert"), "Sau khi hết Cooldown 5.0s, phải kích hoạt cảnh báo mới.")
+
 
 if __name__ == "__main__":
     unittest.main()

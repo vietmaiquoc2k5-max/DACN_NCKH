@@ -1,0 +1,6 @@
+video_id,file_name,native_fps,native_frames,inferred_frames,inferred_dur_sec,inferred_dur_hours,fp_det_fire,fp_det_smoke,fp_det_total,fp_frame_fire,fp_frame_smoke,fp_frame_any,fa_a_ctrl_fire,fa_a_ctrl_smoke,fa_a_ctrl_total,far_a_ctrl_total,fa_b1_fire,fa_b1_smoke,fa_b1_total,far_b1_total,fa_b2_fire,fa_b2_smoke,fa_b2_total,far_b2_total,far_b2_poisson_upper_95
+REAL_NEG_02,NHIỄU 2.mp4,30.0,618,618,20.6,0.0057,0,0,0,0,0,0,0,0,0,0.0,0,0,0,0.0,0,0,0,0.0,524.27
+REAL_NEG_03,NHIỄU 3.mp4,30.0,1054,1054,35.13,0.0098,4,0,4,4,0,4,1,0,1,102.47,0,0,0,0.0,0,0,0,0.0,307.4
+REAL_NEG_04,NHIỄU 4.mp4,30.0,1053,1053,35.1,0.0097,6,99,105,6,99,105,1,4,5,512.82,0,4,4,410.26,0,0,0,0.0,307.69
+REAL_NEG_01,NHIỄU 1.mp4,30.0,201836,2000,66.67,0.0185,0,0,0,0,0,0,0,0,0,0.0,0,0,0,0.0,0,0,0,0.0,162.0
+REAL_NEG_05,NHIỄU 5.mp4,30.0,165480,2000,66.67,0.0185,0,0,0,0,0,0,0,0,0,0.0,0,0,0,0.0,0,0,0,0.0,162.0

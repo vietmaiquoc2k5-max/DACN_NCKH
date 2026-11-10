@@ -1,0 +1,498 @@
+{
+  "metadata": {
+    "title": "Unified False Alarm Rate & Methodology Reconciliation (Task 1, 2, 3, 4)",
+    "git_branch": "fix/week4-scientific-validation",
+    "timestamp_utc": "2026-11-10T10:58:24.814757+00:00",
+    "elapsed_seconds": 133.45,
+    "model_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "evaluation_mode": "bounded_sample",
+    "parameters": {
+      "confidence_threshold": 0.35,
+      "confirm_k": 3,
+      "window_n": 8,
+      "feature_threshold": 0.02,
+      "cooldown_sec": 5.0
+    }
+  },
+  "dataset_accounting": {
+    "total_physical_videos_on_disk": 5,
+    "total_physical_frames_on_disk": 370041,
+    "total_physical_duration_hours_on_disk": 3.4263,
+    "total_inferred_frames": 6725,
+    "total_inferred_duration_sec": 224.17,
+    "total_inferred_duration_hours": 0.0623,
+    "total_decode_errors": 0,
+    "overall_processing_coverage_pct": 1.82,
+    "mt1_requirement_hours": 5.0,
+    "deficit_hours_to_reach_5h": 1.5737,
+    "target_hours_met": false,
+    "status": "BLOCKED_BY_NEGATIVE_DATA"
+  },
+  "three_metrics_separation": {
+    "1_false_positive_detections": {
+      "description": "Tổng số bounding boxes sai phát hiện từ mô hình YOLO trên video âm tính",
+      "counts": {
+        "fire": 10,
+        "smoke": 99,
+        "total": 109
+      }
+    },
+    "2_false_positive_frames": {
+      "description": "Số lượng khung hình chứa ít nhất một bounding box sai (không đếm trùng lặp box)",
+      "counts": {
+        "fire": 10,
+        "smoke": 99,
+        "any": 109
+      }
+    },
+    "3_false_alarm_events": {
+      "description": "Số sự kiện cảnh báo giả độc lập sau temporal confirmation, event merging và cooldown",
+      "counts": {
+        "pipeline_a_controlled_cd5": {
+          "fire": 2,
+          "smoke": 4,
+          "total": 6
+        },
+        "pipeline_a_legacy_cd2": {
+          "fire": 3,
+          "smoke": 8,
+          "total": 11
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0,
+          "smoke": 4,
+          "total": 4
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        }
+      }
+    }
+  },
+  "aggregate_far_comparison": {
+    "pipeline_a_controlled_cd5s": {
+      "name": "Pipeline A (Per-frame baseline, Cooldown 5.0s)",
+      "event_fas": {
+        "fire": 2,
+        "smoke": 4,
+        "total": 6
+      },
+      "far_per_hour": {
+        "fire_far": 32.12,
+        "smoke_far": 64.24,
+        "total_far": 96.36
+      }
+    },
+    "pipeline_a_legacy_cd2s": {
+      "name": "Pipeline A (Legacy baseline, Cooldown 2.0s / Max Gap 2.0s)",
+      "event_fas": {
+        "fire": 3,
+        "smoke": 8,
+        "total": 11
+      },
+      "far_per_hour": {
+        "fire_far": 48.18,
+        "smoke_far": 128.48,
+        "total_far": 176.65
+      }
+    },
+    "pipeline_b1_bytetrack_no_gate": {
+      "name": "Pipeline B1 (ByteTrack + K/N, Cooldown 5.0s, feat=0.0)",
+      "event_fas": {
+        "fire": 0,
+        "smoke": 4,
+        "total": 4
+      },
+      "far_per_hour": {
+        "fire_far": 0.0,
+        "smoke_far": 64.24,
+        "total_far": 64.24
+      },
+      "far_reduction_vs_a_ctrl_pct": 33.33
+    },
+    "pipeline_b2_bytetrack_with_gate": {
+      "name": "Pipeline B2 (ByteTrack + K/N + Temporal Feature Gate, Cooldown 5.0s, feat=0.02)",
+      "event_fas": {
+        "fire": 0,
+        "smoke": 0,
+        "total": 0
+      },
+      "far_point_estimate": {
+        "fire_far": 0.0,
+        "smoke_far": 0.0,
+        "total_far": 0.0
+      },
+      "poisson_95_ci": {
+        "total_ci": [
+          0.0,
+          48.18
+        ],
+        "fire_ci": [
+          0.0,
+          48.18
+        ],
+        "smoke_ci": [
+          0.0,
+          48.18
+        ]
+      },
+      "far_reduction_vs_a_ctrl_pct": 100.0,
+      "statistical_rigor_note": "Trong 0.0623 giờ đánh giá (224.2s), Pipeline B2 ghi nhận 0 sự kiện cảnh báo sai. Điểm ước lượng là 0.00/h. Giới hạn trên khoảng tin cậy Poisson 95% theo Rule of Three là 48.18/h. Không tuyên bố FAR = 0 theo nghĩa tuyệt đối khi thời lượng đánh giá là hữu hạn."
+    },
+    "mt3_target_met_ge_50pct": true
+  },
+  "per_video_results": [
+    {
+      "video_id": "REAL_NEG_02",
+      "file_name": "NHIỄU 2.mp4",
+      "sha256": "de7705fad4d1a65ff20df5eb1f321036cdec7160f6d5073464d9e900c63555ba",
+      "native_fps": 30.0,
+      "total_physical_frames": 618,
+      "inferred_frames": 618,
+      "decode_errors": 0,
+      "processing_coverage_pct": 100.0,
+      "inferred_duration_sec": 20.6,
+      "inferred_duration_hours": 0.0057,
+      "false_positive_detections": {
+        "fire": 0,
+        "smoke": 0,
+        "total": 0
+      },
+      "false_positive_frames": {
+        "fire": 0,
+        "smoke": 0,
+        "any": 0
+      },
+      "false_alarm_events": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        }
+      },
+      "far_per_hour": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_poisson_95_ci": [
+          0.0,
+          524.27
+        ]
+      }
+    },
+    {
+      "video_id": "REAL_NEG_03",
+      "file_name": "NHIỄU 3.mp4",
+      "sha256": "a96ced47406adf836daba9adc3c9137cb2969ad70fb4dae20caa3aaea89a1143",
+      "native_fps": 30.0,
+      "total_physical_frames": 1054,
+      "inferred_frames": 1054,
+      "decode_errors": 0,
+      "processing_coverage_pct": 100.0,
+      "inferred_duration_sec": 35.13,
+      "inferred_duration_hours": 0.0098,
+      "false_positive_detections": {
+        "fire": 4,
+        "smoke": 0,
+        "total": 4
+      },
+      "false_positive_frames": {
+        "fire": 4,
+        "smoke": 0,
+        "any": 4
+      },
+      "false_alarm_events": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 1,
+          "smoke": 0,
+          "total": 1
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 2,
+          "smoke": 0,
+          "total": 2
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        }
+      },
+      "far_per_hour": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 102.47,
+          "smoke": 0.0,
+          "total": 102.47
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 204.93,
+          "smoke": 0.0,
+          "total": 204.93
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_poisson_95_ci": [
+          0.0,
+          307.4
+        ]
+      }
+    },
+    {
+      "video_id": "REAL_NEG_04",
+      "file_name": "NHIỄU 4.mp4",
+      "sha256": "25fda9ea2b1ca96ca51b74fa34b6b75e67ffb06daa0fc0cb4f7eeb1f840e6b94",
+      "native_fps": 30.0,
+      "total_physical_frames": 1053,
+      "inferred_frames": 1053,
+      "decode_errors": 0,
+      "processing_coverage_pct": 100.0,
+      "inferred_duration_sec": 35.1,
+      "inferred_duration_hours": 0.0097,
+      "false_positive_detections": {
+        "fire": 6,
+        "smoke": 99,
+        "total": 105
+      },
+      "false_positive_frames": {
+        "fire": 6,
+        "smoke": 99,
+        "any": 105
+      },
+      "false_alarm_events": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 1,
+          "smoke": 4,
+          "total": 5
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 1,
+          "smoke": 8,
+          "total": 9
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0,
+          "smoke": 4,
+          "total": 4
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        }
+      },
+      "far_per_hour": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 102.56,
+          "smoke": 410.26,
+          "total": 512.82
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 102.56,
+          "smoke": 820.51,
+          "total": 923.08
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0.0,
+          "smoke": 410.26,
+          "total": 410.26
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_poisson_95_ci": [
+          0.0,
+          307.69
+        ]
+      }
+    },
+    {
+      "video_id": "REAL_NEG_01",
+      "file_name": "NHIỄU 1.mp4",
+      "sha256": "4deb083ea8d787f6108d06acdd5d87806acf98c4dfceb428771e3499be7f7640",
+      "native_fps": 30.0,
+      "total_physical_frames": 201836,
+      "inferred_frames": 2000,
+      "decode_errors": 0,
+      "processing_coverage_pct": 0.99,
+      "inferred_duration_sec": 66.67,
+      "inferred_duration_hours": 0.0185,
+      "false_positive_detections": {
+        "fire": 0,
+        "smoke": 0,
+        "total": 0
+      },
+      "false_positive_frames": {
+        "fire": 0,
+        "smoke": 0,
+        "any": 0
+      },
+      "false_alarm_events": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        }
+      },
+      "far_per_hour": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_poisson_95_ci": [
+          0.0,
+          162.0
+        ]
+      }
+    },
+    {
+      "video_id": "REAL_NEG_05",
+      "file_name": "NHIỄU 5.mp4",
+      "sha256": "eb242b46c30484c60342201d9d1e5c2514af552fc013cd2bba9f605098b423ec",
+      "native_fps": 30.0,
+      "total_physical_frames": 165480,
+      "inferred_frames": 2000,
+      "decode_errors": 0,
+      "processing_coverage_pct": 1.21,
+      "inferred_duration_sec": 66.67,
+      "inferred_duration_hours": 0.0185,
+      "false_positive_detections": {
+        "fire": 0,
+        "smoke": 0,
+        "total": 0
+      },
+      "false_positive_frames": {
+        "fire": 0,
+        "smoke": 0,
+        "any": 0
+      },
+      "false_alarm_events": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0,
+          "smoke": 0,
+          "total": 0
+        }
+      },
+      "far_per_hour": {
+        "pipeline_a_controlled_cd5s": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_a_legacy_cd2s": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b1_bytetrack_no_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_bytetrack_with_gate": {
+          "fire": 0.0,
+          "smoke": 0.0,
+          "total": 0.0
+        },
+        "pipeline_b2_poisson_95_ci": [
+          0.0,
+          162.0
+        ]
+      }
+    }
+  ]
+}
