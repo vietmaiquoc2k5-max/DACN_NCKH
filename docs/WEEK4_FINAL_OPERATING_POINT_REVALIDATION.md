@@ -181,3 +181,4 @@ Sau khi đóng băng Operating Point $K=2, N=8, feat=0.02, cd=5.0s, conf=0.35$, 
 2. **Liêm chính khoa học:** Nhóm kiên quyết từ chối công bố nghiệm thu toàn phần khi các điều kiện ngoại cảnh chưa hội tụ đủ:
    $$\mathbf{KẾT\ LUẬN:\ PARTIAL\ (BLOCKED\_BY\_NEGATIVE\_DATA\ \&\ NO\_LIVE\_RTSP)}$$
 3. Toàn bộ 96 automated tests bảo vệ tính toàn vẹn hệ thống đạt PASS 100%. Sẵn sàng chuyển giao cho Tuần 5 và Tuần 7.
+
