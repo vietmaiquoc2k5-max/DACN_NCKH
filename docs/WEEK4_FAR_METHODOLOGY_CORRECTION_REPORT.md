@@ -202,3 +202,4 @@ Căn cứ vào kết quả đối soát phương pháp luận nghiêm ngặt:
 3. **Kế hoạch chuyển tiếp:**
    - Hoàn thành đóng băng kết quả Week 4.
    - Sẵn sàng chuyển giao các module đã tối ưu hóa sang các nhiệm vụ của Tuần 5 (Domain Adaptation trên tập dữ liệu Việt Nam) và Tuần 7 (Hạ tầng mạng RTSP trực tiếp với MediaMTX và Docker).
+
