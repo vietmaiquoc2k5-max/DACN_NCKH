@@ -178,3 +178,4 @@ Hệ thống đã chạy trọn vẹn bộ kiểm thử tự động gồm **81 
   $$\text{Pipeline B2: } \text{conf} = 0.35, \quad K = 2, \quad N = 8, \quad \text{feature\_threshold} = 0.02, \quad \text{cooldown} = 5.0\text{s}$$
 - **Kết luận:**
   Cấu hình `kn_k2_n8` tối ưu hóa trên Validation Set đã giải quyết triệt để bài toán suy giảm Event Instance Recall (độ sụt giảm bằng $0,0$ percentage points so với Baseline), triệt tiêu $100\%$ báo động giả do phản quang/đèn xe, và đạt độ trễ phát hiện siêu tốc ($0,41 - 0,86\text{s}$). Dự án duy trì tính minh bạch và trung thực học thuật bằng việc từ chối nghiệm thu toàn phần cho đến khi bổ sung đủ 5.0 giờ video âm tính.
+
