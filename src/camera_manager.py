@@ -33,6 +33,8 @@ from src.config import (
 )
 from src.detector import SharedFireSmokeDetector
 from src.temporal_verifier import TemporalVerifier, DetectionBox
+from src.bytetrack_adapter import ByteTrackAdapter
+from src.temporal_features import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
 
@@ -135,21 +137,24 @@ def create_status_placeholder_rgb(
 
 
 def list_system_cameras(max_check: int = 4) -> List[Dict[str, Any]]:
-    """Tự động dò quét danh sách các camera và phần mềm camera (Iriun, EOS, USB UVC...) trên máy tính."""
+    """Tự động dò quét nhanh danh sách các camera phần cứng và phần mềm camera (Iriun, EOS, USB UVC...) trên máy tính."""
     cams = []
-    # Bản đồ tên gợi nhớ theo thiết bị phần cứng thực tế dò được
     device_hints = {
-        0: "Webcam #0 - EOS Webcam Utility / Virtual",
-        1: "Webcam #1 - USB2.0 HD UVC WebCam (MSMF)",
-        2: "Webcam #2 - USB2.0 HD WebCam Máy Tính (Khuyên dùng)",
-        3: "Webcam #3 - Iriun Webcam (Camera Điện Thoại)",
+        0: "Webcam #0 - Camera Tích Hợp / Chính",
+        1: "Webcam #1 - USB2.0 HD UVC WebCam",
+        2: "Webcam #2 - Camera Phụ / USB",
+        3: "Webcam #3 - Iriun / Virtual Camera",
     }
     for idx in range(max_check):
         cap = None
         is_ok = False
         res_str = ""
-        backend_used = "CAP_ANY"
-        for backend_name, b_val in [("CAP_MSMF", getattr(cv2, "CAP_MSMF", None)), ("CAP_ANY", cv2.CAP_ANY), ("CAP_DSHOW", getattr(cv2, "CAP_DSHOW", None))]:
+        backend_used = "CAP_DSHOW"
+        # Ưu tiên CAP_DSHOW trên Windows để dò thiết bị nhanh (~0.05s/index)
+        backends = [("CAP_DSHOW", getattr(cv2, "CAP_DSHOW", None))]
+        if idx == 0:
+            backends.append(("CAP_MSMF", getattr(cv2, "CAP_MSMF", None)))
+        for backend_name, b_val in backends:
             if b_val is None:
                 continue
             try:
@@ -176,18 +181,18 @@ def list_system_cameras(max_check: int = 4) -> List[Dict[str, Any]]:
         if is_ok:
             cams.append({
                 "index": idx,
-                "label": f"{name} [{res_str}] ({backend_used})",
+                "label": f"🟢 {name} [{res_str}] (Đang hoạt động)",
                 "backend": backend_used,
                 "resolution": res_str,
-                "active": True
+                "active": True,
             })
         else:
             cams.append({
                 "index": idx,
-                "label": f"{name} (Chưa sẵn sàng)",
-                "backend": "CAP_ANY",
+                "label": f"⚪ {name} (Không có tín hiệu)",
+                "backend": "CAP_DSHOW",
                 "resolution": "N/A",
-                "active": False
+                "active": False,
             })
     return cams
 
@@ -326,11 +331,20 @@ class CameraStreamWorker:
             suspect_frames_k=settings.suspect_frames_k,
             cooldown_sec=settings.alert_cooldown_sec,
             exclusion_zones=config.exclusion_zones,
+            feature_threshold=getattr(settings, "feature_threshold", 0.0),
         )
+        self.tracker = ByteTrackAdapter(
+            settings=getattr(settings, "bytetrack", None),
+            per_class=True,
+        )
+        self.features_extractor = TemporalFeatureExtractor(history_size=12)
+        self.feature_extractor = self.features_extractor
 
         # Trạng thái chuẩn: "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
+        # State Machine V2: "STOPPED" | "CONNECTING" | "RUNNING" | "RECONNECTING" | "ERROR" | "PAUSED"
         self.status: str = "DISCONNECTED"
-        self.error_detail: str = "Chưa kết nối (Nhấn Kết nối để bắt đầu)"
+        self.lifecycle_state: str = "STOPPED"
+        self.error_detail: str = "Camera chưa được kết nối. Nhấn Bắt đầu giám sát để khởi động."
         self.running: bool = False
         self.paused: bool = False
         self.thread: Optional[threading.Thread] = None
@@ -344,6 +358,7 @@ class CameraStreamWorker:
         self.infer_ms: float = 0.0
         self.last_update_ts: float = 0.0
         self.last_update_str: str = "--:--:--"
+        self.disconnected_at_str: str = time.strftime("%H:%M:%S")
         self.frame_count: int = 0
         self.last_inferred_frame_id: int = 0
         self.reconnect_attempts: int = 0
@@ -356,6 +371,7 @@ class CameraStreamWorker:
         self.max_confidence: float = 0.0
         self.active_hits: int = 0
         self.window_size: int = settings.window_size_n
+        self.temporal_score: float = 0.0
         self.last_boxes: List[DetectionBox] = []
 
         init_rgb = create_status_placeholder_rgb(
@@ -367,6 +383,8 @@ class CameraStreamWorker:
 
     def _set_placeholder(self, status: str, detail: str):
         """Cập nhật cả khung hình RGB và chuỗi JPEG Base64 cho trạng thái thông báo."""
+        if status != "CONNECTED":
+            self.disconnected_at_str = time.strftime("%H:%M:%S")
         rgb = create_status_placeholder_rgb(self.config.name, status, detail)
         self.latest_rgb_frame = rgb
         self.latest_jpeg_b64 = encode_rgb_to_jpeg_b64(rgb, quality=self.settings.jpeg_quality)
@@ -379,10 +397,21 @@ class CameraStreamWorker:
     def start(self):
         """Khởi chạy kết nối camera (tách biệt luồng đọc khung hình và luồng suy luận YOLO)."""
         with self.lock:
+            if self.config.source_type == "UNASSIGNED" or (
+                self.config.source_type != "WEBCAM" and not str(self.config.source).strip()
+            ):
+                self.running = False
+                self.paused = False
+                self.status = "DISCONNECTED"
+                self.lifecycle_state = "STOPPED"
+                self.error_detail = "Chưa gán nguồn camera. Hãy chọn Camera đang hoạt động hoặc gắn File Video để test."
+                self._set_placeholder("DISCONNECTED", self.error_detail)
+                return
             if self.running and self.thread and self.thread.is_alive():
                 self.paused = False
                 if self.status == "PAUSED":
                     self.status = "CONNECTED"
+                    self.lifecycle_state = "RUNNING"
                 return
             self.running = True
             self.paused = False
@@ -391,9 +420,12 @@ class CameraStreamWorker:
             self.last_inferred_frame_id = 0
             self.latest_raw_bgr = None
             self.status = "RECONNECTING"
+            self.lifecycle_state = "CONNECTING"
             self.error_detail = f"Đang kết nối tới {self.config.masked_source}..."
             self._set_placeholder("RECONNECTING", self.error_detail)
             self.verifier.reset()
+            self.tracker.reset()
+            self.features_extractor.reset()
             self.infer_event.clear()
             self.thread = threading.Thread(target=self._run_loop, daemon=True)
             self.infer_thread = threading.Thread(target=self._infer_loop, daemon=True)
@@ -407,6 +439,7 @@ class CameraStreamWorker:
             if self.running:
                 self.paused = not self.paused
                 self.status = "PAUSED" if self.paused else "CONNECTED"
+                self.lifecycle_state = "PAUSED" if self.paused else "RUNNING"
                 if self.paused:
                     self.capture_fps = 0.0
                     self.inference_fps = 0.0
@@ -414,7 +447,7 @@ class CameraStreamWorker:
         self._log("Tạm dừng luồng" if self.paused else "Tiếp tục luồng")
 
     def stop(self):
-        """Ngắt kết nối hoàn toàn luồng camera và giải phóng VideoCapture."""
+        """Ngắt kết nối hoàn toàn luồng camera và giải phóng VideoCapture, đưa về trạng thái STOPPED."""
         self.running = False
         self.paused = False
         self.infer_event.set()
@@ -424,8 +457,11 @@ class CameraStreamWorker:
         it = self.infer_thread
         if it and it.is_alive() and it is not threading.current_thread():
             it.join(timeout=1.0)
+        self.thread = None
+        self.infer_thread = None
         with self.lock:
             self.status = "DISCONNECTED"
+            self.lifecycle_state = "STOPPED"
             self.capture_fps = 0.0
             self.inference_fps = 0.0
             self.infer_ms = 0.0
@@ -434,12 +470,12 @@ class CameraStreamWorker:
             self.primary_label = ""
             self.max_confidence = 0.0
             self.active_hits = 0
-            self.error_detail = "Đã ngắt kết nối"
+            self.error_detail = "Camera chưa được kết nối. Nhấn Bắt đầu giám sát để khởi động."
             self._set_placeholder("DISCONNECTED", self.error_detail)
             self.verifier.reset()
             self.tracker.reset()
             self.features_extractor.reset()
-        self._log("Đã ngắt kết nối và giải phóng VideoCapture.")
+        self._log("Đã ngắt kết nối và giải phóng VideoCapture (STOPPED).")
 
     def reconnect(self):
         """Ngắt kết nối hiện tại và thực hiện kết nối lại ngay lập tức."""
@@ -554,6 +590,7 @@ class CameraStreamWorker:
                 confirm_frames_k=self.settings.confirm_frames_k,
                 suspect_frames_k=self.settings.suspect_frames_k,
                 cooldown_sec=self.settings.alert_cooldown_sec,
+                feature_threshold=getattr(self.settings, "feature_threshold", 0.0),
             )
 
             raw_boxes, new_infer_ms = self.detector.detect_frame(
@@ -565,7 +602,32 @@ class CameraStreamWorker:
             if raw_boxes is None or not self.running:
                 continue
 
-            ver_res = self.verifier.update(raw_boxes)
+            # 1. ByteTrack Association (gán track_id ổn định 2 giai đoạn)
+            tracked_boxes = self.tracker.update(raw_boxes, frame=infer_input)
+
+            # 2. Cập nhật Temporal Visual Features cho từng track
+            now_ts = time.time()
+            feature_map = {}
+            for b in tracked_boxes:
+                if b.track_id > 0:
+                    try:
+                        feat_res = self.features_extractor.update(
+                            track_id=b.track_id,
+                            frame_bgr=infer_input,
+                            xyxy=b.xyxy,
+                            timestamp_sec=now_ts,
+                        )
+                        feature_map[b.track_id] = feat_res
+                    except Exception:
+                        pass
+
+            # 3. TemporalVerifier (K/N cửa sổ trượt, temporal features, exclusion zones, cooldown)
+            ver_res = self.verifier.update(
+                tracked_boxes,
+                tracks_assigned=True,
+                feature_map=feature_map,
+                timestamp_sec=now_ts,
+            )
             valid_boxes = ver_res["valid_boxes"]
             if new_infer_ms > 0:
                 infer_fps_win.append(1000.0 / new_infer_ms)
@@ -581,6 +643,7 @@ class CameraStreamWorker:
                 self.max_confidence = ver_res["max_confidence"]
                 self.active_hits = ver_res["active_hits"]
                 self.window_size = ver_res["window_size"]
+                self.temporal_score = round(float(ver_res.get("temporal_score", 0.0)), 3)
                 curr_cap_fps = self.capture_fps
 
             if ver_res["should_trigger_db_alert"]:
@@ -603,8 +666,8 @@ class CameraStreamWorker:
                     alert_level=ver_res["alert_level"],
                     is_demo=0,
                 )
-                if not self.settings.mute_audio:
-                    self.event_db.alert_manager.play_alarm()
+                if not self.settings.mute_audio and self.config.cam_id not in self.event_db.alert_manager.acknowledged_cameras:
+                    self.event_db.alert_manager.play_alarm(camera_name=self.config.cam_id)
                 self._log(
                     f"🚨 CẢNH BÁO [{lbl}] ({int(conf_val*100)}%) tại {self.config.name} "
                     f"sau {ver_res['active_hits']}/{ver_res['window_size']} khung!"
@@ -633,11 +696,26 @@ class CameraStreamWorker:
                         capture_width=self.settings.capture_width,
                     )
                     if cap is None:
+                        if is_file:
+                            # Nguồn file video: nếu lỗi hoặc không tìm thấy, dừng ngay về ERROR/STOPPED, không lặp tự tìm kết nối
+                            with self.lock:
+                                self.status = "ERROR"
+                                self.lifecycle_state = "ERROR"
+                                self.capture_fps = 0.0
+                                self.inference_fps = 0.0
+                                self.alert_level = "CONN_ERROR"
+                                self.error_detail = err_msg or "Không thể đọc tệp video kiểm thử"
+                                self._set_placeholder("ERROR", self.error_detail)
+                                self.running = False
+                            self._log(f"Lỗi đọc tệp video kiểm thử: {err_msg}")
+                            break
+
                         self.reconnect_attempts += 1
                         max_att = max(1, int(self.config.max_reconnect_attempts))
                         if self.config.auto_reconnect and self.reconnect_attempts <= max_att:
                             with self.lock:
                                 self.status = "RECONNECTING"
+                                self.lifecycle_state = "RECONNECTING"
                                 self.capture_fps = 0.0
                                 self.inference_fps = 0.0
                                 self.alert_level = "CONN_ERROR"
@@ -657,6 +735,7 @@ class CameraStreamWorker:
                         else:
                             with self.lock:
                                 self.status = "ERROR"
+                                self.lifecycle_state = "ERROR"
                                 self.capture_fps = 0.0
                                 self.inference_fps = 0.0
                                 self.alert_level = "CONN_ERROR"
@@ -668,10 +747,13 @@ class CameraStreamWorker:
 
                     self.reconnect_attempts = 0
                     self.verifier.reset()
-                    self.tracker.reset()
-                    self.features_extractor.reset()
+                    if hasattr(self, "tracker") and self.tracker:
+                        self.tracker.reset()
+                    if hasattr(self, "feature_extractor") and self.feature_extractor:
+                        self.feature_extractor.reset()
                     with self.lock:
                         self.status = "CONNECTED"
+                        self.lifecycle_state = "RUNNING"
                         self.error_detail = ""
                         if self.alert_level == "CONN_ERROR":
                             self.alert_level = "SAFE"
@@ -777,6 +859,7 @@ class CameraStreamWorker:
 
                 with self.lock:
                     self.status = "CONNECTED"
+                    self.lifecycle_state = "RUNNING"
                     self.capture_fps = round(actual_capture_fps, 1)
                     self.last_update_ts = time.time()
                     self.last_update_str = now_str
@@ -824,6 +907,7 @@ class CameraStreamWorker:
                 "enabled": self.config.enabled,
                 "auto_reconnect": self.config.auto_reconnect,
                 "status": self.status,  # "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
+                "lifecycle_state": self.lifecycle_state,  # "STOPPED" | "CONNECTING" | "RUNNING" | "RECONNECTING" | "ERROR" | "PAUSED"
                 "is_connected": (self.status == "CONNECTED"),
                 "error_detail": mask_rtsp_credentials(self.error_detail),
                 "fps": self.capture_fps,
@@ -832,6 +916,7 @@ class CameraStreamWorker:
                 "infer_ms": self.infer_ms,
                 "resolution": self.resolution_str,
                 "last_update_str": self.last_update_str,
+                "disconnected_at_str": self.disconnected_at_str,
                 "alert_level": self.alert_level,
                 "primary_label": self.primary_label,
                 "max_confidence": self.max_confidence,
@@ -842,6 +927,17 @@ class CameraStreamWorker:
                 "jpeg_b64": self.latest_jpeg_b64,
                 "preview_rgb": self.preview_rgb_frame,
                 "box_count": len(self.last_boxes),
+                "boxes": [
+                    {
+                        "label": b.label,
+                        "confidence": round(float(b.confidence), 3),
+                        "track_id": int(b.track_id),
+                        "xyxy": tuple(b.xyxy),
+                    }
+                    for b in self.last_boxes
+                ],
+                "temporal_score": self.temporal_score,
+                "exclusion_zones": list(self.config.exclusion_zones),
                 "reconnect_attempts": self.reconnect_attempts,
             }
 
@@ -849,7 +945,15 @@ class CameraStreamWorker:
 class MultiCameraManager:
     """Bộ điều phối trung tâm quản lý 9 luồng camera (bố cục 3x3), Detector dùng chung và SQLite."""
 
-    def __init__(self, db_path: str = "alerts.db", model_path: str = "best.pt"):
+    def __init__(
+        self,
+        db_path: str = "alerts.db",
+        model_path: str = "best.pt",
+        auto_assign_videos: bool = True,
+    ):
+        self.start_time = time.time()
+        self.performance_preset = "Balanced"
+        self.default_camera_ids: List[str] = ["CAM-01", "CAM-02", "CAM-03", "CAM-04"]
         self.settings = SystemSettings(model_path=model_path)
         self.alert_manager = AlertManager(db_path=db_path)
         self.event_db = EventDatabase(alert_manager=self.alert_manager, db_path=db_path)
@@ -862,7 +966,9 @@ class MultiCameraManager:
         self.logs: deque = deque(maxlen=100)
         self.log_lock = threading.Lock()
 
-        self.camera_configs: List[CameraConfig] = get_default_9_cameras()
+        self.camera_configs: List[CameraConfig] = get_default_9_cameras(
+            auto_assign_videos=auto_assign_videos
+        )
         self.workers: Dict[str, CameraStreamWorker] = {}
         for cfg in self.camera_configs:
             self.workers[cfg.cam_id] = CameraStreamWorker(
@@ -930,6 +1036,7 @@ class MultiCameraManager:
 
     def reconnect_camera(self, cam_id: str):
         if cam_id in self.workers:
+            self.alert_manager.reset_alarm_acknowledgment(cam_id)
             self.workers[cam_id].reconnect()
 
     def test_camera_connection(self, cam_id: str) -> Tuple[bool, str, np.ndarray]:
@@ -1004,8 +1111,18 @@ class MultiCameraManager:
         self.add_log(
             f"Đã lưu cấu hình {cam_id} [{w.config.source_type}]: '{w.config.name}' -> '{w.config.masked_source}'"
         )
-        if auto_restart or (was_running and w.config.enabled):
+        if auto_restart:
             w.start()
+        else:
+            with w.lock:
+                w.status = "DISCONNECTED"
+                w.lifecycle_state = "STOPPED"
+                w.error_detail = (
+                    f"Đã gán nguồn: {w.config.masked_source}. Nhấn Bắt đầu giám sát để khởi động."
+                    if w.config.source_type != "UNASSIGNED" and bool(str(w.config.source).strip())
+                    else "Chưa gán nguồn camera. Hãy chọn Camera đang hoạt động hoặc gắn File Video để test."
+                )
+                w._set_placeholder("DISCONNECTED", w.error_detail)
 
     def apply_operating_mode_preset(
         self,
@@ -1049,7 +1166,7 @@ class MultiCameraManager:
         self.add_log(f"Đã chuyển chế độ hoạt động hệ thống sang: {mode}")
 
     def set_active_camera_selection(self, selected_cam_ids: List[str], auto_start: bool = True):
-        """Áp dụng danh sách camera được chọn (Dynamic Camera Selection: 1, 4, 6, 9 hoặc custom).
+        """Áp dụng danh sách camera được chọn (Dynamic Camera Selection: 1, 2, 4, 6, 9 hoặc custom).
 
         Quy tắc quản lý nghiêm ngặt:
         1. Camera không được chọn: dừng worker, giải phóng VideoCapture, không tốn GPU/CPU.
@@ -1057,21 +1174,333 @@ class MultiCameraManager:
         3. Camera giữ nguyên: tiếp tục chạy bình thường, KHÔNG reset tracker hay verifier.
         """
         target_ids = set(selected_cam_ids)
+        newly_started: List[CameraStreamWorker] = []
         for cfg in self.camera_configs:
             cid = cfg.cam_id
             w = self.workers[cid]
             if cid in target_ids:
                 cfg.enabled = True
                 w.config.enabled = True
-                if auto_start and not w.running:
+                # Chỉ khởi chạy khi camera đã có nguồn hợp lệ và không ở trạng thái ERROR
+                has_source = (w.config.source_type != "UNASSIGNED") and (
+                    w.config.source_type == "WEBCAM" or bool(str(w.config.source).strip())
+                )
+                if auto_start and has_source and not w.running and w.status != "ERROR":
                     w.start()
+                    newly_started.append(w)
             else:
                 cfg.enabled = False
                 w.config.enabled = False
                 if w.running:
                     w.stop()
 
+        # Khởi chạy bất đồng bộ hoàn toàn không block luồng Streamlit (0ms delay)
         self.add_log(f"Đã cập nhật danh sách camera giám sát: {sorted(list(target_ids))}")
+
+    def apply_performance_preset(self, preset: str):
+        """Áp dụng chế độ hiệu năng thực tế (Low Resource / Balanced / High Performance)."""
+        mode = str(preset).strip()
+        if mode == "Low Resource":
+            self.settings.imgsz = 320
+            self.settings.capture_width = 380
+            self.settings.display_width = 360
+            self.settings.frame_skip = 3
+            self.settings.target_fps_per_cam = 15
+            self.settings.jpeg_quality = 65
+            self.settings.ui_refresh_sec = 0.5
+        elif mode == "High Performance":
+            self.settings.imgsz = 640
+            self.settings.capture_width = 640
+            self.settings.display_width = 540
+            self.settings.frame_skip = 1
+            self.settings.target_fps_per_cam = 30
+            self.settings.jpeg_quality = 82
+            self.settings.ui_refresh_sec = 0.3
+        else:
+            mode = "Balanced"
+            self.settings.imgsz = 416
+            self.settings.capture_width = 480
+            self.settings.display_width = 420
+            self.settings.frame_skip = 2
+            self.settings.target_fps_per_cam = 24
+            self.settings.jpeg_quality = 72
+            self.settings.ui_refresh_sec = 0.4
+        self.performance_preset = mode
+        self.add_log(
+            f"Đã áp dụng chế độ hiệu năng '{mode}' (imgsz={self.settings.imgsz}, skip={self.settings.frame_skip}, target_fps={self.settings.target_fps_per_cam})"
+        )
+
+    def add_camera(
+        self,
+        name: str,
+        source: str,
+        source_type: Optional[str] = None,
+        webcam_index: int = 0,
+        enabled: bool = True,
+        auto_reconnect: bool = True,
+        exclusion_zones: Optional[List[Tuple[float, float, float, float]]] = None,
+        auto_start: bool = False,
+    ) -> str:
+        """Thêm một camera mới vào hệ thống và khởi tạo CameraStreamWorker độc lập."""
+        next_num = len(self.camera_configs) + 1
+        while f"CAM-{next_num:02d}" in self.workers:
+            next_num += 1
+        cam_id = f"CAM-{next_num:02d}"
+        s_type = source_type if source_type in ("VIDEO_TEST", "WEBCAM", "IP_CAMERA") else infer_source_type(source)
+        src_str = str(webcam_index) if s_type == "WEBCAM" else source.strip()
+
+        cfg = CameraConfig(
+            cam_id=cam_id,
+            name=name.strip() or cam_id,
+            source=src_str,
+            source_type=s_type,
+            webcam_index=int(webcam_index) if s_type == "WEBCAM" else 0,
+            enabled=bool(enabled),
+            loop_video=True,
+            auto_reconnect=bool(auto_reconnect),
+            exclusion_zones=list(exclusion_zones) if exclusion_zones else [],
+        )
+        self.camera_configs.append(cfg)
+        worker = CameraStreamWorker(
+            config=cfg,
+            detector=self.detector,
+            event_db=self.event_db,
+            settings=self.settings,
+            log_callback=self.add_log,
+        )
+        self.workers[cam_id] = worker
+        self.add_log(f"Đã thêm camera mới {cam_id} ({cfg.name}) -> {cfg.masked_source}")
+        if auto_start and cfg.enabled:
+            worker.start()
+        return cam_id
+
+    def remove_camera(self, cam_id: str) -> bool:
+        """Xóa cấu hình một camera theo xác nhận của người vận hành (giữ tối thiểu 1 camera)."""
+        if cam_id not in self.workers or len(self.camera_configs) <= 1:
+            return False
+        w = self.workers.pop(cam_id)
+        if w.running:
+            w.stop()
+        self.camera_configs = [c for c in self.camera_configs if c.cam_id != cam_id]
+        if cam_id in self.default_camera_ids:
+            self.default_camera_ids = [c for c in self.default_camera_ids if c != cam_id]
+            if not self.default_camera_ids and self.camera_configs:
+                self.default_camera_ids = [self.camera_configs[0].cam_id]
+        self.add_log(f"Đã xóa cấu hình camera {cam_id}.")
+        return True
+
+    def start_monitoring(self, selected_cam_ids: List[str]) -> Dict[str, Any]:
+        """Bắt đầu giám sát thủ công (MANUAL START): chỉ khởi chạy các camera đã được gán nguồn hợp lệ trong danh sách chọn."""
+        self.alert_manager.reset_alarm_acknowledgment()
+        target_ids = [cid for cid in selected_cam_ids if cid in self.workers]
+        assigned_ids: List[str] = []
+        unassigned_ids: List[str] = []
+        for cid in target_ids:
+            w = self.workers[cid]
+            has_src = w.config.source_type != "UNASSIGNED" and (
+                w.config.source_type == "WEBCAM" or bool(str(w.config.source).strip())
+            )
+            if not has_src:
+                unassigned_ids.append(cid)
+                continue
+            assigned_ids.append(cid)
+            # Nếu camera trước đó bị ERROR, cho phép thử kết nối lại khi người dùng chủ động nhấn Bắt đầu giám sát
+            if w.status == "ERROR" and not w.running:
+                w.status = "DISCONNECTED"
+                w.lifecycle_state = "STOPPED"
+        self.set_active_camera_selection(target_ids, auto_start=bool(assigned_ids))
+        snaps = self.get_selected_snapshots(target_ids)
+        return {
+            "requested": target_ids,
+            "assigned": assigned_ids,
+            "unassigned": unassigned_ids,
+            "connected": [s["cam_id"] for s in snaps if s["is_connected"]],
+            "failed": [s["cam_id"] for s in snaps if s["status"] == "ERROR"],
+        }
+
+    def detect_available_cameras(self, max_check: int = 4) -> Dict[str, Any]:
+        """Tự động dò quét các camera phần cứng đang hoạt động trên máy tính và các luồng RTSP/Video đã gán."""
+        sys_cams = list_system_cameras(max_check=max_check)
+        active_hw = [c for c in sys_cams if c.get("active")]
+        assigned_cams: List[Dict[str, Any]] = []
+        for cfg in self.camera_configs:
+            has_src = cfg.source_type != "UNASSIGNED" and (
+                cfg.source_type == "WEBCAM" or bool(str(cfg.source).strip())
+            )
+            if has_src:
+                assigned_cams.append(
+                    {
+                        "cam_id": cfg.cam_id,
+                        "name": cfg.name,
+                        "source_type": cfg.source_type,
+                        "masked_source": cfg.masked_source,
+                    }
+                )
+        return {
+            "active_hardware": active_hw,
+            "all_hardware": sys_cams,
+            "assigned_cameras": assigned_cams,
+            "assigned_camera_ids": [c["cam_id"] for c in assigned_cams],
+        }
+
+    def assign_active_hardware_cameras(
+        self, webcam_indices: List[int], auto_start: bool = False
+    ) -> List[str]:
+        """Gán danh sách các thiết bị Webcam đang hoạt động được người dùng chọn vào các ô CAM-01, CAM-02..."""
+        assigned_ids: List[str] = []
+        for i, w_idx in enumerate(webcam_indices):
+            if i >= len(self.camera_configs):
+                break
+            cid = self.camera_configs[i].cam_id
+            cname = self.camera_configs[i].name
+            self.update_camera_source(
+                cam_id=cid,
+                new_name=cname,
+                new_source=str(int(w_idx)),
+                source_type="WEBCAM",
+                webcam_index=int(w_idx),
+                enabled=True,
+                auto_restart=auto_start,
+            )
+            assigned_ids.append(cid)
+        return assigned_ids
+
+    def assign_test_video_to_camera(
+        self,
+        cam_id: str,
+        video_path: str,
+        custom_name: Optional[str] = None,
+        auto_start: bool = False,
+    ) -> Tuple[bool, str]:
+        """Gắn một file video vào một ô camera cụ thể để chạy kiểm thử (Test Cam bằng File)."""
+        if cam_id not in self.workers:
+            return False, f"Không tìm thấy ô camera {cam_id}"
+        raw_p = str(video_path or "").strip()
+        if not raw_p:
+            return False, "Chưa chọn file video kiểm thử"
+        p = Path(raw_p)
+        if not p.is_absolute():
+            p = PROJECT_ROOT / raw_p
+        if not p.exists() or not p.is_file():
+            return False, f"Không tìm thấy file video: {raw_p}"
+
+        cap = cv2.VideoCapture(str(p))
+        if not cap or not cap.isOpened():
+            if cap:
+                cap.release()
+            return False, f"Không thể đọc định dạng file video: {p.name}"
+        ret, frame = cap.read()
+        cap.release()
+        if not ret or frame is None:
+            return False, f"File video '{p.name}' không có khung hình hợp lệ"
+
+        w = self.workers[cam_id]
+        target_name = custom_name.strip() if custom_name and custom_name.strip() else w.config.name
+        self.update_camera_source(
+            cam_id=cam_id,
+            new_name=target_name,
+            new_source=str(raw_p),
+            source_type="VIDEO_TEST",
+            enabled=True,
+            auto_restart=auto_start,
+        )
+        return True, f"Đã gắn file video '{p.name}' vào {cam_id} ({target_name})"
+
+    def detach_camera_source(self, cam_id: str) -> bool:
+        """Gỡ nguồn video/camera khỏi một ô camera, đưa về trạng thái trống ban đầu (UNASSIGNED)."""
+        if cam_id not in self.workers:
+            return False
+        w = self.workers[cam_id]
+        w.stop()
+        with w.lock:
+            w.config.source = ""
+            w.config.source_type = "UNASSIGNED"
+            w.status = "DISCONNECTED"
+            w.lifecycle_state = "STOPPED"
+            w.error_detail = "Chưa gán nguồn camera. Hãy chọn Camera đang hoạt động hoặc gắn File Video để test."
+            w._set_placeholder("DISCONNECTED", w.error_detail)
+        self.add_log(f"Đã gỡ nguồn khỏi {cam_id} (Trạng thái: Chưa gán nguồn).")
+        return True
+
+    def clear_all_video_sources(self):
+        """Gỡ toàn bộ các nguồn file video mẫu khỏi tất cả 9 camera để không tự động phát video."""
+        for cid, w in self.workers.items():
+            if w.config.source_type in ("VIDEO_TEST", "UNASSIGNED"):
+                self.detach_camera_source(cid)
+
+    def stop_monitoring(self):
+        """Dừng giám sát toàn bộ camera, giải phóng VideoCapture, đóng RTSP và đưa tất cả về STOPPED."""
+        self.stop_all()
+        self.alert_manager.reset_alarm_acknowledgment()
+        self.add_log("Đã dừng giám sát toàn bộ camera (Tất cả trở về trạng thái STOPPED).")
+
+    def acknowledge_event(
+        self,
+        event_id: int,
+        action_taken: str = "Đã xác nhận cháy thật",
+        note: str = "",
+        is_dismiss: bool = False,
+        clear_all_pending: bool = False,
+    ) -> bool:
+        """Xác nhận hoặc bỏ qua sự kiện cảnh báo và tắt ngay âm báo còi hú."""
+        if is_dismiss:
+            ok = self.event_db.dismiss_event(event_id, note=note or "Đã bỏ qua (Báo động giả)")
+            if clear_all_pending and hasattr(self.event_db, "acknowledge_all_pending"):
+                self.event_db.acknowledge_all_pending(
+                    action_taken="Báo động giả (Đã bỏ qua)",
+                    note=note or "Đã bỏ qua (Báo động giả)",
+                )
+        else:
+            ok = self.event_db.confirm_event(event_id, action_taken=action_taken, note=note)
+            if clear_all_pending and hasattr(self.event_db, "acknowledge_all_pending"):
+                self.event_db.acknowledge_all_pending(
+                    action_taken=action_taken,
+                    note=note or "Xác nhận từ Trung tâm cảnh báo",
+                )
+
+        # Đánh dấu các camera đang trong trạng thái cảnh báo đã được trực ban tiếp nhận để không tự bật lại còi
+        for cid, w in self.workers.items():
+            if w.alert_level in ("FIRE", "SUSPECT"):
+                self.alert_manager.acknowledged_cameras.add(cid)
+
+        self.alert_manager.alarm_silenced_by_ack = True
+        self.alert_manager.stop_alarm()
+        self.add_log(f"🔕 Đã {'bỏ qua' if is_dismiss else 'xác nhận'} sự kiện #{event_id} và tắt âm báo còi hú.")
+        return ok
+
+    def get_active_worker_count(self) -> int:
+        """Trả về số lượng worker camera đang thực sự chạy luồng nền."""
+        return sum(1 for w in self.workers.values() if w.running and w.thread is not None and w.thread.is_alive())
+
+    def update_camera_roi(self, cam_id: str, exclusion_zones: List[Tuple[float, float, float, float]]):
+        """Cập nhật vùng loại trừ ROI chuẩn hóa (x1, y1, x2, y2) trong [0, 1] cho một camera."""
+        if cam_id not in self.workers:
+            return
+        clean_zones: List[Tuple[float, float, float, float]] = []
+        for z in exclusion_zones:
+            if len(z) == 4:
+                x1, y1, x2, y2 = [max(0.0, min(1.0, float(v))) for v in z]
+                if x2 > x1 and y2 > y1:
+                    clean_zones.append((round(x1, 3), round(y1, 3), round(x2, 3), round(y2, 3)))
+        w = self.workers[cam_id]
+        with w.lock:
+            w.config.exclusion_zones = list(clean_zones)
+            w.verifier.exclusion_zones = list(clean_zones)
+        self.add_log(f"Đã cập nhật {len(clean_zones)} vùng loại trừ ROI cho {cam_id}.")
+
+    def set_default_cameras(self, cam_ids: List[str]):
+        """Thiết lập danh sách camera mặc định khi khởi động trung tâm chỉ huy."""
+        valid = [cid for cid in cam_ids if cid in self.workers]
+        if valid:
+            self.default_camera_ids = valid
+            self.add_log(f"Đã đặt camera mặc định: {valid}")
+
+    def get_uptime_str(self) -> str:
+        """Trả về chuỗi thời gian hoạt động của hệ thống định dạng HH:MM:SS."""
+        elapsed = max(0, int(time.time() - self.start_time))
+        hrs, rem = divmod(elapsed, 3600)
+        mins, secs = divmod(rem, 60)
+        return f"{hrs:02d}:{mins:02d}:{secs:02d}"
 
     def get_selected_snapshots(self, selected_cam_ids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         """Lấy trạng thái chỉ của các camera đang được chọn."""

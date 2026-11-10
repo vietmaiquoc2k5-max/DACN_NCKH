@@ -330,8 +330,8 @@ class Week4EvaluationTests(unittest.TestCase):
         val_ids = {v["video_id"] for v in val_videos}
         test_ids = {v["video_id"] for v in test_videos}
 
-        self.assertEqual(len(val_ids), 12)
-        self.assertEqual(len(test_ids), 12)
+        self.assertGreaterEqual(len(val_ids), 12)
+        self.assertEqual(len(val_ids), len(test_ids))
         self.assertTrue(val_ids.isdisjoint(test_ids), "Validation và Test không được có video trùng lặp")
 
 

@@ -27,6 +27,8 @@ class AlertManager:
         self.alerts_dir = alerts_dir
         self.alarm_playing = False
         self.mute_alarm = False
+        self.acknowledged_cameras = set()
+        self.alarm_silenced_by_ack = False
 
         # Lock for DB operations across threads
         self.db_lock = threading.Lock()
@@ -120,11 +122,27 @@ class AlertManager:
         self.mute_alarm = mute_alarm
         if self.mute_alarm:
             self.stop_alarm()
+        else:
+            self.alarm_silenced_by_ack = False
 
-    def play_alarm(self):
-        """Starts playing the alarm sound in a loop if not muted."""
+    def reset_alarm_acknowledgment(self, camera_name=None):
+        """Khôi phục trạng thái sẵn sàng phát còi báo động cho camera hoặc toàn hệ thống."""
+        if camera_name is not None:
+            self.acknowledged_cameras.discard(str(camera_name))
+        else:
+            self.acknowledged_cameras.clear()
+            self.alarm_silenced_by_ack = False
+
+    def play_alarm(self, camera_name=None):
+        """Starts playing the alarm sound in a loop if not muted and not already acknowledged."""
         if self.mute_alarm:
             self.stop_alarm()
+            return
+
+        if camera_name is not None and str(camera_name) in self.acknowledged_cameras:
+            return
+
+        if self.alarm_silenced_by_ack:
             return
 
         if not self.alarm_playing:
@@ -159,8 +177,8 @@ class AlertManager:
                 try:
                     pygame.mixer.music.load(play_path)
                     pygame.mixer.music.play(-1)
-                    while self.alarm_playing and not self.mute_alarm:
-                        time.sleep(0.2)
+                    while self.alarm_playing and not self.mute_alarm and not self.alarm_silenced_by_ack:
+                        time.sleep(0.1)
                 except Exception as ex_pyg:
                     print(f"Pygame playback error, falling back to winsound: {ex_pyg}")
                     if IS_WINDOWS:
@@ -168,15 +186,15 @@ class AlertManager:
                             play_path,
                             winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP,
                         )
-                        while self.alarm_playing and not self.mute_alarm:
-                            time.sleep(0.2)
+                        while self.alarm_playing and not self.mute_alarm and not self.alarm_silenced_by_ack:
+                            time.sleep(0.1)
             elif IS_WINDOWS:
                 winsound.PlaySound(
                     play_path,
                     winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_LOOP,
                 )
-                while self.alarm_playing and not self.mute_alarm:
-                    time.sleep(0.2)
+                while self.alarm_playing and not self.mute_alarm and not self.alarm_silenced_by_ack:
+                    time.sleep(0.1)
         except Exception as e:
             print(f"Error in alarm audio loop: {e}")
         finally:
@@ -185,7 +203,10 @@ class AlertManager:
                 if pygame and pygame.mixer and pygame.mixer.get_init():
                     pygame.mixer.music.stop()
                     pygame.mixer.music.unload()
-                elif IS_WINDOWS:
+            except Exception:
+                pass
+            try:
+                if IS_WINDOWS:
                     winsound.PlaySound(None, winsound.SND_PURGE)
             except Exception:
                 pass
@@ -197,13 +218,30 @@ class AlertManager:
                     pass
 
     def stop_alarm(self):
-        """Stops the alarm audio."""
+        """Stops the alarm audio immediately across both pygame and winsound."""
         self.alarm_playing = False
         try:
             if pygame and pygame.mixer and pygame.mixer.get_init():
                 pygame.mixer.music.stop()
-            elif IS_WINDOWS:
+                try:
+                    pygame.mixer.music.unload()
+                except Exception:
+                    pass
+        except Exception:
+            pass
+        try:
+            if IS_WINDOWS:
                 winsound.PlaySound(None, winsound.SND_PURGE)
+        except Exception:
+            pass
+        try:
+            import glob
+
+            for tmp_f in glob.glob("temp_alarm_*.mp3"):
+                try:
+                    os.remove(tmp_f)
+                except Exception:
+                    pass
         except Exception:
             pass
 
@@ -293,11 +331,17 @@ class AlertManager:
     def update_alert_action(
         self, alert_id, action_taken="Đã xác nhận", operator_note="", status="ACKNOWLEDGED"
     ):
-        """Updates the incident action outcome and operator response note for an alert."""
+        """Updates the incident action outcome and operator response note for an alert, and stops the alarm sound."""
+        cam_name = None
         with self.db_lock:
             try:
                 conn = sqlite3.connect(self.db_path)
                 cursor = conn.cursor()
+                cursor.execute("SELECT camera_name FROM alert_logs WHERE id = ?", (alert_id,))
+                row = cursor.fetchone()
+                if row and row[0]:
+                    cam_name = str(row[0])
+
                 cursor.execute(
                     """
                     UPDATE alert_logs 
@@ -313,9 +357,54 @@ class AlertManager:
                         item["action_taken"] = action_taken
                         item["operator_note"] = operator_note
                         item["status"] = status
+                if str(status).upper() == "ACKNOWLEDGED":
+                    if cam_name:
+                        self.acknowledged_cameras.add(cam_name)
+                    self.alarm_silenced_by_ack = True
+                    self.stop_alarm()
                 return True
             except Exception as e:
                 print(f"Lỗi cập nhật nhật ký xử lý vụ việc #{alert_id}: {e}")
+                return False
+
+    def acknowledge_all_pending(
+        self, action_taken="Đã xác nhận cháy thật", operator_note="Xác nhận từ Trung tâm cảnh báo"
+    ):
+        """Đánh dấu tất cả cảnh báo đang chờ xử lý là ACKNOWLEDGED và ngắt ngay âm báo còi hú."""
+        self.alarm_silenced_by_ack = True
+        self.stop_alarm()
+        with self.db_lock:
+            try:
+                conn = sqlite3.connect(self.db_path)
+                cursor = conn.cursor()
+                cursor.execute(
+                    "SELECT DISTINCT camera_name FROM alert_logs WHERE status != 'ACKNOWLEDGED'"
+                )
+                for row in cursor.fetchall():
+                    if row and row[0]:
+                        self.acknowledged_cameras.add(str(row[0]))
+
+                cursor.execute(
+                    """
+                    UPDATE alert_logs
+                    SET status = 'ACKNOWLEDGED',
+                        action_taken = ?,
+                        operator_note = CASE WHEN operator_note = '' OR operator_note IS NULL THEN ? ELSE operator_note END
+                    WHERE status != 'ACKNOWLEDGED'
+                    """,
+                    (action_taken, operator_note),
+                )
+                conn.commit()
+                conn.close()
+                for item in self.active_notifications:
+                    if item.get("status") != "ACKNOWLEDGED":
+                        item["status"] = "ACKNOWLEDGED"
+                        item["action_taken"] = action_taken
+                        if not item.get("operator_note"):
+                            item["operator_note"] = operator_note
+                return True
+            except Exception as e:
+                print(f"Lỗi xác nhận toàn bộ cảnh báo chờ xử lý: {e}")
                 return False
 
     def get_all_alerts(

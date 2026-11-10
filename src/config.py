@@ -5,7 +5,19 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple, Any
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_orig_path_resolve = Path.resolve
+
+
+def _safe_path_resolve(self: Path, strict: bool = False) -> Path:
+    try:
+        return _orig_path_resolve(self, strict=strict)
+    except PermissionError:
+        return Path(os.path.abspath(os.fspath(self)))
+
+
+Path.resolve = _safe_path_resolve  # type: ignore[method-assign]
+
+PROJECT_ROOT = Path(os.path.abspath(__file__)).parent.parent
 
 # Danh sách các chế độ vận hành của hệ thống
 OPERATING_MODES: Dict[str, str] = {
@@ -122,23 +134,55 @@ class CameraConfig:
     @property
     def masked_source(self) -> str:
         """Trả về chuỗi nguồn đã ẩn mật khẩu RTSP (an toàn để hiển thị và ghi log)."""
+        if not str(self.source).strip() or self.source_type == "UNASSIGNED":
+            return "Chưa gán nguồn"
         if self.source_type == "WEBCAM" or str(self.source).strip().isdigit():
             return f"Webcam #{self.webcam_index}"
         return mask_rtsp_credentials(self.source)
 
 
-def get_default_9_cameras() -> List[CameraConfig]:
-    """Khởi tạo cấu hình mặc định cho 9 camera (3x3) sử dụng các video thực tế có sẵn trong repo."""
+def get_available_test_videos() -> Dict[str, str]:
+    """Liệt kê danh sách các file video kiểm thử có sẵn trên ổ đĩa để người dùng chủ động chọn khi test cam."""
+    videos: Dict[str, str] = {}
+    vn_dir = PROJECT_ROOT / "videovietnam"
+    if vn_dir.exists():
+        for p in sorted(vn_dir.glob("*.mp4")):
+            rel = f"videovietnam/{p.name}"
+            videos[f"🇻🇳 {p.name} ({rel})"] = rel
+
+    fsl_dir = PROJECT_ROOT / "FireSmokeLabeler" / "videos"
+    if fsl_dir.exists():
+        for p in sorted(fsl_dir.iterdir()):
+            if p.suffix.lower() in (".avi", ".mp4", ".mov", ".mkv"):
+                rel = f"FireSmokeLabeler/videos/{p.name}"
+                videos[f"🎞️ {p.name} ({rel})"] = rel
+
+    uploads_dir = PROJECT_ROOT / "uploads"
+    if uploads_dir.exists():
+        for p in sorted(uploads_dir.iterdir(), key=lambda x: x.stat().st_mtime, reverse=True):
+            if p.suffix.lower() in (".mp4", ".avi", ".mov", ".mkv"):
+                rel = f"uploads/{p.name}"
+                videos[f"📤 [Đã tải lên] {p.name}"] = rel
+
+    return videos
+
+
+def get_default_9_cameras(auto_assign_videos: bool = True) -> List[CameraConfig]:
+    """Khởi tạo cấu hình mặc định cho 9 camera (3x3).
+    - Khi `auto_assign_videos=False` (dùng trên giao diện Web Dashboard): KHÔNG tự động gắn sẵn file video vào camera,
+      mọi camera khởi tạo ở trạng thái trống (`source=""`, `source_type="UNASSIGNED"`) để người dùng tự chọn camera đang hoạt động
+      hoặc chủ động gắn file video qua tính năng Test Cam bằng File.
+    """
     candidate_videos = [
-        ("CAM-01", "CAM 01 - Kho Hàng A (VN_POS_01)", "videovietnam/VN_POS_01.mp4"),
-        ("CAM-02", "CAM 02 - Xưởng Sản Xuất (VN_POS_02)", "videovietnam/VN_POS_02.mp4"),
-        ("CAM-03", "CAM 03 - Khu Vực Bãi Xe (VN_POS_03)", "videovietnam/VN_POS_03.mp4"),
-        ("CAM-04", "CAM 04 - Hành Lang Tầng 2 (VN_POS_04)", "videovietnam/VN_POS_04.mp4"),
-        ("CAM-05", "CAM 05 - Trạm Biến Áp (VN_POS_05)", "videovietnam/VN_POS_05.mp4"),
-        ("CAM-06", "CAM 06 - Nhà Kho B (VN_POS_06)", "videovietnam/VN_POS_06.mp4"),
-        ("CAM-07", "CAM 07 - Cổng Chính (VN_POS_07)", "videovietnam/VN_POS_07.mp4"),
-        ("CAM-08", "CAM 08 - Sân Thượng (VN_POS_08)", "videovietnam/VN_POS_08.mp4"),
-        ("CAM-09", "CAM 09 - Giao Thông (VN_NEG_01)", "videovietnam/VN_NEG_01.mp4"),
+        ("CAM-01", "Khu Vực Sảnh Chính", "videovietnam/VN_POS_01.mp4"),
+        ("CAM-02", "Xưởng Sản Xuất", "videovietnam/VN_POS_02.mp4"),
+        ("CAM-03", "Kho Vật Liệu", "videovietnam/VN_POS_03.mp4"),
+        ("CAM-04", "Hành Lang Tầng 2", "videovietnam/VN_POS_04.mp4"),
+        ("CAM-05", "Trạm Biến Áp", "videovietnam/VN_POS_05.mp4"),
+        ("CAM-06", "Khu Vực Nhà Xe", "videovietnam/VN_POS_06.mp4"),
+        ("CAM-07", "Cổng Chính", "videovietnam/VN_POS_07.mp4"),
+        ("CAM-08", "Sân Thượng", "videovietnam/VN_POS_08.mp4"),
+        ("CAM-09", "Hành Lang Kỹ Thuật", "videovietnam/VN_NEG_01.mp4"),
     ]
 
     fallback_videos = [
@@ -155,14 +199,18 @@ def get_default_9_cameras() -> List[CameraConfig]:
 
     configs: List[CameraConfig] = []
     for idx, (cid, cname, rel_path) in enumerate(candidate_videos):
-        full_p = PROJECT_ROOT / rel_path
-        if full_p.exists():
-            src = rel_path
+        if not auto_assign_videos:
+            src = ""
+            s_type = "UNASSIGNED"
         else:
-            fb_rel = fallback_videos[idx % len(fallback_videos)]
-            fb_full = PROJECT_ROOT / fb_rel
-            src = fb_rel if fb_full.exists() else "0"
-        s_type = infer_source_type(src)
+            full_p = PROJECT_ROOT / rel_path
+            if full_p.exists():
+                src = rel_path
+            else:
+                fb_rel = fallback_videos[idx % len(fallback_videos)]
+                fb_full = PROJECT_ROOT / fb_rel
+                src = fb_rel if fb_full.exists() else "0"
+            s_type = infer_source_type(src)
         configs.append(
             CameraConfig(
                 cam_id=cid,
