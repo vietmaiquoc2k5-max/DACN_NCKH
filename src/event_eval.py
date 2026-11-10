@@ -144,21 +144,23 @@ def load_ground_truth_events(
             status = str(row.get("verification_status", "pending_verification")).lower().strip()
             annotator = str(row.get("annotator_id", "")).strip()
 
-            if status not in {"verified", "pending_verification"}:
+            valid_gt_statuses = {"cross_verified", "verified", "annotator_reviewed", "pending_verification", "disputed"}
+            if status not in valid_gt_statuses:
                 raise ValueError(
                     f"{target_path}: Bản ghi video {vid} có verification_status='{status}' không hợp lệ "
-                    "(chỉ chấp nhận 'verified' hoặc 'pending_verification')."
+                    f"(chỉ chấp nhận: {sorted(list(valid_gt_statuses))})."
                 )
 
-            if status == "verified" and (not annotator or annotator.lower() in {"unspecified", "annotator_pending", "none"}):
+            is_verified = status in {"cross_verified", "verified"}
+            if is_verified and (not annotator or annotator.lower() in {"unspecified", "annotator_pending", "none"}):
                 raise ValueError(
-                    f"{target_path}: Bản ghi verified video {vid} thiếu annotator_id hợp lệ (tìm thấy: '{annotator}')."
+                    f"{target_path}: Bản ghi {status} video {vid} thiếu annotator_id hợp lệ (tìm thấy: '{annotator}')."
                 )
 
             if video_ids is not None and vid not in video_ids:
                 continue
 
-            if only_verified and status != "verified":
+            if only_verified and not is_verified:
                 continue
 
             try:
@@ -234,8 +236,8 @@ def get_ground_truth_manifest(
     test_ids = test_video_ids or set()
 
     total_records = len(records)
-    verified_records = [r for r in records if str(r.get("verification_status", "")).lower() == "verified"]
-    pending_records = [r for r in records if str(r.get("verification_status", "")).lower() != "verified"]
+    verified_records = [r for r in records if str(r.get("verification_status", "")).lower() in {"cross_verified", "verified"}]
+    pending_records = [r for r in records if str(r.get("verification_status", "")).lower() not in {"cross_verified", "verified"}]
 
     return {
         "path": str(target_path),

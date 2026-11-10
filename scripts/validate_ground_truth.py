@@ -122,19 +122,42 @@ def validate_ground_truth(
             elif label == "SMOKE":
                 smoke_count += 1
 
-            # Kiểm tra trạng thái xác minh và annotator_id
-            if status not in {"verified", "pending_verification"}:
+            # Kiểm tra trạng thái xác minh và annotator_id theo chuẩn đa thẩm định v1.1
+            valid_statuses = {"cross_verified", "verified", "annotator_reviewed", "pending_verification", "disputed"}
+            if status not in valid_statuses:
                 errors.append(
                     f"Dòng {line_no} video {vid}: verification_status '{status}' không hợp lệ "
-                    "(chỉ chấp nhận 'verified' hoặc 'pending_verification')"
+                    f"(chỉ chấp nhận: {sorted(list(valid_statuses))})"
                 )
-            elif status == "verified":
+            elif status in {"cross_verified", "verified"}:
                 verified_count += 1
                 if not annotator or annotator.lower() in {"unspecified", "annotator_pending", "none"}:
                     errors.append(
-                        f"Dòng {line_no} video {vid}: Bản ghi verified bắt buộc phải có annotator_id hợp lệ "
+                        f"Dòng {line_no} video {vid}: Bản ghi {status} bắt buộc phải có annotator_id hợp lệ "
                         f"(tìm thấy: '{annotator}')"
                     )
+                # Kiểm tra annotator_02 và độ lệch cross-validation
+                ann1 = record.get("annotator_01")
+                ann2 = record.get("annotator_02")
+                if not ann2 or str(ann2).lower() in {"none", "null", "", "annotator_pending"}:
+                    errors.append(
+                        f"Dòng {line_no} video {vid}: Bản ghi {status} bắt buộc phải có annotator_02 kiểm định chéo độc lập."
+                    )
+                s1 = record.get("start_sec_annotator_01")
+                s2 = record.get("start_sec_annotator_02")
+                e1 = record.get("end_sec_annotator_01")
+                e2 = record.get("end_sec_annotator_02")
+                if s1 is not None and s2 is not None and e1 is not None and e2 is not None:
+                    try:
+                        d_start = abs(float(s1) - float(s2))
+                        d_end = abs(float(e1) - float(e2))
+                        if d_start > 0.5 or d_end > 0.5:
+                            errors.append(
+                                f"Dòng {line_no} video {vid}: Sai lệch giữa 2 annotator "
+                                f"(start={d_start:.2f}s, end={d_end:.2f}s) vượt quá 0.5s. Phải chuyển thành 'disputed'."
+                            )
+                    except (ValueError, TypeError):
+                        errors.append(f"Dòng {line_no} video {vid}: Timestamp của annotator không hợp lệ")
             else:
                 pending_count += 1
 

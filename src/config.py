@@ -91,7 +91,12 @@ def mask_rtsp_credentials(source: str) -> str:
     if not source:
         return ""
     s = str(source).strip()
-    return re.sub(r"((?:rtsp|rtsps|http|https|rtmp)://[^:/@\s]+:)([^@\s]+)(@)", r"\1******\3", s, flags=re.IGNORECASE)
+    return re.sub(
+        r"((?:rtsp|rtsps|http|https|rtmp)://[^:/@\s]+:)(.+?)(@[^/@\s]+(?::\d+)?(?:/|$))",
+        r"\1******\3",
+        s,
+        flags=re.IGNORECASE,
+    )
 
 
 def infer_source_type(source: str) -> str:
