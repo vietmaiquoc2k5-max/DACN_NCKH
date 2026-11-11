@@ -218,6 +218,9 @@ class ByteTrackAdapter:
                     for row in tracks_out:
                         if len(row) < 8:
                             continue
+                        tid = int(row[4])
+                        sub_idx = int(row[7])
+                        if 0 <= sub_idx < len(indexed_boxes):
                         raw_tid = int(row[4])
                         sub_idx = int(row[7])
                         if 0 <= sub_idx < len(indexed_boxes):

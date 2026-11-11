@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-10T09:53:43.546186+00:00",
+    "git_branch": "fix/week4-scientific-validation"
+  },
+  "mode_a_file_based": {
+    "file_based_benchmark": [
+      {
+        "num_streams": 1,
+        "source_type": "LOCAL_FILE_AVI",
+        "avg_capture_fps": 23.8,
+        "min_capture_fps": 23.8,
+        "avg_inference_fps": 48.4,
+        "latency_p50_ms": 20.9,
+        "latency_p95_ms": 25.4,
+        "latency_p99_ms": 26.2,
+        "avg_cpu_percent": 81.0,
+        "ram_usage_mb": 423.4,
+        "target_cpu_fps_met": true
+      },
+      {
+        "num_streams": 2,
+        "source_type": "LOCAL_FILE_AVI",
+        "avg_capture_fps": 23.8,
+        "min_capture_fps": 23.8,
+        "avg_inference_fps": 36.1,
+        "latency_p50_ms": 25.3,
+        "latency_p95_ms": 26.0,
+        "latency_p99_ms": 26.2,
+        "avg_cpu_percent": 100.0,
+        "ram_usage_mb": 470.6,
+        "target_cpu_fps_met": true
+      },
+      {
+        "num_streams": 4,
+        "source_type": "LOCAL_FILE_AVI",
+        "avg_capture_fps": 23.6,
+        "min_capture_fps": 22.7,
+        "avg_inference_fps": 32.8,
+        "latency_p50_ms": 27.1,
+        "latency_p95_ms": 82.5,
+        "latency_p99_ms": 136.4,
+        "avg_cpu_percent": 100.0,
+        "ram_usage_mb": 561.6,
+        "target_cpu_fps_met": true
+      },
+      {
+        "num_streams": 6,
+        "source_type": "LOCAL_FILE_AVI",
+        "avg_capture_fps": 23.8,
+        "min_capture_fps": 23.8,
+        "avg_inference_fps": 36.8,
+        "latency_p50_ms": 26.2,
+        "latency_p95_ms": 29.4,
+        "latency_p99_ms": 30.2,
+        "avg_cpu_percent": 100.0,
+        "ram_usage_mb": 647.8,
+        "target_cpu_fps_met": true
+      },
+      {
+        "num_streams": 9,
+        "source_type": "LOCAL_FILE_AVI",
+        "avg_capture_fps": 23.7,
+        "min_capture_fps": 23.7,
+        "avg_inference_fps": 34.6,
+        "latency_p50_ms": 28.7,
+        "latency_p95_ms": 34.2,
+        "latency_p99_ms": 34.9,
+        "avg_cpu_percent": 100.0,
+        "ram_usage_mb": 769.4,
+        "target_cpu_fps_met": true
+      }
+    ]
+  },
+  "mode_b_rtsp_live": {
+    "status": "NOT_TESTED",
+    "reason": "BLOCKED_NO_LIVE_RTSP_SOURCE",
+    "available_streams": 0,
+    "tested_configurations": {
+      "1_cam": "NOT_TESTED",
+      "2_cam": "NOT_TESTED",
+      "4_cam": "NOT_TESTED",
+      "6_cam": "NOT_TESTED",
+      "9_cam": "NOT_TESTED"
+    }
+  }
+}

@@ -1,0 +1,697 @@
+{
+  "metadata": {
+    "title": "Validation Set Event Instance Recall Ablation Study",
+    "git_branch": "fix/week4-scientific-validation",
+    "timestamp_utc": "2026-11-10T10:31:10.261877+00:00",
+    "validation_videos": [
+      "POS_01",
+      "POS_03",
+      "POS_05",
+      "POS_07",
+      "POS_09",
+      "POS_11",
+      "POS_13",
+      "POS_15",
+      "POS_17",
+      "POS_19",
+      "POS_21",
+      "POS_23"
+    ],
+    "validation_frames_count": 2266,
+    "baseline_metrics": {
+      "all_gt_recall": 0.8235,
+      "verified_gt_recall": 1.0,
+      "mean_delay_sec": 0.221
+    }
+  },
+  "best_candidate_selected_on_validation": {
+    "id": "kn_k2_n8",
+    "name": "Global K=2, N=8 (conf=0.35, feat=0.02, cd=5.0s)",
+    "has_per_class_params": false,
+    "parameters": {
+      "default": {
+        "confidence_threshold": 0.35,
+        "k": 2,
+        "n": 8,
+        "feature_threshold": 0.02,
+        "cooldown_sec": 5.0
+      },
+      "per_class": null
+    },
+    "predicted_events_count": 18,
+    "all_gt_evaluation": {
+      "tp_matched": 14,
+      "fn_missed": 3,
+      "fp_unmatched": 4,
+      "recall": 0.8235,
+      "precision": 0.7778,
+      "f1": 0.8,
+      "mean_delay_sec": 0.858,
+      "recall_drop_points": 0.0,
+      "meets_recall_target": true
+    },
+    "verified_gt_evaluation": {
+      "tp_matched": 3,
+      "fn_missed": 0,
+      "recall": 1.0,
+      "precision": 0.1667,
+      "f1": 0.2857,
+      "mean_delay_sec": 0.234,
+      "recall_drop_points": 0.0,
+      "meets_recall_target": true
+    },
+    "meets_mt3_overall": true
+  },
+  "ablation_results": [
+    {
+      "id": "current_pipeline_b2",
+      "name": "Current Pipeline B2 (conf=0.35, K=3, N=8, feat=0.02, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 8,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 17,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 4,
+        "recall": 0.7647,
+        "precision": 0.7647,
+        "f1": 0.7647,
+        "mean_delay_sec": 0.593,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1765,
+        "f1": 0.3,
+        "mean_delay_sec": 0.501,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "current_pipeline_b1",
+      "name": "Current Pipeline B1 (conf=0.35, K=3, N=8, feat=0.0, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 8,
+          "feature_threshold": 0.0,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 18,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 5,
+        "recall": 0.7647,
+        "precision": 0.7222,
+        "f1": 0.7429,
+        "mean_delay_sec": 0.546,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1667,
+        "f1": 0.2857,
+        "mean_delay_sec": 0.434,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "kn_k2_n6",
+      "name": "Global K=2, N=6 (conf=0.35, feat=0.02, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 6,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 21,
+      "all_gt_evaluation": {
+        "tp_matched": 14,
+        "fn_missed": 3,
+        "fp_unmatched": 7,
+        "recall": 0.8235,
+        "precision": 0.6667,
+        "f1": 0.7368,
+        "mean_delay_sec": 0.858,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1429,
+        "f1": 0.25,
+        "mean_delay_sec": 0.234,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "kn_k2_n8",
+      "name": "Global K=2, N=8 (conf=0.35, feat=0.02, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 8,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 18,
+      "all_gt_evaluation": {
+        "tp_matched": 14,
+        "fn_missed": 3,
+        "fp_unmatched": 4,
+        "recall": 0.8235,
+        "precision": 0.7778,
+        "f1": 0.8,
+        "mean_delay_sec": 0.858,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1667,
+        "f1": 0.2857,
+        "mean_delay_sec": 0.234,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "kn_k3_n6",
+      "name": "Global K=3, N=6 (conf=0.35, feat=0.02, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 6,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 19,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 6,
+        "recall": 0.7647,
+        "precision": 0.6842,
+        "f1": 0.7222,
+        "mean_delay_sec": 0.593,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1579,
+        "f1": 0.2727,
+        "mean_delay_sec": 0.501,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "kn_k4_n10",
+      "name": "Global K=4, N=10 (conf=0.35, feat=0.02, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 4,
+          "n": 10,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 15,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 2,
+        "recall": 0.7647,
+        "precision": 0.8667,
+        "f1": 0.8125,
+        "mean_delay_sec": 0.777,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.2,
+        "f1": 0.3333,
+        "mean_delay_sec": 0.634,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "feat_001",
+      "name": "Global feat=0.01 (conf=0.35, K=3, N=8, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 8,
+          "feature_threshold": 0.01,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 18,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 5,
+        "recall": 0.7647,
+        "precision": 0.7222,
+        "f1": 0.7429,
+        "mean_delay_sec": 0.577,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1667,
+        "f1": 0.2857,
+        "mean_delay_sec": 0.434,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "feat_0005",
+      "name": "Global feat=0.005 (conf=0.35, K=3, N=8, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 8,
+          "feature_threshold": 0.005,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 18,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 5,
+        "recall": 0.7647,
+        "precision": 0.7222,
+        "f1": 0.7429,
+        "mean_delay_sec": 0.546,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1667,
+        "f1": 0.2857,
+        "mean_delay_sec": 0.434,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "feat_000",
+      "name": "Global feat=0.00 (conf=0.35, K=2, N=6, cd=5.0s)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 6,
+          "feature_threshold": 0.0,
+          "cooldown_sec": 5.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 25,
+      "all_gt_evaluation": {
+        "tp_matched": 14,
+        "fn_missed": 3,
+        "fp_unmatched": 11,
+        "recall": 0.8235,
+        "precision": 0.56,
+        "f1": 0.6667,
+        "mean_delay_sec": 0.851,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.12,
+        "f1": 0.2143,
+        "mean_delay_sec": 0.134,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "cd_3s",
+      "name": "Global cooldown=3.0s (conf=0.35, K=3, N=8, feat=0.02)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 8,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 3.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 16,
+      "all_gt_evaluation": {
+        "tp_matched": 13,
+        "fn_missed": 4,
+        "fp_unmatched": 3,
+        "recall": 0.7647,
+        "precision": 0.8125,
+        "f1": 0.7879,
+        "mean_delay_sec": 0.593,
+        "recall_drop_points": 5.88,
+        "meets_recall_target": false
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1875,
+        "f1": 0.3158,
+        "mean_delay_sec": 0.501,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": false
+    },
+    {
+      "id": "cd_2s",
+      "name": "Global cooldown=2.0s (conf=0.35, K=2, N=6, feat=0.01)",
+      "has_per_class_params": false,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 6,
+          "feature_threshold": 0.01,
+          "cooldown_sec": 2.0
+        },
+        "per_class": null
+      },
+      "predicted_events_count": 19,
+      "all_gt_evaluation": {
+        "tp_matched": 14,
+        "fn_missed": 3,
+        "fp_unmatched": 5,
+        "recall": 0.8235,
+        "precision": 0.7368,
+        "f1": 0.7778,
+        "mean_delay_sec": 0.829,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1579,
+        "f1": 0.2727,
+        "mean_delay_sec": 0.167,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "per_class_opt_1",
+      "name": "Per-Class Opt 1: FIRE(K=3,N=8,feat=0.02) + SMOKE(K=2,N=8,feat=0.005)",
+      "has_per_class_params": true,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 3,
+          "n": 8,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": {
+          "FIRE": {
+            "confirm_k": 3,
+            "window_n": 8,
+            "feature_threshold": 0.02,
+            "cooldown_sec": 5.0,
+            "confidence_threshold": 0.35
+          },
+          "SMOKE": {
+            "confirm_k": 2,
+            "window_n": 8,
+            "feature_threshold": 0.005,
+            "cooldown_sec": 5.0,
+            "confidence_threshold": 0.3
+          }
+        }
+      },
+      "predicted_events_count": 19,
+      "all_gt_evaluation": {
+        "tp_matched": 14,
+        "fn_missed": 3,
+        "fp_unmatched": 5,
+        "recall": 0.8235,
+        "precision": 0.7368,
+        "f1": 0.7778,
+        "mean_delay_sec": 0.644,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1579,
+        "f1": 0.2727,
+        "mean_delay_sec": 0.434,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "per_class_opt_2",
+      "name": "Per-Class Opt 2: FIRE(K=2,N=6,feat=0.02) + SMOKE(K=2,N=8,feat=0.005)",
+      "has_per_class_params": true,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 6,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 5.0
+        },
+        "per_class": {
+          "FIRE": {
+            "confirm_k": 2,
+            "window_n": 6,
+            "feature_threshold": 0.02,
+            "cooldown_sec": 4.0,
+            "confidence_threshold": 0.35
+          },
+          "SMOKE": {
+            "confirm_k": 2,
+            "window_n": 8,
+            "feature_threshold": 0.005,
+            "cooldown_sec": 4.0,
+            "confidence_threshold": 0.28
+          }
+        }
+      },
+      "predicted_events_count": 21,
+      "all_gt_evaluation": {
+        "tp_matched": 15,
+        "fn_missed": 2,
+        "fp_unmatched": 6,
+        "recall": 0.8824,
+        "precision": 0.7143,
+        "f1": 0.7895,
+        "mean_delay_sec": 0.969,
+        "recall_drop_points": -5.88,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1429,
+        "f1": 0.25,
+        "mean_delay_sec": 0.234,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "per_class_opt_3",
+      "name": "Per-Class Opt 3: FIRE(K=2,N=6,feat=0.015) + SMOKE(K=2,N=6,feat=0.00)",
+      "has_per_class_params": true,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 6,
+          "feature_threshold": 0.015,
+          "cooldown_sec": 3.0
+        },
+        "per_class": {
+          "FIRE": {
+            "confirm_k": 2,
+            "window_n": 6,
+            "feature_threshold": 0.015,
+            "cooldown_sec": 3.0,
+            "confidence_threshold": 0.32
+          },
+          "SMOKE": {
+            "confirm_k": 2,
+            "window_n": 6,
+            "feature_threshold": 0.0,
+            "cooldown_sec": 3.0,
+            "confidence_threshold": 0.25
+          }
+        }
+      },
+      "predicted_events_count": 22,
+      "all_gt_evaluation": {
+        "tp_matched": 15,
+        "fn_missed": 2,
+        "fp_unmatched": 7,
+        "recall": 0.8824,
+        "precision": 0.6818,
+        "f1": 0.7692,
+        "mean_delay_sec": 0.862,
+        "recall_drop_points": -5.88,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1364,
+        "f1": 0.24,
+        "mean_delay_sec": 0.167,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    },
+    {
+      "id": "per_class_opt_4",
+      "name": "Per-Class Opt 4 (Balanced): FIRE(conf=0.35,K=2,N=6,feat=0.02,cd=4.0) + SMOKE(conf=0.28,K=2,N=8,feat=0.00,cd=4.0)",
+      "has_per_class_params": true,
+      "parameters": {
+        "default": {
+          "confidence_threshold": 0.35,
+          "k": 2,
+          "n": 6,
+          "feature_threshold": 0.02,
+          "cooldown_sec": 4.0
+        },
+        "per_class": {
+          "FIRE": {
+            "confirm_k": 2,
+            "window_n": 6,
+            "feature_threshold": 0.02,
+            "cooldown_sec": 4.0,
+            "confidence_threshold": 0.35
+          },
+          "SMOKE": {
+            "confirm_k": 2,
+            "window_n": 8,
+            "feature_threshold": 0.0,
+            "cooldown_sec": 4.0,
+            "confidence_threshold": 0.28
+          }
+        }
+      },
+      "predicted_events_count": 21,
+      "all_gt_evaluation": {
+        "tp_matched": 15,
+        "fn_missed": 2,
+        "fp_unmatched": 6,
+        "recall": 0.8824,
+        "precision": 0.7143,
+        "f1": 0.7895,
+        "mean_delay_sec": 0.915,
+        "recall_drop_points": -5.88,
+        "meets_recall_target": true
+      },
+      "verified_gt_evaluation": {
+        "tp_matched": 3,
+        "fn_missed": 0,
+        "recall": 1.0,
+        "precision": 0.1429,
+        "f1": 0.25,
+        "mean_delay_sec": 0.234,
+        "recall_drop_points": 0.0,
+        "meets_recall_target": true
+      },
+      "meets_mt3_overall": true
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "metadata": {
+    "title": "Validation Operating Point Evaluation (Task 5)",
+    "timestamp_utc": "2026-11-10T11:18:25.078798+00:00",
+    "validation_videos": [
+      "POS_01",
+      "POS_03",
+      "POS_05",
+      "POS_07",
+      "POS_09",
+      "POS_11",
+      "POS_13",
+      "POS_15",
+      "POS_17",
+      "POS_19",
+      "POS_21",
+      "POS_23"
+    ],
+    "validation_frames_count": 2266,
+    "deployed_configuration": {
+      "confidence_threshold": 0.35,
+      "confirm_frames_k": 2,
+      "window_size_n": 8,
+      "feature_threshold": 0.02,
+      "alert_cooldown_sec": 5.0
+    }
+  },
+  "primary_evaluation_cross_verified": {
+    "description": "Đánh giá chính thức trên các sự kiện đã được 2 annotator xác minh chéo độc lập",
+    "gt_count": 3,
+    "sample_size_limitation_warning": "Chỉ có 3 sự kiện đạt chuẩn cross_verified trên tập Validation (POS_03, POS_05, POS_23). Cỡ mẫu này quá nhỏ để khẳng định tính tổng quát hóa tuyệt đối. Kết quả Recall 100% chỉ chứng minh tính nhất quán của thuật toán, không phải bằng chứng tổng quát hoàn chỉnh.",
+    "pipelines": {
+      "baseline_a": {
+        "name": "Baseline A (Per-frame)",
+        "parameters": {
+          "conf": 0.35,
+          "k": 1,
+          "n": 1,
+          "feat_thr": 0.0,
+          "cooldown": 0.0
+        },
+        "predicted_events_count": 48,
+        "tp": 3,
+        "fn": 0,
+        "fp": 45,
+        "event_instance_recall": 1.0,
+        "event_precision": 0.0625,
+        "event_f1": 0.1176,
+        "mean_delay_sec": 0.0,
+        "late_detections_count": 0,
+        "late_detections": [],
+        "missed_detections_count": 0,
+        "missed_detections": [],
+        "recall_drop_points": 0.0
+      },
+      "pipeline_b1": {
+        "name": "Pipeline B1 (ByteTrack K=2/N=8, feat=0.0)",
+        "parameters": {
+          "conf": 0.35,
+          "k": 2,
+          "n": 8,
+          "feat_thr": 0.0,
+          "cooldown": 5.0
+        },
+        "predicted_events_count": 44,
+        "tp": 3,
+        "fn": 0,
+        "fp": 41,
+        "event_instance_recall": 1.0,
+        "event_precision": 0.0682,
+        "event_f1": 0.1277,
+        "mean_delay_sec": 0.0,
+        "late_detections_count": 0,
+        "late_detections": [],
+        "missed_detections_count": 0,
+        "missed_detections": [],
+        "recall_drop_points": 0.0
+      },
+      "pipeline_b2_k2_deployed": {
+        "name": "Pipeline B2 Deployed (ByteTrack K=2/N=8, feat=0.02)",
+        "parameters": {
+          "conf": 0.35,
+          "k": 2,
+          "n": 8,
+          "feat_thr": 0.02,
+          "cooldown": 5.0
+        },
+        "predicted_events_count": 42,
+        "tp": 3,
+        "fn": 0,
+        "fp": 39,
+        "event_instance_recall": 1.0,
+        "event_precision": 0.0714,
+        "event_f1": 0.1333,
+        "mean_delay_sec": 0.0,
+        "late_detections_count": 0,
+        "late_detections": [],
+        "missed_detections_count": 0,
+        "missed_detections": [],
+        "recall_drop_points": 0.0
+      }
+    }
+  },
+  "secondary_exploratory_evaluation_all_gt": {
+    "description": "Đánh giá thăm dò trên toàn bộ 17 sự kiện (bao gồm 14 sự kiện pending_verification)",
+    "gt_count": 17,
+    "pipelines": {
+      "baseline_a": {
+        "name": "Baseline A (Per-frame)",
+        "parameters": {
+          "conf": 0.35,
+          "k": 1,
+          "n": 1,
+          "feat_thr": 0.0,
+          "cooldown": 0.0
+        },
+        "predicted_events_count": 48,
+        "tp": 14,
+        "fn": 3,
+        "fp": 34,
+        "event_instance_recall": 0.8235,
+        "event_precision": 0.2917,
+        "event_f1": 0.4308,
+        "mean_delay_sec": 0.221,
+        "late_detections_count": 4,
+        "late_detections": [
+          {
+            "video_id": "POS_13",
+            "camera_id": "BENCH_POS_13",
+            "label": "FIRE",
+            "start_sec": 14.4144,
+            "end_sec": 14.4144,
+            "confidence": 0.5438
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "SMOKE",
+            "start_sec": 36.8368,
+            "end_sec": 48.8488,
+            "confidence": 0.8969
+          },
+          {
+            "video_id": "POS_13",
+            "camera_id": "BENCH_POS_13",
+            "label": "FIRE",
+            "start_sec": 14.4144,
+            "end_sec": 14.4144,
+            "confidence": 0.5438
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "SMOKE",
+            "start_sec": 36.8368,
+            "end_sec": 48.8488,
+            "confidence": 0.8969
+          }
+        ],
+        "missed_detections_count": 3,
+        "missed_detections": [
+          {
+            "video_id": "POS_09",
+            "camera_id": "BENCH_POS_09",
+            "label": "FIRE",
+            "start_sec": 1.2,
+            "end_sec": 54.7,
+            "confidence": 1.0
+          },
+          {
+            "video_id": "POS_11",
+            "camera_id": "BENCH_POS_11",
+            "label": "SMOKE",
+            "start_sec": 16.1,
+            "end_sec": 22.12,
+            "confidence": 1.0
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "FIRE",
+            "start_sec": 37.6,
+            "end_sec": 49.05,
+            "confidence": 1.0
+          }
+        ],
+        "recall_drop_points": 0.0
+      },
+      "pipeline_b1": {
+        "name": "Pipeline B1 (ByteTrack K=2/N=8, feat=0.0)",
+        "parameters": {
+          "conf": 0.35,
+          "k": 2,
+          "n": 8,
+          "feat_thr": 0.0,
+          "cooldown": 5.0
+        },
+        "predicted_events_count": 44,
+        "tp": 14,
+        "fn": 3,
+        "fp": 30,
+        "event_instance_recall": 0.8235,
+        "event_precision": 0.3182,
+        "event_f1": 0.459,
+        "mean_delay_sec": 0.221,
+        "late_detections_count": 5,
+        "late_detections": [
+          {
+            "video_id": "POS_13",
+            "camera_id": "BENCH_POS_13",
+            "label": "FIRE",
+            "start_sec": 14.4144,
+            "end_sec": 14.4144,
+            "confidence": 0.5438
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "SMOKE",
+            "start_sec": 36.8368,
+            "end_sec": 48.8488,
+            "confidence": 0.8969
+          },
+          {
+            "video_id": "POS_01",
+            "camera_id": "BENCH_POS_01",
+            "label": "FIRE",
+            "start_sec": 19.6,
+            "end_sec": 29.2,
+            "confidence": 0.7359
+          },
+          {
+            "video_id": "POS_15",
+            "camera_id": "BENCH_POS_15",
+            "label": "SMOKE",
+            "start_sec": 41.4,
+            "end_sec": 71.6,
+            "confidence": 0.9166
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "SMOKE",
+            "start_sec": 37.2372,
+            "end_sec": 48.8488,
+            "confidence": 0.8969
+          }
+        ],
+        "missed_detections_count": 3,
+        "missed_detections": [
+          {
+            "video_id": "POS_09",
+            "camera_id": "BENCH_POS_09",
+            "label": "FIRE",
+            "start_sec": 1.2,
+            "end_sec": 54.7,
+            "confidence": 1.0
+          },
+          {
+            "video_id": "POS_11",
+            "camera_id": "BENCH_POS_11",
+            "label": "SMOKE",
+            "start_sec": 16.1,
+            "end_sec": 22.12,
+            "confidence": 1.0
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "FIRE",
+            "start_sec": 37.6,
+            "end_sec": 49.05,
+            "confidence": 1.0
+          }
+        ],
+        "recall_drop_points": 0.0
+      },
+      "pipeline_b2_k2_deployed": {
+        "name": "Pipeline B2 Deployed (ByteTrack K=2/N=8, feat=0.02)",
+        "parameters": {
+          "conf": 0.35,
+          "k": 2,
+          "n": 8,
+          "feat_thr": 0.02,
+          "cooldown": 5.0
+        },
+        "predicted_events_count": 42,
+        "tp": 14,
+        "fn": 3,
+        "fp": 28,
+        "event_instance_recall": 0.8235,
+        "event_precision": 0.3333,
+        "event_f1": 0.4746,
+        "mean_delay_sec": 0.221,
+        "late_detections_count": 4,
+        "late_detections": [
+          {
+            "video_id": "POS_13",
+            "camera_id": "BENCH_POS_13",
+            "label": "FIRE",
+            "start_sec": 14.4144,
+            "end_sec": 14.4144,
+            "confidence": 0.5438
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "SMOKE",
+            "start_sec": 36.8368,
+            "end_sec": 48.8488,
+            "confidence": 0.8969
+          },
+          {
+            "video_id": "POS_01",
+            "camera_id": "BENCH_POS_01",
+            "label": "FIRE",
+            "start_sec": 19.6,
+            "end_sec": 29.2,
+            "confidence": 0.7359
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "SMOKE",
+            "start_sec": 37.2372,
+            "end_sec": 48.8488,
+            "confidence": 0.8969
+          }
+        ],
+        "missed_detections_count": 3,
+        "missed_detections": [
+          {
+            "video_id": "POS_09",
+            "camera_id": "BENCH_POS_09",
+            "label": "FIRE",
+            "start_sec": 1.2,
+            "end_sec": 54.7,
+            "confidence": 1.0
+          },
+          {
+            "video_id": "POS_11",
+            "camera_id": "BENCH_POS_11",
+            "label": "SMOKE",
+            "start_sec": 16.1,
+            "end_sec": 22.12,
+            "confidence": 1.0
+          },
+          {
+            "video_id": "POS_21",
+            "camera_id": "BENCH_POS_21",
+            "label": "FIRE",
+            "start_sec": 37.6,
+            "end_sec": 49.05,
+            "confidence": 1.0
+          }
+        ],
+        "recall_drop_points": 0.0
+      }
+    }
+  }
+}

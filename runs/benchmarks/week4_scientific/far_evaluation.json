@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "evaluation_name": "Full-Frame Continuous Streaming False Alarm Rate (FAR) Evaluation",
+    "git_branch": "fix/week4-scientific-validation",
+    "timestamp_utc": "2026-11-10T09:52:00.324163+00:00",
+    "model_path": "runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
+    "model_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "confidence_threshold": 0.35,
+    "confirm_k": 3,
+    "window_n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "total_processed_frames": 5725,
+    "total_processed_duration_sec": 190.83,
+    "total_processed_hours": 0.05301
+  },
+  "aggregate_metrics": {
+    "pipeline_a_frame_baseline": {
+      "total_frame_fps": 83,
+      "total_event_fas": 9,
+      "far_per_hour": 169.78
+    },
+    "pipeline_b1_bytetrack_no_gate": {
+      "total_frame_fps": 119,
+      "total_event_fas": 5,
+      "far_per_hour": 94.32
+    },
+    "pipeline_b2_bytetrack_with_gate": {
+      "total_frame_fps": 119,
+      "total_event_fas": 0,
+      "far_per_hour": 0.0
+    },
+    "far_reduction_percent": 100.0,
+    "far_reduction_target_met": true
+  },
+  "per_video_results": [
+    {
+      "video_id": "REAL_NEG_02",
+      "file_name": "NHIỄU 2.mp4",
+      "video_sha256": "de7705fad4d1a65ff20df5eb1f321036cdec7160f6d5073464d9e900c63555ba",
+      "total_native_frames": 618,
+      "processed_frames": 618,
+      "decode_errors": 0,
+      "decode_success_rate": 100.0,
+      "native_fps": 30.0,
+      "processed_duration_sec": 20.6,
+      "processed_duration_hours": 0.00572,
+      "pipeline_a_frame_baseline": {
+        "frame_fps": 2,
+        "event_fas": 1,
+        "far_per_hour": 174.83
+      },
+      "pipeline_b1_bytetrack_no_gate": {
+        "frame_fps": 7,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      },
+      "pipeline_b2_bytetrack_with_gate": {
+        "frame_fps": 7,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      }
+    },
+    {
+      "video_id": "REAL_NEG_03",
+      "file_name": "NHIỄU 3.mp4",
+      "video_sha256": "a96ced47406adf836daba9adc3c9137cb2969ad70fb4dae20caa3aaea89a1143",
+      "total_native_frames": 1054,
+      "processed_frames": 1054,
+      "decode_errors": 0,
+      "decode_success_rate": 100.0,
+      "native_fps": 30.0,
+      "processed_duration_sec": 35.13,
+      "processed_duration_hours": 0.00976,
+      "pipeline_a_frame_baseline": {
+        "frame_fps": 27,
+        "event_fas": 4,
+        "far_per_hour": 409.84
+      },
+      "pipeline_b1_bytetrack_no_gate": {
+        "frame_fps": 33,
+        "event_fas": 2,
+        "far_per_hour": 204.92
+      },
+      "pipeline_b2_bytetrack_with_gate": {
+        "frame_fps": 33,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      }
+    },
+    {
+      "video_id": "REAL_NEG_04",
+      "file_name": "NHIỄU 4.mp4",
+      "video_sha256": "25fda9ea2b1ca96ca51b74fa34b6b75e67ffb06daa0fc0cb4f7eeb1f840e6b94",
+      "total_native_frames": 1053,
+      "processed_frames": 1053,
+      "decode_errors": 0,
+      "decode_success_rate": 100.0,
+      "native_fps": 30.0,
+      "processed_duration_sec": 35.1,
+      "processed_duration_hours": 0.00975,
+      "pipeline_a_frame_baseline": {
+        "frame_fps": 45,
+        "event_fas": 3,
+        "far_per_hour": 307.69
+      },
+      "pipeline_b1_bytetrack_no_gate": {
+        "frame_fps": 66,
+        "event_fas": 2,
+        "far_per_hour": 205.13
+      },
+      "pipeline_b2_bytetrack_with_gate": {
+        "frame_fps": 66,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      }
+    },
+    {
+      "video_id": "REAL_NEG_01",
+      "file_name": "NHIỄU 1.mp4",
+      "video_sha256": "4deb083ea8d787f6108d06acdd5d87806acf98c4dfceb428771e3499be7f7640",
+      "total_native_frames": 201836,
+      "processed_frames": 1500,
+      "decode_errors": 0,
+      "decode_success_rate": 100.0,
+      "native_fps": 30.0,
+      "processed_duration_sec": 50.0,
+      "processed_duration_hours": 0.01389,
+      "pipeline_a_frame_baseline": {
+        "frame_fps": 0,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      },
+      "pipeline_b1_bytetrack_no_gate": {
+        "frame_fps": 0,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      },
+      "pipeline_b2_bytetrack_with_gate": {
+        "frame_fps": 0,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      }
+    },
+    {
+      "video_id": "REAL_NEG_05",
+      "file_name": "NHIỄU 5.mp4",
+      "video_sha256": "eb242b46c30484c60342201d9d1e5c2514af552fc013cd2bba9f605098b423ec",
+      "total_native_frames": 165480,
+      "processed_frames": 1500,
+      "decode_errors": 0,
+      "decode_success_rate": 100.0,
+      "native_fps": 30.0,
+      "processed_duration_sec": 50.0,
+      "processed_duration_hours": 0.01389,
+      "pipeline_a_frame_baseline": {
+        "frame_fps": 9,
+        "event_fas": 1,
+        "far_per_hour": 71.99
+      },
+      "pipeline_b1_bytetrack_no_gate": {
+        "frame_fps": 13,
+        "event_fas": 1,
+        "far_per_hour": 71.99
+      },
+      "pipeline_b2_bytetrack_with_gate": {
+        "frame_fps": 13,
+        "event_fas": 0,
+        "far_per_hour": 0.0
+      }
+    }
+  ]
+}

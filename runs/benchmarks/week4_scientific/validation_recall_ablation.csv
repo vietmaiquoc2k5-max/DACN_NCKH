@@ -1,0 +1,16 @@
+id,name,has_per_class_params,tp_matched_all,fn_missed_all,fp_unmatched_all,recall_all,precision_all,f1_all,mean_delay_all_sec,recall_drop_all_pts,tp_matched_ver,fn_missed_ver,recall_ver,precision_ver,f1_ver,mean_delay_ver_sec,recall_drop_ver_pts,meets_recall_target_all,meets_mt3_overall
+current_pipeline_b2,"Current Pipeline B2 (conf=0.35, K=3, N=8, feat=0.02, cd=5.0s)",False,13,4,4,0.7647,0.7647,0.7647,0.593,5.88,3,0,1.0,0.1765,0.3,0.501,0.0,False,False
+current_pipeline_b1,"Current Pipeline B1 (conf=0.35, K=3, N=8, feat=0.0, cd=5.0s)",False,13,4,5,0.7647,0.7222,0.7429,0.546,5.88,3,0,1.0,0.1667,0.2857,0.434,0.0,False,False
+kn_k2_n6,"Global K=2, N=6 (conf=0.35, feat=0.02, cd=5.0s)",False,14,3,7,0.8235,0.6667,0.7368,0.858,0.0,3,0,1.0,0.1429,0.25,0.234,0.0,True,True
+kn_k2_n8,"Global K=2, N=8 (conf=0.35, feat=0.02, cd=5.0s)",False,14,3,4,0.8235,0.7778,0.8,0.858,0.0,3,0,1.0,0.1667,0.2857,0.234,0.0,True,True
+kn_k3_n6,"Global K=3, N=6 (conf=0.35, feat=0.02, cd=5.0s)",False,13,4,6,0.7647,0.6842,0.7222,0.593,5.88,3,0,1.0,0.1579,0.2727,0.501,0.0,False,False
+kn_k4_n10,"Global K=4, N=10 (conf=0.35, feat=0.02, cd=5.0s)",False,13,4,2,0.7647,0.8667,0.8125,0.777,5.88,3,0,1.0,0.2,0.3333,0.634,0.0,False,False
+feat_001,"Global feat=0.01 (conf=0.35, K=3, N=8, cd=5.0s)",False,13,4,5,0.7647,0.7222,0.7429,0.577,5.88,3,0,1.0,0.1667,0.2857,0.434,0.0,False,False
+feat_0005,"Global feat=0.005 (conf=0.35, K=3, N=8, cd=5.0s)",False,13,4,5,0.7647,0.7222,0.7429,0.546,5.88,3,0,1.0,0.1667,0.2857,0.434,0.0,False,False
+feat_000,"Global feat=0.00 (conf=0.35, K=2, N=6, cd=5.0s)",False,14,3,11,0.8235,0.56,0.6667,0.851,0.0,3,0,1.0,0.12,0.2143,0.134,0.0,True,True
+cd_3s,"Global cooldown=3.0s (conf=0.35, K=3, N=8, feat=0.02)",False,13,4,3,0.7647,0.8125,0.7879,0.593,5.88,3,0,1.0,0.1875,0.3158,0.501,0.0,False,False
+cd_2s,"Global cooldown=2.0s (conf=0.35, K=2, N=6, feat=0.01)",False,14,3,5,0.8235,0.7368,0.7778,0.829,0.0,3,0,1.0,0.1579,0.2727,0.167,0.0,True,True
+per_class_opt_1,"Per-Class Opt 1: FIRE(K=3,N=8,feat=0.02) + SMOKE(K=2,N=8,feat=0.005)",True,14,3,5,0.8235,0.7368,0.7778,0.644,0.0,3,0,1.0,0.1579,0.2727,0.434,0.0,True,True
+per_class_opt_2,"Per-Class Opt 2: FIRE(K=2,N=6,feat=0.02) + SMOKE(K=2,N=8,feat=0.005)",True,15,2,6,0.8824,0.7143,0.7895,0.969,-5.88,3,0,1.0,0.1429,0.25,0.234,0.0,True,True
+per_class_opt_3,"Per-Class Opt 3: FIRE(K=2,N=6,feat=0.015) + SMOKE(K=2,N=6,feat=0.00)",True,15,2,7,0.8824,0.6818,0.7692,0.862,-5.88,3,0,1.0,0.1364,0.24,0.167,0.0,True,True
+per_class_opt_4,"Per-Class Opt 4 (Balanced): FIRE(conf=0.35,K=2,N=6,feat=0.02,cd=4.0) + SMOKE(conf=0.28,K=2,N=8,feat=0.00,cd=4.0)",True,15,2,6,0.8824,0.7143,0.7895,0.915,-5.88,3,0,1.0,0.1429,0.25,0.234,0.0,True,True

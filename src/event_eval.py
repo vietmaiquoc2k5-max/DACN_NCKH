@@ -92,13 +92,174 @@ def load_events(path: Path) -> list[Event]:
     for row in load_jsonl(path):
         events.append(Event(
             video_id=str(row["video_id"]),
-            camera_id=str(row["camera_id"]),
+            camera_id=str(row.get("camera_id", f"BENCH_{row['video_id']}")),
             label=str(row["label"]).upper(),
             start_sec=float(row["start_sec"]),
             end_sec=float(row["end_sec"]),
             confidence=float(row.get("confidence", 1.0)),
         ))
     return events
+
+
+DEFAULT_GT_PATH = Path(__file__).resolve().parent.parent / "data" / "ground_truth" / "events.jsonl"
+
+
+def load_ground_truth_events(
+    events_path: Path | str | None = None,
+    catalog_videos: Sequence[dict[str, Any]] | None = None,
+    video_ids: set[str] | None = None,
+    only_verified: bool = True,
+    strict: bool = True,
+    allow_catalog_fallback: bool = False,
+) -> list[Event]:
+    """Nạp danh sách sự kiện Ground Truth độc lập từ tệp JSONL chuẩn.
+
+    Quy định liêm chính khoa học:
+    - Mặc định chỉ nạp các sự kiện có `verification_status == 'verified'` (only_verified=True).
+    - Các bản ghi `pending_verification` KHÔNG BAO GIỜ được tham gia vào đánh giá chính thức.
+    - Trong chế độ chuẩn/nghiêm ngặt (`strict=True`), nếu tệp events.jsonl bị thiếu hoặc không có
+      sự kiện verified nào cho tập video yêu cầu, hàm sẽ ném ngoại lệ rõ ràng, tuyệt đối không
+      âm thầm fallback sinh nhãn tự động từ catalog.
+    - Fallback catalog chỉ được kích hoạt khi người dùng chỉ định rõ `allow_catalog_fallback=True`.
+
+    Args:
+        events_path: Đường dẫn tệp events.jsonl (mặc định data/ground_truth/events.jsonl).
+        catalog_videos: Danh sách video từ catalog (chỉ dùng khi allow_catalog_fallback=True).
+        video_ids: Bộ lọc video_id nếu chỉ muốn nạp một tập con video.
+        only_verified: Nếu True (mặc định), chỉ nạp các event có verification_status == 'verified'.
+        strict: Nếu True (mặc định), fail closed nếu không tìm thấy tệp hoặc không có event verified.
+        allow_catalog_fallback: Nếu True, cho phép fallback tạo nhãn từ catalog khi JSONL thiếu.
+
+    Returns:
+        Danh sách Event đã được chuẩn hóa và kiểm định.
+    """
+    target_path = Path(events_path) if events_path is not None else DEFAULT_GT_PATH
+    if target_path.exists():
+        records = load_jsonl(target_path)
+        events: list[Event] = []
+        for line_no, row in enumerate(records, 1):
+            vid = str(row.get("video_id", "")).strip()
+            cam_id = str(row.get("camera_id", f"BENCH_{vid}")).strip()
+            label = str(row.get("label", "")).upper()
+            status = str(row.get("verification_status", "pending_verification")).lower().strip()
+            annotator = str(row.get("annotator_id", "")).strip()
+
+            valid_gt_statuses = {"cross_verified", "verified", "annotator_reviewed", "pending_verification", "disputed"}
+            if status not in valid_gt_statuses:
+                raise ValueError(
+                    f"{target_path}: Bản ghi video {vid} có verification_status='{status}' không hợp lệ "
+                    f"(chỉ chấp nhận: {sorted(list(valid_gt_statuses))})."
+                )
+
+            is_verified = status in {"cross_verified", "verified"}
+            if is_verified and (not annotator or annotator.lower() in {"unspecified", "annotator_pending", "none"}):
+                raise ValueError(
+                    f"{target_path}: Bản ghi {status} video {vid} thiếu annotator_id hợp lệ (tìm thấy: '{annotator}')."
+                )
+
+            if video_ids is not None and vid not in video_ids:
+                continue
+
+            if only_verified and not is_verified:
+                continue
+
+            try:
+                start_sec = float(row["start_sec"])
+                end_sec = float(row["end_sec"])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError(f"{target_path}: Dòng {line_no} video {vid} thiếu hoặc sai định dạng start_sec/end_sec: {exc}") from exc
+
+            if start_sec < 0.0 or end_sec <= start_sec:
+                raise ValueError(
+                    f"{target_path}: Bản ghi video {vid} có mốc thời gian không hợp lệ: start={start_sec}, end={end_sec}"
+                )
+
+            events.append(Event(
+                video_id=vid,
+                camera_id=cam_id,
+                label=label,
+                start_sec=start_sec,
+                end_sec=end_sec,
+                confidence=float(row.get("confidence", 1.0)),
+            ))
+
+        if strict and only_verified and len(events) == 0 and video_ids is not None:
+            raise ValueError(
+                f"Không tìm thấy sự kiện Ground Truth verified nào cho tập video yêu cầu: {sorted(list(video_ids))} "
+                f"trong tệp {target_path}."
+            )
+
+        return events
+
+    # Fallback to catalog_videos chỉ khi được yêu cầu tường minh
+    if allow_catalog_fallback and catalog_videos is not None:
+        LOGGER.warning("CẢNH BÁO: Tệp Ground Truth độc lập không tồn tại tại %s, fallback sang catalog.", target_path)
+        fallback_events: list[Event] = []
+        for v in catalog_videos:
+            is_pos = v.get("is_positive", True)
+            if not is_pos:
+                continue
+            vid = str(v["video_id"])
+            if video_ids is not None and vid not in video_ids:
+                continue
+            cam_id = str(v.get("camera_id", f"BENCH_{vid}"))
+            dur = float(v.get("duration_sec", 0.0))
+            f_start = float(v.get("fire_start_sec", -1.0))
+            s_start = float(v.get("smoke_start_sec", -1.0))
+            if f_start >= 0 and s_start >= 0:
+                fallback_events.append(Event(vid, cam_id, "FIRE", f_start, dur, 1.0))
+                fallback_events.append(Event(vid, cam_id, "SMOKE", s_start, dur, 1.0))
+            elif f_start >= 0:
+                fallback_events.append(Event(vid, cam_id, "FIRE", f_start, dur, 1.0))
+            elif s_start >= 0:
+                fallback_events.append(Event(vid, cam_id, "SMOKE", s_start, dur, 1.0))
+        return fallback_events
+
+    raise FileNotFoundError(
+        f"Không tìm thấy tệp Ground Truth độc lập tại: {target_path}. "
+        "Theo chuẩn nghiệm thu, không sử dụng silent fallback tự sinh nhãn từ catalog."
+    )
+
+
+def get_ground_truth_manifest(
+    events_path: Path | str | None = None,
+    val_video_ids: set[str] | None = None,
+    test_video_ids: set[str] | None = None,
+) -> dict[str, Any]:
+    """Thống kê chi tiết hiện trạng Ground Truth (verified vs pending) theo nhãn và phân chia tập dữ liệu."""
+    target_path = Path(events_path) if events_path is not None else DEFAULT_GT_PATH
+    if not target_path.exists():
+        return {"status": "FILE_NOT_FOUND", "path": str(target_path)}
+
+    records = load_jsonl(target_path)
+    val_ids = val_video_ids or set()
+    test_ids = test_video_ids or set()
+
+    total_records = len(records)
+    verified_records = [r for r in records if str(r.get("verification_status", "")).lower() in {"cross_verified", "verified"}]
+    pending_records = [r for r in records if str(r.get("verification_status", "")).lower() not in {"cross_verified", "verified"}]
+
+    return {
+        "path": str(target_path),
+        "total_records": total_records,
+        "verified_count": len(verified_records),
+        "pending_count": len(pending_records),
+        "annotation_status": "COMPLETE" if len(pending_records) == 0 else "INCOMPLETE_PENDING_ANNOTATIONS",
+        "verified_breakdown": {
+            "fire": sum(1 for r in verified_records if str(r.get("label", "")).upper() == "FIRE"),
+            "smoke": sum(1 for r in verified_records if str(r.get("label", "")).upper() == "SMOKE"),
+            "validation_split": sum(1 for r in verified_records if str(r.get("video_id", "")) in val_ids),
+            "test_split": sum(1 for r in verified_records if str(r.get("video_id", "")) in test_ids),
+            "videos": sorted(list({str(r["video_id"]) for r in verified_records})),
+        },
+        "pending_breakdown": {
+            "fire": sum(1 for r in pending_records if str(r.get("label", "")).upper() == "FIRE"),
+            "smoke": sum(1 for r in pending_records if str(r.get("label", "")).upper() == "SMOKE"),
+            "validation_split": sum(1 for r in pending_records if str(r.get("video_id", "")) in val_ids),
+            "test_split": sum(1 for r in pending_records if str(r.get("video_id", "")) in test_ids),
+            "videos": sorted(list({str(r["video_id"]) for r in pending_records})),
+        },
+    }
 
 
 def load_frame_detections(path: Path) -> list[FrameDetection]:
@@ -337,36 +498,167 @@ def _merge_timestamps(
     return result
 
 
-def _is_match(gt: Event, pred: Event, tolerance_sec: float) -> bool:
-    """Kiểm tra một sự kiện dự đoán có giao thoa hợp lệ với sự kiện GT hay không.
+def is_timely_onset_match(
+    gt: Event,
+    pred: Event,
+    tolerance_sec: float = 10.0,
+    early_tolerance_sec: float | None = None,
+) -> bool:
+    """Kiểm tra sự kiện dự đoán có khớp kịp thời (timely detection) với thời điểm khởi phát GT hay không.
 
-    Sự kiện dự đoán phải kết thúc tại hoặc sau thời điểm bắt đầu GT (`pred.end_sec >= gt.start_sec`,
-    tức không phải cảnh báo giả kết thúc hoàn toàn trước khi đám cháy khởi phát) và bắt đầu
-    không muộn hơn `gt.end_sec + tolerance_sec`.
+    Định nghĩa Onset Matching:
+    1. Cùng video_id, camera_id và nhãn (FIRE/SMOKE).
+    2. Dự đoán phải giao thoa hoặc kéo dài vào khoảng thời gian cháy/khói diễn ra: `pred.end_sec >= gt.start_sec`.
+    3. Dự đoán không được bắt đầu trước GT onset vượt quá `early_tolerance_sec`:
+       `pred.start_sec >= gt.start_sec - early_tolerance_sec` (mặc định early_tolerance_sec = tolerance_sec).
+       Các dự đoán kết thúc trước khi GT bắt đầu hoặc bắt đầu quá sớm được coi là Early Alert / Cảnh báo sớm.
+    4. Dự đoán bắt đầu không được muộn hơn thời điểm khởi phát cộng với dung sai:
+       `pred.start_sec <= gt.start_sec + tolerance_sec`.
+       (Dự đoán bắt đầu sau `gt.start_sec + tolerance_sec` được tính là Late Detection,
+       tuyệt đối không được tính là timely detection).
     """
+    if tolerance_sec < 0:
+        raise ValueError("tolerance_sec phải >= 0")
+    early_tol = tolerance_sec if early_tolerance_sec is None else early_tolerance_sec
+    if early_tol < 0:
+        raise ValueError("early_tolerance_sec phải >= 0")
+
     return (
         gt.video_id == pred.video_id
         and gt.camera_id == pred.camera_id
         and gt.label == pred.label
-        and pred.start_sec <= gt.end_sec + tolerance_sec
         and pred.end_sec >= gt.start_sec
+        and pred.start_sec >= (gt.start_sec - early_tol)
+        and pred.start_sec <= (gt.start_sec + tolerance_sec)
     )
+
+
+def _is_match(gt: Event, pred: Event, tolerance_sec: float, early_tolerance_sec: float | None = None) -> bool:
+    """Hàm tương thích ngược: chuyển tiếp trực tiếp sang `is_timely_onset_match`."""
+    return is_timely_onset_match(gt, pred, tolerance_sec=tolerance_sec, early_tolerance_sec=early_tolerance_sec)
+
+
+def max_cardinality_min_cost_matching(
+    cost_matrix: list[list[float | None]],
+) -> list[tuple[int, int]]:
+    """Giải bài toán ghép cặp cực đại với tổng chi phí nhỏ nhất (Maximum Cardinality, Minimum Cost Bipartite Matching).
+
+    Sử dụng thuật toán Min-Cost Max-Flow (Successive Shortest Path qua SPFA) độc lập, thuần Python:
+    1. Cực đại hóa số lượng cặp ghép hợp lệ (cardinality |M|).
+    2. Trong số các tập ghép có cardinality cực đại, cực tiểu hóa tổng độ trễ onset chênh lệch.
+    3. Đảm bảo ánh xạ 1-1 chặt chẽ (one-to-one matching).
+
+    Args:
+        cost_matrix: Ma trận chi phí kích thước m x n, trong đó cost_matrix[i][j] là độ trễ onset (float >= 0),
+                     hoặc None nếu không tồn tại cạnh hợp lệ giữa GT i và Pred j.
+
+    Returns:
+        Danh sách các cặp chỉ số (i, j) được ghép cặp tối ưu.
+    """
+    m = len(cost_matrix)
+    if m == 0:
+        return []
+    n = len(cost_matrix[0])
+    if n == 0:
+        return []
+
+    source = m + n
+    sink = m + n + 1
+    num_nodes = m + n + 2
+
+    class FlowEdge:
+        __slots__ = ("to", "cap", "cost", "rev")
+
+        def __init__(self, to: int, cap: int, cost: float, rev: int) -> None:
+            self.to = to
+            self.cap = cap
+            self.cost = cost
+            self.rev = rev
+
+    graph: list[list[FlowEdge]] = [[] for _ in range(num_nodes)]
+
+    def add_edge(u: int, v: int, cap: int, cost: float) -> None:
+        graph[u].append(FlowEdge(v, cap, cost, len(graph[v])))
+        graph[v].append(FlowEdge(u, 0, -cost, len(graph[u]) - 1))
+
+    for i in range(m):
+        add_edge(source, i, 1, 0.0)
+
+    for j in range(n):
+        add_edge(m + j, sink, 1, 0.0)
+
+    BIG_REWARD = 10_000.0
+    for i in range(m):
+        for j in range(n):
+            c = cost_matrix[i][j]
+            if c is not None:
+                add_edge(i, m + j, 1, float(c) - BIG_REWARD)
+
+    flow = 0
+    while True:
+        dist = [float("inf")] * num_nodes
+        prev_node = [-1] * num_nodes
+        prev_edge = [-1] * num_nodes
+        in_queue = [False] * num_nodes
+
+        dist[source] = 0.0
+        queue = [source]
+        in_queue[source] = True
+        head = 0
+
+        while head < len(queue):
+            u = queue[head]
+            head += 1
+            in_queue[u] = False
+
+            for e_idx, e in enumerate(graph[u]):
+                if e.cap > 0 and dist[e.to] > dist[u] + e.cost + 1e-9:
+                    dist[e.to] = dist[u] + e.cost
+                    prev_node[e.to] = u
+                    prev_edge[e.to] = e_idx
+                    if not in_queue[e.to]:
+                        queue.append(e.to)
+                        in_queue[e.to] = True
+
+        if dist[sink] >= -BIG_REWARD / 2.0:
+            break
+
+        curr = sink
+        while curr != source:
+            p = prev_node[curr]
+            e_idx = prev_edge[curr]
+            graph[p][e_idx].cap -= 1
+            rev_idx = graph[p][e_idx].rev
+            graph[curr][rev_idx].cap += 1
+            curr = p
+
+        flow += 1
+
+    matches: list[tuple[int, int]] = []
+    for i in range(m):
+        for e in graph[i]:
+            if m <= e.to < m + n and e.cap == 0:
+                matches.append((i, e.to - m))
+
+    matches.sort(key=lambda pair: pair[0])
+    return matches
 
 
 def evaluate(
     ground_truth: Sequence[Event],
     predictions: Sequence[Event],
     positive_video_ids: set[str],
-    negative_video_ids: set[str] | None,
-    negative_hours: float | None,
+    negative_video_ids: set[str] | None = None,
+    negative_hours: float | None = None,
     tolerance_sec: float = 10.0,
+    early_tolerance_sec: float | None = None,
     allow_missing_negative: bool = False,
 ) -> dict[str, Any]:
     """Đánh giá Video-level Event Recall, Event-instance Recall, Precision, F1, Delay và Negative FAR.
 
-    Định nghĩa chuẩn:
-    - `video_event_recall` = Số video dương tính có ít nhất 1 alert khớp GT / Tổng số video dương tính.
-    - `mean_detection_delay_sec` = Trung bình (pred.start_sec - gt.start_sec) trên các cặp khớp.
+    Định nghĩa chuẩn dựa trên Onset Matching:
+    - `video_event_recall` = Số video dương tính có ít nhất 1 alert khớp kịp thời GT / Tổng số video dương tính verified.
+    - `mean_detection_delay_sec` = Trung bình max(0.0, pred.start_sec - gt.start_sec) trên các cặp khớp kịp thời.
     - `false_alarms_per_hour` = Số alert event không khớp GT trên các video thuộc `negative_video_ids`
       chia cho `negative_hours`.
 
@@ -379,6 +671,9 @@ def evaluate(
         raise ValueError("positive_video_ids không được rỗng")
     if tolerance_sec < 0:
         raise ValueError("tolerance_sec phải >= 0")
+    early_tol = tolerance_sec if early_tolerance_sec is None else early_tolerance_sec
+    if early_tol < 0:
+        raise ValueError("early_tolerance_sec phải >= 0")
 
     has_valid_negative = (
         negative_video_ids is not None
@@ -394,40 +689,106 @@ def evaluate(
     neg_ids: set[str] = set(negative_video_ids) if negative_video_ids else set()
     neg_hrs: float | None = float(negative_hours) if (has_valid_negative and negative_hours is not None) else None
 
-    candidates = sorted(
-        (abs(pred.start_sec - gt.start_sec), gi, pi)
-        for gi, gt in enumerate(ground_truth)
-        for pi, pred in enumerate(predictions)
-        if _is_match(gt, pred, tolerance_sec)
-    )
+    # Nhóm GT và Predictions theo (video_id, camera_id, label) để thực hiện Maximum Bipartite Matching
+    grouped_gt: dict[tuple[str, str, str], list[tuple[int, Event]]] = {}
+    for gi, gt in enumerate(ground_truth):
+        key = (gt.video_id, gt.camera_id, gt.label)
+        grouped_gt.setdefault(key, []).append((gi, gt))
+
+    grouped_pred: dict[tuple[str, str, str], list[tuple[int, Event]]] = {}
+    for pi, pred in enumerate(predictions):
+        key = (pred.video_id, pred.camera_id, pred.label)
+        grouped_pred.setdefault(key, []).append((pi, pred))
+
+    all_keys = set(grouped_gt.keys()) | set(grouped_pred.keys())
+    matched_pairs: list[tuple[int, int]] = []
     used_gt: set[int] = set()
     used_pred: set[int] = set()
-    pairs: list[tuple[int, int]] = []
-    for _, gi, pi in candidates:
-        if gi not in used_gt and pi not in used_pred:
+
+    for key in sorted(all_keys):
+        gts = grouped_gt.get(key, [])
+        preds = grouped_pred.get(key, [])
+        if not gts or not preds:
+            continue
+
+        cost_matrix: list[list[float | None]] = []
+        for _, gt in gts:
+            row: list[float | None] = []
+            for _, pred in preds:
+                if is_timely_onset_match(gt, pred, tolerance_sec=tolerance_sec, early_tolerance_sec=early_tol):
+                    delay = max(0.0, pred.start_sec - gt.start_sec)
+                    row.append(delay)
+                else:
+                    row.append(None)
+            cost_matrix.append(row)
+
+        local_matches = max_cardinality_min_cost_matching(cost_matrix)
+        for g_idx, p_idx in local_matches:
+            gi = gts[g_idx][0]
+            pi = preds[p_idx][0]
+            matched_pairs.append((gi, pi))
             used_gt.add(gi)
             used_pred.add(pi)
-            pairs.append((gi, pi))
+
+    # Phân loại các dự đoán không được ghép cặp
+    late_detections: list[dict[str, Any]] = []
+    early_alerts: list[dict[str, Any]] = []
+    negative_false_alarms: list[dict[str, Any]] = []
+    unmatched_positive_predictions: list[dict[str, Any]] = []
+
+    for pi, pred in enumerate(predictions):
+        if pi in used_pred:
+            continue
+        pred_dict = asdict(pred)
+        if pred.video_id in neg_ids:
+            negative_false_alarms.append(pred_dict)
+        elif pred.video_id in positive_video_ids:
+            # Kiểm tra xem có phải late detection hay early alert đối với GT cùng video/label không
+            video_label_gts = [
+                gt for gt in ground_truth
+                if gt.video_id == pred.video_id and gt.label == pred.label
+            ]
+            is_late = False
+            is_early = False
+            if video_label_gts:
+                for gt in video_label_gts:
+                    if pred.start_sec > (gt.start_sec + tolerance_sec) and pred.start_sec <= (gt.end_sec + tolerance_sec) and pred.end_sec >= gt.start_sec:
+                        is_late = True
+                        break
+                    if pred.end_sec < gt.start_sec or pred.start_sec < (gt.start_sec - early_tol):
+                        is_early = True
+            if is_late:
+                late_detections.append(pred_dict)
+            elif is_early:
+                early_alerts.append(pred_dict)
+            else:
+                unmatched_positive_predictions.append(pred_dict)
 
     recalled_positive_videos = {
-        ground_truth[gi].video_id for gi, _ in pairs
+        ground_truth[gi].video_id for gi, _ in matched_pairs
         if ground_truth[gi].video_id in positive_video_ids
     }
-    video_recall = len(recalled_positive_videos) / len(positive_video_ids)
-    event_recall = len(used_gt) / len(ground_truth) if ground_truth else 0.0
-    precision = len(used_pred) / len(predictions) if predictions else 0.0
+    verified_positive_video_ids = {
+        gt.video_id for gt in ground_truth if gt.video_id in positive_video_ids
+    }
+
+    # Video recall được tính trên tập video có verified GT
+    video_recall = (
+        len(recalled_positive_videos) / len(verified_positive_video_ids)
+        if verified_positive_video_ids else 0.0
+    )
+    split_video_recall = (
+        len(recalled_positive_videos) / len(positive_video_ids)
+        if positive_video_ids else 0.0
+    )
+    event_recall = len(matched_pairs) / len(ground_truth) if ground_truth else 0.0
+    precision = len(matched_pairs) / len(predictions) if predictions else 0.0
     f1 = 2 * precision * event_recall / (precision + event_recall) if (precision + event_recall) > 0 else 0.0
 
-    positive_unmatched_alerts = sum(
-        1 for idx, pred in enumerate(predictions)
-        if idx not in used_pred and pred.video_id in positive_video_ids
-    )
+    total_positive_unmatched_alerts = len(late_detections) + len(early_alerts) + len(unmatched_positive_predictions)
 
     if has_valid_negative and neg_hrs is not None:
-        false_alarms: int | None = sum(
-            1 for idx, pred in enumerate(predictions)
-            if idx not in used_pred and pred.video_id in neg_ids
-        )
+        false_alarms: int | None = len(negative_false_alarms)
         far_per_hour: float | None = false_alarms / neg_hrs
         eval_status = "COMPLETE"
         far_status = "VERIFIED"
@@ -437,7 +798,7 @@ def evaluate(
         eval_status = "BLOCKED_BY_NEGATIVE_DATA"
         far_status = "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
 
-    delays = [max(0.0, predictions[pi].start_sec - ground_truth[gi].start_sec) for gi, pi in pairs]
+    delays = [max(0.0, predictions[pi].start_sec - ground_truth[gi].start_sec) for gi, pi in matched_pairs]
 
     unmatched_gt = [
         asdict(gt) for gi, gt in enumerate(ground_truth) if gi not in used_gt
@@ -447,6 +808,8 @@ def evaluate(
             **asdict(pred),
             "is_negative_video": pred.video_id in neg_ids,
             "is_positive_video": pred.video_id in positive_video_ids,
+            "is_late_detection": any(p["video_id"] == pred.video_id and p["start_sec"] == pred.start_sec for p in late_detections),
+            "is_early_alert": any(p["video_id"] == pred.video_id and p["start_sec"] == pred.start_sec for p in early_alerts),
         }
         for pi, pred in enumerate(predictions) if pi not in used_pred
     ]
@@ -456,18 +819,23 @@ def evaluate(
         "counts": {
             "ground_truth_events": len(ground_truth),
             "predicted_events": len(predictions),
-            "matched_events": len(pairs),
+            "matched_events": len(matched_pairs),
+            "timely_detections": len(matched_pairs),
+            "late_detections": len(late_detections),
+            "early_alerts": len(early_alerts),
             "unmatched_gt_events": len(unmatched_gt),
             "unmatched_predicted_events": len(unmatched_preds),
-            "positive_unmatched_alerts": positive_unmatched_alerts,
-            "unmatched_positive_predictions": positive_unmatched_alerts,
+            "positive_unmatched_alerts": total_positive_unmatched_alerts,
+            "unmatched_positive_predictions": total_positive_unmatched_alerts,
             "recalled_positive_videos": len(recalled_positive_videos),
+            "verified_positive_videos": len(verified_positive_video_ids),
             "positive_videos": len(positive_video_ids),
             "negative_videos": len(neg_ids),
             "negative_false_alarms": false_alarms,
         },
         "metrics": {
             "video_event_recall": video_recall,
+            "split_video_event_recall": split_video_recall,
             "event_instance_recall": event_recall,
             "event_precision": precision,
             "event_f1": f1,
@@ -491,9 +859,12 @@ def evaluate(
                 "ground_truth": asdict(ground_truth[gi]),
                 "prediction": asdict(predictions[pi]),
                 "delay_sec": max(0.0, predictions[pi].start_sec - ground_truth[gi].start_sec),
+                "is_timely": True,
             }
-            for gi, pi in pairs
+            for gi, pi in matched_pairs
         ],
+        "late_detections": late_detections,
+        "early_alerts": early_alerts,
         "unmatched_ground_truth": unmatched_gt,
         "unmatched_predictions": unmatched_preds,
     }

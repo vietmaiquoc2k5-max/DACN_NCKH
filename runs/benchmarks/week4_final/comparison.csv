@@ -1,13 +1,13 @@
 split,pipeline,videos_count,raw_alarms_or_db_triggers,merged_events_count,strict_video_event_recall_pct,any_class_video_recall_pct,event_instance_recall_pct,event_precision_pct,event_f1_pct,strict_mean_detection_delay_sec,onset_mean_detection_delay_sec,pre_event_false_alarms_on_pos,unmatched_positive_predictions,negative_false_alarms_per_hour,detector_only_latency_ms,detector_only_fps,end_to_end_pipeline_latency_ms,end_to_end_pipeline_fps,status
-full_24_positive,"Pipeline A: Frame-level Baseline (No K/N, No Tracker)",24,2938,53,95.83,95.83,80.0,52.83,63.64,1.02,0.967,3,25,UNAVAILABLE,17.265,57.92,17.265,57.92,BLOCKED_BY_NEGATIVE_DATA
-full_24_positive,"Pipeline B1: ByteTrack + K/N (No Feature Gate, feat_thr=0.0)",24,129,32,95.83,95.83,71.43,78.12,74.63,2.091,1.847,0,7,UNAVAILABLE,17.265,57.92,17.847,56.03,BLOCKED_BY_NEGATIVE_DATA
-full_24_positive,Pipeline B2: ByteTrack + K/N + Temporal Feature Gate (feat_thr=0.02),24,128,31,95.83,95.83,71.43,80.65,75.76,2.131,1.873,0,6,UNAVAILABLE,17.265,57.92,18.101,55.25,BLOCKED_BY_NEGATIVE_DATA
-full_24_positive,Pipeline C: Legacy IoU Temporal (IoU + K/N),24,128,33,95.83,95.83,74.29,78.79,76.47,2.192,1.786,0,7,UNAVAILABLE,17.265,57.92,17.295,57.82,BLOCKED_BY_NEGATIVE_DATA
-val_12_positive,"Pipeline A: Frame-level Baseline (No K/N, No Tracker)",12,1920,26,91.67,91.67,82.35,53.85,65.12,0.193,0.145,1,12,UNAVAILABLE,17.144,58.33,17.144,58.33,BLOCKED_BY_NEGATIVE_DATA
-val_12_positive,"Pipeline B1: ByteTrack + K/N (No Feature Gate, feat_thr=0.0)",12,79,16,91.67,91.67,76.47,81.25,78.79,1.193,0.519,0,3,UNAVAILABLE,17.144,58.33,17.795,56.19,BLOCKED_BY_NEGATIVE_DATA
-val_12_positive,Pipeline B2: ByteTrack + K/N + Temporal Feature Gate (feat_thr=0.02),12,79,16,91.67,91.67,76.47,81.25,78.79,1.27,0.573,0,3,UNAVAILABLE,17.144,58.33,18.087,55.29,BLOCKED_BY_NEGATIVE_DATA
-val_12_positive,Pipeline C: Legacy IoU Temporal (IoU + K/N),12,78,17,91.67,91.67,82.35,82.35,82.35,1.529,0.5,0,3,UNAVAILABLE,17.144,58.33,17.177,58.22,BLOCKED_BY_NEGATIVE_DATA
-test_12_positive,"Pipeline A: Frame-level Baseline (No K/N, No Tracker)",12,1018,27,100.0,100.0,77.78,51.85,62.22,1.847,1.721,2,13,UNAVAILABLE,17.386,57.52,17.386,57.52,BLOCKED_BY_NEGATIVE_DATA
-test_12_positive,"Pipeline B1: ByteTrack + K/N (No Feature Gate, feat_thr=0.0)",12,50,16,100.0,100.0,66.67,75.0,70.59,3.064,3.064,0,4,UNAVAILABLE,17.386,57.52,17.898,55.87,BLOCKED_BY_NEGATIVE_DATA
-test_12_positive,Pipeline B2: ByteTrack + K/N + Temporal Feature Gate (feat_thr=0.02),12,49,15,100.0,100.0,66.67,80.0,72.73,3.065,3.065,0,3,UNAVAILABLE,17.386,57.52,18.115,55.2,BLOCKED_BY_NEGATIVE_DATA
-test_12_positive,Pipeline C: Legacy IoU Temporal (IoU + K/N),12,50,16,100.0,100.0,66.67,75.0,70.59,2.964,2.964,0,4,UNAVAILABLE,17.386,57.52,17.412,57.43,BLOCKED_BY_NEGATIVE_DATA
+full_24_positive,"Pipeline A: Frame-level Baseline (No K/N, No Tracker)",24,2938,53,100.0,95.83,81.82,16.98,28.12,0.596,0.967,3,44,UNAVAILABLE,18.302,54.64,18.302,54.64,BLOCKED_BY_NEGATIVE_DATA
+full_24_positive,"Pipeline B1: ByteTrack + K/N (No Feature Gate, feat_thr=0.0)",24,129,32,100.0,95.83,72.73,25.0,37.21,0.496,1.847,0,24,UNAVAILABLE,18.302,54.64,18.895,52.92,BLOCKED_BY_NEGATIVE_DATA
+full_24_positive,Pipeline B2: ByteTrack + K/N + Temporal Feature Gate (feat_thr=0.02),24,128,31,100.0,95.83,72.73,25.81,38.1,0.521,1.873,0,23,UNAVAILABLE,18.302,54.64,19.142,52.24,BLOCKED_BY_NEGATIVE_DATA
+full_24_positive,Pipeline C: Legacy IoU Temporal (IoU + K/N),24,128,33,100.0,95.83,72.73,24.24,36.36,0.471,1.786,0,25,UNAVAILABLE,18.302,54.64,18.332,54.55,BLOCKED_BY_NEGATIVE_DATA
+val_12_positive,"Pipeline A: Frame-level Baseline (No K/N, No Tracker)",12,1920,26,100.0,91.67,100.0,11.54,20.69,0.0,0.145,1,23,UNAVAILABLE,18.09,55.28,18.09,55.28,BLOCKED_BY_NEGATIVE_DATA
+val_12_positive,"Pipeline B1: ByteTrack + K/N (No Feature Gate, feat_thr=0.0)",12,79,16,100.0,91.67,100.0,18.75,31.58,0.434,0.519,0,13,UNAVAILABLE,18.09,55.28,18.737,53.37,BLOCKED_BY_NEGATIVE_DATA
+val_12_positive,Pipeline B2: ByteTrack + K/N + Temporal Feature Gate (feat_thr=0.02),12,79,16,100.0,91.67,100.0,18.75,31.58,0.501,0.573,0,13,UNAVAILABLE,18.09,55.28,19.012,52.6,BLOCKED_BY_NEGATIVE_DATA
+val_12_positive,Pipeline C: Legacy IoU Temporal (IoU + K/N),12,78,17,100.0,91.67,100.0,17.65,30.0,0.434,0.5,0,14,UNAVAILABLE,18.09,55.28,18.123,55.18,BLOCKED_BY_NEGATIVE_DATA
+test_12_positive,"Pipeline A: Frame-level Baseline (No K/N, No Tracker)",12,1018,27,100.0,100.0,75.0,22.22,34.29,0.893,1.721,2,21,UNAVAILABLE,18.514,54.01,18.514,54.01,BLOCKED_BY_NEGATIVE_DATA
+test_12_positive,"Pipeline B1: ByteTrack + K/N (No Feature Gate, feat_thr=0.0)",12,50,16,100.0,100.0,62.5,31.25,41.67,0.534,3.064,0,11,UNAVAILABLE,18.514,54.01,19.053,52.48,BLOCKED_BY_NEGATIVE_DATA
+test_12_positive,Pipeline B2: ByteTrack + K/N + Temporal Feature Gate (feat_thr=0.02),12,49,15,100.0,100.0,62.5,33.33,43.48,0.534,3.065,0,10,UNAVAILABLE,18.514,54.01,19.272,51.89,BLOCKED_BY_NEGATIVE_DATA
+test_12_positive,Pipeline C: Legacy IoU Temporal (IoU + K/N),12,50,16,100.0,100.0,62.5,31.25,41.67,0.494,2.964,0,11,UNAVAILABLE,18.514,54.01,18.54,53.94,BLOCKED_BY_NEGATIVE_DATA
