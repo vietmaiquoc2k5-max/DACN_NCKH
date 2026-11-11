@@ -150,6 +150,18 @@ def get_available_test_videos() -> Dict[str, str]:
             rel = f"videovietnam/{p.name}"
             videos[f"🇻🇳 {p.name} ({rel})"] = rel
 
+    pos_dir = PROJECT_ROOT / "VN_POS_21"
+    if pos_dir.exists():
+        for p in sorted(pos_dir.glob("*.mp4")):
+            rel = f"VN_POS_21/{p.name}"
+            videos[f"🔥 {p.name} ({rel})"] = rel
+
+    neg_dir = PROJECT_ROOT / "VN_NEG_05"
+    if neg_dir.exists():
+        for p in sorted(neg_dir.glob("*.mp4")):
+            rel = f"VN_NEG_05/{p.name}"
+            videos[f"🛡️ {p.name} ({rel})"] = rel
+
     fsl_dir = PROJECT_ROOT / "FireSmokeLabeler" / "videos"
     if fsl_dir.exists():
         for p in sorted(fsl_dir.iterdir()):
