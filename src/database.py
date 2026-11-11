@@ -59,22 +59,36 @@ class EventDatabase:
         )
 
     def confirm_event(self, event_id: int, action_taken: str = "Đã xác nhận cháy thật", note: str = "") -> bool:
-        """Đánh dấu sự kiện là đã xác nhận và lưu ghi chú xử lý."""
-        return self.alert_manager.update_alert_action(
+        """Đánh dấu sự kiện là đã xác nhận, lưu ghi chú xử lý và tắt ngay còi báo động."""
+        ok = self.alert_manager.update_alert_action(
             alert_id=event_id,
             action_taken=action_taken,
             operator_note=note,
             status="ACKNOWLEDGED",
         )
+        self.alert_manager.stop_alarm()
+        return ok
 
     def dismiss_event(self, event_id: int, note: str = "Báo động giả / Đã bỏ qua") -> bool:
-        """Đánh dấu sự kiện là báo động giả / bỏ qua."""
-        return self.alert_manager.update_alert_action(
+        """Đánh dấu sự kiện là báo động giả / bỏ qua và tắt ngay còi báo động."""
+        ok = self.alert_manager.update_alert_action(
             alert_id=event_id,
             action_taken="Báo động giả (Đã bỏ qua)",
             operator_note=note,
             status="ACKNOWLEDGED",
         )
+        self.alert_manager.stop_alarm()
+        return ok
+
+    def acknowledge_all_pending(
+        self, action_taken: str = "Đã xác nhận cháy thật", note: str = "Xác nhận từ Trung tâm cảnh báo"
+    ) -> bool:
+        """Xác nhận toàn bộ sự kiện đang chờ xử lý và tắt ngay còi báo động."""
+        ok = self.alert_manager.acknowledge_all_pending(
+            action_taken=action_taken, operator_note=note
+        )
+        self.alert_manager.stop_alarm()
+        return ok
 
     def delete_event(self, event_id: int) -> bool:
         """Xóa một sự kiện và ảnh bằng chứng tương ứng."""

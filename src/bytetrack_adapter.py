@@ -18,8 +18,10 @@ import numpy as np
 
 try:
     from ultralytics.trackers.byte_tracker import BYTETracker
+    from ultralytics.trackers.basetrack import BaseTrack
 except ImportError as err:  # pragma: no cover
     BYTETracker = None  # type: ignore
+    BaseTrack = None  # type: ignore
 
 from src.config import ByteTrackSettings
 from src.temporal_verifier import DetectionBox
@@ -60,6 +62,7 @@ class ByteTrackAdapter:
         self,
         settings: Optional[ByteTrackSettings] = None,
         per_class: bool = True,
+        **kwargs: Any,
     ) -> None:
         """Khởi tạo ByteTrackAdapter với cấu hình được chỉ định.
 
@@ -77,6 +80,7 @@ class ByteTrackAdapter:
         self.per_class = per_class
         self._id_counter = itertools.count(1)
         self._trackers: Dict[int, BYTETracker] = {}
+        self._track_id_map: Dict[Tuple[int, int], int] = {}
         LOGGER.info(
             "Khởi tạo ByteTrackAdapter (high_thresh=%.2f, low_thresh=%.2f, new_thresh=%.2f, buffer=%d, per_class=%s)",
             self.settings.track_high_thresh,
@@ -87,7 +91,7 @@ class ByteTrackAdapter:
         )
 
     def _create_tracker_instance(self) -> BYTETracker:
-        """Tạo một thực thể BYTETracker với bộ tham số chuẩn."""
+        """Tạo một thực thể BYTETracker với bộ tham số chuẩn mà không làm reset BaseTrack._count toàn cục."""
         args = SimpleNamespace(
             track_high_thresh=float(self.settings.track_high_thresh),
             track_low_thresh=float(self.settings.track_low_thresh),
@@ -96,8 +100,10 @@ class ByteTrackAdapter:
             match_thresh=float(self.settings.match_thresh),
             fuse_score=bool(self.settings.fuse_score),
         )
+        saved_count = getattr(BaseTrack, "_count", 0) if BaseTrack is not None else 0
         tracker = BYTETracker(args)
-        # Đồng bộ bộ đếm ID để đảm bảo track_id duy nhất và không bị trùng lặp giữa các class
+        if BaseTrack is not None and getattr(BaseTrack, "_count", 0) < saved_count:
+            BaseTrack._count = saved_count
         tracker._ids = self._id_counter
         return tracker
 
@@ -114,6 +120,7 @@ class ByteTrackAdapter:
         Được gọi khi camera khởi động lại, kết nối lại hoặc đổi nguồn video.
         """
         self._trackers.clear()
+        self._track_id_map.clear()
         self._id_counter = itertools.count(1)
         LOGGER.debug("ByteTrackAdapter đã được reset hoàn toàn trạng thái.")
 
@@ -214,6 +221,13 @@ class ByteTrackAdapter:
                         tid = int(row[4])
                         sub_idx = int(row[7])
                         if 0 <= sub_idx < len(indexed_boxes):
+                        raw_tid = int(row[4])
+                        sub_idx = int(row[7])
+                        if 0 <= sub_idx < len(indexed_boxes):
+                            map_key = (key, raw_tid)
+                            if map_key not in self._track_id_map:
+                                self._track_id_map[map_key] = next(self._id_counter)
+                            tid = self._track_id_map[map_key]
                             orig_idx, box_obj = indexed_boxes[sub_idx]
                             box_obj.track_id = tid
 

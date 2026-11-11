@@ -105,6 +105,8 @@ class FireDetector:
                 self._log("Không thể khởi động: Chưa tải được mô hình YOLO.")
                 return
 
+        if hasattr(alert_manager, "reset_alarm_acknowledgment"):
+            alert_manager.reset_alarm_acknowledgment()
         self.running = True
         self.thread = threading.Thread(
             target=self._detection_loop,
@@ -199,14 +201,15 @@ class FireDetector:
             if fire_detected_in_frame:
                 self.consecutive_fire_frames += 1
                 if self.consecutive_fire_frames >= self.consecutive_frames_limit:
-                    # Trigger Audio Alarm
-                    alert_manager.play_alarm()
+                    # Trigger Audio Alarm only if operator has not already acknowledged/silenced it
+                    if not getattr(alert_manager, "alarm_silenced_by_ack", False):
+                        alert_manager.play_alarm(camera_name="CAM-01")
                     if self.alert_callback:
                         self.alert_callback(True)
                         
                     # Handle In-App Alert Cooldown & Record to Database
                     current_time = time.time()
-                    if current_time - self.last_alert_time > self.alert_cooldown:
+                    if current_time - self.last_alert_time > self.alert_cooldown and not getattr(alert_manager, "alarm_silenced_by_ack", False):
                         self.last_alert_time = current_time
                         label_name = detected_label.upper()
                         if is_simulation_mode:

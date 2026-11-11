@@ -31,8 +31,13 @@ datasets/*
 !datasets/vn_dataset/
 **/*.cache
 videovietnam/
+negative_videos/
+VN_NEG_05/
+VN_POS_21/
+videovietnam.rar
 downloads/
 *.zip
+*.rar
 *.tar.gz
 *.whl
 

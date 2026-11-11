@@ -22,7 +22,7 @@ import tempfile
 from pathlib import Path
 import numpy as np
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(os.path.abspath(__file__)).parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -166,6 +166,250 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         self.assertIn("total_fps", metrics)
         self.assertIn("avg_fps", metrics)
         self.assertIn("overall_level", metrics)
+
+    def test_13_dual_and_hexa_camera_selection(self):
+        """13. Chọn 2 camera (DUAL) và 6 camera (HEXA) theo chuẩn FIREWATCH COMMAND CENTER."""
+        cams_2 = ["CAM-01", "CAM-02"]
+        self.manager.set_active_camera_selection(cams_2, auto_start=True)
+        running_2 = [w.config.cam_id for w in self.manager.workers.values() if w.running]
+        self.assertEqual(sorted(running_2), sorted(cams_2))
+
+        cams_6 = [f"CAM-0{i}" for i in range(1, 7)]
+        self.manager.set_active_camera_selection(cams_6, auto_start=True)
+        running_6 = [w.config.cam_id for w in self.manager.workers.values() if w.running]
+        self.assertEqual(sorted(running_6), sorted(cams_6))
+
+    def test_14_performance_presets_and_roi_and_add_camera(self):
+        """14. Kiểm tra Performance Presets, cập nhật ROI per-camera và thêm camera mới."""
+        self.manager.apply_performance_preset("Low Resource")
+        self.assertEqual(self.manager.settings.target_fps_per_cam, 15)
+        self.assertEqual(self.manager.settings.frame_skip, 3)
+        self.assertEqual(self.manager.settings.imgsz, 320)
+
+        self.manager.apply_performance_preset("High Performance")
+        self.assertEqual(self.manager.settings.target_fps_per_cam, 30)
+        self.assertEqual(self.manager.settings.frame_skip, 1)
+        self.assertEqual(self.manager.settings.imgsz, 640)
+
+        self.manager.apply_performance_preset("Balanced")
+        self.assertEqual(self.manager.settings.target_fps_per_cam, 24)
+        self.assertEqual(self.manager.settings.frame_skip, 2)
+        self.assertEqual(self.manager.settings.imgsz, 416)
+
+        # Cập nhật ROI cho CAM-01
+        roi_zones = [(0.1, 0.1, 0.3, 0.3)]
+        self.manager.update_camera_roi("CAM-01", roi_zones)
+        self.assertEqual(self.manager.workers["CAM-01"].config.exclusion_zones, roi_zones)
+
+        # Thêm camera mới
+        new_id = self.manager.add_camera("Khu vực thử nghiệm", "test_fire.mp4", source_type="VIDEO_FILE", enabled=False)
+        self.assertIn(new_id, self.manager.workers)
+
+    def test_15_preserve_state_of_unchanged_cameras_and_disconnected_info(self):
+        """15. Giữ nguyên trạng thái những camera không thay đổi khi chuyển cơ số camera & giữ thông tin nhận diện khi tạm dừng/lỗi."""
+        self.manager.set_active_camera_selection(["CAM-01", "CAM-02", "CAM-03", "CAM-04"], auto_start=True)
+        w1 = self.manager.workers["CAM-01"]
+        t_before = w1.thread
+
+        # Chuyển từ 4 camera xuống 2 camera (CAM-01 và CAM-02 giữ nguyên)
+        self.manager.set_active_camera_selection(["CAM-01", "CAM-02"], auto_start=True)
+        self.assertIs(w1.thread, t_before, "Camera giữ nguyên không được khởi tạo lại thread")
+
+        # Tạm dừng CAM-01 và kiểm tra thông tin nhận diện vẫn được giữ nguyên
+        w1.pause()
+        with w1.lock:
+            w1.primary_label = "FIRE"
+            w1.max_confidence = 0.88
+            w1.active_hits = 3
+        snap1 = w1.get_snapshot()
+        self.assertEqual(snap1["status"], "PAUSED")
+        self.assertEqual(snap1["primary_label"], "FIRE")
+        self.assertAlmostEqual(snap1["max_confidence"], 0.88, places=2)
+        self.assertEqual(snap1["active_hits"], 3)
+
+    def test_16_html_sanitization_and_no_raw_html_leak(self):
+        """16. Kiểm tra hàm chuẩn hóa HTML không để dòng thụt lề >= 4 khoảng trắng hay dòng trống gây lỗi lộ thẻ HTML thô."""
+        import html as py_html
+        sample_dirty = """
+        <div class="fw-cam-card">
+            <div class="fw-cam-header">
+                <span>CAM-01</span>
+            </div>
+
+            <div class="fw-cam-status-bar">
+                <span>Nhận diện: An toàn</span>
+            </div>
+        </div>
+        """
+        cleaned = "\n".join(line.strip() for line in sample_dirty.splitlines() if line.strip())
+        for ln in cleaned.splitlines():
+            self.assertFalse(ln.startswith("    "), "Không được phép còn dòng thụt lề >= 4 spaces gây lỗi code-block Markdown")
+            self.assertTrue(len(ln) > 0, "Không được phép còn dòng trống bên trong khối HTML")
+
+        # Kiểm tra escape dữ liệu không đáng tin cậy từ tên camera/nguồn lỗi
+        untrusted = '<div class="fw-cam-foot"><script>alert(1)</script>'
+        escaped = py_html.escape(untrusted, quote=True)
+        self.assertNotIn("<div", escaped)
+        self.assertNotIn("<script>", escaped)
+
+    def test_17_disconnected_camera_timestamp_and_no_infinite_worker_spawn(self):
+        """17. Kiểm tra camera lỗi ghi nhận thời điểm mất kết nối và không tự tạo lại worker liên tục khi rerun."""
+        self.manager.update_camera_source("CAM-08", "CAM-08 Offline Test", "non_existent_stream_999.mp4", auto_reconnect=False)
+        self.manager.set_active_camera_selection(["CAM-08"], auto_start=True)
+        time.sleep(0.3)
+
+        w8 = self.manager.workers["CAM-08"]
+        snap8 = w8.get_snapshot()
+        self.assertEqual(snap8["status"], "ERROR")
+        self.assertFalse(w8.running)
+        self.assertTrue(len(snap8.get("disconnected_at_str", "")) >= 5)
+
+        # Gọi lại set_active_camera_selection khi Streamlit rerun: không được tự tạo lại worker cho camera đang ERROR
+        old_thread = w8.thread
+        self.manager.set_active_camera_selection(["CAM-08"], auto_start=True)
+        self.assertFalse(w8.running)
+        self.assertIs(w8.thread, old_thread)
+
+        # Khôi phục nguồn hợp lệ và kết nối lại thủ công
+        self.manager.update_camera_source("CAM-08", "CAM 08 - Sân Thượng", "videovietnam/VN_POS_08.mp4", auto_reconnect=True)
+        self.manager.reconnect_camera("CAM-08")
+        time.sleep(0.2)
+        self.assertEqual(w8.get_snapshot()["status"], "CONNECTED")
+
+    def test_18_database_confirm_dismiss_and_preserve_history(self):
+        """18. Kiểm tra Xác nhận và Bỏ qua cập nhật đúng SQLite mà không làm mất lịch sử sự kiện."""
+        dummy_bgr = np.zeros((240, 320, 3), dtype=np.uint8)
+        ev1 = self.manager.event_db.record_event(dummy_bgr, "CAM-01", "FIRE", 0.91, alert_level="FIRE", is_demo=0)
+        ev2 = self.manager.event_db.record_event(dummy_bgr, "CAM-02", "SMOKE", 0.78, alert_level="SUSPECT", is_demo=0)
+
+        stat_before = self.manager.event_db.get_summary_statistics()
+        total_before = stat_before["total_real"]
+        unack_before = stat_before["unconfirmed"]
+
+        self.manager.event_db.confirm_event(ev1["id"], action_taken="Xác nhận cháy thật", note="Test confirm")
+        self.manager.event_db.dismiss_event(ev2["id"], note="Test dismiss")
+
+        stat_after = self.manager.event_db.get_summary_statistics()
+        self.assertEqual(stat_after["total_real"], total_before, "Không được làm mất sự kiện lịch sử sau khi xác nhận/bỏ qua")
+        self.assertEqual(stat_after["unconfirmed"], unack_before - 2)
+
+    def test_19_manual_start_and_stop_monitoring_state_machine(self):
+        """19. Kiểm tra V2 Manual Start: khởi động ở STOPPED (0 worker), start_monitoring bật đúng camera được chọn, stop_monitoring trả toàn bộ về STOPPED."""
+        self.manager.stop_monitoring()
+        self.assertEqual(self.manager.get_active_worker_count(), 0)
+        for cid, w in self.manager.workers.items():
+            snap = w.get_snapshot()
+            self.assertEqual(snap["lifecycle_state"], "STOPPED")
+            self.assertEqual(snap["status"], "DISCONNECTED")
+            self.assertFalse(w.running)
+
+        # Chỉ chọn cấu hình nhưng auto_start=False -> vẫn giữ STOPPED, 0 worker chạy
+        self.manager.set_active_camera_selection(["CAM-01", "CAM-02"], auto_start=False)
+        self.assertEqual(self.manager.get_active_worker_count(), 0)
+        self.assertEqual(self.manager.workers["CAM-01"].get_snapshot()["lifecycle_state"], "STOPPED")
+
+        # Nhấn Bắt đầu giám sát cho CAM-01
+        self.manager.start_monitoring(["CAM-01"])
+        time.sleep(0.25)
+        self.assertEqual(self.manager.get_active_worker_count(), 1)
+        snap1 = self.manager.workers["CAM-01"].get_snapshot()
+        self.assertEqual(snap1["lifecycle_state"], "RUNNING")
+        self.assertEqual(snap1["status"], "CONNECTED")
+        self.assertEqual(self.manager.workers["CAM-02"].get_snapshot()["lifecycle_state"], "STOPPED")
+
+        # Nhấn Dừng giám sát -> tất cả trở về STOPPED, đóng thread/VideoCapture
+        self.manager.stop_monitoring()
+        self.assertEqual(self.manager.get_active_worker_count(), 0)
+        for cid, w in self.manager.workers.items():
+            self.assertEqual(w.get_snapshot()["lifecycle_state"], "STOPPED")
+            self.assertFalse(w.running)
+            self.assertIsNone(w.thread)
+
+    def test_20_remove_camera_with_confirmation(self):
+        """20. Kiểm tra thêm và xóa cấu hình camera an toàn trong Quản lý camera."""
+        new_cid = self.manager.add_camera("CAM 99 - Test Remove", "videovietnam/VN_POS_01.mp4", auto_start=False)
+        self.assertIn(new_cid, self.manager.workers)
+        self.assertEqual(self.manager.workers[new_cid].get_snapshot()["lifecycle_state"], "STOPPED")
+        removed = self.manager.remove_camera(new_cid)
+        self.assertTrue(removed)
+        self.assertNotIn(new_cid, self.manager.workers)
+
+    def test_21_confirm_event_stops_and_silences_alarm(self):
+        """21. Kiểm tra sau khi xác nhận (hoặc bỏ qua) sự kiện cảnh báo thì âm báo còi hú phải tắt ngay và không tự bật lại."""
+        dummy_bgr = np.zeros((240, 320, 3), dtype=np.uint8)
+        ev = self.manager.event_db.record_event(dummy_bgr, "CAM-01", "FIRE", 0.94, alert_level="FIRE", is_demo=0)
+
+        # Giả lập trạng thái còi đang kêu
+        self.manager.alert_manager.reset_alarm_acknowledgment()
+        self.manager.alert_manager.alarm_playing = True
+
+        # Nhấn Xác nhận sự kiện
+        self.manager.acknowledge_event(ev["id"], action_taken="Đã xác nhận cháy thật", note="Test tắt còi")
+
+        # Còi phải tắt ngay lập tức và cờ khóa âm báo sau xác nhận phải bật
+        self.assertFalse(self.manager.alert_manager.alarm_playing, "Sau khi xác nhận, alarm_playing phải bằng False")
+        self.assertTrue(self.manager.alert_manager.alarm_silenced_by_ack, "Sau khi xác nhận, alarm_silenced_by_ack phải bằng True")
+        self.assertIn("CAM-01", self.manager.alert_manager.acknowledged_cameras)
+
+        # Gọi lại play_alarm cho camera đã xác nhận không được phép làm còi kêu lại
+        self.manager.alert_manager.play_alarm(camera_name="CAM-01")
+        self.assertFalse(self.manager.alert_manager.alarm_playing, "Còi không được tự bật lại sau khi đã xác nhận")
+
+    def test_22_no_auto_video_and_test_cam_by_file(self):
+        """
+        Kiểm tra:
+        1. Khi khởi tạo với auto_assign_videos=False (như trên Web Dashboard),
+           KHÔNG tự động gắn bất kỳ video mẫu nào vào 9 camera (source="" và source_type="UNASSIGNED").
+        2. start_monitoring() trên các camera chưa gán nguồn không mở luồng giả tạo.
+        3. assign_test_video_to_camera() gắn file video để test camera cụ thể.
+        4. detect_available_cameras() trả về danh sách thiết bị phần cứng và các ô đã gán nguồn.
+        5. detach_camera_source() gỡ nguồn khỏi camera.
+        """
+        no_vid_mgr = MultiCameraManager(
+            db_path="test_dynamic_no_auto_vid.db",
+            model_path="best.pt",
+            auto_assign_videos=False,
+        )
+        try:
+            for cfg in no_vid_mgr.camera_configs:
+                self.assertEqual(cfg.source, "", f"{cfg.cam_id} không được tự động gắn video")
+                self.assertEqual(cfg.source_type, "UNASSIGNED")
+                self.assertEqual(cfg.masked_source, "Chưa gán nguồn")
+
+            res = no_vid_mgr.start_monitoring(["CAM-01", "CAM-02"])
+            self.assertEqual(res["assigned"], [])
+            self.assertEqual(res["connected"], [])
+            self.assertEqual(set(res["unassigned"]), {"CAM-01", "CAM-02"})
+
+            # Gán file video để test CAM-01
+            test_videos = no_vid_mgr.detect_available_cameras()
+            self.assertIn("active_hardware", test_videos)
+            self.assertEqual(test_videos["assigned_camera_ids"], [])
+
+            from src.config import get_available_test_videos
+            avail_vids = get_available_test_videos()
+            if avail_vids:
+                first_vid_path = list(avail_vids.values())[0]
+                ok, msg = no_vid_mgr.assign_test_video_to_camera("CAM-01", first_vid_path, auto_start=False)
+                self.assertTrue(ok, msg)
+                c1_cfg = no_vid_mgr.workers["CAM-01"].config
+                self.assertEqual(c1_cfg.source, first_vid_path)
+                self.assertEqual(c1_cfg.source_type, "VIDEO_TEST")
+
+                det_after = no_vid_mgr.detect_available_cameras()
+                self.assertEqual(det_after["assigned_camera_ids"], ["CAM-01"])
+
+                # Gỡ nguồn
+                no_vid_mgr.detach_camera_source("CAM-01")
+                self.assertEqual(c1_cfg.source, "")
+                self.assertEqual(c1_cfg.source_type, "UNASSIGNED")
+        finally:
+            no_vid_mgr.stop_all()
+            if os.path.exists("test_dynamic_no_auto_vid.db"):
+                try:
+                    os.remove("test_dynamic_no_auto_vid.db")
+                except OSError:
+                    pass
 
 
 if __name__ == "__main__":
