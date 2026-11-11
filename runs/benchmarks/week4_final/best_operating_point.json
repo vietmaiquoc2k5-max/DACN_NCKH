@@ -1,352 +1,46 @@
 {
-  "status": "NO_FEASIBLE_OPERATING_POINT",
-  "feasible": false,
-  "blocked_by_negative_data": true,
-  "selected_operating_point": null,
-  "provisional_candidate_on_positive_val": {
+  "status": "OFFICIAL",
+  "feasible": true,
+  "selected_operating_point": {
     "confidence_threshold": 0.35,
-    "k": 5,
-    "n": 12,
-    "feature_threshold": 0.0,
-    "cooldown_sec": 0.0,
-    "baseline_video_event_recall": 1.0,
-    "baseline_far_per_hour": null,
-    "metrics": {
-      "video_event_recall": 1.0,
-      "split_video_event_recall": 0.25,
-      "event_instance_recall": 1.0,
-      "event_precision": 0.21428571428571427,
-      "event_f1": 0.35294117647058826,
-      "false_alarms_per_hour": null,
-      "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
-      "mean_detection_delay_sec": 0.8343333333333334,
-      "negative_video_hours": null,
-      "temporal_tolerance_sec": 10.0
-    },
-    "counts": {
-      "ground_truth_events": 3,
-      "predicted_events": 14,
-      "matched_events": 3,
-      "timely_detections": 3,
-      "late_detections": 0,
-      "early_alerts": 0,
-      "unmatched_gt_events": 0,
-      "unmatched_predicted_events": 11,
-      "positive_unmatched_alerts": 11,
-      "unmatched_positive_predictions": 11,
-      "recalled_positive_videos": 3,
-      "verified_positive_videos": 3,
-      "positive_videos": 12,
-      "negative_videos": 0,
-      "negative_false_alarms": null
-    },
-    "far_reduction_vs_frame_baseline": null,
-    "video_event_recall_drop": 0.0,
-    "feasible": false,
-    "status": "BLOCKED_BY_NEGATIVE_DATA"
+    "k": 3,
+    "n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "max_event_gap_sec": 2.0
   },
-  "reason": "NO_FEASIBLE_OPERATING_POINT (BLOCKED_BY_NEGATIVE_DATA: Chưa có >= 5 giờ video âm tính độc lập trên ổ đĩa để xác minh điều kiện giảm >= 50% FAR/giờ. Đã chọn cấu hình provisional tối ưu Recall và Delay trên tập Validation dương tính).",
-  "locked_test_set_evaluation_of_provisional": {
-    "parameters": {
-      "confidence_threshold": 0.35,
-      "k": 5,
-      "n": 12,
-      "feature_threshold": 0.0,
-      "cooldown_sec": 0.0
-    },
-    "test_set_report": {
-      "status": "BLOCKED_BY_NEGATIVE_DATA",
-      "counts": {
-        "ground_truth_events": 8,
-        "predicted_events": 14,
-        "matched_events": 4,
-        "timely_detections": 4,
-        "late_detections": 2,
-        "early_alerts": 0,
-        "unmatched_gt_events": 4,
-        "unmatched_predicted_events": 10,
-        "positive_unmatched_alerts": 10,
-        "unmatched_positive_predictions": 10,
-        "recalled_positive_videos": 4,
-        "verified_positive_videos": 5,
-        "positive_videos": 12,
-        "negative_videos": 0,
-        "negative_false_alarms": null
-      },
-      "metrics": {
-        "video_event_recall": 0.8,
-        "split_video_event_recall": 0.3333333333333333,
-        "event_instance_recall": 0.5,
-        "event_precision": 0.2857142857142857,
-        "event_f1": 0.36363636363636365,
-        "false_alarms_per_hour": null,
-        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
-        "mean_detection_delay_sec": 0.8965749999999999,
-        "negative_video_hours": null,
-        "temporal_tolerance_sec": 10.0
-      },
-      "targets": {
-        "mean_delay_le_10s": true,
-        "has_valid_negative_data": false,
-        "overall_pass": false
-      },
-      "matches": [
-        {
-          "ground_truth": {
-            "video_id": "POS_02",
-            "camera_id": "BENCH_POS_02",
-            "label": "FIRE",
-            "start_sec": 0.1,
-            "end_sec": 7.84,
-            "confidence": 1.0
-          },
-          "prediction": {
-            "video_id": "POS_02",
-            "camera_id": "BENCH_POS_02",
-            "label": "FIRE",
-            "start_sec": 0.8008,
-            "end_sec": 7.8078,
-            "confidence": 0.7738
-          },
-          "delay_sec": 0.7008,
-          "is_timely": true
-        },
-        {
-          "ground_truth": {
-            "video_id": "POS_10",
-            "camera_id": "BENCH_POS_10",
-            "label": "FIRE",
-            "start_sec": 0.1,
-            "end_sec": 17.12,
-            "confidence": 1.0
-          },
-          "prediction": {
-            "video_id": "POS_10",
-            "camera_id": "BENCH_POS_10",
-            "label": "FIRE",
-            "start_sec": 1.4014,
-            "end_sec": 17.017,
-            "confidence": 0.862
-          },
-          "delay_sec": 1.3014,
-          "is_timely": true
-        },
-        {
-          "ground_truth": {
-            "video_id": "POS_12",
-            "camera_id": "BENCH_POS_12",
-            "label": "SMOKE",
-            "start_sec": 1.2,
-            "end_sec": 16.96,
-            "confidence": 1.0
-          },
-          "prediction": {
-            "video_id": "POS_12",
-            "camera_id": "BENCH_POS_12",
-            "label": "SMOKE",
-            "start_sec": 2.0833,
-            "end_sec": 16.875,
-            "confidence": 0.879
-          },
-          "delay_sec": 0.8833,
-          "is_timely": true
-        },
-        {
-          "ground_truth": {
-            "video_id": "POS_24",
-            "camera_id": "BENCH_POS_24",
-            "label": "SMOKE",
-            "start_sec": 0.1,
-            "end_sec": 15.48,
-            "confidence": 1.0
-          },
-          "prediction": {
-            "video_id": "POS_24",
-            "camera_id": "BENCH_POS_24",
-            "label": "SMOKE",
-            "start_sec": 0.8008,
-            "end_sec": 9.2092,
-            "confidence": 0.88
-          },
-          "delay_sec": 0.7008,
-          "is_timely": true
-        }
-      ],
-      "late_detections": [
-        {
-          "video_id": "POS_04",
-          "camera_id": "BENCH_POS_04",
-          "label": "FIRE",
-          "start_sec": 11.4114,
-          "end_sec": 16.2162,
-          "confidence": 0.789
-        },
-        {
-          "video_id": "POS_24",
-          "camera_id": "BENCH_POS_24",
-          "label": "SMOKE",
-          "start_sec": 12.4124,
-          "end_sec": 15.4154,
-          "confidence": 0.8583
-        }
-      ],
-      "early_alerts": [],
-      "unmatched_ground_truth": [
-        {
-          "video_id": "POS_02",
-          "camera_id": "BENCH_POS_02",
-          "label": "SMOKE",
-          "start_sec": 0.1,
-          "end_sec": 7.84,
-          "confidence": 1.0
-        },
-        {
-          "video_id": "POS_04",
-          "camera_id": "BENCH_POS_04",
-          "label": "FIRE",
-          "start_sec": 0.3,
-          "end_sec": 17.02,
-          "confidence": 1.0
-        },
-        {
-          "video_id": "POS_04",
-          "camera_id": "BENCH_POS_04",
-          "label": "SMOKE",
-          "start_sec": 4.2,
-          "end_sec": 17.02,
-          "confidence": 1.0
-        },
-        {
-          "video_id": "POS_12",
-          "camera_id": "BENCH_POS_12",
-          "label": "FIRE",
-          "start_sec": 13.2,
-          "end_sec": 16.96,
-          "confidence": 1.0
-        }
-      ],
-      "unmatched_predictions": [
-        {
-          "video_id": "POS_04",
-          "camera_id": "BENCH_POS_04",
-          "label": "FIRE",
-          "start_sec": 11.4114,
-          "end_sec": 16.2162,
-          "confidence": 0.789,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": true,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_06",
-          "camera_id": "BENCH_POS_06",
-          "label": "FIRE",
-          "start_sec": 0.8008,
-          "end_sec": 55.055,
-          "confidence": 0.8916,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_08",
-          "camera_id": "BENCH_POS_08",
-          "label": "FIRE",
-          "start_sec": 1.0,
-          "end_sec": 25.6,
-          "confidence": 0.8177,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_08",
-          "camera_id": "BENCH_POS_08",
-          "label": "SMOKE",
-          "start_sec": 10.6,
-          "end_sec": 13.0,
-          "confidence": 0.6716,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_08",
-          "camera_id": "BENCH_POS_08",
-          "label": "SMOKE",
-          "start_sec": 23.8,
-          "end_sec": 25.6,
-          "confidence": 0.6765,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_16",
-          "camera_id": "BENCH_POS_16",
-          "label": "SMOKE",
-          "start_sec": 0.8528,
-          "end_sec": 5.1167,
-          "confidence": 0.6704,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_18",
-          "camera_id": "BENCH_POS_18",
-          "label": "SMOKE",
-          "start_sec": 65.4,
-          "end_sec": 70.0,
-          "confidence": 0.6307,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_20",
-          "camera_id": "BENCH_POS_20",
-          "label": "SMOKE",
-          "start_sec": 0.8,
-          "end_sec": 27.4,
-          "confidence": 0.8792,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_22",
-          "camera_id": "BENCH_POS_22",
-          "label": "SMOKE",
-          "start_sec": 1.8,
-          "end_sec": 27.0,
-          "confidence": 0.8917,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": false,
-          "is_early_alert": false
-        },
-        {
-          "video_id": "POS_24",
-          "camera_id": "BENCH_POS_24",
-          "label": "SMOKE",
-          "start_sec": 12.4124,
-          "end_sec": 15.4154,
-          "confidence": 0.8583,
-          "is_negative_video": false,
-          "is_positive_video": true,
-          "is_late_detection": true,
-          "is_early_alert": false
-        }
-      ]
-    }
+  "selection_split": "validation_and_negative_exposure",
+  "constraints": {
+    "min_negative_exposure_hours": 5.0,
+    "min_far_reduction_percentage": 50.0,
+    "max_event_recall_drop_percentage": 5.0,
+    "max_mean_detection_delay_sec": 10.0
+  },
+  "validation_metrics": {
+    "video_event_recall": 0.9583,
+    "event_instance_recall": 0.7143,
+    "event_precision": 0.8065,
+    "event_f1": 0.7576,
+    "mean_detection_delay_sec": 2.13,
+    "valid_negative_exposure_hours": 7.2026,
+    "false_alarms_per_hour": 58.4511,
+    "far_95_ci": [
+      53.0003,
+      61.9221
+    ],
+    "far_reduction_vs_frame_baseline_pct": 57.39
+  },
+  "test_metrics_provisional": {
+    "video_event_recall": 1.0,
+    "event_instance_recall": 0.7222,
+    "event_precision": 0.7222,
+    "event_f1": 0.7222,
+    "mean_detection_delay_sec": 3.21
+  },
+  "verification_history": {
+    "timestamp": "2026-11-12T00:00:34.206379",
+    "git_commit": "256065e7",
+    "model_checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "evaluated_by": "Mai Quốc Việt & Lê Minh Thiên"
   }
 }

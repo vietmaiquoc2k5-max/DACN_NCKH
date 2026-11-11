@@ -1,0 +1,96 @@
+{
+  "run_id": "run_20261111_233035_neg_full",
+  "created_at": "2026-11-12T00:00:34.195501",
+  "git_commit": "256065e7",
+  "model_checkpoint": "runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "device": "cuda:0",
+  "total_inference_time_sec": 1791.04,
+  "average_system_fps": 71.63,
+  "config": {
+    "sample_fps": 5.0,
+    "conf_thresh": 0.25,
+    "eval_conf_thresh": 0.35,
+    "window_n": 8,
+    "confirm_k": 3,
+    "cooldown_sec": 5.0,
+    "feature_threshold": 0.02,
+    "max_event_gap_sec": 2.0
+  },
+  "exposure_summary": {
+    "run_id": "run_20261111_233035_neg_full",
+    "timestamp": "2026-11-12T00:00:34.117138",
+    "total_videos_processed": 79,
+    "total_decoded_frames": 929939,
+    "total_processed_frames": 128291,
+    "frame_integrity_pass": true,
+    "total_exposure_seconds": 25929.53,
+    "total_exposure_hours": 7.2026,
+    "target_hours": 5.0,
+    "surplus_hours": 2.2026,
+    "coverage_ratio": 1.0,
+    "failed_videos": [],
+    "pipeline_a": {
+      "fp_events_total": 988,
+      "fp_events_fire": 363,
+      "fp_events_smoke": 625,
+      "far_per_hour_total": 137.1727,
+      "far_per_hour_fire": 50.3985,
+      "far_per_hour_smoke": 86.7742,
+      "ci_95_total": [
+        103.4534,
+        137.1727
+      ],
+      "ci_95_fire": [
+        45.3466,
+        53.8694
+      ],
+      "ci_95_smoke": [
+        80.1037,
+        90.2452
+      ]
+    },
+    "pipeline_b1": {
+      "fp_events_total": 547,
+      "fp_events_fire": 140,
+      "fp_events_smoke": 407,
+      "far_per_hour_total": 75.9448,
+      "far_per_hour_fire": 19.4374,
+      "far_per_hour_smoke": 56.5074,
+      "ci_95_total": [
+        69.713,
+        79.4158
+      ],
+      "ci_95_fire": [
+        16.3511,
+        22.9084
+      ],
+      "ci_95_smoke": [
+        51.1502,
+        59.9783
+      ]
+    },
+    "pipeline_b2": {
+      "fp_events_total": 421,
+      "fp_events_fire": 67,
+      "fp_events_smoke": 354,
+      "far_per_hour_total": 58.4511,
+      "far_per_hour_fire": 9.3022,
+      "far_per_hour_smoke": 49.1489,
+      "ci_95_total": [
+        53.0003,
+        61.9221
+      ],
+      "ci_95_fire": [
+        7.2091,
+        11.8135
+      ],
+      "ci_95_smoke": [
+        44.1618,
+        52.6199
+      ]
+    },
+    "far_reduction_percentage": 57.39,
+    "proposal_mt3_target_met": true
+  }
+}

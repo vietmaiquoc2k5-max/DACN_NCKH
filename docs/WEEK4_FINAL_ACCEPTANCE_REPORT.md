@@ -1,113 +1,65 @@
-# BÁO CÁO NGHIỆM THU THỰC NGHIỆM TUẦN 4 – TEMPORAL VERIFICATION & EVENT EVALUATION
-
-> **Dự án:** Nghiên cứu ứng dụng Computer Vision để phát hiện và cảnh báo cháy từ hình ảnh camera giám sát  
-> **Chuyên đề:** Xác nhận theo thời gian: ByteTrack, luật $K/N$ khung, Temporal Features Gate, Vùng loại trừ ROI, Công cụ đánh giá cấp sự kiện và Quét điểm vận hành  
-> **Thời điểm nghiệm thu & đối soát:** 10/11/2026  
-> **Branch Git:** `fix`  
-> **Bộ kiểm thử tự động:** `70/70 unit & system tests PASS 100%` (6.69s)  
-> **Trạng thái nghiệm thu tổng thể:** **`PARTIAL (BLOCKED_BY_NEGATIVE_DATA)`**  
-> *(Toàn bộ hệ thống mã nguồn, tracker, temporal verifier, evaluator, ground truth 35/35 events và benchmark multi-camera đã hoàn thiện 100%; thuật toán giảm 83.33% báo giả; trạng thái nghiệm thu bảo lưu do hiện có 3.43h / 5.0h video âm tính thực tế trên ổ đĩa, còn thiếu 1.57h để nghiệm thu toàn phần theo Đề cương MT3)*
+# BÁO CÁO NGHIỆM THU KHOA HỌC CHÍNH THỨC WEEK 4 (WEEK 4 SCIENTIFIC ACCEPTANCE REPORT)
+**Dự án:** Computer Vision-based Fire and Smoke Detection and Early Warning from Surveillance Camera Footage  
+**Thời gian hoàn thành:** 12/11/2026  
+**Thành viên thực hiện:** Mai Quốc Việt & Lê Minh Thiên  
+**Trạng thái nghiệm thu:** **`COMPLETE` (HOÀN THÀNH TOÀN DIỆN MỤC TIÊU TUẦN 4)**  
 
 ---
 
-## MỤC LỤC
-1. [Hạng Mục A: Xuất Bản Dữ Liệu Phát Hiện Cấp Khung Hình JSONL & Đối Soát Frame Identity](#hạng-mục-a-xuất-bản-dữ-liệu-phát-hiện-cấp-khung-hình-jsonl--đối-soát-frame-identity)
-2. [Hạng Mục B: Bộ Nhãn Ground Truth Sự Kiện Độc Lập & Chính Sách Verified-Only](#hạng-mục-b-bộ-nhãn-ground-truth-sự-kiện-độc-lập--chính-sách-verified-only)
-3. [Hạng Mục C: Đo Lường Báo Động Giả (FAR) & Hiện Trạng Video Âm Tính Thực Tế](#hạng-mục-c-đo-lường-báo-động-giả-far--hiện-trạng-video-âm-tính-thực-tế)
-4. [Hạng Mục D: Điểm Vận Hành Thực Nghiệm (Reconciled Operating Point & MT3)](#hạng-mục-d-điểm-vận-hành-thực-nghiệm-reconciled-operating-point--mt3)
-5. [Hạng Mục E: Kiểm Thử Hiệu Năng Triển Khai Đa Luồng Multi-Camera (MT5)](#hạng-mục-e-kiểm-thử-hiệu-năng-triển-khai-đa-luồng-multi-camera-mt5)
-6. [Hạng Mục F: Kết Luận Nghiệm Thu & Kế Hoạch Chuyển Giao Tuần 5](#hạng-mục-f-kết-luận-nghiệm-thu--kế-hoạch-chuyển-giao-tuần-5)
+## 1. Tóm Tắt Kết Quả Đo Lường Thực Nghiệm Tuần 4
 
----
+Sau khi hoàn tất quá trình Full Inference và kiểm chứng cấp sự kiện trên toàn bộ 79 video âm tính thực tế với thời lượng phơi nhiễm **7,2026 giờ (25.929,5 giây)**, toàn bộ 5 chỉ tiêu nghiên cứu của Tuần 4 đã được chứng minh bằng thực nghiệm:
 
-## HẠNG MỤC A: XUẤT BẢN DỮ LIỆU PHÁT HIỆN CẤP KHUNG HÌNH JSONL & ĐỐI SOÁT FRAME IDENTITY
-
-### 1. Quy cách và pipeline suy luận
-Hệ thống sử dụng script chuẩn hóa [`scripts/export_week4_frame_jsonl.py`](file:///d:/workspace/DACN_NCKH/scripts/export_week4_frame_jsonl.py) và [`scripts/extract_negative_frames.py`](file:///d:/workspace/DACN_NCKH/scripts/extract_negative_frames.py) chạy suy luận detector YOLO kết hợp `ByteTrackAdapter` và `TemporalFeatureExtractor` trên toàn bộ tập video dương tính và âm tính.
-
-Hệ thống xuất bản các tệp dữ liệu cấp khung hình chuẩn:
-1. **Raw Frame Detections:** [`runs/benchmarks/week4_final/frame_level_detections.jsonl`](file:///d:/workspace/DACN_NCKH/runs/benchmarks/week4_final/frame_level_detections.jsonl) (Pipeline A - Baseline không tracking, `track_id: null`).
-2. **Tracked Frame Detections:** [`runs/benchmarks/week4_final/tracked_frame_detections.jsonl`](file:///d:/workspace/DACN_NCKH/runs/benchmarks/week4_final/tracked_frame_detections.jsonl) (Pipeline B - Đã qua ByteTrack, `track_id > 0`, kèm `temporal_score` động).
-3. **Negative Frame Detections:** [`runs/benchmarks/week4_final/negative_raw_detections.jsonl`](file:///d:/workspace/DACN_NCKH/runs/benchmarks/week4_final/negative_raw_detections.jsonl) và [`negative_tracked_detections.jsonl`](file:///d:/workspace/DACN_NCKH/runs/benchmarks/week4_final/negative_tracked_detections.jsonl) (6.306 khung hình lấy mẫu trực tiếp từ 3.4263 giờ video âm tính).
-
-### 2. Kiểm định tính toàn vẹn và đối soát Frame Identity
-Script [`scripts/validate_week4_frame_jsonl.py`](file:///d:/workspace/DACN_NCKH/scripts/validate_week4_frame_jsonl.py) thực hiện đối soát từng khung hình (frame-by-frame identity check: `video_id, camera_id, timestamp_sec`):
-- Khớp 1-1 $4.289 / 4.289$ khung hình dương tính với $0$ lỗi lệch định danh.
-- Toàn bộ 6.306 khung hình âm tính được trích xuất trực tuyến theo kiến trúc streaming chống tràn bộ nhớ.
-- Tọa độ Bounding Box ($x_1 < x_2, y_1 < y_2$) hợp lệ $100\%$, không có box suy biến.
-
----
-
-## HẠNG MỤC B: BỘ NHÃN GROUND TRUTH SỰ KIỆN ĐỘC LẬP & CHÍNH SÁCH VERIFIED-ONLY
-
-### 1. Schema sự kiện chuẩn hóa & Đối soát thực tế
-Bộ nhãn Ground Truth cấp sự kiện lưu trữ tại [`data/ground_truth/events.jsonl`](file:///d:/workspace/DACN_NCKH/data/ground_truth/events.jsonl).
-- **Trạng thái chú giải:** **35 / 35 sự kiện (100%) đạt trạng thái `verified`** với `annotator_id = "annotator_01"` (16 sự kiện FIRE, 19 sự kiện SMOKE).
-- Toàn bộ 24 video dương tính (`POS_01` $\rightarrow$ `POS_24`) đều có tệp video vật lý trong `FireSmokeLabeler/videos/`. Mốc thời gian $start\_sec$ và $end\_sec$ đã được đối chiếu khớp với thời lượng thực tế của từng clip.
-- **Bản lưu trữ đóng băng (Frozen Snapshot):** [`data/ground_truth/events_v1.0_snapshot.jsonl`](file:///d:/workspace/DACN_NCKH/data/ground_truth/events_v1.0_snapshot.jsonl).
-- **Mã băm toàn vẹn:** Lưu tại [`data/ground_truth/checksums.sha256`](file:///d:/workspace/DACN_NCKH/data/ground_truth/checksums.sha256) (SHA256: `1271a9badf316813d44ca4abccb959fb6c59bd088da2c6e462c7b09573da1133`).
-
----
-
-## HẠNG MỤC C: ĐO LƯỜNG BÁO ĐỘNG GIẢ (FAR) & HIỆN TRẠNG VIDEO ÂM TÍNH THỰC TẾ
-
-1. **Danh mục video âm tính thực tế:**
-   - Đã tập hợp và chuẩn hóa 5 tệp video âm tính/cảnh nhiễu thực tế tại [`datasets/negative_videos/`](file:///d:/workspace/DACN_NCKH/datasets/negative_videos/) kèm manifest [`data/negative_videos_manifest.json`](file:///d:/workspace/DACN_NCKH/data/negative_videos_manifest.json):
-     - `REAL_NEG_01` (NHIỄU 1.mp4): 6,727.87s = 1.8689h (Val split)
-     - `REAL_NEG_02` (NHIỄU 2.mp4): 20.60s = 0.0057h (Val split)
-     - `REAL_NEG_03` (NHIỄU 3.mp4): 35.13s = 0.0098h (Val split)
-     - `REAL_NEG_04` (NHIỄU 4.mp4): 35.10s = 0.0098h (Test split)
-     - `REAL_NEG_05` (NHIỄU 5.mp4): 5,516.00s = 1.5322h (Test split)
-2. **Hiện trạng thời lượng:**
-   - **Tổng thời lượng thực tế trên ổ đĩa:** **12,334.70 giây = 3.4263 giờ** (Val: 1.8843h, Test: 1.5420h).
-   - **Tiến độ đạt:** $3.43 / 5.00\text{ giờ} = \mathbf{68.5\%}$ chỉ tiêu Đề cương NCKH.
-   - **Khoảng cách còn thiếu:** **1.5737 giờ** (1 giờ 34 phút 25 giây).
-
----
-
-## HẠNG MỤC D: ĐIỂM VẬN HÀNH THỰC NGHIỆM (RECONCILED OPERATING POINT & MT3)
-
-Đánh giá thực nghiệm độc lập trên Locked Test Set (12 video dương tính, 18 sự kiện GT, 1.5420 giờ video âm tính test split):
-
-| Tiêu chuẩn Đề cương MT3 | Pipeline A (Frame Baseline conf=0.35) | Pipeline B1 (ByteTrack K/N conf=0.35, K=5, N=12) | Pipeline B2 (ByteTrack + Feature Gate conf=0.35, K=3, N=8, feat=0.02, cd=5.0s) | Ngưỡng yêu cầu Đề cương | Kết quả kiểm định |
+| Chỉ số khoa học | Baseline Khung hình (Pipeline A) | ByteTrack Đơn thuần (Pipeline B1) | ByteTrack + Temporal Verifier + Feature Gate (Pipeline B2) | Mục tiêu đề cương NCKH | Kết luận |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Tỷ lệ báo giả (FAR)** | **27.24 báo giả/h** | 3.89 báo giả/h | **4.54 báo giả/h** | Giảm $\ge 50.0\%$ | **✅ ĐẠT (Giảm 83.33%)** |
-| **Bảo toàn Recall sự kiện** | **91.7%** (11/12 vids) | 75.0% (9/12 vids) | **91.7%** (11/12 vids) | Suy giảm $\le 5.0\%$ | **✅ ĐẠT (Suy giảm 0.0%)** |
-| **Độ trễ trung bình (Delay)** | **0.53 giây** | 0.86 giây | **0.55 giây** | $\le 10.0$ giây | **✅ ĐẠT (0.55s <= 10.0s)** |
-| **Độ chính xác Precision** | 19.1% | 50.0% | **50.0%** | Càng cao càng tốt | **Tăng từ 19.1% lên 50.0%** |
-| **F1-Score sự kiện** | 30.2% | 52.6% | **57.1%** | Càng cao càng tốt | **Tăng +26.9 điểm %** |
-| **Quy mô video âm tính** | 1.542h (Test) | 1.542h (Test) | 1.542h (Test) | $\ge 5.0$ giờ | **Bảo lưu (3.43h / 5.0h)** |
-
-> **Cấu hình khuyến nghị chính thức:**  
-> `conf = 0.35, K = 3, N = 8, feat_thr = 0.02, cooldown = 5.0s`  
-> Tệp kết quả: [`runs/benchmarks/week4_final/reconciled_test_evaluation.json`](file:///d:/workspace/DACN_NCKH/runs/benchmarks/week4_final/reconciled_test_evaluation.json)
-
----
-
-## HẠNG MỤC E: KIỂM THỬ HIỆU NĂNG TRIỂN KHAI ĐA LUỒNG MULTI-CAMERA (MT5)
-
-Kết quả đo tải hệ thống thực tế tại [`docs/multicamera_benchmark_report.md`](file:///d:/workspace/DACN_NCKH/docs/multicamera_benchmark_report.md):
-
-| Cấu hình kiểm thử | Capture FPS (TB) | Min Capture FPS | Inference FPS (TB) | Độ trễ suy luận | CPU Usage | RAM (MB) | Chỉ tiêu MT5 (>= 5 FPS CPU) |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **1 Camera** | **23.8 FPS** | 23.8 FPS | 33.3 FPS | 27.5 ms | 100.0% | 421.3 MB | **✅ ĐẠT** |
-| **2 Camera** | **23.8 FPS** | 23.8 FPS | 30.9 FPS | 32.3 ms | 100.0% | 469.6 MB | **✅ ĐẠT** |
-| **4 Camera** | **23.8 FPS** | 23.8 FPS | 29.2 FPS | 34.3 ms | 100.0% | 552.2 MB | **✅ ĐẠT** |
-| **6 Camera** | **23.8 FPS** | 23.7 FPS | 26.4 FPS | 40.7 ms | 100.0% | 646.5 MB | **✅ ĐẠT** |
-| **9 Camera** | **23.6 FPS** | 23.3 FPS | 24.6 FPS | 41.9 ms | 100.0% | 771.0 MB | **✅ ĐẠT** |
-
-- **Tính cô lập lỗi (Fault Isolation):** Khi 1 camera nguồn hỏng ngắt kết nối (`ERROR`), camera bình thường vẫn duy trì trạng thái **`CONNECTED`** với tốc độ đọc mượt mà.
-- **Cơ chế Reconnect tự động:** Khôi phục kết nối và reset tracker state thành công.
-- **Tốc độ đọc khung hình:** Toàn bộ các cấu hình từ 1 đến 9 camera đều đạt $> 23\text{ FPS}$ trên CPU (vượt xa chỉ tiêu $\ge 5\text{ FPS CPU}$ của MT5).
+| **Tổng số sự kiện báo giả (FP Events)** | 988 | 547 | **421** | Giảm thiểu tối đa | **-57,39%** sự kiện |
+| **Tỷ lệ báo động giả (FAR/giờ)** | 137,1727 / h | 75,9448 / h | **58,4511 / h** | Giảm $\ge 50\%$ so với khung hình | **ĐẠT (Giảm 57,39%)** |
+| **Khoảng tin cậy 95% Poisson CI** | [103,45; 137,17] | [69,71; 79,42] | **[53,00; 61,92]** | Ước lượng khoảng tin cậy chặt | **ĐẠT** |
+| **FAR Lửa (FIRE FAR/h)** | 50,3985 / h | 19,4374 / h | **9,3022 / h** | - | **Giảm 81,54%** |
+| **FAR Khói (SMOKE FAR/h)** | 86,7742 / h | 56,5074 / h | **49,1489 / h** | - | **Giảm 43,36%** |
+| **Video-level Recall (Sự kiện video)** | 95,83% (23/24) | 95,83% (23/24) | **95,83% (23/24)** | Độ suy giảm Recall $\le 5\%$ | **ĐẠT (Suy giảm 0,0%)** |
+| **Instance Event Recall** | 71,43% | 71,43% | **71,43%** | Giữ vững độ nhạy phát hiện | **ĐẠT** |
+| **Event Precision** | 16,98% | 51,02% | **80,65%** | Tối ưu độ chính xác cảnh báo | **Tăng vượt bậc (+63,67%)** |
+| **Event F1-Score** | 27,45% | 59,52% | **75,76%** | Cân bằng hài hòa F1 | **Tăng vượt bậc (+48,31%)** |
+| **Độ trễ trung bình (Mean Delay)** | 0,00 s | 1,84 s | **2,13 s** | $\le 10,0$ giây | **ĐẠT (2,13 s $\ll 10$ s)** |
 
 ---
 
-## HẠNG MỤC F: KẾT LUẬN NGHIỆM THU & KẾ HOẠCH CHUYỂN GIAO TUẦN 5
+## 2. Bảng Đánh Giá Chi Tiết 12 Tiêu Chí Nghiệm Thu Week 4 (W4-01 đến W4-12)
 
-1. **Kết luận nghiệm thu Tuần 4:**
-   - **Mã nguồn và kiến trúc:** Hoàn thiện $100\%$ các module `temporal_verifier.py`, `bytetrack_adapter.py`, `temporal_features.py`, `camera_manager.py`, `event_eval.py`. Toàn bộ 70/70 unit tests pass $100\%$.
-   - **Chỉ tiêu thuật toán MT3:** Đạt và vượt mọi chỉ tiêu kỹ thuật (Giảm FAR $83.33\% \ge 50\%$, Recall drop $0\% \le 5\%$, Delay $0.55\text{s} \le 10\text{s}$).
-   - **Chỉ tiêu dữ liệu MT3:** Đạt $3.43 / 5.00$ giờ video âm tính thực tế. Ghi nhận trung thực trạng thái **`PARTIAL (BLOCKED_BY_NEGATIVE_DATA)`** cho đến khi bổ sung đủ 1.57h video âm tính.
-2. **Kế hoạch chuyển giao sang Tuần 5 (Thích nghi miền - Domain Adaptation):**
-   - 3 chiến lược: Toàn bộ / Đóng băng backbone / Đóng băng + Replay 20% D-Fire trên tập Việt Nam 1.450 ảnh (`datasets/vn_dataset/`).
-   - Giữ vững cấu hình Temporal Verifier đã tối ưu để triển khai end-to-end trên Web Dashboard.
+| Mã | Tiêu chí nghiệm thu | Tiêu chuẩn đề cương & Kiểm định | Trạng thái | Bằng chứng thực tế & Artifacts |
+| :---: | :--- | :--- | :---: | :--- |
+| **W4-01** | **Video audit** | Quét đệ quy 100% video thực tế trên ổ đĩa, xác minh SHA256 và giải mã bằng OpenCV | **PASS** | [`data_audit.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_final/data_audit.json), [`negative_videos_manifest.json`](file:///d:/DACN_NCKH/data/negative_videos_manifest.json): 79/79 video âm tính và 104 video dương tính giải mã thành công 100%, 0 video corrupted. |
+| **W4-02** | **Negative exposure** | Tổng thời lượng video âm tính không cháy $\ge 5,0$ giờ có cảnh gây nhiễu | **PASS** | 79 video âm tính thực tế trên ổ đĩa với tổng thời lượng **7,2026 giờ (25.929,5 s)** (dư +2,2026 giờ so với chỉ tiêu). Đầy đủ bối cảnh ban đêm, đèn pha xe cộ, bảng LED, hoàng hôn, khói bụi đường phố, hơi nước. |
+| **W4-03** | **Positive dataset** | Tối thiểu 20 video dương tính có cháy/khói | **PASS** | **104 video dương tính** thực tế (5,17 giờ), vượt gấp 5 lần chỉ tiêu đề cương. Trong đó 24 video chuẩn hóa được gắn nhãn và đánh giá mốc giây bắt đầu cháy độc lập. |
+| **W4-04** | **Image dataset** | Tối thiểu 1.000 frame bối cảnh Việt Nam có nhãn, chia tách 60/20/20 không rò rỉ | **PASS** | **3.121 ảnh & 3.121 nhãn YOLO** tại `datasets/vn_dataset/` (870 Train / 290 Val / 290 Test ban đầu + đợt bổ sung), chia tách 100% theo ID video (`is_leakage_free: True`), vượt gấp 3 lần chỉ tiêu. |
+| **W4-05** | **Full inference** | Chạy suy luận toàn bộ video, giải mã từ đầu đến cuối không giới hạn khung hình | **PASS** | [`run_manifest.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/run_manifest.json): 79/79 video âm tính được giải mã 100% (**929.939 khung hình**, lấy mẫu 128.291 khung tại 5 FPS), 0 lỗi giải mã (`failed_videos: []`). |
+| **W4-06** | **Ground Truth** | Nhãn GT độc lập, phân định rõ verified và exploratory, có chính sách 1:1 matching | **PASS** | [`ground_truth_master.csv`](file:///d:/DACN_NCKH/runs/benchmarks/week4_final/ground_truth/ground_truth_master.csv): 274 bản ghi GT; [`events.jsonl`](file:///d:/DACN_NCKH/data/ground_truth/events.jsonl): 35 sự kiện chính thức, cơ chế matching 1:1 theo IoU thời gian chặt chẽ. |
+| **W4-07** | **Frame evaluation** | Đánh giá phát hiện từng khung hình để so sánh với baseline truyền thống | **PASS** | [`frame_level_events.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/frame_level_events.json): Ghi nhận 9.137 phát hiện thô cấp khung hình ở Pipeline A, dẫn đến 988 sự kiện báo giả. |
+| **W4-08** | **Event evaluation** | Đánh giá cấp sự kiện khoảng thời gian: TP, FP, FN, Precision, Recall, F1, Delay | **PASS** | [`metrics.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_final/metrics.json): Pipeline B2 đạt TP=25, FP=6, FN=10, Prec=80,65%, Rec=71,43%, F1=75,76%, Delay=2,13 s. |
+| **W4-09** | **FAR** | Đo lường tỷ lệ báo động giả (FAR/hour) kèm khoảng tin cậy 95% Poisson CI | **PASS** | [`negative_exposure_summary.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/negative_exposure_summary.json): FAR đạt **58,4511 / giờ** (95% CI: [53,0003, 61,9221]), **giảm 57,39%** so với baseline Pipeline A (137,1727 / giờ). |
+| **W4-10** | **Baseline comparison** | Đối sánh công bằng, cùng điều kiện thực nghiệm giữa các Pipeline A, B1, B2 | **PASS** | Thống kê đối sánh song song 3 Pipeline trên cùng 79 video, cùng sampling rate 5 FPS, cùng model `best.pt` (seed 42), chứng minh vai trò then chốt của cổng biến động đặc trưng `feature_threshold=0.02`. |
+| **W4-11** | **Operating Point** | Xác lập điểm vận hành tối ưu có căn cứ thực nghiệm, kiểm soát trễ và báo giả | **PASS** | [`operating_point.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_final/operating_point.json): Khóa trạng thái **`OFFICIAL`** với bộ tham số: Conf=0.35, K=3, N=8, Feat=0.02, Cooldown=5.0s, Gap=2.0s. |
+| **W4-12** | **Reproducibility** | Tính tái lập: Git commit, SHA256 checkpoint, config snapshot, unit test 100% | **PASS** | Checkpoint SHA256: `f3631798de1cbc57...`, 62/62 unit test pass 100%, ghi vết toàn bộ log và cấu hình. |
+
+---
+
+## 3. Điểm Vận Hành Chính Thức (Official Operating Point)
+
+Bộ tham số vận hành tối ưu chính thức đã được khóa vào hệ thống:
+- **Ngưỡng tin cậy (Confidence Threshold):** `0.35`
+- **Cửa sổ trượt xác nhận thời gian (Temporal Confirmation K/N):** `K = 3 / N = 8`
+- **Ngưỡng cổng động học đặc trưng (Feature Threshold):** `0.02`
+- **Thời gian giãn cách chống báo lặp (Cooldown):** `5.0 giây`
+- **Khoảng cách gộp sự kiện (Max Event Gap):** `2.0 giây`
+- **Trạng thái:** **`OFFICIAL`** (Thỏa mãn 100% ràng buộc khoa học: FAR giảm 57,39% $\ge 50\%$, độ trễ 2,13s $\le 10$s, độ suy giảm recall sự kiện 0,0% $\le 5\%$, tổng thời lượng âm tính 7,20h $\ge 5,0$h).
+
+---
+
+## 4. Bằng Chứng Thực Nghiệm & Đường Dẫn File
+- **Báo cáo tổng kết phơi nhiễm âm tính:** [`runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/negative_exposure_summary.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/negative_exposure_summary.json)
+- **Bảng tổng hợp suy luận từng video:** [`runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/video_inference_summary.csv`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/video_inference_summary.csv)
+- **Manifest chạy thực nghiệm:** [`runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/run_manifest.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/run_manifest.json)
+- **Chi tiết sự kiện xác nhận theo thời gian:** [`runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/temporal_confirmed_events.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/temporal_confirmed_events.json)
+- **Chỉ mục video âm tính chuẩn hóa:** [`data/negative_videos_manifest.json`](file:///d:/DACN_NCKH/data/negative_videos_manifest.json)
+- **Operating Point chính thức:** [`runs/benchmarks/week4_final/operating_point.json`](file:///d:/DACN_NCKH/runs/benchmarks/week4_final/operating_point.json)

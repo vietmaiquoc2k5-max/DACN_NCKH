@@ -1,0 +1,7750 @@
+{
+  "pipeline_b1_events": [
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "FIRE",
+      "start_sec": 960.6,
+      "end_sec": 960.6,
+      "confidence": 0.4233
+    },
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "FIRE",
+      "start_sec": 2238.8,
+      "end_sec": 2238.8,
+      "confidence": 0.502
+    },
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "SMOKE",
+      "start_sec": 3467.8,
+      "end_sec": 3467.8,
+      "confidence": 0.3684
+    },
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "SMOKE",
+      "start_sec": 3762.8,
+      "end_sec": 3762.8,
+      "confidence": 0.5264
+    },
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "SMOKE",
+      "start_sec": 3768.0,
+      "end_sec": 3768.0,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "FIRE",
+      "start_sec": 3796.0,
+      "end_sec": 3796.0,
+      "confidence": 0.4102
+    },
+    {
+      "video_id": "VN_NEG_03",
+      "camera_id": "BENCH_VN_NEG_03",
+      "label": "SMOKE",
+      "start_sec": 13.4,
+      "end_sec": 13.4,
+      "confidence": 0.4187
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 1050.0,
+      "end_sec": 1050.0,
+      "confidence": 0.6895
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1421.8,
+      "end_sec": 1421.8,
+      "confidence": 0.667
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1485.6,
+      "end_sec": 1485.6,
+      "confidence": 0.4941
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1490.6,
+      "end_sec": 1490.6,
+      "confidence": 0.6187
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1495.8,
+      "end_sec": 1495.8,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1500.8,
+      "end_sec": 1500.8,
+      "confidence": 0.502
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1507.4,
+      "end_sec": 1507.4,
+      "confidence": 0.4302
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1512.4,
+      "end_sec": 1512.4,
+      "confidence": 0.5215
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1517.4,
+      "end_sec": 1517.4,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1526.6,
+      "end_sec": 1526.6,
+      "confidence": 0.5273
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1534.4,
+      "end_sec": 1534.4,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1539.4,
+      "end_sec": 1539.4,
+      "confidence": 0.5078
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1546.0,
+      "end_sec": 1546.0,
+      "confidence": 0.4187
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1551.8,
+      "end_sec": 1551.8,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1556.8,
+      "end_sec": 1556.8,
+      "confidence": 0.5815
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1566.8,
+      "end_sec": 1566.8,
+      "confidence": 0.3821
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1571.8,
+      "end_sec": 1571.8,
+      "confidence": 0.5757
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1576.8,
+      "end_sec": 1576.8,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1582.6,
+      "end_sec": 1582.6,
+      "confidence": 0.5469
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1587.8,
+      "end_sec": 1587.8,
+      "confidence": 0.4551
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1593.4,
+      "end_sec": 1593.4,
+      "confidence": 0.4648
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1601.4,
+      "end_sec": 1601.4,
+      "confidence": 0.5
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1607.6,
+      "end_sec": 1607.6,
+      "confidence": 0.4902
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1613.0,
+      "end_sec": 1613.0,
+      "confidence": 0.4312
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1620.8,
+      "end_sec": 1620.8,
+      "confidence": 0.46
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1628.2,
+      "end_sec": 1628.2,
+      "confidence": 0.4775
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1635.8,
+      "end_sec": 1635.8,
+      "confidence": 0.4456
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3796.6,
+      "end_sec": 3796.6,
+      "confidence": 0.5879
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3801.8,
+      "end_sec": 3801.8,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3808.8,
+      "end_sec": 3808.8,
+      "confidence": 0.384
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3814.0,
+      "end_sec": 3814.0,
+      "confidence": 0.7017
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3825.4,
+      "end_sec": 3825.4,
+      "confidence": 0.7939
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3831.4,
+      "end_sec": 3831.4,
+      "confidence": 0.5518
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3836.6,
+      "end_sec": 3836.6,
+      "confidence": 0.4534
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3870.6,
+      "end_sec": 3870.6,
+      "confidence": 0.5117
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3879.2,
+      "end_sec": 3879.2,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3884.2,
+      "end_sec": 3884.2,
+      "confidence": 0.7051
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3898.0,
+      "end_sec": 3898.0,
+      "confidence": 0.6533
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3906.8,
+      "end_sec": 3906.8,
+      "confidence": 0.6489
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 3910.0,
+      "end_sec": 3910.0,
+      "confidence": 0.4331
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4251.4,
+      "end_sec": 4251.4,
+      "confidence": 0.4619
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4256.4,
+      "end_sec": 4256.4,
+      "confidence": 0.8027
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4261.4,
+      "end_sec": 4261.4,
+      "confidence": 0.8257
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4266.4,
+      "end_sec": 4266.4,
+      "confidence": 0.8232
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4271.4,
+      "end_sec": 4271.4,
+      "confidence": 0.7827
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4276.4,
+      "end_sec": 4276.4,
+      "confidence": 0.7827
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4281.4,
+      "end_sec": 4281.4,
+      "confidence": 0.687
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4286.4,
+      "end_sec": 4286.4,
+      "confidence": 0.7334
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 4288.6,
+      "end_sec": 4288.6,
+      "confidence": 0.5449
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4293.4,
+      "end_sec": 4293.4,
+      "confidence": 0.7866
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 4296.2,
+      "end_sec": 4296.2,
+      "confidence": 0.6113
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4349.8,
+      "end_sec": 4349.8,
+      "confidence": 0.4736
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 5168.0,
+      "end_sec": 5168.0,
+      "confidence": 0.4292
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 5.2,
+      "end_sec": 5.2,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.6592
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 67.6,
+      "end_sec": 67.6,
+      "confidence": 0.7471
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 75.2,
+      "end_sec": 75.2,
+      "confidence": 0.4243
+    },
+    {
+      "video_id": "VN_NEG_07",
+      "camera_id": "BENCH_VN_NEG_07",
+      "label": "SMOKE",
+      "start_sec": 40.2,
+      "end_sec": 40.2,
+      "confidence": 0.7969
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 93.6,
+      "end_sec": 93.6,
+      "confidence": 0.4368
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 98.6,
+      "end_sec": 98.6,
+      "confidence": 0.686
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 112.6,
+      "end_sec": 112.6,
+      "confidence": 0.5342
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 176.6,
+      "end_sec": 176.6,
+      "confidence": 0.7778
+    },
+    {
+      "video_id": "VN_NEG_09",
+      "camera_id": "BENCH_VN_NEG_09",
+      "label": "SMOKE",
+      "start_sec": 45.0,
+      "end_sec": 45.0,
+      "confidence": 0.6548
+    },
+    {
+      "video_id": "VN_NEG_09",
+      "camera_id": "BENCH_VN_NEG_09",
+      "label": "FIRE",
+      "start_sec": 45.6,
+      "end_sec": 45.6,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 48.2,
+      "end_sec": 48.2,
+      "confidence": 0.7559
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 107.0,
+      "end_sec": 107.0,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 272.4,
+      "end_sec": 272.4,
+      "confidence": 0.7007
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 277.4,
+      "end_sec": 277.4,
+      "confidence": 0.7568
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "camera_id": "BENCH_VN_NEG_12",
+      "label": "SMOKE",
+      "start_sec": 19.0,
+      "end_sec": 19.0,
+      "confidence": 0.645
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "camera_id": "BENCH_VN_NEG_12",
+      "label": "SMOKE",
+      "start_sec": 27.0,
+      "end_sec": 27.0,
+      "confidence": 0.4446
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "camera_id": "BENCH_VN_NEG_12",
+      "label": "SMOKE",
+      "start_sec": 45.8,
+      "end_sec": 45.8,
+      "confidence": 0.8608
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 0.8,
+      "end_sec": 0.8,
+      "confidence": 0.6792
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 5.8,
+      "end_sec": 5.8,
+      "confidence": 0.7129
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 10.8,
+      "end_sec": 10.8,
+      "confidence": 0.7051
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 15.8,
+      "end_sec": 15.8,
+      "confidence": 0.6758
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 26.2,
+      "end_sec": 26.2,
+      "confidence": 0.6934
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 31.2,
+      "end_sec": 31.2,
+      "confidence": 0.7734
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 42.6,
+      "end_sec": 42.6,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 47.8,
+      "end_sec": 47.8,
+      "confidence": 0.7446
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 78.8,
+      "end_sec": 78.8,
+      "confidence": 0.5176
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "FIRE",
+      "start_sec": 79.8,
+      "end_sec": 79.8,
+      "confidence": 0.3979
+    },
+    {
+      "video_id": "VN_NEG_14",
+      "camera_id": "BENCH_VN_NEG_14",
+      "label": "SMOKE",
+      "start_sec": 33.8,
+      "end_sec": 33.8,
+      "confidence": 0.54
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 1.6,
+      "end_sec": 1.6,
+      "confidence": 0.6387
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 13.8,
+      "end_sec": 13.8,
+      "confidence": 0.7476
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 18.8,
+      "end_sec": 18.8,
+      "confidence": 0.7656
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 21.0,
+      "end_sec": 21.0,
+      "confidence": 0.606
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 23.8,
+      "end_sec": 23.8,
+      "confidence": 0.7515
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 28.4,
+      "end_sec": 28.4,
+      "confidence": 0.6001
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 28.8,
+      "end_sec": 28.8,
+      "confidence": 0.6001
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 33.4,
+      "end_sec": 33.4,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 34.0,
+      "end_sec": 34.0,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 39.0,
+      "end_sec": 39.0,
+      "confidence": 0.7441
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 56.4,
+      "end_sec": 56.4,
+      "confidence": 0.3638
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 61.4,
+      "end_sec": 61.4,
+      "confidence": 0.3577
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 145.4,
+      "end_sec": 145.4,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 151.8,
+      "end_sec": 151.8,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 225.0,
+      "end_sec": 225.0,
+      "confidence": 0.627
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 286.6,
+      "end_sec": 286.6,
+      "confidence": 0.4282
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 292.4,
+      "end_sec": 292.4,
+      "confidence": 0.3804
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 328.0,
+      "end_sec": 328.0,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 335.4,
+      "end_sec": 335.4,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 341.0,
+      "end_sec": 341.0,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 346.0,
+      "end_sec": 346.0,
+      "confidence": 0.6714
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 358.0,
+      "end_sec": 358.0,
+      "confidence": 0.5581
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 363.0,
+      "end_sec": 363.0,
+      "confidence": 0.5312
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 368.0,
+      "end_sec": 368.0,
+      "confidence": 0.5469
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 386.8,
+      "end_sec": 386.8,
+      "confidence": 0.5518
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 392.0,
+      "end_sec": 392.0,
+      "confidence": 0.6353
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 398.6,
+      "end_sec": 398.6,
+      "confidence": 0.7725
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 403.8,
+      "end_sec": 403.8,
+      "confidence": 0.7241
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 148.8,
+      "end_sec": 148.8,
+      "confidence": 0.6504
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 230.0,
+      "end_sec": 230.0,
+      "confidence": 0.6167
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 235.4,
+      "end_sec": 235.4,
+      "confidence": 0.4485
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 242.2,
+      "end_sec": 242.2,
+      "confidence": 0.4368
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 247.6,
+      "end_sec": 247.6,
+      "confidence": 0.5815
+    },
+    {
+      "video_id": "VN_NEG_17",
+      "camera_id": "BENCH_VN_NEG_17",
+      "label": "SMOKE",
+      "start_sec": 171.4,
+      "end_sec": 171.4,
+      "confidence": 0.6084
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.5215
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.6816
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.6548
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 17.0,
+      "end_sec": 17.0,
+      "confidence": 0.8638
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 48.6,
+      "end_sec": 48.6,
+      "confidence": 0.7104
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 66.4,
+      "end_sec": 66.4,
+      "confidence": 0.7529
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 71.4,
+      "end_sec": 71.4,
+      "confidence": 0.7461
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 76.4,
+      "end_sec": 76.4,
+      "confidence": 0.8789
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "FIRE",
+      "start_sec": 81.6,
+      "end_sec": 81.6,
+      "confidence": 0.561
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 85.6,
+      "end_sec": 85.6,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 96.0,
+      "end_sec": 96.0,
+      "confidence": 0.3989
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 115.2,
+      "end_sec": 115.2,
+      "confidence": 0.8296
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 52.4,
+      "end_sec": 52.4,
+      "confidence": 0.4368
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 76.8,
+      "end_sec": 76.8,
+      "confidence": 0.3904
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 81.8,
+      "end_sec": 81.8,
+      "confidence": 0.4668
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 205.4,
+      "end_sec": 205.4,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 269.6,
+      "end_sec": 269.6,
+      "confidence": 0.5527
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 276.8,
+      "end_sec": 276.8,
+      "confidence": 0.8066
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 391.8,
+      "end_sec": 391.8,
+      "confidence": 0.6807
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 424.0,
+      "end_sec": 424.0,
+      "confidence": 0.4524
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 527.0,
+      "end_sec": 527.0,
+      "confidence": 0.7778
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 602.8,
+      "end_sec": 602.8,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 644.4,
+      "end_sec": 644.4,
+      "confidence": 0.4658
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 668.8,
+      "end_sec": 668.8,
+      "confidence": 0.4177
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 689.6,
+      "end_sec": 689.6,
+      "confidence": 0.5757
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 791.2,
+      "end_sec": 791.2,
+      "confidence": 0.5234
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 902.6,
+      "end_sec": 902.6,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 8.8,
+      "end_sec": 8.8,
+      "confidence": 0.5225
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 13.8,
+      "end_sec": 13.8,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 18.8,
+      "end_sec": 18.8,
+      "confidence": 0.4465
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 23.8,
+      "end_sec": 23.8,
+      "confidence": 0.4292
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 28.8,
+      "end_sec": 28.8,
+      "confidence": 0.7778
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 47.0,
+      "end_sec": 47.0,
+      "confidence": 0.4629
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 52.0,
+      "end_sec": 52.0,
+      "confidence": 0.6489
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 70.0,
+      "end_sec": 70.0,
+      "confidence": 0.8223
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "FIRE",
+      "start_sec": 73.2,
+      "end_sec": 73.2,
+      "confidence": 0.501
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 79.8,
+      "end_sec": 79.8,
+      "confidence": 0.8252
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 107.0,
+      "end_sec": 107.0,
+      "confidence": 0.6011
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 113.8,
+      "end_sec": 113.8,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 120.4,
+      "end_sec": 120.4,
+      "confidence": 0.4678
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 126.6,
+      "end_sec": 126.6,
+      "confidence": 0.3757
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 131.6,
+      "end_sec": 131.6,
+      "confidence": 0.8555
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 149.2,
+      "end_sec": 149.2,
+      "confidence": 0.5547
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 175.4,
+      "end_sec": 175.4,
+      "confidence": 0.4243
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 332.4,
+      "end_sec": 332.4,
+      "confidence": 0.6299
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 401.6,
+      "end_sec": 401.6,
+      "confidence": 0.3621
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "FIRE",
+      "start_sec": 513.0,
+      "end_sec": 513.0,
+      "confidence": 0.4543
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "FIRE",
+      "start_sec": 523.4,
+      "end_sec": 523.4,
+      "confidence": 0.4785
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 613.0,
+      "end_sec": 613.0,
+      "confidence": 0.4341
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 748.8,
+      "end_sec": 748.8,
+      "confidence": 0.5381
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 5.005,
+      "end_sec": 5.005,
+      "confidence": 0.7734
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 24.024,
+      "end_sec": 24.024,
+      "confidence": 0.4341
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 29.029,
+      "end_sec": 29.029,
+      "confidence": 0.8892
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 47.8478,
+      "end_sec": 47.8478,
+      "confidence": 0.7007
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 59.8598,
+      "end_sec": 59.8598,
+      "confidence": 0.7886
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 67.6676,
+      "end_sec": 67.6676,
+      "confidence": 0.6162
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 73.073,
+      "end_sec": 73.073,
+      "confidence": 0.7178
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 78.078,
+      "end_sec": 78.078,
+      "confidence": 0.8628
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 83.083,
+      "end_sec": 83.083,
+      "confidence": 0.5869
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 88.8888,
+      "end_sec": 88.8888,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 95.2952,
+      "end_sec": 95.2952,
+      "confidence": 0.5908
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 131.9318,
+      "end_sec": 131.9318,
+      "confidence": 0.5918
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 136.9368,
+      "end_sec": 136.9368,
+      "confidence": 0.7676
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 141.9418,
+      "end_sec": 141.9418,
+      "confidence": 0.8389
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 146.9468,
+      "end_sec": 146.9468,
+      "confidence": 0.8335
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 173.173,
+      "end_sec": 173.173,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 178.178,
+      "end_sec": 178.178,
+      "confidence": 0.7432
+    },
+    {
+      "video_id": "VN_NEG_23",
+      "camera_id": "BENCH_VN_NEG_23",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.7251
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.5439
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.4717
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 20.6,
+      "end_sec": 20.6,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "FIRE",
+      "start_sec": 22.2,
+      "end_sec": 22.2,
+      "confidence": 0.4312
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 97.8,
+      "end_sec": 97.8,
+      "confidence": 0.5205
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 81.2,
+      "end_sec": 81.2,
+      "confidence": 0.5244
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 86.2,
+      "end_sec": 86.2,
+      "confidence": 0.6299
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 91.2,
+      "end_sec": 91.2,
+      "confidence": 0.8623
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 96.2,
+      "end_sec": 96.2,
+      "confidence": 0.7441
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 101.2,
+      "end_sec": 101.2,
+      "confidence": 0.7432
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "FIRE",
+      "start_sec": 105.4,
+      "end_sec": 105.4,
+      "confidence": 0.7798
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 106.4,
+      "end_sec": 106.4,
+      "confidence": 0.7798
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 115.4,
+      "end_sec": 115.4,
+      "confidence": 0.6533
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 120.6,
+      "end_sec": 120.6,
+      "confidence": 0.7759
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 125.6,
+      "end_sec": 125.6,
+      "confidence": 0.8564
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 130.6,
+      "end_sec": 130.6,
+      "confidence": 0.8418
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 135.6,
+      "end_sec": 135.6,
+      "confidence": 0.854
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 148.6,
+      "end_sec": 148.6,
+      "confidence": 0.7358
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 160.6,
+      "end_sec": 160.6,
+      "confidence": 0.5088
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 166.6,
+      "end_sec": 166.6,
+      "confidence": 0.4026
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 171.8,
+      "end_sec": 171.8,
+      "confidence": 0.6885
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 177.0,
+      "end_sec": 177.0,
+      "confidence": 0.7593
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 185.8,
+      "end_sec": 185.8,
+      "confidence": 0.4475
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "FIRE",
+      "start_sec": 190.2,
+      "end_sec": 190.2,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 190.8,
+      "end_sec": 190.8,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "FIRE",
+      "start_sec": 195.8,
+      "end_sec": 195.8,
+      "confidence": 0.4216
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 200.8,
+      "end_sec": 200.8,
+      "confidence": 0.8413
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 236.2,
+      "end_sec": 236.2,
+      "confidence": 0.5918
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 242.0,
+      "end_sec": 242.0,
+      "confidence": 0.5488
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 250.8,
+      "end_sec": 250.8,
+      "confidence": 0.4158
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 255.8,
+      "end_sec": 255.8,
+      "confidence": 0.7402
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 379.6,
+      "end_sec": 379.6,
+      "confidence": 0.3877
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 405.6,
+      "end_sec": 405.6,
+      "confidence": 0.8301
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.5659
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.6162
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.6533
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.6733
+    },
+    {
+      "video_id": "VN_NEG_27",
+      "camera_id": "BENCH_VN_NEG_27",
+      "label": "SMOKE",
+      "start_sec": 37.6,
+      "end_sec": 37.6,
+      "confidence": 0.4397
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "camera_id": "BENCH_VN_NEG_28",
+      "label": "SMOKE",
+      "start_sec": 1.8,
+      "end_sec": 1.8,
+      "confidence": 0.502
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "camera_id": "BENCH_VN_NEG_28",
+      "label": "SMOKE",
+      "start_sec": 56.8,
+      "end_sec": 56.8,
+      "confidence": 0.5869
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "camera_id": "BENCH_VN_NEG_28",
+      "label": "SMOKE",
+      "start_sec": 64.6,
+      "end_sec": 64.6,
+      "confidence": 0.6724
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "camera_id": "BENCH_VN_NEG_29",
+      "label": "FIRE",
+      "start_sec": 66.6,
+      "end_sec": 66.6,
+      "confidence": 0.4036
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "camera_id": "BENCH_VN_NEG_29",
+      "label": "FIRE",
+      "start_sec": 122.6,
+      "end_sec": 122.6,
+      "confidence": 0.4534
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "camera_id": "BENCH_VN_NEG_29",
+      "label": "FIRE",
+      "start_sec": 201.4,
+      "end_sec": 201.4,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "camera_id": "BENCH_VN_NEG_29",
+      "label": "FIRE",
+      "start_sec": 217.8,
+      "end_sec": 217.8,
+      "confidence": 0.4377
+    },
+    {
+      "video_id": "VN_NEG_30",
+      "camera_id": "BENCH_VN_NEG_30",
+      "label": "FIRE",
+      "start_sec": 32.032,
+      "end_sec": 32.032,
+      "confidence": 0.7026
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 123.5234,
+      "end_sec": 123.5234,
+      "confidence": 0.5718
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 131.3312,
+      "end_sec": 131.3312,
+      "confidence": 0.5391
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 218.0178,
+      "end_sec": 218.0178,
+      "confidence": 0.4446
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 223.6234,
+      "end_sec": 223.6234,
+      "confidence": 0.4141
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 259.8596,
+      "end_sec": 259.8596,
+      "confidence": 0.5757
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 268.0678,
+      "end_sec": 268.0678,
+      "confidence": 0.5303
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 322.5222,
+      "end_sec": 322.5222,
+      "confidence": 0.541
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 345.345,
+      "end_sec": 345.345,
+      "confidence": 0.5698
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 350.7504,
+      "end_sec": 350.7504,
+      "confidence": 0.5908
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 361.9616,
+      "end_sec": 361.9616,
+      "confidence": 0.6636
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 363.7634,
+      "end_sec": 363.7634,
+      "confidence": 0.5059
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 366.9666,
+      "end_sec": 366.9666,
+      "confidence": 0.6636
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 421.0206,
+      "end_sec": 421.0206,
+      "confidence": 0.7041
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 435.0346,
+      "end_sec": 435.0346,
+      "confidence": 0.5
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 447.6472,
+      "end_sec": 447.6472,
+      "confidence": 0.4971
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 453.6532,
+      "end_sec": 453.6532,
+      "confidence": 0.395
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 561.9614,
+      "end_sec": 561.9614,
+      "confidence": 0.5981
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 567.567,
+      "end_sec": 567.567,
+      "confidence": 0.6152
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 582.582,
+      "end_sec": 582.582,
+      "confidence": 0.604
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 587.587,
+      "end_sec": 587.587,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 592.592,
+      "end_sec": 592.592,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 599.599,
+      "end_sec": 599.599,
+      "confidence": 0.667
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 607.4068,
+      "end_sec": 607.4068,
+      "confidence": 0.5098
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 616.2156,
+      "end_sec": 616.2156,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 629.0284,
+      "end_sec": 629.0284,
+      "confidence": 0.5698
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 636.0354,
+      "end_sec": 636.0354,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 649.649,
+      "end_sec": 649.649,
+      "confidence": 0.5371
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 659.0584,
+      "end_sec": 659.0584,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 665.4648,
+      "end_sec": 665.4648,
+      "confidence": 0.5312
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 677.4768,
+      "end_sec": 677.4768,
+      "confidence": 0.4912
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 682.4818,
+      "end_sec": 682.4818,
+      "confidence": 0.5796
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 720.9202,
+      "end_sec": 720.9202,
+      "confidence": 0.4197
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 740.1394,
+      "end_sec": 740.1394,
+      "confidence": 0.5293
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 745.5448,
+      "end_sec": 745.5448,
+      "confidence": 0.4226
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 753.9532,
+      "end_sec": 753.9532,
+      "confidence": 0.5776
+    },
+    {
+      "video_id": "VN_NEG_32",
+      "camera_id": "BENCH_VN_NEG_32",
+      "label": "FIRE",
+      "start_sec": 30.0,
+      "end_sec": 30.0,
+      "confidence": 0.6011
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "FIRE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.3621
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "FIRE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.4417
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "FIRE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.4331
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "FIRE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.4543
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "FIRE",
+      "start_sec": 27.6,
+      "end_sec": 27.6,
+      "confidence": 0.5039
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "SMOKE",
+      "start_sec": 30.2,
+      "end_sec": 30.2,
+      "confidence": 0.5273
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "SMOKE",
+      "start_sec": 50.2585,
+      "end_sec": 50.2585,
+      "confidence": 0.4619
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "SMOKE",
+      "start_sec": 55.2635,
+      "end_sec": 55.2635,
+      "confidence": 0.6196
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "FIRE",
+      "start_sec": 57.5575,
+      "end_sec": 57.5575,
+      "confidence": 0.46
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "SMOKE",
+      "start_sec": 62.9796,
+      "end_sec": 62.9796,
+      "confidence": 0.396
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "FIRE",
+      "start_sec": 74.0,
+      "end_sec": 74.0,
+      "confidence": 0.5796
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 89.4,
+      "end_sec": 89.4,
+      "confidence": 0.6318
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 96.8,
+      "end_sec": 96.8,
+      "confidence": 0.7646
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 102.0,
+      "end_sec": 102.0,
+      "confidence": 0.6245
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 133.2,
+      "end_sec": 133.2,
+      "confidence": 0.7944
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 186.2,
+      "end_sec": 186.2,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_37",
+      "camera_id": "BENCH_VN_NEG_37",
+      "label": "SMOKE",
+      "start_sec": 36.6,
+      "end_sec": 36.6,
+      "confidence": 0.4485
+    },
+    {
+      "video_id": "VN_NEG_37",
+      "camera_id": "BENCH_VN_NEG_37",
+      "label": "SMOKE",
+      "start_sec": 53.4,
+      "end_sec": 53.4,
+      "confidence": 0.7417
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 21.4,
+      "end_sec": 21.4,
+      "confidence": 0.3999
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "FIRE",
+      "start_sec": 28.0,
+      "end_sec": 28.0,
+      "confidence": 0.4436
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 29.0,
+      "end_sec": 29.0,
+      "confidence": 0.5146
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 38.8,
+      "end_sec": 38.8,
+      "confidence": 0.4026
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 54.6,
+      "end_sec": 54.6,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 60.4,
+      "end_sec": 60.4,
+      "confidence": 0.6123
+    },
+    {
+      "video_id": "VN_NEG_39",
+      "camera_id": "BENCH_VN_NEG_39",
+      "label": "SMOKE",
+      "start_sec": 32.0,
+      "end_sec": 32.0,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_39",
+      "camera_id": "BENCH_VN_NEG_39",
+      "label": "SMOKE",
+      "start_sec": 40.0,
+      "end_sec": 40.0,
+      "confidence": 0.5283
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 0.6,
+      "end_sec": 0.6,
+      "confidence": 0.8228
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 5.6,
+      "end_sec": 5.6,
+      "confidence": 0.8853
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 21.6,
+      "end_sec": 21.6,
+      "confidence": 0.4055
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 37.0,
+      "end_sec": 37.0,
+      "confidence": 0.4678
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 45.8,
+      "end_sec": 45.8,
+      "confidence": 0.3904
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 52.8,
+      "end_sec": 52.8,
+      "confidence": 0.3867
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 71.6,
+      "end_sec": 71.6,
+      "confidence": 0.7949
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 89.2,
+      "end_sec": 89.2,
+      "confidence": 0.8589
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 94.2,
+      "end_sec": 94.2,
+      "confidence": 0.8877
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 99.4,
+      "end_sec": 99.4,
+      "confidence": 0.7026
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 110.8,
+      "end_sec": 110.8,
+      "confidence": 0.4648
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 117.2,
+      "end_sec": 117.2,
+      "confidence": 0.8428
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 152.2,
+      "end_sec": 152.2,
+      "confidence": 0.3694
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 162.0,
+      "end_sec": 162.0,
+      "confidence": 0.4736
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 200.4,
+      "end_sec": 200.4,
+      "confidence": 0.6406
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 296.6,
+      "end_sec": 296.6,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 301.6,
+      "end_sec": 301.6,
+      "confidence": 0.6406
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 306.6,
+      "end_sec": 306.6,
+      "confidence": 0.6802
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 311.6,
+      "end_sec": 311.6,
+      "confidence": 0.6504
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 316.6,
+      "end_sec": 316.6,
+      "confidence": 0.6372
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 322.2,
+      "end_sec": 322.2,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 380.8,
+      "end_sec": 380.8,
+      "confidence": 0.6792
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 385.8,
+      "end_sec": 385.8,
+      "confidence": 0.6836
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 390.8,
+      "end_sec": 390.8,
+      "confidence": 0.6636
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 395.8,
+      "end_sec": 395.8,
+      "confidence": 0.6836
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 400.8,
+      "end_sec": 400.8,
+      "confidence": 0.6626
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 440.6,
+      "end_sec": 440.6,
+      "confidence": 0.3979
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 445.6,
+      "end_sec": 445.6,
+      "confidence": 0.457
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 450.6,
+      "end_sec": 450.6,
+      "confidence": 0.4551
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 455.6,
+      "end_sec": 455.6,
+      "confidence": 0.4495
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 461.8,
+      "end_sec": 461.8,
+      "confidence": 0.4377
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 495.8,
+      "end_sec": 495.8,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 538.4,
+      "end_sec": 538.4,
+      "confidence": 0.8721
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 553.2,
+      "end_sec": 553.2,
+      "confidence": 0.4272
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 559.2,
+      "end_sec": 559.2,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 564.6,
+      "end_sec": 564.6,
+      "confidence": 0.4785
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 570.2,
+      "end_sec": 570.2,
+      "confidence": 0.4226
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "camera_id": "BENCH_VN_NEG_42",
+      "label": "SMOKE",
+      "start_sec": 189.6,
+      "end_sec": 189.6,
+      "confidence": 0.6436
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "camera_id": "BENCH_VN_NEG_42",
+      "label": "SMOKE",
+      "start_sec": 306.8,
+      "end_sec": 306.8,
+      "confidence": 0.6504
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.8501
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.8521
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.8501
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 15.6,
+      "end_sec": 15.6,
+      "confidence": 0.4207
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 20.8,
+      "end_sec": 20.8,
+      "confidence": 0.792
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 25.8,
+      "end_sec": 25.8,
+      "confidence": 0.7871
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 30.8,
+      "end_sec": 30.8,
+      "confidence": 0.8916
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 36.0,
+      "end_sec": 36.0,
+      "confidence": 0.8623
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.8428
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "FIRE",
+      "start_sec": 13.8,
+      "end_sec": 13.8,
+      "confidence": 0.8301
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 14.2,
+      "end_sec": 14.2,
+      "confidence": 0.8301
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 26.0,
+      "end_sec": 26.0,
+      "confidence": 0.7388
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 33.2,
+      "end_sec": 33.2,
+      "confidence": 0.8193
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "FIRE",
+      "start_sec": 35.0,
+      "end_sec": 35.0,
+      "confidence": 0.7578
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "FIRE",
+      "start_sec": 144.6,
+      "end_sec": 144.6,
+      "confidence": 0.7417
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "FIRE",
+      "start_sec": 149.6,
+      "end_sec": 149.6,
+      "confidence": 0.7773
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 154.6,
+      "end_sec": 154.6,
+      "confidence": 0.876
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 159.6,
+      "end_sec": 159.6,
+      "confidence": 0.8457
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 171.4,
+      "end_sec": 171.4,
+      "confidence": 0.5303
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 177.0,
+      "end_sec": 177.0,
+      "confidence": 0.7334
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 187.0,
+      "end_sec": 187.0,
+      "confidence": 0.4197
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 192.2,
+      "end_sec": 192.2,
+      "confidence": 0.8223
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 207.6,
+      "end_sec": 207.6,
+      "confidence": 0.4707
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 212.6,
+      "end_sec": 212.6,
+      "confidence": 0.8228
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 218.6,
+      "end_sec": 218.6,
+      "confidence": 0.582
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 225.4,
+      "end_sec": 225.4,
+      "confidence": 0.4253
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 231.0,
+      "end_sec": 231.0,
+      "confidence": 0.5649
+    },
+    {
+      "video_id": "VN_NEG_45",
+      "camera_id": "BENCH_VN_NEG_45",
+      "label": "SMOKE",
+      "start_sec": 37.0,
+      "end_sec": 37.0,
+      "confidence": 0.5225
+    },
+    {
+      "video_id": "VN_NEG_45",
+      "camera_id": "BENCH_VN_NEG_45",
+      "label": "SMOKE",
+      "start_sec": 44.2,
+      "end_sec": 44.2,
+      "confidence": 0.8574
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 95.4,
+      "end_sec": 95.4,
+      "confidence": 0.6416
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "FIRE",
+      "start_sec": 146.8,
+      "end_sec": 146.8,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 312.0,
+      "end_sec": 312.0,
+      "confidence": 0.4688
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 322.8,
+      "end_sec": 322.8,
+      "confidence": 0.4648
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 334.6,
+      "end_sec": 334.6,
+      "confidence": 0.4639
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "FIRE",
+      "start_sec": 343.8,
+      "end_sec": 343.8,
+      "confidence": 0.4436
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 357.2,
+      "end_sec": 357.2,
+      "confidence": 0.4727
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "FIRE",
+      "start_sec": 359.0,
+      "end_sec": 359.0,
+      "confidence": 0.498
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 410.2,
+      "end_sec": 410.2,
+      "confidence": 0.4746
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 4.0,
+      "end_sec": 4.0,
+      "confidence": 0.6792
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 12.6,
+      "end_sec": 12.6,
+      "confidence": 0.7476
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.8286
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 28.0,
+      "end_sec": 28.0,
+      "confidence": 0.8569
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 28.2,
+      "end_sec": 28.2,
+      "confidence": 0.8569
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 52.4,
+      "end_sec": 52.4,
+      "confidence": 0.5981
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 57.4,
+      "end_sec": 57.4,
+      "confidence": 0.7349
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 62.4,
+      "end_sec": 62.4,
+      "confidence": 0.7598
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 88.0,
+      "end_sec": 88.0,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 93.0,
+      "end_sec": 93.0,
+      "confidence": 0.7905
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 134.6,
+      "end_sec": 134.6,
+      "confidence": 0.5029
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 229.2,
+      "end_sec": 229.2,
+      "confidence": 0.5322
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 325.2,
+      "end_sec": 325.2,
+      "confidence": 0.5068
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 339.4,
+      "end_sec": 339.4,
+      "confidence": 0.6479
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 365.0,
+      "end_sec": 365.0,
+      "confidence": 0.6577
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 370.0,
+      "end_sec": 370.0,
+      "confidence": 0.6577
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 387.2,
+      "end_sec": 387.2,
+      "confidence": 0.4426
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 461.6,
+      "end_sec": 461.6,
+      "confidence": 0.5708
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 466.6,
+      "end_sec": 466.6,
+      "confidence": 0.5708
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 488.6,
+      "end_sec": 488.6,
+      "confidence": 0.7974
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 493.6,
+      "end_sec": 493.6,
+      "confidence": 0.8159
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 498.6,
+      "end_sec": 498.6,
+      "confidence": 0.6592
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 503.6,
+      "end_sec": 503.6,
+      "confidence": 0.8311
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 508.6,
+      "end_sec": 508.6,
+      "confidence": 0.8862
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 516.2,
+      "end_sec": 516.2,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 579.2,
+      "end_sec": 579.2,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 885.0,
+      "end_sec": 885.0,
+      "confidence": 0.4844
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 919.0,
+      "end_sec": 919.0,
+      "confidence": 0.5146
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1137.0,
+      "end_sec": 1137.0,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1142.0,
+      "end_sec": 1142.0,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1189.8,
+      "end_sec": 1189.8,
+      "confidence": 0.8848
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1241.2,
+      "end_sec": 1241.2,
+      "confidence": 0.8794
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1265.8,
+      "end_sec": 1265.8,
+      "confidence": 0.563
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1270.8,
+      "end_sec": 1270.8,
+      "confidence": 0.8164
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1275.8,
+      "end_sec": 1275.8,
+      "confidence": 0.8013
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1535.8,
+      "end_sec": 1535.8,
+      "confidence": 0.5669
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1618.2,
+      "end_sec": 1618.2,
+      "confidence": 0.4351
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1719.0,
+      "end_sec": 1719.0,
+      "confidence": 0.7417
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1734.6,
+      "end_sec": 1734.6,
+      "confidence": 0.8193
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1847.2,
+      "end_sec": 1847.2,
+      "confidence": 0.4312
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1854.0,
+      "end_sec": 1854.0,
+      "confidence": 0.4312
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1902.0,
+      "end_sec": 1902.0,
+      "confidence": 0.3999
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1908.2,
+      "end_sec": 1908.2,
+      "confidence": 0.3999
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1913.4,
+      "end_sec": 1913.4,
+      "confidence": 0.7051
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2040.6,
+      "end_sec": 2040.6,
+      "confidence": 0.6333
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2045.6,
+      "end_sec": 2045.6,
+      "confidence": 0.7637
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2109.0,
+      "end_sec": 2109.0,
+      "confidence": 0.8848
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2169.0,
+      "end_sec": 2169.0,
+      "confidence": 0.8711
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2202.6,
+      "end_sec": 2202.6,
+      "confidence": 0.6836
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2235.4,
+      "end_sec": 2235.4,
+      "confidence": 0.7891
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2274.0,
+      "end_sec": 2274.0,
+      "confidence": 0.5566
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 2287.8,
+      "end_sec": 2287.8,
+      "confidence": 0.8091
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2288.6,
+      "end_sec": 2288.6,
+      "confidence": 0.8198
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2405.6,
+      "end_sec": 2405.6,
+      "confidence": 0.627
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2412.2,
+      "end_sec": 2412.2,
+      "confidence": 0.6494
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2504.0,
+      "end_sec": 2504.0,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2509.6,
+      "end_sec": 2509.6,
+      "confidence": 0.5381
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2515.8,
+      "end_sec": 2515.8,
+      "confidence": 0.5391
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2520.8,
+      "end_sec": 2520.8,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2526.0,
+      "end_sec": 2526.0,
+      "confidence": 0.7534
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2621.6,
+      "end_sec": 2621.6,
+      "confidence": 0.7124
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2681.8,
+      "end_sec": 2681.8,
+      "confidence": 0.6699
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2690.4,
+      "end_sec": 2690.4,
+      "confidence": 0.6333
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2695.8,
+      "end_sec": 2695.8,
+      "confidence": 0.6992
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2734.4,
+      "end_sec": 2734.4,
+      "confidence": 0.7188
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2791.2,
+      "end_sec": 2791.2,
+      "confidence": 0.8081
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2835.2,
+      "end_sec": 2835.2,
+      "confidence": 0.6953
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2841.4,
+      "end_sec": 2841.4,
+      "confidence": 0.7622
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2905.2,
+      "end_sec": 2905.2,
+      "confidence": 0.5972
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2986.2,
+      "end_sec": 2986.2,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3032.8,
+      "end_sec": 3032.8,
+      "confidence": 0.832
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3088.8,
+      "end_sec": 3088.8,
+      "confidence": 0.4321
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3093.8,
+      "end_sec": 3093.8,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3131.0,
+      "end_sec": 3131.0,
+      "confidence": 0.6362
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3136.2,
+      "end_sec": 3136.2,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3160.0,
+      "end_sec": 3160.0,
+      "confidence": 0.457
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3165.4,
+      "end_sec": 3165.4,
+      "confidence": 0.4216
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3170.4,
+      "end_sec": 3170.4,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3214.4,
+      "end_sec": 3214.4,
+      "confidence": 0.7905
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3253.2,
+      "end_sec": 3253.2,
+      "confidence": 0.6943
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.6318
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "FIRE",
+      "start_sec": 3.0,
+      "end_sec": 3.0,
+      "confidence": 0.7734
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "FIRE",
+      "start_sec": 21.4,
+      "end_sec": 21.4,
+      "confidence": 0.7358
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 56.0,
+      "end_sec": 56.0,
+      "confidence": 0.5859
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 74.6,
+      "end_sec": 74.6,
+      "confidence": 0.7168
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 79.6,
+      "end_sec": 79.6,
+      "confidence": 0.769
+    },
+    {
+      "video_id": "VN_NEG_49",
+      "camera_id": "BENCH_VN_NEG_49",
+      "label": "FIRE",
+      "start_sec": 31.2,
+      "end_sec": 31.2,
+      "confidence": 0.6582
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "SMOKE",
+      "start_sec": 31.0,
+      "end_sec": 31.0,
+      "confidence": 0.7339
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 42.4,
+      "end_sec": 42.4,
+      "confidence": 0.7476
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 48.0,
+      "end_sec": 48.0,
+      "confidence": 0.4697
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 53.0,
+      "end_sec": 53.0,
+      "confidence": 0.7593
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 58.0,
+      "end_sec": 58.0,
+      "confidence": 0.7534
+    },
+    {
+      "video_id": "VN_NEG_51",
+      "camera_id": "BENCH_VN_NEG_51",
+      "label": "SMOKE",
+      "start_sec": 20.8,
+      "end_sec": 20.8,
+      "confidence": 0.645
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.5361
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.4912
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.499
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "FIRE",
+      "start_sec": 12.8,
+      "end_sec": 12.8,
+      "confidence": 0.4456
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 44.8,
+      "end_sec": 44.8,
+      "confidence": 0.6895
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 50.0,
+      "end_sec": 50.0,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 61.0,
+      "end_sec": 61.0,
+      "confidence": 0.605
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "FIRE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.4045
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "SMOKE",
+      "start_sec": 27.8,
+      "end_sec": 27.8,
+      "confidence": 0.3914
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "FIRE",
+      "start_sec": 36.4,
+      "end_sec": 36.4,
+      "confidence": 0.4121
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "FIRE",
+      "start_sec": 45.2,
+      "end_sec": 45.2,
+      "confidence": 0.3857
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "SMOKE",
+      "start_sec": 49.8,
+      "end_sec": 49.8,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "SMOKE",
+      "start_sec": 60.2,
+      "end_sec": 60.2,
+      "confidence": 0.5649
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "FIRE",
+      "start_sec": 95.2,
+      "end_sec": 95.2,
+      "confidence": 0.4207
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "camera_id": "BENCH_VN_NEG_55",
+      "label": "SMOKE",
+      "start_sec": 11.8,
+      "end_sec": 11.8,
+      "confidence": 0.7139
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "camera_id": "BENCH_VN_NEG_55",
+      "label": "SMOKE",
+      "start_sec": 21.2,
+      "end_sec": 21.2,
+      "confidence": 0.7295
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "camera_id": "BENCH_VN_NEG_55",
+      "label": "SMOKE",
+      "start_sec": 31.8,
+      "end_sec": 31.8,
+      "confidence": 0.5088
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "camera_id": "BENCH_VN_NEG_56",
+      "label": "SMOKE",
+      "start_sec": 15.2,
+      "end_sec": 15.2,
+      "confidence": 0.5581
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "camera_id": "BENCH_VN_NEG_56",
+      "label": "SMOKE",
+      "start_sec": 24.0,
+      "end_sec": 24.0,
+      "confidence": 0.5698
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "camera_id": "BENCH_VN_NEG_56",
+      "label": "SMOKE",
+      "start_sec": 29.0,
+      "end_sec": 29.0,
+      "confidence": 0.7139
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 0.6,
+      "end_sec": 0.6,
+      "confidence": 0.4863
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 23.4,
+      "end_sec": 23.4,
+      "confidence": 0.4036
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 28.4,
+      "end_sec": 28.4,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 61.6,
+      "end_sec": 61.6,
+      "confidence": 0.4534
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 66.8,
+      "end_sec": 66.8,
+      "confidence": 0.7056
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 74.4,
+      "end_sec": 74.4,
+      "confidence": 0.4746
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 165.6,
+      "end_sec": 165.6,
+      "confidence": 0.647
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 5.0,
+      "end_sec": 5.0,
+      "confidence": 0.6133
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 10.0,
+      "end_sec": 10.0,
+      "confidence": 0.8008
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 15.2,
+      "end_sec": 15.2,
+      "confidence": 0.7959
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 27.0,
+      "end_sec": 27.0,
+      "confidence": 0.7607
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 32.2,
+      "end_sec": 32.2,
+      "confidence": 0.7842
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 40.4,
+      "end_sec": 40.4,
+      "confidence": 0.7852
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 164.4,
+      "end_sec": 164.4,
+      "confidence": 0.498
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 2.4,
+      "end_sec": 2.4,
+      "confidence": 0.6538
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 17.6,
+      "end_sec": 17.6,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 28.4,
+      "end_sec": 28.4,
+      "confidence": 0.4226
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 69.6,
+      "end_sec": 69.6,
+      "confidence": 0.4121
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 83.6,
+      "end_sec": 83.6,
+      "confidence": 0.385
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 88.6,
+      "end_sec": 88.6,
+      "confidence": 0.7402
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 99.2,
+      "end_sec": 99.2,
+      "confidence": 0.8682
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 131.6,
+      "end_sec": 131.6,
+      "confidence": 0.6655
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 136.6,
+      "end_sec": 136.6,
+      "confidence": 0.6626
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 141.6,
+      "end_sec": 141.6,
+      "confidence": 0.8081
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "SMOKE",
+      "start_sec": 25.2252,
+      "end_sec": 25.2252,
+      "confidence": 0.7583
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "SMOKE",
+      "start_sec": 34.4344,
+      "end_sec": 34.4344,
+      "confidence": 0.6919
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "FIRE",
+      "start_sec": 109.9098,
+      "end_sec": 109.9098,
+      "confidence": 0.4639
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "FIRE",
+      "start_sec": 115.115,
+      "end_sec": 115.115,
+      "confidence": 0.4639
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "FIRE",
+      "start_sec": 140.5404,
+      "end_sec": 140.5404,
+      "confidence": 0.4805
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 24.2,
+      "end_sec": 24.2,
+      "confidence": 0.5176
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 42.2,
+      "end_sec": 42.2,
+      "confidence": 0.3774
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 58.2,
+      "end_sec": 58.2,
+      "confidence": 0.5962
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "FIRE",
+      "start_sec": 117.0,
+      "end_sec": 117.0,
+      "confidence": 0.5273
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "FIRE",
+      "start_sec": 122.0,
+      "end_sec": 122.0,
+      "confidence": 0.6387
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 191.2,
+      "end_sec": 191.2,
+      "confidence": 0.4658
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 196.4,
+      "end_sec": 196.4,
+      "confidence": 0.3794
+    },
+    {
+      "video_id": "VN_NEG_64",
+      "camera_id": "BENCH_VN_NEG_64",
+      "label": "SMOKE",
+      "start_sec": 41.2,
+      "end_sec": 41.2,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_64",
+      "camera_id": "BENCH_VN_NEG_64",
+      "label": "SMOKE",
+      "start_sec": 111.0,
+      "end_sec": 111.0,
+      "confidence": 0.542
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.6133
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "FIRE",
+      "start_sec": 9.0,
+      "end_sec": 9.0,
+      "confidence": 0.4941
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 67.8,
+      "end_sec": 67.8,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 82.8,
+      "end_sec": 82.8,
+      "confidence": 0.6841
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "FIRE",
+      "start_sec": 88.0,
+      "end_sec": 88.0,
+      "confidence": 0.7295
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 101.4,
+      "end_sec": 101.4,
+      "confidence": 0.5859
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "FIRE",
+      "start_sec": 106.6,
+      "end_sec": 106.6,
+      "confidence": 0.7505
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 108.8,
+      "end_sec": 108.8,
+      "confidence": 0.7905
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 122.2,
+      "end_sec": 122.2,
+      "confidence": 0.8516
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 128.6,
+      "end_sec": 128.6,
+      "confidence": 0.8105
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 146.8,
+      "end_sec": 146.8,
+      "confidence": 0.4951
+    },
+    {
+      "video_id": "negsVideo1.858",
+      "camera_id": "BENCH_negsVideo1.858",
+      "label": "SMOKE",
+      "start_sec": 2.0833,
+      "end_sec": 2.0833,
+      "confidence": 0.4426
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.5581
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 25.4,
+      "end_sec": 25.4,
+      "confidence": 0.5264
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 52.2,
+      "end_sec": 52.2,
+      "confidence": 0.6768
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 63.2,
+      "end_sec": 63.2,
+      "confidence": 0.644
+    },
+    {
+      "video_id": "negsVideo8.865",
+      "camera_id": "BENCH_negsVideo8.865",
+      "label": "FIRE",
+      "start_sec": 95.095,
+      "end_sec": 95.095,
+      "confidence": 0.4785
+    },
+    {
+      "video_id": "negsVideo9.866",
+      "camera_id": "BENCH_negsVideo9.866",
+      "label": "FIRE",
+      "start_sec": 8.0,
+      "end_sec": 8.0,
+      "confidence": 0.8257
+    }
+  ],
+  "pipeline_b2_events": [
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "SMOKE",
+      "start_sec": 3468.0,
+      "end_sec": 3468.0,
+      "confidence": 0.3684
+    },
+    {
+      "video_id": "VN_NEG_01",
+      "camera_id": "BENCH_VN_NEG_01",
+      "label": "SMOKE",
+      "start_sec": 3763.2,
+      "end_sec": 3763.2,
+      "confidence": 0.5264
+    },
+    {
+      "video_id": "VN_NEG_03",
+      "camera_id": "BENCH_VN_NEG_03",
+      "label": "SMOKE",
+      "start_sec": 13.8,
+      "end_sec": 13.8,
+      "confidence": 0.4187
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 1050.0,
+      "end_sec": 1050.0,
+      "confidence": 0.6895
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1421.8,
+      "end_sec": 1421.8,
+      "confidence": 0.667
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 1526.6,
+      "end_sec": 1526.6,
+      "confidence": 0.5273
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3796.6,
+      "end_sec": 3796.6,
+      "confidence": 0.5879
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3801.8,
+      "end_sec": 3801.8,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3808.8,
+      "end_sec": 3808.8,
+      "confidence": 0.384
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3814.0,
+      "end_sec": 3814.0,
+      "confidence": 0.7017
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3825.6,
+      "end_sec": 3825.6,
+      "confidence": 0.7939
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3831.4,
+      "end_sec": 3831.4,
+      "confidence": 0.5518
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3836.6,
+      "end_sec": 3836.6,
+      "confidence": 0.4534
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3870.6,
+      "end_sec": 3870.6,
+      "confidence": 0.5117
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3879.2,
+      "end_sec": 3879.2,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3884.2,
+      "end_sec": 3884.2,
+      "confidence": 0.7051
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3898.0,
+      "end_sec": 3898.0,
+      "confidence": 0.6533
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 3906.8,
+      "end_sec": 3906.8,
+      "confidence": 0.6489
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4251.4,
+      "end_sec": 4251.4,
+      "confidence": 0.4619
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4256.4,
+      "end_sec": 4256.4,
+      "confidence": 0.8027
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4261.4,
+      "end_sec": 4261.4,
+      "confidence": 0.8257
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4266.4,
+      "end_sec": 4266.4,
+      "confidence": 0.8232
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4271.4,
+      "end_sec": 4271.4,
+      "confidence": 0.7827
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4276.4,
+      "end_sec": 4276.4,
+      "confidence": 0.7827
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4281.4,
+      "end_sec": 4281.4,
+      "confidence": 0.687
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4286.4,
+      "end_sec": 4286.4,
+      "confidence": 0.7334
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 4289.2,
+      "end_sec": 4289.2,
+      "confidence": 0.6426
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4293.4,
+      "end_sec": 4293.4,
+      "confidence": 0.7866
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "FIRE",
+      "start_sec": 4296.6,
+      "end_sec": 4296.6,
+      "confidence": 0.6113
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "camera_id": "BENCH_VN_NEG_04",
+      "label": "SMOKE",
+      "start_sec": 4350.2,
+      "end_sec": 4350.2,
+      "confidence": 0.4736
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 5.2,
+      "end_sec": 5.2,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.6592
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "camera_id": "BENCH_VN_NEG_06",
+      "label": "SMOKE",
+      "start_sec": 67.6,
+      "end_sec": 67.6,
+      "confidence": 0.7471
+    },
+    {
+      "video_id": "VN_NEG_07",
+      "camera_id": "BENCH_VN_NEG_07",
+      "label": "SMOKE",
+      "start_sec": 42.0,
+      "end_sec": 42.0,
+      "confidence": 0.7969
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 93.6,
+      "end_sec": 93.6,
+      "confidence": 0.4368
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 98.6,
+      "end_sec": 98.6,
+      "confidence": 0.686
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 112.6,
+      "end_sec": 112.6,
+      "confidence": 0.5342
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "camera_id": "BENCH_VN_NEG_08",
+      "label": "SMOKE",
+      "start_sec": 177.0,
+      "end_sec": 177.0,
+      "confidence": 0.7778
+    },
+    {
+      "video_id": "VN_NEG_09",
+      "camera_id": "BENCH_VN_NEG_09",
+      "label": "SMOKE",
+      "start_sec": 45.2,
+      "end_sec": 45.2,
+      "confidence": 0.6548
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 48.2,
+      "end_sec": 48.2,
+      "confidence": 0.7559
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 107.0,
+      "end_sec": 107.0,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 272.4,
+      "end_sec": 272.4,
+      "confidence": 0.7007
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "camera_id": "BENCH_VN_NEG_11",
+      "label": "SMOKE",
+      "start_sec": 277.4,
+      "end_sec": 277.4,
+      "confidence": 0.7568
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "camera_id": "BENCH_VN_NEG_12",
+      "label": "SMOKE",
+      "start_sec": 20.2,
+      "end_sec": 20.2,
+      "confidence": 0.7744
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "camera_id": "BENCH_VN_NEG_12",
+      "label": "SMOKE",
+      "start_sec": 27.0,
+      "end_sec": 27.0,
+      "confidence": 0.4446
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 0.8,
+      "end_sec": 0.8,
+      "confidence": 0.6792
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 5.8,
+      "end_sec": 5.8,
+      "confidence": 0.7129
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 10.8,
+      "end_sec": 10.8,
+      "confidence": 0.7051
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 16.0,
+      "end_sec": 16.0,
+      "confidence": 0.6758
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 26.2,
+      "end_sec": 26.2,
+      "confidence": 0.6934
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 31.2,
+      "end_sec": 31.2,
+      "confidence": 0.7734
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 42.6,
+      "end_sec": 42.6,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 47.8,
+      "end_sec": 47.8,
+      "confidence": 0.7446
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "SMOKE",
+      "start_sec": 78.8,
+      "end_sec": 78.8,
+      "confidence": 0.5176
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "camera_id": "BENCH_VN_NEG_13",
+      "label": "FIRE",
+      "start_sec": 79.8,
+      "end_sec": 79.8,
+      "confidence": 0.3979
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 14.0,
+      "end_sec": 14.0,
+      "confidence": 0.7476
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 19.0,
+      "end_sec": 19.0,
+      "confidence": 0.7593
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 21.0,
+      "end_sec": 21.0,
+      "confidence": 0.606
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 24.0,
+      "end_sec": 24.0,
+      "confidence": 0.7515
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 29.0,
+      "end_sec": 29.0,
+      "confidence": 0.7446
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "FIRE",
+      "start_sec": 32.2,
+      "end_sec": 32.2,
+      "confidence": 0.3604
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 34.0,
+      "end_sec": 34.0,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 39.0,
+      "end_sec": 39.0,
+      "confidence": 0.7441
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 152.0,
+      "end_sec": 152.0,
+      "confidence": 0.5571
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 226.4,
+      "end_sec": 226.4,
+      "confidence": 0.6504
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 328.0,
+      "end_sec": 328.0,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 335.4,
+      "end_sec": 335.4,
+      "confidence": 0.4883
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 341.0,
+      "end_sec": 341.0,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 346.0,
+      "end_sec": 346.0,
+      "confidence": 0.6714
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 386.8,
+      "end_sec": 386.8,
+      "confidence": 0.5518
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 392.0,
+      "end_sec": 392.0,
+      "confidence": 0.6353
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 398.6,
+      "end_sec": 398.6,
+      "confidence": 0.7725
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "camera_id": "BENCH_VN_NEG_15",
+      "label": "SMOKE",
+      "start_sec": 403.8,
+      "end_sec": 403.8,
+      "confidence": 0.7241
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 232.2,
+      "end_sec": 232.2,
+      "confidence": 0.7759
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 237.2,
+      "end_sec": 237.2,
+      "confidence": 0.7256
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 242.2,
+      "end_sec": 242.2,
+      "confidence": 0.4368
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "camera_id": "BENCH_VN_NEG_16",
+      "label": "SMOKE",
+      "start_sec": 247.6,
+      "end_sec": 247.6,
+      "confidence": 0.5815
+    },
+    {
+      "video_id": "VN_NEG_17",
+      "camera_id": "BENCH_VN_NEG_17",
+      "label": "SMOKE",
+      "start_sec": 171.4,
+      "end_sec": 171.4,
+      "confidence": 0.6084
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 0.6,
+      "end_sec": 0.6,
+      "confidence": 0.5215
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 6.0,
+      "end_sec": 6.0,
+      "confidence": 0.8306
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 11.0,
+      "end_sec": 11.0,
+      "confidence": 0.6548
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 17.2,
+      "end_sec": 17.2,
+      "confidence": 0.8638
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 48.8,
+      "end_sec": 48.8,
+      "confidence": 0.7104
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 68.2,
+      "end_sec": 68.2,
+      "confidence": 0.7529
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 73.2,
+      "end_sec": 73.2,
+      "confidence": 0.749
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 78.2,
+      "end_sec": 78.2,
+      "confidence": 0.7788
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "FIRE",
+      "start_sec": 81.8,
+      "end_sec": 81.8,
+      "confidence": 0.5649
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 86.6,
+      "end_sec": 86.6,
+      "confidence": 0.4746
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 96.0,
+      "end_sec": 96.0,
+      "confidence": 0.3989
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "camera_id": "BENCH_VN_NEG_18",
+      "label": "SMOKE",
+      "start_sec": 115.8,
+      "end_sec": 115.8,
+      "confidence": 0.8452
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 52.8,
+      "end_sec": 52.8,
+      "confidence": 0.5488
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 76.8,
+      "end_sec": 76.8,
+      "confidence": 0.3904
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 81.8,
+      "end_sec": 81.8,
+      "confidence": 0.4668
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 205.4,
+      "end_sec": 205.4,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 269.6,
+      "end_sec": 269.6,
+      "confidence": 0.5527
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 276.8,
+      "end_sec": 276.8,
+      "confidence": 0.8066
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 391.8,
+      "end_sec": 391.8,
+      "confidence": 0.6807
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 424.0,
+      "end_sec": 424.0,
+      "confidence": 0.4524
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 527.0,
+      "end_sec": 527.0,
+      "confidence": 0.7778
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 602.8,
+      "end_sec": 602.8,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 668.8,
+      "end_sec": 668.8,
+      "confidence": 0.4177
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 689.8,
+      "end_sec": 689.8,
+      "confidence": 0.5757
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 791.2,
+      "end_sec": 791.2,
+      "confidence": 0.5234
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "camera_id": "BENCH_VN_NEG_20",
+      "label": "SMOKE",
+      "start_sec": 902.6,
+      "end_sec": 902.6,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 12.4,
+      "end_sec": 12.4,
+      "confidence": 0.5088
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 17.8,
+      "end_sec": 17.8,
+      "confidence": 0.4465
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 22.8,
+      "end_sec": 22.8,
+      "confidence": 0.4292
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 27.8,
+      "end_sec": 27.8,
+      "confidence": 0.7568
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 47.0,
+      "end_sec": 47.0,
+      "confidence": 0.4629
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 52.0,
+      "end_sec": 52.0,
+      "confidence": 0.6489
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 72.4,
+      "end_sec": 72.4,
+      "confidence": 0.8369
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "FIRE",
+      "start_sec": 73.2,
+      "end_sec": 73.2,
+      "confidence": 0.501
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 80.6,
+      "end_sec": 80.6,
+      "confidence": 0.8252
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 107.8,
+      "end_sec": 107.8,
+      "confidence": 0.6011
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 120.4,
+      "end_sec": 120.4,
+      "confidence": 0.4678
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 130.8,
+      "end_sec": 130.8,
+      "confidence": 0.8555
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 149.2,
+      "end_sec": 149.2,
+      "confidence": 0.5547
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 175.4,
+      "end_sec": 175.4,
+      "confidence": 0.4243
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 401.6,
+      "end_sec": 401.6,
+      "confidence": 0.3621
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "FIRE",
+      "start_sec": 523.4,
+      "end_sec": 523.4,
+      "confidence": 0.4785
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "camera_id": "BENCH_VN_NEG_21",
+      "label": "SMOKE",
+      "start_sec": 748.8,
+      "end_sec": 748.8,
+      "confidence": 0.5381
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 5.005,
+      "end_sec": 5.005,
+      "confidence": 0.7734
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 24.024,
+      "end_sec": 24.024,
+      "confidence": 0.4341
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 29.029,
+      "end_sec": 29.029,
+      "confidence": 0.8892
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 48.6486,
+      "end_sec": 48.6486,
+      "confidence": 0.7007
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 59.8598,
+      "end_sec": 59.8598,
+      "confidence": 0.7886
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 68.6686,
+      "end_sec": 68.6686,
+      "confidence": 0.7393
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 73.6736,
+      "end_sec": 73.6736,
+      "confidence": 0.7178
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 79.6796,
+      "end_sec": 79.6796,
+      "confidence": 0.5869
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 84.6846,
+      "end_sec": 84.6846,
+      "confidence": 0.5869
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 89.6896,
+      "end_sec": 89.6896,
+      "confidence": 0.7217
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 95.2952,
+      "end_sec": 95.2952,
+      "confidence": 0.5908
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 134.7346,
+      "end_sec": 134.7346,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 141.9418,
+      "end_sec": 141.9418,
+      "confidence": 0.8389
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 146.9468,
+      "end_sec": 146.9468,
+      "confidence": 0.8335
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 173.173,
+      "end_sec": 173.173,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "camera_id": "BENCH_VN_NEG_22",
+      "label": "SMOKE",
+      "start_sec": 178.178,
+      "end_sec": 178.178,
+      "confidence": 0.7432
+    },
+    {
+      "video_id": "VN_NEG_23",
+      "camera_id": "BENCH_VN_NEG_23",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.7251
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.5439
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.4717
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 20.6,
+      "end_sec": 20.6,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "camera_id": "BENCH_VN_NEG_24",
+      "label": "SMOKE",
+      "start_sec": 97.8,
+      "end_sec": 97.8,
+      "confidence": 0.5205
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 81.2,
+      "end_sec": 81.2,
+      "confidence": 0.5244
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 86.2,
+      "end_sec": 86.2,
+      "confidence": 0.6299
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 91.2,
+      "end_sec": 91.2,
+      "confidence": 0.8623
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 96.2,
+      "end_sec": 96.2,
+      "confidence": 0.7441
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 101.2,
+      "end_sec": 101.2,
+      "confidence": 0.7432
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "FIRE",
+      "start_sec": 105.4,
+      "end_sec": 105.4,
+      "confidence": 0.7798
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 106.4,
+      "end_sec": 106.4,
+      "confidence": 0.7798
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 116.6,
+      "end_sec": 116.6,
+      "confidence": 0.7461
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 121.6,
+      "end_sec": 121.6,
+      "confidence": 0.8564
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 130.0,
+      "end_sec": 130.0,
+      "confidence": 0.8418
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 135.0,
+      "end_sec": 135.0,
+      "confidence": 0.8188
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 148.6,
+      "end_sec": 148.6,
+      "confidence": 0.7358
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 166.6,
+      "end_sec": 166.6,
+      "confidence": 0.4026
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 172.0,
+      "end_sec": 172.0,
+      "confidence": 0.6885
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 177.0,
+      "end_sec": 177.0,
+      "confidence": 0.7593
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 186.6,
+      "end_sec": 186.6,
+      "confidence": 0.6353
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 191.6,
+      "end_sec": 191.6,
+      "confidence": 0.8257
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "FIRE",
+      "start_sec": 195.8,
+      "end_sec": 195.8,
+      "confidence": 0.4216
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 196.6,
+      "end_sec": 196.6,
+      "confidence": 0.4216
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 236.4,
+      "end_sec": 236.4,
+      "confidence": 0.5918
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 242.0,
+      "end_sec": 242.0,
+      "confidence": 0.5488
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 250.8,
+      "end_sec": 250.8,
+      "confidence": 0.4158
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 255.8,
+      "end_sec": 255.8,
+      "confidence": 0.7402
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 379.6,
+      "end_sec": 379.6,
+      "confidence": 0.3877
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "camera_id": "BENCH_VN_NEG_25",
+      "label": "SMOKE",
+      "start_sec": 405.6,
+      "end_sec": 405.6,
+      "confidence": 0.8301
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 1.0,
+      "end_sec": 1.0,
+      "confidence": 0.5786
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 6.0,
+      "end_sec": 6.0,
+      "confidence": 0.6162
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 11.0,
+      "end_sec": 11.0,
+      "confidence": 0.6533
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "camera_id": "BENCH_VN_NEG_26",
+      "label": "SMOKE",
+      "start_sec": 16.0,
+      "end_sec": 16.0,
+      "confidence": 0.6733
+    },
+    {
+      "video_id": "VN_NEG_27",
+      "camera_id": "BENCH_VN_NEG_27",
+      "label": "SMOKE",
+      "start_sec": 37.6,
+      "end_sec": 37.6,
+      "confidence": 0.4397
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "camera_id": "BENCH_VN_NEG_28",
+      "label": "SMOKE",
+      "start_sec": 1.8,
+      "end_sec": 1.8,
+      "confidence": 0.502
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "camera_id": "BENCH_VN_NEG_28",
+      "label": "SMOKE",
+      "start_sec": 56.8,
+      "end_sec": 56.8,
+      "confidence": 0.5869
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "camera_id": "BENCH_VN_NEG_28",
+      "label": "SMOKE",
+      "start_sec": 65.6,
+      "end_sec": 65.6,
+      "confidence": 0.6724
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "camera_id": "BENCH_VN_NEG_29",
+      "label": "FIRE",
+      "start_sec": 201.6,
+      "end_sec": 201.6,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_30",
+      "camera_id": "BENCH_VN_NEG_30",
+      "label": "FIRE",
+      "start_sec": 32.032,
+      "end_sec": 32.032,
+      "confidence": 0.7026
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 123.5234,
+      "end_sec": 123.5234,
+      "confidence": 0.5718
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 131.3312,
+      "end_sec": 131.3312,
+      "confidence": 0.5391
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 218.0178,
+      "end_sec": 218.0178,
+      "confidence": 0.4446
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 223.6234,
+      "end_sec": 223.6234,
+      "confidence": 0.4141
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 259.8596,
+      "end_sec": 259.8596,
+      "confidence": 0.5757
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 268.0678,
+      "end_sec": 268.0678,
+      "confidence": 0.5303
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 323.5232,
+      "end_sec": 323.5232,
+      "confidence": 0.541
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 345.345,
+      "end_sec": 345.345,
+      "confidence": 0.5698
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 350.7504,
+      "end_sec": 350.7504,
+      "confidence": 0.5908
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 361.9616,
+      "end_sec": 361.9616,
+      "confidence": 0.6636
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 363.7634,
+      "end_sec": 363.7634,
+      "confidence": 0.5059
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 366.9666,
+      "end_sec": 366.9666,
+      "confidence": 0.6636
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 421.0206,
+      "end_sec": 421.0206,
+      "confidence": 0.7041
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 435.435,
+      "end_sec": 435.435,
+      "confidence": 0.6113
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 447.6472,
+      "end_sec": 447.6472,
+      "confidence": 0.4971
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "SMOKE",
+      "start_sec": 453.6532,
+      "end_sec": 453.6532,
+      "confidence": 0.395
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 561.9614,
+      "end_sec": 561.9614,
+      "confidence": 0.5981
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 567.567,
+      "end_sec": 567.567,
+      "confidence": 0.6152
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 582.582,
+      "end_sec": 582.582,
+      "confidence": 0.604
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 587.587,
+      "end_sec": 587.587,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 592.592,
+      "end_sec": 592.592,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 599.599,
+      "end_sec": 599.599,
+      "confidence": 0.667
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 608.0074,
+      "end_sec": 608.0074,
+      "confidence": 0.5098
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 616.2156,
+      "end_sec": 616.2156,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 629.0284,
+      "end_sec": 629.0284,
+      "confidence": 0.5698
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 636.0354,
+      "end_sec": 636.0354,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 650.65,
+      "end_sec": 650.65,
+      "confidence": 0.5371
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 659.0584,
+      "end_sec": 659.0584,
+      "confidence": 0.6602
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 665.4648,
+      "end_sec": 665.4648,
+      "confidence": 0.5312
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 677.4768,
+      "end_sec": 677.4768,
+      "confidence": 0.4912
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 682.4818,
+      "end_sec": 682.4818,
+      "confidence": 0.5796
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 720.9202,
+      "end_sec": 720.9202,
+      "confidence": 0.4197
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 740.1394,
+      "end_sec": 740.1394,
+      "confidence": 0.5293
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 745.5448,
+      "end_sec": 745.5448,
+      "confidence": 0.4226
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "camera_id": "BENCH_VN_NEG_31",
+      "label": "FIRE",
+      "start_sec": 757.757,
+      "end_sec": 757.757,
+      "confidence": 0.6372
+    },
+    {
+      "video_id": "VN_NEG_32",
+      "camera_id": "BENCH_VN_NEG_32",
+      "label": "FIRE",
+      "start_sec": 30.0,
+      "end_sec": 30.0,
+      "confidence": 0.6011
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "camera_id": "BENCH_VN_NEG_34",
+      "label": "SMOKE",
+      "start_sec": 30.4,
+      "end_sec": 30.4,
+      "confidence": 0.5273
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "SMOKE",
+      "start_sec": 54.8465,
+      "end_sec": 54.8465,
+      "confidence": 0.4707
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "FIRE",
+      "start_sec": 57.5575,
+      "end_sec": 57.5575,
+      "confidence": 0.46
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "camera_id": "BENCH_VN_NEG_35",
+      "label": "SMOKE",
+      "start_sec": 62.9796,
+      "end_sec": 62.9796,
+      "confidence": 0.396
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 89.4,
+      "end_sec": 89.4,
+      "confidence": 0.6318
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 96.8,
+      "end_sec": 96.8,
+      "confidence": 0.7646
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 102.4,
+      "end_sec": 102.4,
+      "confidence": 0.6245
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 133.2,
+      "end_sec": 133.2,
+      "confidence": 0.7944
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "camera_id": "BENCH_VN_NEG_36",
+      "label": "SMOKE",
+      "start_sec": 186.6,
+      "end_sec": 186.6,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_37",
+      "camera_id": "BENCH_VN_NEG_37",
+      "label": "SMOKE",
+      "start_sec": 53.4,
+      "end_sec": 53.4,
+      "confidence": 0.7417
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 21.8,
+      "end_sec": 21.8,
+      "confidence": 0.4377
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 29.2,
+      "end_sec": 29.2,
+      "confidence": 0.5547
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 38.8,
+      "end_sec": 38.8,
+      "confidence": 0.4026
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 54.6,
+      "end_sec": 54.6,
+      "confidence": 0.4609
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "camera_id": "BENCH_VN_NEG_38",
+      "label": "SMOKE",
+      "start_sec": 60.4,
+      "end_sec": 60.4,
+      "confidence": 0.6123
+    },
+    {
+      "video_id": "VN_NEG_39",
+      "camera_id": "BENCH_VN_NEG_39",
+      "label": "SMOKE",
+      "start_sec": 32.0,
+      "end_sec": 32.0,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_39",
+      "camera_id": "BENCH_VN_NEG_39",
+      "label": "SMOKE",
+      "start_sec": 40.0,
+      "end_sec": 40.0,
+      "confidence": 0.5283
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 0.6,
+      "end_sec": 0.6,
+      "confidence": 0.8228
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 5.6,
+      "end_sec": 5.6,
+      "confidence": 0.8853
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 21.6,
+      "end_sec": 21.6,
+      "confidence": 0.4055
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 52.8,
+      "end_sec": 52.8,
+      "confidence": 0.3867
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 71.6,
+      "end_sec": 71.6,
+      "confidence": 0.7949
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 89.2,
+      "end_sec": 89.2,
+      "confidence": 0.8589
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 94.2,
+      "end_sec": 94.2,
+      "confidence": 0.8877
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 100.6,
+      "end_sec": 100.6,
+      "confidence": 0.7026
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 111.8,
+      "end_sec": 111.8,
+      "confidence": 0.8467
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 117.4,
+      "end_sec": 117.4,
+      "confidence": 0.8428
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "FIRE",
+      "start_sec": 200.4,
+      "end_sec": 200.4,
+      "confidence": 0.6406
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 316.6,
+      "end_sec": 316.6,
+      "confidence": 0.6372
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 403.2,
+      "end_sec": 403.2,
+      "confidence": 0.6758
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 538.4,
+      "end_sec": 538.4,
+      "confidence": 0.8721
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 556.4,
+      "end_sec": 556.4,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 561.4,
+      "end_sec": 561.4,
+      "confidence": 0.5195
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "camera_id": "BENCH_VN_NEG_41",
+      "label": "SMOKE",
+      "start_sec": 570.2,
+      "end_sec": 570.2,
+      "confidence": 0.4226
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "camera_id": "BENCH_VN_NEG_42",
+      "label": "SMOKE",
+      "start_sec": 189.6,
+      "end_sec": 189.6,
+      "confidence": 0.6436
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "camera_id": "BENCH_VN_NEG_42",
+      "label": "SMOKE",
+      "start_sec": 306.8,
+      "end_sec": 306.8,
+      "confidence": 0.6504
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 16.6,
+      "end_sec": 16.6,
+      "confidence": 0.4226
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 21.6,
+      "end_sec": 21.6,
+      "confidence": 0.792
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 26.6,
+      "end_sec": 26.6,
+      "confidence": 0.876
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 31.6,
+      "end_sec": 31.6,
+      "confidence": 0.8853
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "camera_id": "BENCH_VN_NEG_43",
+      "label": "SMOKE",
+      "start_sec": 36.6,
+      "end_sec": 36.6,
+      "confidence": 0.8623
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 0.4,
+      "end_sec": 0.4,
+      "confidence": 0.8428
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 14.2,
+      "end_sec": 14.2,
+      "confidence": 0.5156
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 26.0,
+      "end_sec": 26.0,
+      "confidence": 0.7388
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 33.2,
+      "end_sec": 33.2,
+      "confidence": 0.8193
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 145.2,
+      "end_sec": 145.2,
+      "confidence": 0.7578
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "FIRE",
+      "start_sec": 147.2,
+      "end_sec": 147.2,
+      "confidence": 0.7744
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 150.2,
+      "end_sec": 150.2,
+      "confidence": 0.7773
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "FIRE",
+      "start_sec": 152.2,
+      "end_sec": 152.2,
+      "confidence": 0.7891
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 155.2,
+      "end_sec": 155.2,
+      "confidence": 0.876
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 174.6,
+      "end_sec": 174.6,
+      "confidence": 0.5303
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 179.6,
+      "end_sec": 179.6,
+      "confidence": 0.7627
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 187.0,
+      "end_sec": 187.0,
+      "confidence": 0.4197
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 192.2,
+      "end_sec": 192.2,
+      "confidence": 0.8223
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 207.6,
+      "end_sec": 207.6,
+      "confidence": 0.4707
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 212.6,
+      "end_sec": 212.6,
+      "confidence": 0.8228
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 218.6,
+      "end_sec": 218.6,
+      "confidence": 0.582
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 225.4,
+      "end_sec": 225.4,
+      "confidence": 0.4253
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "camera_id": "BENCH_VN_NEG_44",
+      "label": "SMOKE",
+      "start_sec": 231.0,
+      "end_sec": 231.0,
+      "confidence": 0.5649
+    },
+    {
+      "video_id": "VN_NEG_45",
+      "camera_id": "BENCH_VN_NEG_45",
+      "label": "SMOKE",
+      "start_sec": 37.0,
+      "end_sec": 37.0,
+      "confidence": 0.5225
+    },
+    {
+      "video_id": "VN_NEG_45",
+      "camera_id": "BENCH_VN_NEG_45",
+      "label": "SMOKE",
+      "start_sec": 44.2,
+      "end_sec": 44.2,
+      "confidence": 0.8574
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 95.4,
+      "end_sec": 95.4,
+      "confidence": 0.6416
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "FIRE",
+      "start_sec": 146.8,
+      "end_sec": 146.8,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 334.6,
+      "end_sec": 334.6,
+      "confidence": 0.4639
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "FIRE",
+      "start_sec": 343.8,
+      "end_sec": 343.8,
+      "confidence": 0.4436
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 358.6,
+      "end_sec": 358.6,
+      "confidence": 0.5591
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "FIRE",
+      "start_sec": 359.0,
+      "end_sec": 359.0,
+      "confidence": 0.498
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "camera_id": "BENCH_VN_NEG_46",
+      "label": "SMOKE",
+      "start_sec": 410.2,
+      "end_sec": 410.2,
+      "confidence": 0.4746
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 4.0,
+      "end_sec": 4.0,
+      "confidence": 0.6792
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 12.6,
+      "end_sec": 12.6,
+      "confidence": 0.7476
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.8286
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 28.0,
+      "end_sec": 28.0,
+      "confidence": 0.8569
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 28.2,
+      "end_sec": 28.2,
+      "confidence": 0.8569
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 53.2,
+      "end_sec": 53.2,
+      "confidence": 0.5981
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 58.4,
+      "end_sec": 58.4,
+      "confidence": 0.668
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 88.0,
+      "end_sec": 88.0,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 93.0,
+      "end_sec": 93.0,
+      "confidence": 0.7905
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 134.6,
+      "end_sec": 134.6,
+      "confidence": 0.5029
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 229.2,
+      "end_sec": 229.2,
+      "confidence": 0.5322
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 325.2,
+      "end_sec": 325.2,
+      "confidence": 0.5068
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 339.4,
+      "end_sec": 339.4,
+      "confidence": 0.6479
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 366.2,
+      "end_sec": 366.2,
+      "confidence": 0.6577
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 462.8,
+      "end_sec": 462.8,
+      "confidence": 0.5708
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 467.8,
+      "end_sec": 467.8,
+      "confidence": 0.625
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 490.6,
+      "end_sec": 490.6,
+      "confidence": 0.8159
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 495.6,
+      "end_sec": 495.6,
+      "confidence": 0.7964
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 500.6,
+      "end_sec": 500.6,
+      "confidence": 0.772
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 505.6,
+      "end_sec": 505.6,
+      "confidence": 0.8311
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 510.6,
+      "end_sec": 510.6,
+      "confidence": 0.855
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 516.2,
+      "end_sec": 516.2,
+      "confidence": 0.5107
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 579.4,
+      "end_sec": 579.4,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 885.6,
+      "end_sec": 885.6,
+      "confidence": 0.397
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 919.0,
+      "end_sec": 919.0,
+      "confidence": 0.5146
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1137.0,
+      "end_sec": 1137.0,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1142.0,
+      "end_sec": 1142.0,
+      "confidence": 0.6396
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1190.0,
+      "end_sec": 1190.0,
+      "confidence": 0.8848
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1241.2,
+      "end_sec": 1241.2,
+      "confidence": 0.8794
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1265.8,
+      "end_sec": 1265.8,
+      "confidence": 0.563
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1270.8,
+      "end_sec": 1270.8,
+      "confidence": 0.8164
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1275.8,
+      "end_sec": 1275.8,
+      "confidence": 0.8013
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1535.8,
+      "end_sec": 1535.8,
+      "confidence": 0.5669
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1618.2,
+      "end_sec": 1618.2,
+      "confidence": 0.4351
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1719.4,
+      "end_sec": 1719.4,
+      "confidence": 0.7417
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1734.6,
+      "end_sec": 1734.6,
+      "confidence": 0.8193
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1847.2,
+      "end_sec": 1847.2,
+      "confidence": 0.4312
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1854.0,
+      "end_sec": 1854.0,
+      "confidence": 0.4312
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1902.0,
+      "end_sec": 1902.0,
+      "confidence": 0.3999
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 1912.2,
+      "end_sec": 1912.2,
+      "confidence": 0.7051
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2040.6,
+      "end_sec": 2040.6,
+      "confidence": 0.6333
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2045.6,
+      "end_sec": 2045.6,
+      "confidence": 0.7637
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2109.0,
+      "end_sec": 2109.0,
+      "confidence": 0.8848
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2169.0,
+      "end_sec": 2169.0,
+      "confidence": 0.8711
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2202.6,
+      "end_sec": 2202.6,
+      "confidence": 0.6836
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2235.4,
+      "end_sec": 2235.4,
+      "confidence": 0.7891
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2274.0,
+      "end_sec": 2274.0,
+      "confidence": 0.5566
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 2287.8,
+      "end_sec": 2287.8,
+      "confidence": 0.8091
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2288.6,
+      "end_sec": 2288.6,
+      "confidence": 0.8198
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2405.6,
+      "end_sec": 2405.6,
+      "confidence": 0.627
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2412.2,
+      "end_sec": 2412.2,
+      "confidence": 0.6494
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2504.0,
+      "end_sec": 2504.0,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2509.6,
+      "end_sec": 2509.6,
+      "confidence": 0.5381
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2515.8,
+      "end_sec": 2515.8,
+      "confidence": 0.5391
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2520.8,
+      "end_sec": 2520.8,
+      "confidence": 0.6621
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2526.0,
+      "end_sec": 2526.0,
+      "confidence": 0.7534
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2622.2,
+      "end_sec": 2622.2,
+      "confidence": 0.7432
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2681.8,
+      "end_sec": 2681.8,
+      "confidence": 0.6699
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2691.0,
+      "end_sec": 2691.0,
+      "confidence": 0.6851
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2734.4,
+      "end_sec": 2734.4,
+      "confidence": 0.7188
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2791.2,
+      "end_sec": 2791.2,
+      "confidence": 0.8081
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2835.2,
+      "end_sec": 2835.2,
+      "confidence": 0.6953
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2841.4,
+      "end_sec": 2841.4,
+      "confidence": 0.7622
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2905.2,
+      "end_sec": 2905.2,
+      "confidence": 0.5972
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 2986.2,
+      "end_sec": 2986.2,
+      "confidence": 0.5049
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3032.8,
+      "end_sec": 3032.8,
+      "confidence": 0.832
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3088.8,
+      "end_sec": 3088.8,
+      "confidence": 0.4321
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3093.8,
+      "end_sec": 3093.8,
+      "confidence": 0.4824
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3131.0,
+      "end_sec": 3131.0,
+      "confidence": 0.6362
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3136.2,
+      "end_sec": 3136.2,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3160.0,
+      "end_sec": 3160.0,
+      "confidence": 0.457
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3165.4,
+      "end_sec": 3165.4,
+      "confidence": 0.4216
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3171.2,
+      "end_sec": 3171.2,
+      "confidence": 0.7153
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "FIRE",
+      "start_sec": 3214.4,
+      "end_sec": 3214.4,
+      "confidence": 0.7905
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "camera_id": "BENCH_VN_NEG_47",
+      "label": "SMOKE",
+      "start_sec": 3253.2,
+      "end_sec": 3253.2,
+      "confidence": 0.6943
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "FIRE",
+      "start_sec": 3.0,
+      "end_sec": 3.0,
+      "confidence": 0.7734
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 56.2,
+      "end_sec": 56.2,
+      "confidence": 0.5859
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 74.6,
+      "end_sec": 74.6,
+      "confidence": 0.7168
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "camera_id": "BENCH_VN_NEG_48",
+      "label": "SMOKE",
+      "start_sec": 79.6,
+      "end_sec": 79.6,
+      "confidence": 0.769
+    },
+    {
+      "video_id": "VN_NEG_49",
+      "camera_id": "BENCH_VN_NEG_49",
+      "label": "FIRE",
+      "start_sec": 31.2,
+      "end_sec": 31.2,
+      "confidence": 0.6582
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 44.6,
+      "end_sec": 44.6,
+      "confidence": 0.7534
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 49.6,
+      "end_sec": 49.6,
+      "confidence": 0.7007
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "camera_id": "BENCH_VN_NEG_50",
+      "label": "FIRE",
+      "start_sec": 54.6,
+      "end_sec": 54.6,
+      "confidence": 0.7593
+    },
+    {
+      "video_id": "VN_NEG_51",
+      "camera_id": "BENCH_VN_NEG_51",
+      "label": "SMOKE",
+      "start_sec": 20.8,
+      "end_sec": 20.8,
+      "confidence": 0.645
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 0.6,
+      "end_sec": 0.6,
+      "confidence": 0.5361
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 5.6,
+      "end_sec": 5.6,
+      "confidence": 0.4912
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "FIRE",
+      "start_sec": 16.2,
+      "end_sec": 16.2,
+      "confidence": 0.4514
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 44.8,
+      "end_sec": 44.8,
+      "confidence": 0.6895
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 50.0,
+      "end_sec": 50.0,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "camera_id": "BENCH_VN_NEG_53",
+      "label": "SMOKE",
+      "start_sec": 61.0,
+      "end_sec": 61.0,
+      "confidence": 0.605
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "SMOKE",
+      "start_sec": 30.2,
+      "end_sec": 30.2,
+      "confidence": 0.5137
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "SMOKE",
+      "start_sec": 49.8,
+      "end_sec": 49.8,
+      "confidence": 0.5352
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "camera_id": "BENCH_VN_NEG_54",
+      "label": "SMOKE",
+      "start_sec": 60.6,
+      "end_sec": 60.6,
+      "confidence": 0.5649
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "camera_id": "BENCH_VN_NEG_55",
+      "label": "SMOKE",
+      "start_sec": 11.8,
+      "end_sec": 11.8,
+      "confidence": 0.7139
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "camera_id": "BENCH_VN_NEG_55",
+      "label": "SMOKE",
+      "start_sec": 21.2,
+      "end_sec": 21.2,
+      "confidence": 0.7295
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "camera_id": "BENCH_VN_NEG_55",
+      "label": "SMOKE",
+      "start_sec": 31.8,
+      "end_sec": 31.8,
+      "confidence": 0.5088
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "camera_id": "BENCH_VN_NEG_56",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.5581
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "camera_id": "BENCH_VN_NEG_56",
+      "label": "SMOKE",
+      "start_sec": 28.4,
+      "end_sec": 28.4,
+      "confidence": 0.7031
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 1.2,
+      "end_sec": 1.2,
+      "confidence": 0.4863
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 23.4,
+      "end_sec": 23.4,
+      "confidence": 0.4036
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 28.4,
+      "end_sec": 28.4,
+      "confidence": 0.6094
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 62.2,
+      "end_sec": 62.2,
+      "confidence": 0.4534
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 67.2,
+      "end_sec": 67.2,
+      "confidence": 0.7056
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 74.4,
+      "end_sec": 74.4,
+      "confidence": 0.4746
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "camera_id": "BENCH_VN_NEG_58",
+      "label": "SMOKE",
+      "start_sec": 165.6,
+      "end_sec": 165.6,
+      "confidence": 0.647
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 5.2,
+      "end_sec": 5.2,
+      "confidence": 0.6333
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 10.4,
+      "end_sec": 10.4,
+      "confidence": 0.8008
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 27.2,
+      "end_sec": 27.2,
+      "confidence": 0.7607
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "camera_id": "BENCH_VN_NEG_59",
+      "label": "SMOKE",
+      "start_sec": 32.2,
+      "end_sec": 32.2,
+      "confidence": 0.7842
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 18.0,
+      "end_sec": 18.0,
+      "confidence": 0.4961
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 91.6,
+      "end_sec": 91.6,
+      "confidence": 0.7402
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 101.4,
+      "end_sec": 101.4,
+      "confidence": 0.8682
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 135.4,
+      "end_sec": 135.4,
+      "confidence": 0.6611
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "camera_id": "BENCH_VN_NEG_60",
+      "label": "SMOKE",
+      "start_sec": 140.4,
+      "end_sec": 140.4,
+      "confidence": 0.8066
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "SMOKE",
+      "start_sec": 25.2252,
+      "end_sec": 25.2252,
+      "confidence": 0.7583
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "SMOKE",
+      "start_sec": 34.4344,
+      "end_sec": 34.4344,
+      "confidence": 0.6919
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "camera_id": "BENCH_VN_NEG_61",
+      "label": "FIRE",
+      "start_sec": 141.141,
+      "end_sec": 141.141,
+      "confidence": 0.4805
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 24.2,
+      "end_sec": 24.2,
+      "confidence": 0.5176
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 58.2,
+      "end_sec": 58.2,
+      "confidence": 0.5962
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 191.2,
+      "end_sec": 191.2,
+      "confidence": 0.4658
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "camera_id": "BENCH_VN_NEG_63",
+      "label": "SMOKE",
+      "start_sec": 196.4,
+      "end_sec": 196.4,
+      "confidence": 0.3794
+    },
+    {
+      "video_id": "VN_NEG_64",
+      "camera_id": "BENCH_VN_NEG_64",
+      "label": "SMOKE",
+      "start_sec": 41.2,
+      "end_sec": 41.2,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_64",
+      "camera_id": "BENCH_VN_NEG_64",
+      "label": "SMOKE",
+      "start_sec": 111.6,
+      "end_sec": 111.6,
+      "confidence": 0.6523
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 5.4,
+      "end_sec": 5.4,
+      "confidence": 0.6133
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 68.0,
+      "end_sec": 68.0,
+      "confidence": 0.6309
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 82.8,
+      "end_sec": 82.8,
+      "confidence": 0.6841
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "FIRE",
+      "start_sec": 88.0,
+      "end_sec": 88.0,
+      "confidence": 0.7295
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 101.6,
+      "end_sec": 101.6,
+      "confidence": 0.686
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "FIRE",
+      "start_sec": 106.6,
+      "end_sec": 106.6,
+      "confidence": 0.7505
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 108.8,
+      "end_sec": 108.8,
+      "confidence": 0.7905
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 122.2,
+      "end_sec": 122.2,
+      "confidence": 0.8516
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 128.6,
+      "end_sec": 128.6,
+      "confidence": 0.8105
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "camera_id": "BENCH_VN_NEG_65",
+      "label": "SMOKE",
+      "start_sec": 146.8,
+      "end_sec": 146.8,
+      "confidence": 0.4951
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 15.4,
+      "end_sec": 15.4,
+      "confidence": 0.5581
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 25.4,
+      "end_sec": 25.4,
+      "confidence": 0.5264
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 52.2,
+      "end_sec": 52.2,
+      "confidence": 0.6768
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "camera_id": "BENCH_negsVideo4.861",
+      "label": "SMOKE",
+      "start_sec": 63.2,
+      "end_sec": 63.2,
+      "confidence": 0.644
+    },
+    {
+      "video_id": "negsVideo9.866",
+      "camera_id": "BENCH_negsVideo9.866",
+      "label": "FIRE",
+      "start_sec": 8.0,
+      "end_sec": 8.0,
+      "confidence": 0.8257
+    }
+  ]
+}

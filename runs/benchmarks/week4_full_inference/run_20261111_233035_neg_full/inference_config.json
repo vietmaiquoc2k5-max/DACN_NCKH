@@ -1,0 +1,10 @@
+{
+  "sample_fps": 5.0,
+  "conf_thresh": 0.25,
+  "eval_conf_thresh": 0.35,
+  "window_n": 8,
+  "confirm_k": 3,
+  "cooldown_sec": 5.0,
+  "feature_threshold": 0.02,
+  "max_event_gap_sec": 2.0
+}

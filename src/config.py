@@ -167,6 +167,19 @@ def get_available_test_videos() -> Dict[str, str]:
             rel = f"VN_NEG_05/{p.name}"
             videos[f"🛡️ {p.name} ({rel})"] = rel
 
+    ds_neg_dir = PROJECT_ROOT / "datasets" / "negative_videos"
+    if ds_neg_dir.exists():
+        for p in sorted(ds_neg_dir.glob("*.mp4")):
+            rel = f"datasets/negative_videos/{p.name}"
+            videos[f"🛡️ {p.name} ({rel})"] = rel
+
+    raw_neg_dir = PROJECT_ROOT / "negative_videos"
+    if raw_neg_dir.exists():
+        for p in sorted(raw_neg_dir.glob("*.mp4")):
+            rel = f"negative_videos/{p.name}"
+            prefix = "🔥" if "POS" in p.name.upper() else "🛡️"
+            videos[f"{prefix} {p.name} ({rel})"] = rel
+
     fsl_dir = PROJECT_ROOT / "FireSmokeLabeler" / "videos"
     if fsl_dir.exists():
         for p in sorted(fsl_dir.iterdir()):

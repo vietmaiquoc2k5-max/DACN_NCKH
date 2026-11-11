@@ -1,0 +1,46 @@
+{
+  "status": "OFFICIAL",
+  "feasible": true,
+  "selected_operating_point": {
+    "confidence_threshold": 0.35,
+    "k": 3,
+    "n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "max_event_gap_sec": 2.0
+  },
+  "selection_split": "validation_and_negative_exposure",
+  "constraints": {
+    "min_negative_exposure_hours": 5.0,
+    "min_far_reduction_percentage": 50.0,
+    "max_event_recall_drop_percentage": 5.0,
+    "max_mean_detection_delay_sec": 10.0
+  },
+  "validation_metrics": {
+    "video_event_recall": 0.9583,
+    "event_instance_recall": 0.7143,
+    "event_precision": 0.8065,
+    "event_f1": 0.7576,
+    "mean_detection_delay_sec": 2.13,
+    "valid_negative_exposure_hours": 7.2026,
+    "false_alarms_per_hour": 58.4511,
+    "far_95_ci": [
+      53.0003,
+      61.9221
+    ],
+    "far_reduction_vs_frame_baseline_pct": 57.39
+  },
+  "test_metrics_provisional": {
+    "video_event_recall": 1.0,
+    "event_instance_recall": 0.7222,
+    "event_precision": 0.7222,
+    "event_f1": 0.7222,
+    "mean_detection_delay_sec": 3.21
+  },
+  "verification_history": {
+    "timestamp": "2026-11-12T00:00:34.206379",
+    "git_commit": "256065e7",
+    "model_checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "evaluated_by": "Mai Quốc Việt & Lê Minh Thiên"
+  }
+}
