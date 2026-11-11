@@ -1,0 +1,265 @@
+{
+  "status": "PASS",
+  "cross_check_matched": true,
+  "cross_check_note": "Khớp nối 100% về định danh khung hình (video_id, camera_id, timestamp_sec) và số lượng phát hiện.",
+  "frame_alignment": {
+    "total_frames_aligned": 4289,
+    "mismatches_count": 0,
+    "raw_unique_frames": 4289,
+    "tracked_unique_frames": 4289,
+    "missing_in_tracked_count": 0,
+    "missing_in_raw_count": 0,
+    "raw_duplicates_count": 0,
+    "tracked_duplicates_count": 0
+  },
+  "raw_detections_validation": {
+    "file": "frame_level_detections.jsonl",
+    "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\frame_level_detections.jsonl",
+    "is_tracked_schema": false,
+    "status": "PASS",
+    "metrics": {
+      "total_lines": 4289,
+      "total_videos": 24,
+      "total_cameras": 24,
+      "empty_frames": 1412,
+      "empty_frame_percentage": 32.92,
+      "non_empty_frames": 2877,
+      "total_detections": 4034,
+      "mean_detections_per_frame": 0.9405
+    },
+    "per_video_summary": {
+      "POS_01": {
+        "frame_count": 147,
+        "max_timestamp_sec": 29.2
+      },
+      "POS_02": {
+        "frame_count": 40,
+        "max_timestamp_sec": 7.8078
+      },
+      "POS_03": {
+        "frame_count": 60,
+        "max_timestamp_sec": 11.8
+      },
+      "POS_04": {
+        "frame_count": 85,
+        "max_timestamp_sec": 16.8168
+      },
+      "POS_05": {
+        "frame_count": 64,
+        "max_timestamp_sec": 12.6126
+      },
+      "POS_06": {
+        "frame_count": 276,
+        "max_timestamp_sec": 55.055
+      },
+      "POS_07": {
+        "frame_count": 401,
+        "max_timestamp_sec": 80.08
+      },
+      "POS_08": {
+        "frame_count": 129,
+        "max_timestamp_sec": 25.6
+      },
+      "POS_09": {
+        "frame_count": 274,
+        "max_timestamp_sec": 54.6
+      },
+      "POS_10": {
+        "frame_count": 86,
+        "max_timestamp_sec": 17.017
+      },
+      "POS_11": {
+        "frame_count": 111,
+        "max_timestamp_sec": 22.022
+      },
+      "POS_12": {
+        "frame_count": 82,
+        "max_timestamp_sec": 16.875
+      },
+      "POS_13": {
+        "frame_count": 288,
+        "max_timestamp_sec": 57.4574
+      },
+      "POS_14": {
+        "frame_count": 108,
+        "max_timestamp_sec": 21.4001
+      },
+      "POS_15": {
+        "frame_count": 393,
+        "max_timestamp_sec": 78.4
+      },
+      "POS_16": {
+        "frame_count": 514,
+        "max_timestamp_sec": 109.37
+      },
+      "POS_17": {
+        "frame_count": 101,
+        "max_timestamp_sec": 20.0
+      },
+      "POS_18": {
+        "frame_count": 351,
+        "max_timestamp_sec": 70.0
+      },
+      "POS_19": {
+        "frame_count": 121,
+        "max_timestamp_sec": 24.0
+      },
+      "POS_20": {
+        "frame_count": 138,
+        "max_timestamp_sec": 27.4
+      },
+      "POS_21": {
+        "frame_count": 245,
+        "max_timestamp_sec": 48.8488
+      },
+      "POS_22": {
+        "frame_count": 136,
+        "max_timestamp_sec": 27.0
+      },
+      "POS_23": {
+        "frame_count": 61,
+        "max_timestamp_sec": 12.024
+      },
+      "POS_24": {
+        "frame_count": 78,
+        "max_timestamp_sec": 15.4154
+      }
+    },
+    "errors": {
+      "syntax_errors_count": 0,
+      "schema_errors_count": 0,
+      "timestamp_inversion_count": 0,
+      "duplicate_timestamp_count": 0,
+      "confidence_errors_count": 0,
+      "track_id_errors_count": 0,
+      "label_errors_count": 0,
+      "bbox_errors_count": 0,
+      "sample_error_details": []
+    }
+  },
+  "tracked_detections_validation": {
+    "file": "tracked_frame_detections.jsonl",
+    "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\tracked_frame_detections.jsonl",
+    "is_tracked_schema": true,
+    "status": "PASS",
+    "metrics": {
+      "total_lines": 4289,
+      "total_videos": 24,
+      "total_cameras": 24,
+      "empty_frames": 1444,
+      "empty_frame_percentage": 33.67,
+      "non_empty_frames": 2845,
+      "total_detections": 3676,
+      "mean_detections_per_frame": 0.8571
+    },
+    "per_video_summary": {
+      "POS_01": {
+        "frame_count": 147,
+        "max_timestamp_sec": 29.2
+      },
+      "POS_02": {
+        "frame_count": 40,
+        "max_timestamp_sec": 7.8078
+      },
+      "POS_03": {
+        "frame_count": 60,
+        "max_timestamp_sec": 11.8
+      },
+      "POS_04": {
+        "frame_count": 85,
+        "max_timestamp_sec": 16.8168
+      },
+      "POS_05": {
+        "frame_count": 64,
+        "max_timestamp_sec": 12.6126
+      },
+      "POS_06": {
+        "frame_count": 276,
+        "max_timestamp_sec": 55.055
+      },
+      "POS_07": {
+        "frame_count": 401,
+        "max_timestamp_sec": 80.08
+      },
+      "POS_08": {
+        "frame_count": 129,
+        "max_timestamp_sec": 25.6
+      },
+      "POS_09": {
+        "frame_count": 274,
+        "max_timestamp_sec": 54.6
+      },
+      "POS_10": {
+        "frame_count": 86,
+        "max_timestamp_sec": 17.017
+      },
+      "POS_11": {
+        "frame_count": 111,
+        "max_timestamp_sec": 22.022
+      },
+      "POS_12": {
+        "frame_count": 82,
+        "max_timestamp_sec": 16.875
+      },
+      "POS_13": {
+        "frame_count": 288,
+        "max_timestamp_sec": 57.4574
+      },
+      "POS_14": {
+        "frame_count": 108,
+        "max_timestamp_sec": 21.4001
+      },
+      "POS_15": {
+        "frame_count": 393,
+        "max_timestamp_sec": 78.4
+      },
+      "POS_16": {
+        "frame_count": 514,
+        "max_timestamp_sec": 109.37
+      },
+      "POS_17": {
+        "frame_count": 101,
+        "max_timestamp_sec": 20.0
+      },
+      "POS_18": {
+        "frame_count": 351,
+        "max_timestamp_sec": 70.0
+      },
+      "POS_19": {
+        "frame_count": 121,
+        "max_timestamp_sec": 24.0
+      },
+      "POS_20": {
+        "frame_count": 138,
+        "max_timestamp_sec": 27.4
+      },
+      "POS_21": {
+        "frame_count": 245,
+        "max_timestamp_sec": 48.8488
+      },
+      "POS_22": {
+        "frame_count": 136,
+        "max_timestamp_sec": 27.0
+      },
+      "POS_23": {
+        "frame_count": 61,
+        "max_timestamp_sec": 12.024
+      },
+      "POS_24": {
+        "frame_count": 78,
+        "max_timestamp_sec": 15.4154
+      }
+    },
+    "errors": {
+      "syntax_errors_count": 0,
+      "schema_errors_count": 0,
+      "timestamp_inversion_count": 0,
+      "duplicate_timestamp_count": 0,
+      "confidence_errors_count": 0,
+      "track_id_errors_count": 0,
+      "label_errors_count": 0,
+      "bbox_errors_count": 0,
+      "sample_error_details": []
+    }
+  }
+}

@@ -1,0 +1,9 @@
+# SHA256 & MD5 Checksums for Ground Truth Events
+# Generated: 2026-11-10
+
+1271a9badf316813d44ca4abccb959fb6c59bd088da2c6e462c7b09573da1133  events.jsonl
+1271a9badf316813d44ca4abccb959fb6c59bd088da2c6e462c7b09573da1133  events_v1.0_snapshot.jsonl
+
+# MD5
+# events.jsonl: f711539a95bfc0317e5fb2d8d5cb72e9
+# events_v1.0_snapshot.jsonl: f711539a95bfc0317e5fb2d8d5cb72e9

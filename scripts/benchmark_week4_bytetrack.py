@@ -68,7 +68,9 @@ from src.event_eval import (
     export_json,
     extract_frame_level_alarms,
     frame_detections_to_events,
+    get_ground_truth_manifest,
     grid_search,
+    load_ground_truth_events,
     merge_frame_alarms_to_events,
     select_best_operating_point,
 )
@@ -840,9 +842,15 @@ def main() -> int:
         else:
             test_tracked_frames.extend(r["tracked_frame_detections"])
 
-    gt_all = build_ground_truth_events(avail_pos)
-    gt_val = build_ground_truth_events(val_videos)
-    gt_test = build_ground_truth_events(test_videos)
+    gt_manifest = get_ground_truth_manifest(val_video_ids=val_ids, test_video_ids=test_ids)
+    print(f"\n📋 Thống kê Ground Truth độc lập:")
+    print(f"   - Tổng bản ghi: {gt_manifest['total_records']} ({gt_manifest['verified_count']} verified, {gt_manifest['pending_count']} pending)")
+    print(f"   - Validation verified: {gt_manifest['verified_breakdown']['validation_split']} events trên {len(gt_manifest['verified_breakdown']['videos'])} videos")
+    print(f"   - Test verified: {gt_manifest['verified_breakdown']['test_split']} events")
+
+    gt_all = load_ground_truth_events(video_ids=set(v["video_id"] for v in avail_pos), only_verified=True, strict=True)
+    gt_val = load_ground_truth_events(video_ids=val_ids, only_verified=True, strict=True)
+    gt_test = load_ground_truth_events(video_ids=test_ids, only_verified=True, strict=True)
 
     print("\n🔍 Đang quét lưới tham số (Grid Search) TRÊN TẬP VALIDATION...")
     grid_candidates_val = grid_search(
@@ -1172,6 +1180,7 @@ def main() -> int:
             "missing_negative_hours_in_catalog": round(total_neg_miss_sec / 3600.0, 4),
             "proposal_target_negative_hours": 5.0,
         },
+        "ground_truth_manifest": gt_manifest,
         "splits_summary": {
             "full_24_positive": full_summary,
             "val_12_positive": val_summary,

@@ -1,0 +1,6 @@
+video_id,file_name,native_fps,native_frames_total,processed_frames,decode_errors,success_decode_rate_pct,duration_evaluated_sec,duration_evaluated_hours,pipeline_a_frame_fps,pipeline_a_event_fas,pipeline_a_far,pipeline_b1_frame_fps,pipeline_b1_event_fas,pipeline_b1_far,pipeline_b2_frame_fps,pipeline_b2_event_fas,pipeline_b2_far,pipeline_b2_poisson_95_upper
+REAL_NEG_02,NHIỄU 2.mp4,30.0,618,618,0,100.0,20.6,0.0057,0,0,0.0,0,0,0.0,0,0,0.0,524.27
+REAL_NEG_03,NHIỄU 3.mp4,30.0,1054,1054,0,100.0,35.13,0.0098,4,2,204.93,4,0,0.0,4,0,0.0,307.4
+REAL_NEG_04,NHIỄU 4.mp4,30.0,1053,1053,0,100.0,35.1,0.0097,105,8,820.51,105,4,410.26,105,0,0.0,307.69
+REAL_NEG_01,NHIỄU 1.mp4,30.0,201836,2000,0,100.0,66.67,0.0185,0,0,0.0,0,0,0.0,0,0,0.0,162.0
+REAL_NEG_05,NHIỄU 5.mp4,30.0,165480,2000,0,100.0,66.67,0.0185,0,0,0.0,0,0,0.0,0,0,0.0,162.0
