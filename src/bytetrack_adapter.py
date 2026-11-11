@@ -104,7 +104,7 @@ class ByteTrackAdapter:
         tracker = BYTETracker(args)
         if BaseTrack is not None and getattr(BaseTrack, "_count", 0) < saved_count:
             BaseTrack._count = saved_count
-        tracker._ids = self._id_counter
+        tracker._ids = itertools.count(1)
         return tracker
 
     def _get_tracker(self, cls_id: int) -> BYTETracker:

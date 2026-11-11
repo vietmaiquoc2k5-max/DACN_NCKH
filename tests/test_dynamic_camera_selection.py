@@ -271,7 +271,8 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         self.assertIs(w8.thread, old_thread)
 
         # Khôi phục nguồn hợp lệ và kết nối lại thủ công
-        self.manager.update_camera_source("CAM-08", "CAM 08 - Sân Thượng", "videovietnam/VN_POS_08.mp4", auto_reconnect=True)
+        valid_sample = "negative_videos/VN_POS_08.mp4" if os.path.exists("negative_videos/VN_POS_08.mp4") else "datasets/test_videos/pos/posVideo1.868.avi"
+        self.manager.update_camera_source("CAM-08", "CAM 08 - Sân Thượng", valid_sample, auto_reconnect=True)
         self.manager.reconnect_camera("CAM-08")
         time.sleep(0.2)
         self.assertEqual(w8.get_snapshot()["status"], "CONNECTED")
@@ -327,7 +328,8 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
 
     def test_20_remove_camera_with_confirmation(self):
         """20. Kiểm tra thêm và xóa cấu hình camera an toàn trong Quản lý camera."""
-        new_cid = self.manager.add_camera("CAM 99 - Test Remove", "videovietnam/VN_POS_01.mp4", auto_start=False)
+        sample_path = "negative_videos/VN_POS_01.mp4" if os.path.exists("negative_videos/VN_POS_01.mp4") else "datasets/test_videos/pos/posVideo1.868.avi"
+        new_cid = self.manager.add_camera("CAM 99 - Test Remove", sample_path, auto_start=False)
         self.assertIn(new_cid, self.manager.workers)
         self.assertEqual(self.manager.workers[new_cid].get_snapshot()["lifecycle_state"], "STOPPED")
         removed = self.manager.remove_camera(new_cid)

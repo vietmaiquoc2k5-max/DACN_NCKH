@@ -90,7 +90,7 @@ def load_dataset_catalog(csv_path: Path) -> Dict[str, Any]:
     available_negative: List[Dict[str, Any]] = []
     missing_negative: List[Dict[str, Any]] = []
 
-    with csv_path.open("r", encoding="utf-8") as f:
+    with csv_path.open("r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
             vid = row["video_id"].strip()

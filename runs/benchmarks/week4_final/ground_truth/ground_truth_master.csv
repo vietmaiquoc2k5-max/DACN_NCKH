@@ -1,0 +1,275 @@
+﻿video_id,video_path,label,start_sec,end_sec,verification_status,annotator,notes
+POS_01,datasets/test_videos/pos/posVideo1.868.avi,FIRE,2.4,29.3,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_01,datasets/test_videos/pos/posVideo1.868.avi,SMOKE,6.8,29.3,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_02,datasets/test_videos/pos/posVideo10.869.avi,FIRE,0.1,7.84,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_02,datasets/test_videos/pos/posVideo10.869.avi,SMOKE,0.1,7.84,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_03,datasets/test_videos/pos/posVideo11.870.avi,FIRE,0.3,11.87,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_04,datasets/test_videos/pos/posVideo2.871.avi,FIRE,0.3,17.02,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_04,datasets/test_videos/pos/posVideo2.871.avi,SMOKE,4.2,17.02,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_05,datasets/test_videos/pos/posVideo3.872.avi,FIRE,0.1,12.71,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_06,datasets/test_videos/pos/posVideo4.873.avi,FIRE,0.1,55.22,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_06,datasets/test_videos/pos/posVideo4.873.avi,SMOKE,34.6,55.22,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_07,datasets/test_videos/pos/posVideo5.874.avi,FIRE,0.1,80.28,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_08,datasets/test_videos/pos/posVideo6.875.avi,FIRE,0.4,25.8,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_08,datasets/test_videos/pos/posVideo6.875.avi,SMOKE,8.8,25.8,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_09,datasets/test_videos/pos/posVideo7.876.avi,FIRE,1.2,54.7,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_10,datasets/test_videos/pos/posVideo8.877.avi,FIRE,0.1,17.12,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_11,datasets/test_videos/pos/posVideo9.878.avi,FIRE,0.1,22.12,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_11,datasets/test_videos/pos/posVideo9.878.avi,SMOKE,16.1,22.12,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn fire_pos
+POS_12,datasets/test_videos/pos/testpos01.817.avi,FIRE,13.2,16.96,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_12,datasets/test_videos/pos/testpos01.817.avi,SMOKE,1.2,16.96,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_13,datasets/test_videos/pos/testpos02.818.avi,FIRE,0.1,57.66,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_13,datasets/test_videos/pos/testpos02.818.avi,SMOKE,0.1,57.66,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_14,datasets/test_videos/pos/testpos03.819.avi,FIRE,12.9,21.47,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_14,datasets/test_videos/pos/testpos03.819.avi,SMOKE,1.3,21.47,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_15,datasets/test_videos/pos/testpos04.820.avi,FIRE,64.4,78.56,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_15,datasets/test_videos/pos/testpos04.820.avi,SMOKE,0.2,78.56,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_16,datasets/test_videos/pos/testpos05.821.avi,SMOKE,1.7,109.58,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_17,datasets/test_videos/pos/testpos06.822.avi,SMOKE,0.4,20.1,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_18,datasets/test_videos/pos/testpos07.823.avi,SMOKE,11.2,70.1,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_19,datasets/test_videos/pos/testpos08.824.avi,SMOKE,1.2,24.2,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_20,datasets/test_videos/pos/testpos09.825.avi,SMOKE,0.1,27.6,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_21,datasets/test_videos/pos/testpos10.826.avi,FIRE,37.6,49.05,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_21,datasets/test_videos/pos/testpos10.826.avi,SMOKE,0.1,49.05,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_22,datasets/test_videos/pos/testpos11.827.avi,SMOKE,0.6,27.12,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_23,datasets/test_videos/pos/testpos12.828.avi,SMOKE,0.1,12.12,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+POS_24,datasets/test_videos/pos/testpos13.829.avi,SMOKE,0.1,15.48,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Dataset chuẩn smoke_pos
+NEG_25,datasets/test_videos/neg/negsVideo1.858.avi,NEGATIVE,0.0,189.12,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_26,datasets/test_videos/neg/negsVideo10.1072.avi,NEGATIVE,0.0,9.84,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_27,datasets/test_videos/neg/negsVideo11.1073.avi,NEGATIVE,0.0,7.2,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_28,datasets/test_videos/neg/negsVideo12.1074.avi,NEGATIVE,0.0,26.11,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_29,datasets/test_videos/neg/negsVideo13.1075.avi,NEGATIVE,0.0,11.08,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_30,datasets/test_videos/neg/negsVideo14.1076.avi,NEGATIVE,0.0,1.87,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_31,datasets/test_videos/neg/negsVideo15.1078.avi,NEGATIVE,0.0,2.95,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_32,datasets/test_videos/neg/negsVideo16.1077.avi,NEGATIVE,0.0,10.59,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_33,datasets/test_videos/neg/negsVideo2.859.avi,NEGATIVE,0.0,15.5,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_34,datasets/test_videos/neg/negsVideo3.860.avi,NEGATIVE,0.0,16.0,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_35,datasets/test_videos/neg/negsVideo4.861.avi,NEGATIVE,0.0,64.37,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_36,datasets/test_videos/neg/negsVideo5.862.avi,NEGATIVE,0.0,14.63,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_37,datasets/test_videos/neg/negsVideo6.863.avi,NEGATIVE,0.0,45.68,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_38,datasets/test_videos/neg/negsVideo7.864.avi,NEGATIVE,0.0,18.03,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_39,datasets/test_videos/neg/negsVideo8.865.avi,NEGATIVE,0.0,125.49,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_40,datasets/test_videos/neg/negsVideo9.866.avi,NEGATIVE,0.0,25.8,VERIFIED,Mai Quốc Việt,Dataset chuẩn fire_neg
+NEG_41,datasets/test_videos/neg/testneg01.807.avi,NEGATIVE,0.0,10.04,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_42,datasets/test_videos/neg/testneg02.808.avi,NEGATIVE,0.0,45.12,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_43,datasets/test_videos/neg/testneg03.809.avi,NEGATIVE,0.0,24.93,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_44,datasets/test_videos/neg/testneg04.810.avi,NEGATIVE,0.0,113.6,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_45,datasets/test_videos/neg/testneg05.811.avi,NEGATIVE,0.0,10.04,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_46,datasets/test_videos/neg/testneg06.812.avi,NEGATIVE,0.0,10.04,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_47,datasets/test_videos/neg/testneg07.813.avi,NEGATIVE,0.0,31.04,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_48,datasets/test_videos/neg/testneg08.814.avi,NEGATIVE,0.0,30.04,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+NEG_49,datasets/test_videos/neg/testneg09.815.avi,NEGATIVE,0.0,28.92,VERIFIED,Mai Quốc Việt,Dataset chuẩn smoke_neg
+VN_NEG_01,negative_videos/VN_NEG_01.mp4,NEGATIVE,0.0,3874.03,VERIFIED,Mai Quốc Việt,Video Viet Nam; URL suy ra tu ten goc - can xac nhan
+VN_POS_01,negative_videos/VN_POS_01.mp4,FIRE,0.2,44.56,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh; URL suy ra tu ten goc - can xac nhan
+VN_POS_01,negative_videos/VN_POS_01.mp4,SMOKE,0.2,44.56,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh; URL suy ra tu ten goc - can xac nhan
+VN_POS_02,negative_videos/VN_POS_02.mp4,FIRE,1.4,19.3,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh; URL suy ra tu ten goc - can xac nhan
+VN_POS_02,negative_videos/VN_POS_02.mp4,SMOKE,0.1,19.3,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh; URL suy ra tu ten goc - can xac nhan
+VN_POS_03,negative_videos/VN_POS_03.mp4,FIRE,0.1,59.43,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; URL suy ra tu ten goc - can xac nhan
+VN_POS_03,negative_videos/VN_POS_03.mp4,SMOKE,12.3,59.43,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; URL suy ra tu ten goc - can xac nhan
+VN_POS_04,negative_videos/VN_POS_04.mp4,FIRE,0.1,51.67,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; URL suy ra tu ten goc - can xac nhan
+VN_POS_04,negative_videos/VN_POS_04.mp4,SMOKE,0.1,51.67,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; URL suy ra tu ten goc - can xac nhan
+VN_POS_05,negative_videos/VN_POS_05.mp4,SMOKE,5.1,86.55,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; URL suy ra tu ten goc - can xac nhan
+VN_POS_06,negative_videos/VN_POS_06.mp4,FIRE,0.1,71.44,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_06,negative_videos/VN_POS_06.mp4,SMOKE,0.1,71.44,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_07,negative_videos/VN_POS_07.mp4,SMOKE,0.2,73.88,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_08,negative_videos/VN_POS_08.mp4,SMOKE,0.1,10.71,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh
+VN_POS_09,negative_videos/VN_POS_09.mp4,SMOKE,0.7,10.16,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh
+VN_POS_10,negative_videos/VN_POS_10.mp4,FIRE,5.7,130.83,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_10,negative_videos/VN_POS_10.mp4,SMOKE,8.9,130.83,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_NEG_03,negative_videos/VN_NEG_03.mp4,NEGATIVE,0.0,35.1,VERIFIED,Mai Quốc Việt,Video Viet Nam
+VN_NEG_04,negative_videos/VN_NEG_04.mp4,NEGATIVE,0.0,5516.0,VERIFIED,Mai Quốc Việt,Video Viet Nam
+VN_POS_11,negative_videos/VN_POS_11.mp4,FIRE,2.8,89.36,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_11,negative_videos/VN_POS_11.mp4,SMOKE,2.0,89.36,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_12,negative_videos/VN_POS_12.mp4,FIRE,0.4,73.48,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_12,negative_videos/VN_POS_12.mp4,SMOKE,7.8,73.48,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_13,negative_videos/VN_POS_13.mp4,FIRE,64.8,302.4,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_14,negative_videos/VN_POS_14.mp4,FIRE,31.8,73.97,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_14,negative_videos/VN_POS_14.mp4,SMOKE,45.0,73.97,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_15,negative_videos/VN_POS_15.mp4,FIRE,13.2,136.36,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_15,negative_videos/VN_POS_15.mp4,SMOKE,5.2,136.36,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_16,negative_videos/VN_POS_16.mp4,FIRE,14.4,113.84,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_16,negative_videos/VN_POS_16.mp4,SMOKE,15.6,113.84,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_17,negative_videos/VN_POS_17.mp4,FIRE,48.4,1500.44,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_17,negative_videos/VN_POS_17.mp4,SMOKE,31.2,1500.44,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_18,negative_videos/VN_POS_18.mp4,SMOKE,40.6,4425.0,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_19,negative_videos/VN_POS_19.mp4,SMOKE,0.4,67.87,VERIFIED,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC; video doc - kiem tra co phai camera co dinh
+VN_POS_20,negative_videos/VN_POS_20.mp4,FIRE,0.4,77.52,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_POS_20,negative_videos/VN_POS_20.mp4,SMOKE,0.4,77.52,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,Video Viet Nam; AI_GOI_Y_MOC
+VN_NEG_06,negative_videos/VN_NEG_06.mp4,NEGATIVE,0.0,104.77,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_07,negative_videos/VN_NEG_07.mp4,NEGATIVE,0.0,62.84,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_08,negative_videos/VN_NEG_08.mp4,NEGATIVE,0.0,205.92,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_09,negative_videos/VN_NEG_09.mp4,NEGATIVE,0.0,70.08,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_10,negative_videos/VN_NEG_10.mp4,NEGATIVE,0.0,497.23,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_11,negative_videos/VN_NEG_11.mp4,NEGATIVE,0.0,287.72,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_12,negative_videos/VN_NEG_12.mp4,NEGATIVE,0.0,69.96,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_13,negative_videos/VN_NEG_13.mp4,NEGATIVE,0.0,94.6,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_14,negative_videos/VN_NEG_14.mp4,NEGATIVE,0.0,128.4,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_15,negative_videos/VN_NEG_15.mp4,NEGATIVE,0.0,459.52,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_16,negative_videos/VN_NEG_16.mp4,NEGATIVE,0.0,300.28,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_17,negative_videos/VN_NEG_17.mp4,NEGATIVE,0.0,176.4,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_18,negative_videos/VN_NEG_18.mp4,NEGATIVE,0.0,124.4,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_19,negative_videos/VN_NEG_19.mp4,NEGATIVE,0.0,74.8,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_20,negative_videos/VN_NEG_20.mp4,NEGATIVE,0.0,928.87,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_21,negative_videos/VN_NEG_21.mp4,NEGATIVE,0.0,999.97,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_22,negative_videos/VN_NEG_22.mp4,NEGATIVE,0.0,247.98,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_23,negative_videos/VN_NEG_23.mp4,NEGATIVE,0.0,138.52,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_24,negative_videos/VN_NEG_24.mp4,NEGATIVE,0.0,259.88,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_25,negative_videos/VN_NEG_25.mp4,NEGATIVE,0.0,413.2,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_26,negative_videos/VN_NEG_26.mp4,NEGATIVE,0.0,181.12,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_27,negative_videos/VN_NEG_27.mp4,NEGATIVE,0.0,59.8,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_28,negative_videos/VN_NEG_28.mp4,NEGATIVE,0.0,76.76,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_29,negative_videos/VN_NEG_29.mp4,NEGATIVE,0.0,232.32,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_30,negative_videos/VN_NEG_30.mp4,NEGATIVE,0.0,84.78,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_31,negative_videos/VN_NEG_31.mp4,NEGATIVE,0.0,837.52,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_32,negative_videos/VN_NEG_32.mp4,NEGATIVE,0.0,73.88,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_33,negative_videos/VN_NEG_33.mp4,NEGATIVE,0.0,89.83,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_34,negative_videos/VN_NEG_34.mp4,NEGATIVE,0.0,64.84,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_35,negative_videos/VN_NEG_35.mp4,NEGATIVE,0.0,113.14,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_36,negative_videos/VN_NEG_36.mp4,NEGATIVE,0.0,196.8,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_37,negative_videos/VN_NEG_37.mp4,NEGATIVE,0.0,61.72,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_38,negative_videos/VN_NEG_38.mp4,NEGATIVE,0.0,62.88,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_39,negative_videos/VN_NEG_39.mp4,NEGATIVE,0.0,125.32,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_40,negative_videos/VN_NEG_40.mp4,NEGATIVE,0.0,104.29,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_41,negative_videos/VN_NEG_41.mp4,NEGATIVE,0.0,579.0,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_42,negative_videos/VN_NEG_42.mp4,NEGATIVE,0.0,321.64,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_43,negative_videos/VN_NEG_43.mp4,NEGATIVE,0.0,48.8,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_44,negative_videos/VN_NEG_44.mp4,NEGATIVE,0.0,322.12,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_45,negative_videos/VN_NEG_45.mp4,NEGATIVE,0.0,187.92,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_46,negative_videos/VN_NEG_46.mp4,NEGATIVE,0.0,432.48,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_47,negative_videos/VN_NEG_47.mp4,NEGATIVE,0.0,3286.97,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_48,negative_videos/VN_NEG_48.mp4,NEGATIVE,0.0,281.5,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_49,negative_videos/VN_NEG_49.mp4,NEGATIVE,0.0,53.04,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_50,negative_videos/VN_NEG_50.mp4,NEGATIVE,0.0,132.32,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_51,negative_videos/VN_NEG_51.mp4,NEGATIVE,0.0,67.6,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_52,negative_videos/VN_NEG_52.mp4,NEGATIVE,0.0,85.04,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_53,negative_videos/VN_NEG_53.mp4,NEGATIVE,0.0,75.2,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_54,negative_videos/VN_NEG_54.mp4,NEGATIVE,0.0,117.64,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_55,negative_videos/VN_NEG_55.mp4,NEGATIVE,0.0,189.08,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_56,negative_videos/VN_NEG_56.mp4,NEGATIVE,0.0,107.12,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_57,negative_videos/VN_NEG_57.mp4,NEGATIVE,0.0,100.2,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_58,negative_videos/VN_NEG_58.mp4,NEGATIVE,0.0,249.77,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_59,negative_videos/VN_NEG_59.mp4,NEGATIVE,0.0,267.35,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_60,negative_videos/VN_NEG_60.mp4,NEGATIVE,0.0,150.36,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_61,negative_videos/VN_NEG_61.mp4,NEGATIVE,0.0,164.5,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_62,negative_videos/VN_NEG_62.mp4,NEGATIVE,0.0,74.92,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_63,negative_videos/VN_NEG_63.mp4,NEGATIVE,0.0,216.28,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_64,negative_videos/VN_NEG_64.mp4,NEGATIVE,0.0,126.16,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_NEG_65,negative_videos/VN_NEG_65.mp4,NEGATIVE,0.0,272.8,VERIFIED,Mai Quốc Việt,Video Viet Nam am tinh (canh nhieu khong chay - Bo sung MT1)
+VN_POS_21,negative_videos/VN_POS_21.mp4,FIRE,15.0,82.64,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=15.0s, Khói=15.0s)"
+VN_POS_21,negative_videos/VN_POS_21.mp4,SMOKE,15.0,82.64,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=15.0s, Khói=15.0s)"
+VN_POS_22,negative_videos/VN_POS_22.mp4,FIRE,14.0,48.88,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=14.0s, Khói=14.0s)"
+VN_POS_22,negative_videos/VN_POS_22.mp4,SMOKE,14.0,48.88,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=14.0s, Khói=14.0s)"
+VN_POS_23,negative_videos/VN_POS_23.mp4,FIRE,0.4,193.68,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=12.4s)"
+VN_POS_23,negative_videos/VN_POS_23.mp4,SMOKE,12.4,193.68,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=12.4s)"
+VN_POS_24,negative_videos/VN_POS_24.mp4,FIRE,85.4,1091.64,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=85.4s, Khói=97.0s)"
+VN_POS_24,negative_videos/VN_POS_24.mp4,SMOKE,97.0,1091.64,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=85.4s, Khói=97.0s)"
+VN_POS_25,negative_videos/VN_POS_25.mp4,FIRE,10.2,93.69,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=10.2s, Khói=10.2s)"
+VN_POS_25,negative_videos/VN_POS_25.mp4,SMOKE,10.2,93.69,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=10.2s, Khói=10.2s)"
+VN_POS_26,negative_videos/VN_POS_26.mp4,FIRE,5.2,109.0,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.2s, Khói=0.4s)"
+VN_POS_26,negative_videos/VN_POS_26.mp4,SMOKE,0.4,109.0,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.2s, Khói=0.4s)"
+VN_POS_27,negative_videos/VN_POS_27.mp4,FIRE,8.0,63.36,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=8.0s, Khói=3.8s)"
+VN_POS_27,negative_videos/VN_POS_27.mp4,SMOKE,3.8,63.36,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=8.0s, Khói=3.8s)"
+VN_POS_28,negative_videos/VN_POS_28.mp4,SMOKE,18.6,320.53,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=-1.0s, Khói=18.6s)"
+VN_POS_29,negative_videos/VN_POS_29.mp4,FIRE,2.6,87.36,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.6s, Khói=3.0s)"
+VN_POS_29,negative_videos/VN_POS_29.mp4,SMOKE,3.0,87.36,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.6s, Khói=3.0s)"
+VN_POS_30,negative_videos/VN_POS_30.mp4,FIRE,0.4,250.9,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_30,negative_videos/VN_POS_30.mp4,SMOKE,0.4,250.9,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_31,negative_videos/VN_POS_31.mp4,FIRE,3.0,61.84,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=3.0s, Khói=3.0s)"
+VN_POS_31,negative_videos/VN_POS_31.mp4,SMOKE,3.0,61.84,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=3.0s, Khói=3.0s)"
+VN_POS_32,negative_videos/VN_POS_32.mp4,FIRE,11.4,46.28,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=11.4s, Khói=0.4s)"
+VN_POS_32,negative_videos/VN_POS_32.mp4,SMOKE,0.4,46.28,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=11.4s, Khói=0.4s)"
+VN_POS_33,negative_videos/VN_POS_33.mp4,FIRE,5.8,99.08,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.8s, Khói=0.4s)"
+VN_POS_33,negative_videos/VN_POS_33.mp4,SMOKE,0.4,99.08,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.8s, Khói=0.4s)"
+VN_POS_34,negative_videos/VN_POS_34.mp4,FIRE,1.0,46.04,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=1.0s, Khói=0.4s); video doc"
+VN_POS_34,negative_videos/VN_POS_34.mp4,SMOKE,0.4,46.04,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=1.0s, Khói=0.4s); video doc"
+VN_POS_35,negative_videos/VN_POS_35.mp4,FIRE,10.2,91.02,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=10.2s, Khói=27.2s)"
+VN_POS_35,negative_videos/VN_POS_35.mp4,SMOKE,27.2,91.02,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=10.2s, Khói=27.2s)"
+VN_POS_36,negative_videos/VN_POS_36.mp4,FIRE,0.4,332.6,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_36,negative_videos/VN_POS_36.mp4,SMOKE,0.4,332.6,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_37,negative_videos/VN_POS_37.mp4,FIRE,0.4,66.21,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=1.7s)"
+VN_POS_37,negative_videos/VN_POS_37.mp4,SMOKE,1.7,66.21,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=1.7s)"
+VN_POS_38,negative_videos/VN_POS_38.mp4,FIRE,0.4,47.96,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_38,negative_videos/VN_POS_38.mp4,SMOKE,0.4,47.96,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_39,negative_videos/VN_POS_39.mp4,FIRE,37.8,203.52,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=37.8s, Khói=55.2s)"
+VN_POS_39,negative_videos/VN_POS_39.mp4,SMOKE,55.2,203.52,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=37.8s, Khói=55.2s)"
+VN_POS_40,negative_videos/VN_POS_40.mp4,FIRE,0.4,170.88,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_40,negative_videos/VN_POS_40.mp4,SMOKE,0.4,170.88,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_41,negative_videos/VN_POS_41.mp4,FIRE,2.2,176.92,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.2s, Khói=0.4s)"
+VN_POS_41,negative_videos/VN_POS_41.mp4,SMOKE,0.4,176.92,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.2s, Khói=0.4s)"
+VN_POS_42,negative_videos/VN_POS_42.mp4,FIRE,40.2,100.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=40.2s, Khói=17.2s)"
+VN_POS_42,negative_videos/VN_POS_42.mp4,SMOKE,17.2,100.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=40.2s, Khói=17.2s)"
+VN_POS_43,negative_videos/VN_POS_43.mp4,FIRE,0.4,234.49,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_43,negative_videos/VN_POS_43.mp4,SMOKE,0.4,234.49,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_44,negative_videos/VN_POS_44.mp4,FIRE,0.4,71.1,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_44,negative_videos/VN_POS_44.mp4,SMOKE,0.4,71.1,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_45,negative_videos/VN_POS_45.mp4,FIRE,2.0,47.65,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.0s, Khói=19.4s)"
+VN_POS_45,negative_videos/VN_POS_45.mp4,SMOKE,19.4,47.65,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.0s, Khói=19.4s)"
+VN_POS_46,negative_videos/VN_POS_46.mp4,FIRE,5.6,56.76,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.6s, Khói=5.6s)"
+VN_POS_46,negative_videos/VN_POS_46.mp4,SMOKE,5.6,56.76,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.6s, Khói=5.6s)"
+VN_POS_47,negative_videos/VN_POS_47.mp4,FIRE,4.0,96.25,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=4.0s, Khói=0.4s)"
+VN_POS_47,negative_videos/VN_POS_47.mp4,SMOKE,0.4,96.25,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=4.0s, Khói=0.4s)"
+VN_POS_48,negative_videos/VN_POS_48.mp4,FIRE,0.4,46.33,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=5.8s)"
+VN_POS_48,negative_videos/VN_POS_48.mp4,SMOKE,5.8,46.33,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=5.8s)"
+VN_POS_49,negative_videos/VN_POS_49.mp4,FIRE,0.4,57.72,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_49,negative_videos/VN_POS_49.mp4,SMOKE,0.4,57.72,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_50,negative_videos/VN_POS_50.mp4,FIRE,0.4,89.03,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_50,negative_videos/VN_POS_50.mp4,SMOKE,0.4,89.03,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_51,negative_videos/VN_POS_51.mp4,FIRE,0.4,89.03,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_51,negative_videos/VN_POS_51.mp4,SMOKE,0.4,89.03,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_52,negative_videos/VN_POS_52.mp4,FIRE,0.4,239.24,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_52,negative_videos/VN_POS_52.mp4,SMOKE,0.4,239.24,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_53,negative_videos/VN_POS_53.mp4,FIRE,0.4,67.67,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_53,negative_videos/VN_POS_53.mp4,SMOKE,0.4,67.67,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_54,negative_videos/VN_POS_54.mp4,FIRE,0.4,73.41,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_54,negative_videos/VN_POS_54.mp4,SMOKE,0.4,73.41,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_55,negative_videos/VN_POS_55.mp4,FIRE,4.2,67.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=4.2s, Khói=4.2s)"
+VN_POS_55,negative_videos/VN_POS_55.mp4,SMOKE,4.2,67.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=4.2s, Khói=4.2s)"
+VN_POS_56,negative_videos/VN_POS_56.mp4,FIRE,2.0,130.04,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.0s, Khói=0.4s)"
+VN_POS_56,negative_videos/VN_POS_56.mp4,SMOKE,0.4,130.04,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=2.0s, Khói=0.4s)"
+VN_POS_57,negative_videos/VN_POS_57.mp4,FIRE,24.8,191.24,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=24.8s, Khói=8.4s)"
+VN_POS_57,negative_videos/VN_POS_57.mp4,SMOKE,8.4,191.24,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=24.8s, Khói=8.4s)"
+VN_POS_58,negative_videos/VN_POS_58.mp4,FIRE,6.0,35.92,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=6.0s, Khói=6.0s)"
+VN_POS_58,negative_videos/VN_POS_58.mp4,SMOKE,6.0,35.92,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=6.0s, Khói=6.0s)"
+VN_POS_59,negative_videos/VN_POS_59.mp4,FIRE,0.4,568.36,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_59,negative_videos/VN_POS_59.mp4,SMOKE,0.4,568.36,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_60,negative_videos/VN_POS_60.mp4,FIRE,43.0,89.16,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=43.0s, Khói=12.8s)"
+VN_POS_60,negative_videos/VN_POS_60.mp4,SMOKE,12.8,89.16,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=43.0s, Khói=12.8s)"
+VN_POS_61,negative_videos/VN_POS_61.mp4,FIRE,0.8,201.62,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.8s, Khói=1.0s)"
+VN_POS_61,negative_videos/VN_POS_61.mp4,SMOKE,1.0,201.62,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.8s, Khói=1.0s)"
+VN_POS_62,negative_videos/VN_POS_62.mp4,FIRE,9.2,37.0,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=9.2s, Khói=-1.0s)"
+VN_POS_63,negative_videos/VN_POS_63.mp4,FIRE,5.6,85.63,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.6s, Khói=15.0s)"
+VN_POS_63,negative_videos/VN_POS_63.mp4,SMOKE,15.0,85.63,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=5.6s, Khói=15.0s)"
+VN_POS_64,negative_videos/VN_POS_64.mp4,FIRE,0.6,39.63,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.6s, Khói=0.4s)"
+VN_POS_64,negative_videos/VN_POS_64.mp4,SMOKE,0.4,39.63,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.6s, Khói=0.4s)"
+VN_POS_65,negative_videos/VN_POS_65.mp4,FIRE,0.4,70.94,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_65,negative_videos/VN_POS_65.mp4,SMOKE,0.4,70.94,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_66,negative_videos/VN_POS_66.mp4,FIRE,0.4,53.32,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=15.6s)"
+VN_POS_66,negative_videos/VN_POS_66.mp4,SMOKE,15.6,53.32,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=15.6s)"
+VN_POS_67,negative_videos/VN_POS_67.mp4,FIRE,0.4,128.23,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_67,negative_videos/VN_POS_67.mp4,SMOKE,0.4,128.23,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_68,negative_videos/VN_POS_68.mp4,FIRE,8.2,140.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=8.2s, Khói=8.2s)"
+VN_POS_68,negative_videos/VN_POS_68.mp4,SMOKE,8.2,140.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=8.2s, Khói=8.2s)"
+VN_POS_69,negative_videos/VN_POS_69.mp4,FIRE,14.0,73.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=14.0s, Khói=14.0s)"
+VN_POS_69,negative_videos/VN_POS_69.mp4,SMOKE,14.0,73.2,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=14.0s, Khói=14.0s)"
+VN_POS_70,negative_videos/VN_POS_70.mp4,FIRE,0.4,43.17,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_70,negative_videos/VN_POS_70.mp4,SMOKE,0.4,43.17,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_71,negative_videos/VN_POS_71.mp4,FIRE,31.4,172.8,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=31.4s, Khói=77.0s)"
+VN_POS_71,negative_videos/VN_POS_71.mp4,SMOKE,77.0,172.8,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=31.4s, Khói=77.0s)"
+VN_POS_72,negative_videos/VN_POS_72.mp4,FIRE,13.4,54.77,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=13.4s, Khói=0.4s)"
+VN_POS_72,negative_videos/VN_POS_72.mp4,SMOKE,0.4,54.77,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=13.4s, Khói=0.4s)"
+VN_POS_73,negative_videos/VN_POS_73.mp4,FIRE,8.6,627.97,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=8.6s, Khói=8.6s)"
+VN_POS_73,negative_videos/VN_POS_73.mp4,SMOKE,8.6,627.97,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=8.6s, Khói=8.6s)"
+VN_POS_74,negative_videos/VN_POS_74.mp4,FIRE,13.2,55.6,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=13.2s, Khói=3.0s)"
+VN_POS_74,negative_videos/VN_POS_74.mp4,SMOKE,3.0,55.6,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=13.2s, Khói=3.0s)"
+VN_POS_75,negative_videos/VN_POS_75.mp4,FIRE,16.8,94.32,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=16.8s, Khói=0.4s)"
+VN_POS_75,negative_videos/VN_POS_75.mp4,SMOKE,0.4,94.32,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=16.8s, Khói=0.4s)"
+VN_POS_76,negative_videos/VN_POS_76.mp4,FIRE,0.8,207.12,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.8s, Khói=0.8s)"
+VN_POS_76,negative_videos/VN_POS_76.mp4,SMOKE,0.8,207.12,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.8s, Khói=0.8s)"
+VN_POS_77,negative_videos/VN_POS_77.mp4,FIRE,3.0,179.92,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=3.0s, Khói=13.2s)"
+VN_POS_77,negative_videos/VN_POS_77.mp4,SMOKE,13.2,179.92,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=3.0s, Khói=13.2s)"
+VN_POS_78,negative_videos/VN_POS_78.mp4,FIRE,3.2,1802.64,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=3.2s, Khói=0.8s)"
+VN_POS_78,negative_videos/VN_POS_78.mp4,SMOKE,0.8,1802.64,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=3.2s, Khói=0.8s)"
+VN_POS_79,negative_videos/VN_POS_79.mp4,FIRE,10.4,53.44,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=10.4s, Khói=10.4s)"
+VN_POS_79,negative_videos/VN_POS_79.mp4,SMOKE,10.4,53.44,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=10.4s, Khói=10.4s)"
+VN_POS_80,negative_videos/VN_POS_80.mp4,FIRE,0.4,187.97,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
+VN_POS_80,negative_videos/VN_POS_80.mp4,SMOKE,0.4,187.97,EXPLORATORY,Mai Quốc Việt / Lê Minh Thiên,"Video Viet Nam duong tinh (Bo sung MT1/MT3); AI_DO_MOC(Lửa=0.4s, Khói=0.4s)"
