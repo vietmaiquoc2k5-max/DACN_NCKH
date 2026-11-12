@@ -1,7 +1,7 @@
 {
   "audit_title": "Operating Point Validation & Status Audit",
-  "audit_timestamp": "2026-11-12T09:11:00Z",
-  "source_commit": "c95907f6b8cf12cc02563dfaab209f304dbc3259",
+  "audit_timestamp": "2026-11-12T17:35:00+07:00",
+  "source_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
   "operating_point_status": "PROVISIONAL",
   "operating_point_parameters": {
     "confidence_threshold": 0.35,

@@ -1,6 +1,7 @@
 {
   "report_title": "Verified Event-Level False Alarm Rate (FAR) & Poisson Exact 95% CI",
-  "audit_timestamp": "2026-11-12T17:00:00+07:00",
+  "audit_timestamp": "2026-11-12T17:35:00+07:00",
+  "source_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
   "evaluation_run_id": "run_20261111_233035_neg_full",
   "operating_point_used": {
     "status": "PROVISIONAL",

@@ -19,6 +19,7 @@ import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
+from unittest.mock import MagicMock, patch
 
 import cv2
 import numpy as np
@@ -39,6 +40,7 @@ from src.video_audit import (
     classify_decode_termination,
     compute_streaming_sha256,
     detect_duplicates_and_id_collisions,
+    run_external_stream_decode_check,
     verify_manifest_vs_inference,
 )
 
@@ -467,14 +469,18 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertTrue(low <= point <= high)
 
     def test_37_far_consistent_exposure_scope(self):
-        """37. Mẫu số phơi nhiễm nhất quán giữa các phép tính FAR."""
-        k = 421
-        far_bench = k / 7.2026
-        far_stream = k / 7.1312
-        far_untrunc = k / 6.9846
-        self.assertAlmostEqual(far_bench, 58.4511, places=3)
+        """37. Mẫu số phơi nhiễm nhất quán giữa các phép tính FAR trên 2 phạm vi đối chiếu."""
+        # Scope 1 (79 video): 421 báo giả trên 7.1312h giải mã thực tế
+        k_stream = 421
+        t_stream = 7.1312
+        far_stream = k_stream / t_stream
         self.assertAlmostEqual(far_stream, 59.0361, places=3)
-        self.assertAlmostEqual(far_untrunc, 60.2755, places=3)
+
+        # Scope 2 (77 video không lỗi luồng): 417 báo giả trên 6.9846h (loại trừ 4 báo giả từ VN_NEG_48)
+        k_untrunc = 417
+        t_untrunc = 6.9846
+        far_untrunc = k_untrunc / t_untrunc
+        self.assertAlmostEqual(far_untrunc, 59.7028, places=3)
 
     # =========================================================================
     # 6. INTEGRATION & CONSISTENCY TESTS (38 - 42)
@@ -554,6 +560,84 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertEqual(review_zero, "CORRUPTED")
         self.assertFalse(verified_zero)
         self.assertEqual(missing_zero, 1)
+
+    def test_44_audit_pipeline_invalid_fps(self):
+        """44. Pipeline thực tế: FPS=0 hoặc không hợp lệ -> status=NEEDS_REVIEW, full_decode_verified=False."""
+        vpath = self.test_dir / "zero_fps.avi"
+        create_synthetic_video(vpath, num_frames=20, fps=10.0)
+        orig_get = cv2.VideoCapture.get
+        def mock_get(self_cap, propId):
+            if propId == cv2.CAP_PROP_FPS:
+                return 0.0
+            return orig_get(self_cap, propId)
+
+        with patch.object(cv2.VideoCapture, "get", mock_get):
+            res = audit_single_video(vpath, full_decode=True)
+            self.assertEqual(res["decode_status"], "NEEDS_REVIEW")
+            self.assertEqual(res["status"], "NEEDS_REVIEW")
+            self.assertFalse(res["full_decode_verified"])
+            self.assertEqual(res["duration_seconds"], 0.0)
+
+    def test_45_audit_pipeline_zero_reported_frames(self):
+        """45. Pipeline thực tế: metadata container reported_frame_count=0 -> NEEDS_REVIEW, full_decode_verified=False."""
+        vpath = self.test_dir / "zero_frames.avi"
+        create_synthetic_video(vpath, num_frames=20, fps=10.0)
+        orig_get = cv2.VideoCapture.get
+        def mock_get(self_cap, propId):
+            if propId == cv2.CAP_PROP_FRAME_COUNT:
+                return 0.0
+            return orig_get(self_cap, propId)
+
+        with patch.object(cv2.VideoCapture, "get", mock_get):
+            res = audit_single_video(vpath, full_decode=True)
+            self.assertEqual(res["decode_status"], "NEEDS_REVIEW")
+            self.assertEqual(res["status"], "NEEDS_REVIEW")
+            self.assertFalse(res["full_decode_verified"])
+
+    def test_46_audit_pipeline_ffprobe_not_installed(self):
+        """46. Pipeline thực tế: khi FFmpeg/FFprobe không cài đặt -> OpenCV fallback vận hành an toàn và ghi rõ backend."""
+        vpath = self.test_dir / "no_ffprobe.avi"
+        create_synthetic_video(vpath, num_frames=20, fps=10.0)
+        with patch("shutil.which", return_value=None):
+            res = audit_single_video(vpath, full_decode=True)
+            self.assertEqual(res["decode_status"], "NORMAL_EOF")
+            self.assertEqual(res["status"], "VALID")
+            self.assertTrue(res["full_decode_verified"])
+            self.assertIn("opencv", res["stream_verification_backend"].lower())
+            self.assertFalse(res["external_tool_check"]["tool_available"])
+
+    def test_47_audit_pipeline_external_tool_error_exit_code(self):
+        """47. Pipeline thực tế: khi công cụ ngoại biên phát hiện lỗi exit_code != 0 -> TRUNCATED_STREAM/DECODE_ERROR, full_decode_verified=False."""
+        vpath = self.test_dir / "ext_error.avi"
+        create_synthetic_video(vpath, num_frames=20, fps=10.0)
+        mock_ext = {
+            "tool_available": True,
+            "tool_name": "ffmpeg",
+            "exit_code": 1,
+            "stderr": "error: corrupt NAL unit in slice header",
+            "is_clean_decode": False,
+            "error_detected": True,
+            "error_message": "error: corrupt NAL unit in slice header",
+            "nb_read_frames": None,
+        }
+        with patch("src.video_audit.run_external_stream_decode_check", return_value=mock_ext):
+            res = audit_single_video(vpath, full_decode=True)
+            self.assertIn(res["decode_status"], ("TRUNCATED_STREAM", "DECODE_ERROR"))
+            self.assertNotEqual(res["decode_status"], "NORMAL_EOF")
+            self.assertFalse(res["full_decode_verified"])
+            self.assertEqual(res["status"], "NEEDS_REVIEW")
+
+    def test_48_audit_pipeline_silent_eof_missing_frames(self):
+        """48. Pipeline thực tế: decoder dừng im lặng thiếu frames mà không ném exception -> TRUNCATED_STREAM, full_decode_verified=False."""
+        vpath = self.test_dir / "silent_stop.avi"
+        create_synthetic_video(vpath, num_frames=40, fps=10.0)
+        raw = vpath.read_bytes()
+        vpath.write_bytes(raw[: int(len(raw) * 0.5)])
+        res = audit_single_video(vpath, full_decode=True)
+        self.assertEqual(res["decode_status"], "TRUNCATED_STREAM")
+        self.assertEqual(res["status"], "NEEDS_REVIEW")
+        self.assertFalse(res["full_decode_verified"])
+        self.assertGreater(res["missing_frames"], 10)
 
 
 if __name__ == "__main__":

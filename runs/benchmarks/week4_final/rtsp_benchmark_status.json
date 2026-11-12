@@ -14,6 +14,7 @@
   "file_simulation_report": "docs/multicamera_file_benchmark_report.md",
   "live_rtsp_evaluated": false,
   "scientific_integrity_note": "Tuân thủ nguyên tắc không tạo số liệu giả: hệ thống ghi nhận chính xác trạng thái NOT_TESTED do thiếu thiết bị camera vật lý kết nối trực tiếp, không sử dụng file video giả lập để tuyên bố đạt chỉ tiêu RTSP thực tế.",
-  "last_updated_at": "2026-11-12T09:10:00Z"
+  "source_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
+  "last_updated_at": "2026-11-12T17:35:00+07:00"
 }
 

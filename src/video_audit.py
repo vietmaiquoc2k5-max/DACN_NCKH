@@ -34,7 +34,10 @@ import csv
 import hashlib
 import json
 import logging
+import math
 import os
+import shutil
+import subprocess
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
@@ -107,8 +110,6 @@ def probe_video_with_ffprobe(filepath: str | Path) -> Optional[Dict[str, Any]]:
     Returns:
         Dict metadata ffprobe nếu ffprobe tồn tại và chạy thành công, None nếu không có ffprobe.
     """
-    import shutil
-    import subprocess
     ffprobe_bin = shutil.which("ffprobe")
     if not ffprobe_bin:
         return None
@@ -130,12 +131,160 @@ def probe_video_with_ffprobe(filepath: str | Path) -> Optional[Dict[str, Any]]:
     return None
 
 
+def run_external_stream_decode_check(filepath: str | Path, timeout_sec: int = 15) -> Dict[str, Any]:
+    """Sử dụng ffmpeg hoặc ffprobe để kiểm tra giải mã toàn bộ luồng video (stream termination check).
+
+    Kiểm tra:
+    1. Công cụ ngoại vi (ffmpeg hoặc ffprobe) có trên hệ thống không.
+    2. Chạy giải mã toàn bộ stream tới null sink:
+       - ffmpeg: ffmpeg -v error -i <file> -map 0:v:0 -f null -
+       - ffprobe: ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of json <file>
+    3. Kiểm tra exit_code, stderr và phát hiện các thông báo lỗi NAL/packet/header decoding error.
+
+    Returns:
+        Dict:
+        - tool_available (bool)
+        - tool_name (str | None)
+        - exit_code (int | None)
+        - stderr (str)
+        - is_clean_decode (bool | None)
+        - error_detected (bool)
+        - error_message (str)
+        - nb_read_frames (int | None)
+    """
+    path_str = str(filepath)
+    ffprobe_bin = shutil.which("ffprobe")
+    ffmpeg_bin = shutil.which("ffmpeg")
+
+    if not ffprobe_bin and not ffmpeg_bin:
+        return {
+            "tool_available": False,
+            "tool_name": None,
+            "exit_code": None,
+            "stderr": "",
+            "is_clean_decode": None,
+            "error_detected": False,
+            "error_message": "Không tìm thấy ffmpeg/ffprobe trong PATH hệ thống (sử dụng OpenCV fallback)",
+            "nb_read_frames": None,
+        }
+
+    # Ưu tiên ffmpeg để decode toàn bộ luồng tới null sink
+    if ffmpeg_bin:
+        tool_name = "ffmpeg"
+        cmd = [
+            ffmpeg_bin,
+            "-v", "error",
+            "-i", path_str,
+            "-map", "0:v:0",
+            "-f", "null",
+            "-",
+        ]
+        try:
+            res = subprocess.run(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=timeout_sec,
+            )
+            err_text = res.stderr.strip()
+            is_clean = (res.returncode == 0 and len(err_text) == 0)
+            has_error = (res.returncode != 0 or any(
+                kw in err_text.lower() for kw in ("error", "corrupt", "invalid", "truncat", "failed")
+            ))
+            return {
+                "tool_available": True,
+                "tool_name": tool_name,
+                "exit_code": res.returncode,
+                "stderr": err_text,
+                "is_clean_decode": is_clean,
+                "error_detected": has_error,
+                "error_message": err_text if has_error else "",
+                "nb_read_frames": None,
+            }
+        except subprocess.TimeoutExpired:
+            return {
+                "tool_available": True,
+                "tool_name": tool_name,
+                "exit_code": -1,
+                "stderr": "Command timed out",
+                "is_clean_decode": False,
+                "error_detected": True,
+                "error_message": f"FFmpeg giải mã luồng bị treo vượt quá {timeout_sec}s",
+                "nb_read_frames": None,
+            }
+        except Exception as exc:
+            return {
+                "tool_available": True,
+                "tool_name": tool_name,
+                "exit_code": -1,
+                "stderr": str(exc),
+                "is_clean_decode": False,
+                "error_detected": True,
+                "error_message": f"Ngoại lệ khi chạy FFmpeg: {exc}",
+                "nb_read_frames": None,
+            }
+
+    # Nếu chỉ có ffprobe
+    tool_name = "ffprobe"
+    cmd = [
+        ffprobe_bin,
+        "-v", "error",
+        "-count_frames",
+        "-select_streams", "v:0",
+        "-show_entries", "stream=nb_read_frames",
+        "-of", "json",
+        path_str,
+    ]
+    try:
+        res = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout_sec,
+        )
+        err_text = res.stderr.strip()
+        nb_read = None
+        if res.returncode == 0 and res.stdout:
+            try:
+                data = json.loads(res.stdout)
+                streams = data.get("streams", [])
+                if streams:
+                    nb_read = int(streams[0].get("nb_read_frames", 0) or 0)
+            except Exception:
+                pass
+        has_error = (res.returncode != 0 or len(err_text) > 0)
+        return {
+            "tool_available": True,
+            "tool_name": tool_name,
+            "exit_code": res.returncode,
+            "stderr": err_text,
+            "is_clean_decode": (res.returncode == 0 and not has_error),
+            "error_detected": has_error,
+            "error_message": err_text if has_error else "",
+            "nb_read_frames": nb_read,
+        }
+    except Exception as exc:
+        return {
+            "tool_available": True,
+            "tool_name": tool_name,
+            "exit_code": -1,
+            "stderr": str(exc),
+            "is_clean_decode": False,
+            "error_detected": True,
+            "error_message": f"Ngoại lệ khi chạy FFprobe: {exc}",
+            "nb_read_frames": None,
+        }
+
+
 def classify_decode_termination(
     actual_decoded_frames: int,
     reported_frame_count: int,
     fps: float,
     filepath: Optional[Path | str] = None,
     ffprobe_meta: Optional[Dict[str, Any]] = None,
+    external_check: Optional[Dict[str, Any]] = None,
 ) -> Tuple[DecodeStatus, str, bool, int, str, bool]:
     """Phân loại trạng thái kết thúc giải mã (Stream Termination Classification).
 
@@ -143,11 +292,43 @@ def classify_decode_termination(
         (decode_status, status, tolerance_applied, decode_errors, err_msg, full_decode_verified)
 
     Nguyên tắc khoa học bắt buộc:
-    - full_decode_verified=True CHỈ KHI decode_status == DecodeStatus.NORMAL_EOF.
-    - Tuyệt đối không dùng (actual_decoded_frames > 0) làm bằng chứng full decode.
-    - Thiếu frame nhưng không có bằng chứng chứng minh container padding -> chuyển NEEDS_REVIEW.
-    - Thiếu > 10 frames -> TRUNCATED_STREAM, status NEEDS_REVIEW, full_decode_verified=False.
+    1. full_decode_verified=True CHỈ KHI decode_status == DecodeStatus.NORMAL_EOF.
+    2. Tuyệt đối không dùng (actual_decoded_frames > 0) làm bằng chứng full decode.
+    3. Không xem cap.grab() == False là bằng chứng kết thúc bình thường.
+    4. Không tự động đánh dấu VALID khi decoder kết thúc mà không xác định được nguyên nhân hoặc thiếu metadata.
+    5. FPS bằng 0 hoặc không hợp lệ (NaN, <=0, >240) -> NEEDS_REVIEW, full_decode_verified=False.
+    6. reported_frame_count <= 0 -> NEEDS_REVIEW, full_decode_verified=False.
+    7. Công cụ ngoại vi (ffmpeg/ffprobe) báo exit_code != 0 hoặc error_detected -> DECODE_ERROR hoặc TRUNCATED_STREAM.
+    8. Thiếu frame trong dung sai: bắt buộc thỏa mãn giới hạn thời gian (<= 0.25s / <= 0.35s). Không thỏa mãn -> NEEDS_REVIEW.
+    9. Thiếu > 10 frames -> TRUNCATED_STREAM, status NEEDS_REVIEW, full_decode_verified=False.
     """
+    # 0. Kiểm tra kết quả từ công cụ ngoại biên (nếu có công cụ và phát hiện lỗi)
+    if external_check and external_check.get("tool_available"):
+        if external_check.get("exit_code") != 0 or external_check.get("error_detected"):
+            tool_n = external_check.get("tool_name", "external_tool")
+            code_ret = external_check.get("exit_code", -1)
+            err_detail = external_check.get("error_message", "Decode error")
+            if actual_decoded_frames == 0:
+                return (
+                    DecodeStatus.DECODE_ERROR,
+                    "CORRUPTED",
+                    False,
+                    1,
+                    f"Bộ giải mã ngoại vi ({tool_n} exit_code={code_ret}) báo lỗi luồng không thể giải mã: {err_detail}",
+                    False,
+                )
+            else:
+                missing = max(1, reported_frame_count - actual_decoded_frames) if reported_frame_count > 0 else 1
+                return (
+                    DecodeStatus.TRUNCATED_STREAM,
+                    "NEEDS_REVIEW",
+                    False,
+                    missing,
+                    f"Bộ giải mã ngoại vi ({tool_n} exit_code={code_ret}) phát hiện lỗi đứt luồng/NAL rác giữa chừng: {err_detail}",
+                    False,
+                )
+
+    # 1. Không giải mã được khung hình nào
     if actual_decoded_frames == 0:
         return (
             DecodeStatus.DECODE_ERROR,
@@ -158,21 +339,33 @@ def classify_decode_termination(
             False,
         )
 
-    if reported_frame_count == 0:
+    # 2. FPS không hợp lệ
+    if fps <= 0.0 or math.isnan(fps) or math.isinf(fps) or fps > 240.0:
         return (
             DecodeStatus.NEEDS_REVIEW,
             "NEEDS_REVIEW",
             False,
             0,
-            f"reported_frame_count=0 từ metadata container — không đủ bằng chứng đối chiếu EOF bình thường. Đã decode {actual_decoded_frames} frames.",
+            f"FPS={fps} không hợp lệ — không đủ căn cứ xác nhận thời gian luồng và khoảng cách khung hình",
+            False,
+        )
+
+    # 3. Metadata container frame count không hợp lệ (reported <= 0)
+    if reported_frame_count <= 0:
+        return (
+            DecodeStatus.NEEDS_REVIEW,
+            "NEEDS_REVIEW",
+            False,
+            0,
+            f"reported_frame_count={reported_frame_count} từ metadata container — không đủ bằng chứng đối chiếu EOF bình thường. Đã decode {actual_decoded_frames} frames.",
             False,
         )
 
     missing_frames = max(0, reported_frame_count - actual_decoded_frames)
-    delta_sec = missing_frames / max(1.0, fps)
+    delta_sec = missing_frames / fps
     missing_ratio = missing_frames / max(1, reported_frame_count)
 
-    # 1. Khớp tuyệt đối 100%
+    # 4. Khớp tuyệt đối 100% (missing_frames == 0)
     if missing_frames == 0:
         return (
             DecodeStatus.NORMAL_EOF,
@@ -183,7 +376,7 @@ def classify_decode_termination(
             True,
         )
 
-    # 2. Dung sai padding container nhỏ (1-5 frames)
+    # 5. Dung sai padding container nhỏ (1-5 frames)
     # Cần điều kiện: thời lượng lệch <= 0.25s (trong phạm vi 1 GOP / B-frame PTS rounding)
     if missing_frames <= CONTAINER_PADDING_TOLERANCE:
         if delta_sec <= 0.25:
@@ -205,7 +398,7 @@ def classify_decode_termination(
                 False,
             )
 
-    # 3. Dung sai cận (6-10 frames)
+    # 6. Dung sai cận (6-10 frames)
     # Cần điều kiện: thời lượng lệch <= 0.35s VÀ tỷ lệ thiếu <= 1.0%
     if missing_frames <= CONTAINER_BORDERLINE_TOLERANCE:
         if delta_sec <= 0.35 and missing_ratio <= 0.01:
@@ -235,7 +428,7 @@ def classify_decode_termination(
                 False,
             )
 
-    # 4. Thiếu > 10 frames: Bắt buộc là TRUNCATED_STREAM
+    # 7. Thiếu > 10 frames: Bắt buộc là TRUNCATED_STREAM
     LOGGER.warning(
         "Video %s TRUNCATED_STREAM: Stream kết thúc sớm tại frame %d/%d (thiếu %d frames > %d)",
         filepath or "unknown", actual_decoded_frames, reported_frame_count, missing_frames, TRUNCATED_STREAM_THRESHOLD
@@ -601,7 +794,8 @@ def audit_single_video(
 
         cap.release()
 
-        # Thử nghiệm với ffprobe nếu có
+        # Thử nghiệm với ffprobe / ffmpeg nếu có
+        external_check = run_external_stream_decode_check(vpath)
         ffprobe_meta = probe_video_with_ffprobe(vpath)
 
         # Phân loại trạng thái kết thúc giải mã (Stream Termination Classification)
@@ -618,6 +812,7 @@ def audit_single_video(
             fps=fps_val,
             filepath=rel_path,
             ffprobe_meta=ffprobe_meta,
+            external_check=external_check,
         )
         decode_status_val = str(decode_status_obj)
         missing_frames = max(0, reported_frame_count - actual_decoded_frames)
@@ -629,6 +824,7 @@ def audit_single_video(
         full_decode_verified = False
         err_msg = "Chỉ thực hiện probe khởi động, chưa giải mã tuần tự đến EOF"
         ffprobe_meta = None
+        external_check = None
 
     # Tính thời lượng thực tế (dựa trên full_decoded_frames — ground truth)
     if fps_val > 0 and actual_decoded_frames > 0:
@@ -637,6 +833,13 @@ def audit_single_video(
     else:
         dur_sec = 0.0
         dur_calc_method = "none"
+
+    if external_check and external_check.get("tool_available") and external_check.get("is_clean_decode"):
+        stream_backend = f"external_{external_check['tool_name']}_full_decode"
+    elif ffprobe_meta:
+        stream_backend = "ffprobe_stream_metadata"
+    else:
+        stream_backend = "opencv_pts_frame_analysis (ffprobe_not_found_fallback)"
 
     result = {
         "video_id": vid,
@@ -672,7 +875,8 @@ def audit_single_video(
         "codec": codec_str,
         "error_message": err_msg,
         "duplicate_of": None,
-        "stream_verification_backend": "ffprobe_stream_metadata" if ffprobe_meta else "opencv_pts_frame_analysis (ffprobe_not_found_fallback)",
+        "stream_verification_backend": stream_backend,
+        "external_tool_check": external_check,
         "duration_calc_method": dur_calc_method,
         "schema_version": CACHE_SCHEMA_VERSION,
         "last_audited_at": datetime.now(timezone.utc).isoformat(),
@@ -729,6 +933,8 @@ def _make_error_record(
         "codec": codec,
         "error_message": error_message,
         "duplicate_of": None,
+        "stream_verification_backend": "none (open_failed)",
+        "external_tool_check": None,
         "duration_calc_method": "none",
         "schema_version": CACHE_SCHEMA_VERSION,
         "last_audited_at": datetime.now(timezone.utc).isoformat(),

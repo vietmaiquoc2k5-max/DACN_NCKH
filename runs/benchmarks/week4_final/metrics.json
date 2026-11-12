@@ -1,5 +1,6 @@
 {
-  "timestamp": "2026-11-12T07:42:10.579554+00:00",
+  "timestamp": "2026-11-12T17:35:00+07:00",
+  "source_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
   "acceptance_status": "PARTIAL (PENDING_24_GT_VERIFICATION)",
   "model_checkpoint": "runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
   "experiment_settings": {

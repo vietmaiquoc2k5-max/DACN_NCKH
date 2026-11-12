@@ -1,7 +1,8 @@
 {
   "audit_title": "Scientific Provenance & Artifact Traceability Audit",
-  "audit_timestamp": "2026-11-12T17:00:00+07:00",
-  "source_commit": "091352f7f8b51c5cd65790ca8c7026d988170e76",
+  "audit_timestamp": "2026-11-12T17:35:00+07:00",
+  "source_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
+  "audit_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
   "git_branch": "main",
   "authoritative_model_checkpoint": {
     "relative_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
