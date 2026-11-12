@@ -1,0 +1,141 @@
+video_id,relative_path,file_size_bytes,sha256,fps,reported_frame_count,full_decoded_frames,ffmpeg_read_frames,decode_status,status,source_label_status,human_review_status,full_decode_verified,duration_seconds,duration_hours,error_message
+VN_NEG_06,datasets/negative_videos/VN_NEG_06.mp4,39409336,624ec8250d9c227580fc06ffe99ce3b21562070fe9358c47789b9fbb5028a0c1,30.0,3143,3138,3138,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,104.6,0.0291,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_07,datasets/negative_videos/VN_NEG_07.mp4,2872178,ce46bcb59a421bcde16c34f0601ec941da23d74327284ac9d009b94275145281,25.0,1571,1569,1569,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,62.76,0.0174,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_08,datasets/negative_videos/VN_NEG_08.mp4,43825050,4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648,25.0,5148,5145,5145,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,205.8,0.0572,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_09,datasets/negative_videos/VN_NEG_09.mp4,19732548,140ab2a2b12c5c3a5d2b0b3f8b319e88f2a0eafaea86dec110f7dae45c7c589c,25.0,1752,1749,1749,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,69.96,0.0194,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_10,datasets/negative_videos/VN_NEG_10.mp4,291944941,3ed5b015393ce74d1da992dece66ce4a4b7abcd4b77ce5d3d23264794c4eacbe,59.94,29804,26556,26556,TRUNCATED_STREAM,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,443.04,0.1231,"[h264 @ 000001c20051bd00] Invalid NAL unit size (7937 > 7149).
+[h264 @ 000001c20051bd00] missing picture in access unit with size 7153
+[h264 @ 000001c20212e440] Invalid NAL unit size (7937 > 7149).
+[h264 @ 000001c20212e440] Error splitting the input into NAL units.
+[vist#0:0/h264 @ 000001c2022bfd80] [dec:h264 @ 000001c2004a39c0] Decoding error: Invalid data found when processing input
+[vist#0:0/h264 @ 000001c2022bfd80] [dec:h264 @ 000001c2004a39c0] Error processing packet in decoder: Invalid data found when processing input
+[vist#0:0/h264 @ 000001c2022bfd80] [dec:h264 @ 000001c2004a39c0] Task finished with error code: -1094995529 (Invalid data found when processing input)
+[vist#0:0/h264 @ 000001c2022bfd80] [dec:h264 @ 000001c2004a39c0] Terminating thread with return code -1094995529 (Invalid data found when processing input)"
+VN_NEG_11,datasets/negative_videos/VN_NEG_11.mp4,64644368,beea573ebb7a6a856bd40d772530e9bbc5842457c4ed64695793087fed42531c,25.0,7193,7191,7191,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,287.64,0.0799,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_12,datasets/negative_videos/VN_NEG_12.mp4,7199782,6a7dee5d035ee983aab5d811d80c5627f54785edd0e58ca006d7a327d6f6de0a,25.0,1749,1746,1746,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,69.84,0.0194,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_13,datasets/negative_videos/VN_NEG_13.mp4,7052412,bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b,25.0,2365,2363,2363,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,94.52,0.0263,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_14,datasets/negative_videos/VN_NEG_14.mp4,24999146,837cca6113345151a14c02e69aadd795ba5f2bb9bcc9c2933f25725a272ba545,25.0,3210,3208,3208,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,128.32,0.0356,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_15,datasets/negative_videos/VN_NEG_15.mp4,125183715,b0a62d91a1b6d717ef08944ae143d4426492d52b6ef7bdb868a1a0a031a2e416,25.0,11488,11486,11486,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,459.44,0.1276,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_16,datasets/negative_videos/VN_NEG_16.mp4,68502111,d03d94a07065ace339b25506d56a70eafadc438b717c980bdcbb164a0a9b6748,25.0,7507,7505,7505,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,300.2,0.0834,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_17,datasets/negative_videos/VN_NEG_17.mp4,33859974,fcb18ca2944fba3ad266cee2cc06152abdf0be789573fe16a37f06e4d7a77f65,25.0,4410,4407,4407,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,176.28,0.049,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_18,datasets/negative_videos/VN_NEG_18.mp4,23461770,8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee,25.0,3110,3107,3107,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,124.28,0.0345,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_19,datasets/negative_videos/VN_NEG_19.mp4,8120356,4ea7a95b4f1d0b2560c4c6383b547394975c2aa392ee3f770cb0be3d31961b5a,25.0,1870,1867,1867,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,74.68,0.0207,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_20,datasets/negative_videos/VN_NEG_20.mp4,656570250,39f72bdf2a04b64aa9a418cfc01572fe659ec44566268b5c97ebcf57920946b6,60.0,55732,55726,55726,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,928.77,0.258,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_21,datasets/negative_videos/VN_NEG_21.mp4,222708458,3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f,30.0,29999,29995,29995,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,999.83,0.2777,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_22,datasets/negative_videos/VN_NEG_22.mp4,21460723,18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814,29.97,7432,7429,7429,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,247.88,0.0689,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_23,datasets/negative_videos/VN_NEG_23.mp4,38795087,bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23,25.0,3463,3460,3460,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,138.4,0.0384,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_24,datasets/negative_videos/VN_NEG_24.mp4,68485435,d6e0b3d8661b9a8e6293798a0f8b8de767174549caf6ef582bb66b3d9f5adbc9,25.0,6497,6495,6495,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,259.8,0.0722,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_25,datasets/negative_videos/VN_NEG_25.mp4,102611401,b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe,30.0,12396,12393,12393,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,413.1,0.1148,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_26,datasets/negative_videos/VN_NEG_26.mp4,38374571,2052a0b8d37cb73c6941ab0eb8b52f0b75d26de99aa59c74b9caa686b8503525,25.0,4528,4526,4526,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,181.04,0.0503,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_27,datasets/negative_videos/VN_NEG_27.mp4,16234254,2cdac58ec5d0ff56d0ca7ee339ba8712fb476cc384c19e38569eeff853c2dac5,25.0,1495,1492,1492,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,59.68,0.0166,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_28,datasets/negative_videos/VN_NEG_28.mp4,32221854,db494e51f8900c965364a297142bc1745413b71319d16916af020e1c5a02d448,25.0,1919,1917,1917,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,76.68,0.0213,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_29,datasets/negative_videos/VN_NEG_29.mp4,62497324,02594a376735377d85b62b4630ee50e4bab0332a76f02dfc25d1a6693c9cc4da,25.0,5808,5806,5806,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,232.24,0.0645,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_30,datasets/negative_videos/VN_NEG_30.mp4,37979206,6bd343e24e0a948011b0058ac6f46b281e677268429d27f7ca8f159024da7bff,29.97,2541,2538,2538,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,84.68,0.0235,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_31,datasets/negative_videos/VN_NEG_31.mp4,617541250,b4b766383b57e8eff74b1479005650345d21978bd511d293d6cd5b134fce42b4,59.94,50201,50196,50196,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,837.44,0.2326,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_32,datasets/negative_videos/VN_NEG_32.mp4,35465567,2828f46f4aca2600082509da8240e407d215f0585fe440833dc84ace831b9f1a,50.0,3694,3690,3690,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,73.8,0.0205,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_33,datasets/negative_videos/VN_NEG_33.mp4,32326236,1a735ce99aebaba1a43bfcf13bcdce6565a1f8f5f9d473d52d1c30aadebf33af,30.0,2695,2692,2692,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,89.73,0.0249,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_34,datasets/negative_videos/VN_NEG_34.mp4,21971216,21c67fe7388f1092ac95683dc37c37ab5eded6bf2f6a337136027f3d287351c8,25.0,1621,1619,1619,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,64.76,0.018,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_35,datasets/negative_videos/VN_NEG_35.mp4,55176341,6b9827179674cc46d3b07305d8b84c7d69e5efd5a0714d507693592d243cfc4f,23.98,2713,2710,2710,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,113.01,0.0314,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_36,datasets/negative_videos/VN_NEG_36.mp4,97949277,d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013,25.0,4920,4917,4917,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,196.68,0.0546,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_37,datasets/negative_videos/VN_NEG_37.mp4,11883469,d94d87467334a576b07dfbefffeeaf7db13ef76cd4a894f01d82849a99fc7e35,25.0,1543,1540,1540,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,61.6,0.0171,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_38,datasets/negative_videos/VN_NEG_38.mp4,19087780,01b4b563e0e50f23cb999dc7dfa587dabbd86f887b8d7159dcce49abd4eb2644,25.0,1572,1570,1570,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,62.8,0.0174,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_39,datasets/negative_videos/VN_NEG_39.mp4,10693982,54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb,25.0,3133,3131,3131,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,125.24,0.0348,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_40,datasets/negative_videos/VN_NEG_40.mp4,34317534,955182cd25ac0ec1601d1e2a65516301d8673c0162b6702eaa8ab118e74a3e98,24.0,2503,2500,2500,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,104.17,0.0289,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_41,datasets/negative_videos/VN_NEG_41.mp4,100227019,17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618,25.0,14475,14473,14473,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,578.92,0.1608,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_42,datasets/negative_videos/VN_NEG_42.mp4,72738585,0ee3d9e16ed5eaedbdbc47afb5f2f3d954e1c154a31ee8f96ffd7c5995655bb6,25.0,8041,8038,8038,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,321.52,0.0893,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_43,datasets/negative_videos/VN_NEG_43.mp4,9560179,b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4,30.0,1464,1461,1461,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,48.7,0.0135,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_44,datasets/negative_videos/VN_NEG_44.mp4,115469312,f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e,25.0,8053,8050,8050,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,322.0,0.0894,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_45,datasets/negative_videos/VN_NEG_45.mp4,45808826,0e6a343c81cea59e54551cee61d30df97d921b9e9c98cf674db91fea57649c28,25.0,4698,4695,4695,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,187.8,0.0522,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_46,datasets/negative_videos/VN_NEG_46.mp4,212990089,346db12914a5f2d51b8681bd33fb494f6f54e84543f071ac281e674d91f65b22,25.0,10812,10809,10809,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,432.36,0.1201,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_47,datasets/negative_videos/VN_NEG_47.mp4,438220610,3b6f4e6cda8b6662072408828e020dc9818f76f394a613e5f810b54f120e9bad,30.0,98609,98603,98603,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,3286.77,0.913,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_48,datasets/negative_videos/VN_NEG_48.mp4,48545679,d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942,30.0,8445,2533,2533,TRUNCATED_STREAM,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,84.43,0.0235,"[h264 @ 0000026a5fa4d580] Invalid NAL unit size (4356936 > 211708).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 211712
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (943076661 > 9912).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 9916
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-706876214 > 4121).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 4125
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (1937757395 > 4442).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 4446
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-303919900 > 5443).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 5447
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (1770180995 > 37677).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 37681
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (576045228 > 6131).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 6135
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-200017175 > 7080).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 7084
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-62711096 > 5198).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 5202
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-1610606206 > 80030).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 80034
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-1119980281 > 10438).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 10442
+[h264 @ 0000026a5f857b40] Invalid NAL unit size (4356936 > 211708).
+[h264 @ 0000026a5f857b40] Error splitting the input into NAL units.
+[h264 @ 0000026a5fc700c0] Invalid NAL unit size (943076661 > 9912).
+[h264 @ 0000026a5fc700c0] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (723975530 > 9879).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 9883
+[h264 @ 0000026a5fc70780] Invalid NAL unit size (-706876214 > 4121).
+[h264 @ 0000026a5fc70780] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-1516073484 > 6996).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 7000
+[h264 @ 0000026a5fa4f380] Invalid NAL unit size (1937757395 > 4442).
+[h264 @ 0000026a5fa4f380] Error splitting the input into NAL units.
+[h264 @ 0000026a5f7d6080] Invalid NAL unit size (-303919900 > 5443).
+[h264 @ 0000026a5f7d6080] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-960740894 > 32035).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 32039
+[h264 @ 0000026a5f7d6bc0] Invalid NAL unit size (1770180995 > 37677).
+[h264 @ 0000026a5f7d6bc0] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-4506091 > 6234).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 6238
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-921168479 > 5813).
+[h264 @ 0000026a5f7d7880] Invalid NAL unit size (576045228 > 6131).
+[h264 @ 0000026a5f7d7880] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 5817
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (1745680929 > 5304).
+[h264 @ 0000026a5f7d8580] Invalid NAL unit size (-200017175 > 7080).
+[h264 @ 0000026a5f7d8580] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 5308
+[h264 @ 0000026a5dcace80] Invalid NAL unit size (-62711096 > 5198).
+[h264 @ 0000026a5dcace80] Error splitting the input into NAL units.
+[h264 @ 0000026a5dcae980] Invalid NAL unit size (-1610606206 > 80030).
+[h264 @ 0000026a5dcae980] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-1119974565 > 37605).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 37609
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-240701411 > 5600).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 5604
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (-1281052460 > 6021).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 6025
+[h264 @ 0000026a5dc4e900] Invalid NAL unit size (-1119980281 > 10438).
+[h264 @ 0000026a5dc4e900] Error splitting the input into NAL units.
+[h264 @ 0000026a5f857780] Invalid NAL unit size (723975530 > 9879).
+[h264 @ 0000026a5f857780] Error splitting the input into NAL units.
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (1734408959 > 5201).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 5205
+[vist#0:0/h264 @ 0000026a5feb5040] [dec:h264 @ 0000026a5dc35940] Error submitting packet to decoder: Invalid data found when processing input
+[vist#0:0/h264 @ 0000026a5feb5040] [dec:h264 @ 0000026a5dc35940] Error processing packet in decoder: Invalid data found when processing input
+[h264 @ 0000026a5fa4d580] Invalid NAL unit size (1292508648 > 48313).
+[h264 @ 0000026a5fa4d580] missing picture in access unit with size 48317
+[h264 @ 0000026a5f856c80] Invalid NAL unit size (-1516073484 > 6996).
+[h264 @ 0000026a5f856c80] Error splitting the input into NAL units.
+[vist#0:0/h264 @ 0000026a5feb5040] [dec:h264 @ 0000026a5dc35940] Task finished with error code: -1094995529 (Invalid data found when processing input)
+[vist#0:0/h264 @ 0000026a5feb5040] [dec:h264 @ 0000026a5dc35940] Terminating thread with return code -1094995529 (Invalid data found when processing input)"
+VN_NEG_49,datasets/negative_videos/VN_NEG_49.mp4,18447363,e0a2599f06c7a9774a1ff391b38828e09d36464d58fe8131eb35a27cfaf75b74,25.0,1326,1324,1324,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,52.96,0.0147,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_50,datasets/negative_videos/VN_NEG_50.mp4,21542566,712ab0b474690b047bca2bfc83c30d405f76374dd0add83259ec45145bc9f361,25.0,3308,3305,3305,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,132.2,0.0367,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_51,datasets/negative_videos/VN_NEG_51.mp4,11846562,90c0a880490c9c7219c366355ef46603c219db3c8479d070975d5029d8297339,25.0,1690,1687,1687,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,67.48,0.0187,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_52,datasets/negative_videos/VN_NEG_52.mp4,17710352,273294e4a2c3e2c8ec5902b4c5848e45b7b2a74d3f0079516ac3b68ca44fc160,25.0,2126,2123,2123,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,84.92,0.0236,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_53,datasets/negative_videos/VN_NEG_53.mp4,15985721,2c1a0dababe5a006d657d40b28ddc526f0d8e21da28027f4fd944594241ffadb,25.0,1880,1877,1877,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,75.08,0.0209,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_54,datasets/negative_videos/VN_NEG_54.mp4,38720567,122dc64a79a9c4d9c806ee9bd5afe85354d0506fe9cc600de5c22863e06fc4a4,25.0,2941,2939,2939,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,117.56,0.0327,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_55,datasets/negative_videos/VN_NEG_55.mp4,56158903,60411030fcea9f58fb9cdec828d705eeac7cdabebf5ca785289a0a691d8a8642,25.0,4727,4725,4725,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,189.0,0.0525,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_56,datasets/negative_videos/VN_NEG_56.mp4,34970290,e9255e00a982d47287f103b306b46ed300ec75c36df45494a4c22566bc8f836c,25.0,2678,2676,2676,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,107.04,0.0297,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_57,datasets/negative_videos/VN_NEG_57.mp4,42916283,5d1ccd753c9679a4b90ed16ef73ce372d4e5c2fbc04cc527adb457467489f895,25.0,2505,2502,2502,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,100.08,0.0278,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_58,datasets/negative_videos/VN_NEG_58.mp4,188710982,28923fbb7ed9a7102bd02f654061eb073599d687fa596803508c8eb9e3ff4273,60.0,14986,14982,14982,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,249.7,0.0694,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_59,datasets/negative_videos/VN_NEG_59.mp4,177752964,e8e2c535d49164f6231c3d6c919f339d3c5fc92cbfea04d62d83eaf1c3564a81,60.0,16041,16036,16036,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,267.27,0.0742,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_60,datasets/negative_videos/VN_NEG_60.mp4,23842841,c59d5d40880f56d98f7fb56bae047cb992b8c502dc2570aa9189ef2e1e483842,25.0,3759,3754,3754,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,150.16,0.0417,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_61,datasets/negative_videos/VN_NEG_61.mp4,8048519,80b494bb648f9fbcfb6c0742da7d0f6f265848a7a1d8e90268e5536b6f079b13,29.97,4930,4927,4927,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,164.4,0.0457,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_62,datasets/negative_videos/VN_NEG_62.mp4,9793355,5c8b99f6b17bd0a24f11fa9b0275fe8f9bf10e9dcff0d161ce890559fe7e4da2,25.0,1873,1870,1870,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,74.8,0.0208,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_63,datasets/negative_videos/VN_NEG_63.mp4,46302517,10acf139ef0e18386cb6a006722b2739f270a297461dbc21301b11dab7e547da,25.0,5407,5404,5404,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,216.16,0.06,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_64,datasets/negative_videos/VN_NEG_64.mp4,7318051,c37b81144c37d81e94653d469d8819f46b83ed714224c714a394f51ea714afad,25.0,3154,3152,3152,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,126.08,0.035,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"
+VN_NEG_65,datasets/negative_videos/VN_NEG_65.mp4,125421483,4df50454e18b129f85ec83cdcd1f43941f6e3760fb3dee55a14996a4880f9541,25.0,6820,6817,6817,NEEDS_REVIEW,NEEDS_REVIEW,SURVEILLANCE_NEGATIVE_BATCH,PENDING_HUMAN_REVIEW,False,272.68,0.0757,"OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated"

@@ -1,0 +1,3 @@
+Scope,Videos,Hours,Pipeline A FAR,Pipeline B2 FAR,95% Poisson CI,Reduction (%),MT3 Target (>=50%)
+Scope 1 (All Evaluated),79,7.1312,138.55,59.04,"[53.53, 64.95]",57.39%,PASS
+Scope 2 (Clean Only),77,6.9846,139.02,59.7,"[54.11, 65.72]",57.05%,PASS

@@ -23,6 +23,10 @@ from pathlib import Path
 from typing import Any, Dict, List
 from unittest.mock import MagicMock, patch
 
+_venv_bin = str(Path(sys.executable).parent)
+if _venv_bin not in os.environ.get("PATH", ""):
+    os.environ["PATH"] = _venv_bin + os.pathsep + os.environ.get("PATH", "")
+
 import cv2
 import numpy as np
 

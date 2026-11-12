@@ -1,0 +1,40 @@
+{
+  "timestamp_iso": "2026-11-12T21:45:00Z",
+  "git_head": "cd57e2252a662c87c420263f6539dbf183db021e",
+  "git_status_porcelain": [
+    " M src/video_audit.py",
+    " M tests/test_video_audit_and_consistency.py"
+  ],
+  "python_version": "3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]",
+  "opencv_version": "5.0.0",
+  "ffmpeg_path": null,
+  "ffmpeg_version": "",
+  "checkpoint": {
+    "path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "exists": true,
+    "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "size_bytes": 6247332
+  },
+  "manifest": {
+    "path": "data/negative_videos_manifest.json",
+    "exists": true,
+    "sha256": "5413a0328fc6aea70da0f5b22f96514b8bab780a45737f22be0dea896768bfb1",
+    "entry_count": 79
+  },
+  "disk_scan": {
+    "directories": [
+      "datasets/negative_videos",
+      "datasets/test_videos/neg"
+    ],
+    "total_negative_files_found": 79,
+    "manifest_entry_count": 79,
+    "files_in_manifest_not_on_disk": [],
+    "files_on_disk_not_in_manifest": []
+  },
+  "duplicates_audit": {
+    "duplicate_ids_count": 0,
+    "duplicate_ids": [],
+    "duplicate_hashes_count": 0,
+    "duplicate_hashes": []
+  }
+}

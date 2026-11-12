@@ -1,0 +1,36 @@
+video_id,event_id,class,onset_sec,offset_sec,annotator_1,annotator_2,review_status,disagreement_flag,adjudication_notes,evidence_ref
+POS_01,POS_01_E01_FIRE,FIRE,2.4,29.3,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_01.avi
+POS_01,POS_01_E02_SMOKE,SMOKE,6.8,29.3,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_01.avi
+POS_02,POS_02_E03_FIRE,FIRE,0.1,7.84,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_02.avi
+POS_02,POS_02_E04_SMOKE,SMOKE,0.1,7.84,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_02.avi
+POS_03,POS_03_E05_FIRE,FIRE,0.3,11.87,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_03.avi
+POS_04,POS_04_E06_FIRE,FIRE,0.3,17.02,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_04.avi
+POS_04,POS_04_E07_SMOKE,SMOKE,4.2,17.02,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_04.avi
+POS_05,POS_05_E08_FIRE,FIRE,0.1,12.71,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_05.avi
+POS_06,POS_06_E09_FIRE,FIRE,0.1,55.22,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_06.avi
+POS_06,POS_06_E10_SMOKE,SMOKE,34.6,55.22,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_06.avi
+POS_07,POS_07_E11_FIRE,FIRE,0.1,80.28,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_07.avi
+POS_08,POS_08_E12_FIRE,FIRE,0.4,25.8,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_08.avi
+POS_08,POS_08_E13_SMOKE,SMOKE,8.8,25.8,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_08.avi
+POS_09,POS_09_E14_FIRE,FIRE,1.2,54.7,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_09.avi
+POS_10,POS_10_E15_FIRE,FIRE,0.1,17.12,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_10.avi
+POS_11,POS_11_E16_FIRE,FIRE,0.1,22.12,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_11.avi
+POS_11,POS_11_E17_SMOKE,SMOKE,16.1,22.12,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_11.avi
+POS_12,POS_12_E18_FIRE,FIRE,13.2,16.96,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_12.avi
+POS_12,POS_12_E19_SMOKE,SMOKE,1.2,16.96,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_12.avi
+POS_13,POS_13_E20_FIRE,FIRE,0.1,57.66,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_13.avi
+POS_13,POS_13_E21_SMOKE,SMOKE,0.1,57.66,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_13.avi
+POS_14,POS_14_E22_FIRE,FIRE,12.9,21.47,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_14.avi
+POS_14,POS_14_E23_SMOKE,SMOKE,1.3,21.47,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_14.avi
+POS_15,POS_15_E24_FIRE,FIRE,64.4,78.56,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_15.avi
+POS_15,POS_15_E25_SMOKE,SMOKE,0.2,78.56,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_15.avi
+POS_16,POS_16_E26_SMOKE,SMOKE,1.7,109.58,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_16.avi
+POS_17,POS_17_E27_SMOKE,SMOKE,0.4,20.1,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_17.avi
+POS_18,POS_18_E28_SMOKE,SMOKE,11.2,70.1,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_18.avi
+POS_19,POS_19_E29_SMOKE,SMOKE,1.2,24.2,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_19.avi
+POS_20,POS_20_E30_SMOKE,SMOKE,0.1,27.6,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_20.avi
+POS_21,POS_21_E31_FIRE,FIRE,37.6,49.05,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_21.avi
+POS_21,POS_21_E32_SMOKE,SMOKE,0.1,49.05,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_21.avi
+POS_22,POS_22_E33_SMOKE,SMOKE,0.6,27.12,annotator_01,,PENDING_HUMAN_REVIEW,False,Awaiting second independent human annotator review.,FireSmokeLabeler/videos/POS_22.avi
+POS_23,POS_23_E34_SMOKE,SMOKE,0.1,12.12,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_23.avi
+POS_24,POS_24_E35_SMOKE,SMOKE,0.1,15.48,annotator_01,annotator_02,VERIFIED,False,Dual annotator consensus verified.,FireSmokeLabeler/videos/POS_24.avi

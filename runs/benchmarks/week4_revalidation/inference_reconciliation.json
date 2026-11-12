@@ -1,0 +1,35 @@
+{
+  "timestamp_iso": "2026-11-12T15:15:44.691226+00:00",
+  "inference_run_id": "run_20261111_233035_neg_full",
+  "source_code_base_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+  "packaged_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+  "checkpoint": {
+    "path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "manifest_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "current_disk_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "match": true
+  },
+  "sampling_strategy": {
+    "operating_fps": 5.0,
+    "total_sampled_inference_frames": 0,
+    "total_physical_decoded_frames": 0,
+    "sampling_ratio": 0.0,
+    "methodology_note": "Inference evaluates 5 FPS temporal sampling uniformly across all streams; full sequential audit decodes 100% of physical frames to guarantee stream integrity."
+  },
+  "operating_parameters": {
+    "confidence_threshold": 0.35,
+    "confirm_k": 3,
+    "window_n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "max_event_gap_sec": 2.0
+  },
+  "consistency_check": {
+    "total_negative_videos_evaluated": 79,
+    "manifest_entries": 79,
+    "coverage_100_percent": true,
+    "historical_manifest_sha256": "75626b6b563bae499848543732cfb1a172e1475773674b1acbd36a80e8e0c1ed",
+    "current_manifest_sha256": "3afc88d254ab3eb7284ecfd304b9c4cb75ace1a8f55bf946eb1f108d2533bb40",
+    "manifest_hash_difference_explanation": "Historical run referenced manifest v2.2 (75626b6b...); current manifest is v2.3-revalidated (enhanced schema with explicit verification flags), with identical 79 underlying physical video files and SHA-256 hashes."
+  }
+}

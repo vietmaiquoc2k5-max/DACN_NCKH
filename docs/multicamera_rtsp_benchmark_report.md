@@ -1,7 +1,7 @@
 # Báo Cáo Đo Kiểm Thực Nghiệm Camera RTSP Trực Tiếp (RTSP Live Benchmark)
 
 **Dự án:** DACN_NCKH - Phát hiện và cảnh báo cháy từ camera giám sát  
-**Ngày thực hiện:** 12/11/2026 07:44:24 UTC  
+**Ngày thực hiện:** 12/11/2026 15:17:16 UTC  
 **Chế độ kiểm thử:** **B. RTSP Live Network Benchmark**  
 **Số luồng RTSP khả dụng trên môi trường:** **0 luồng**  
 **Trạng thái kiểm thử:** **`NOT_TESTED (BLOCKED_NO_LIVE_RTSP_SOURCE)`**  

@@ -1,0 +1,67 @@
+{
+  "timestamp_iso": "2026-11-12T15:15:51.293730+00:00",
+  "scope_1_all_evaluated_streams": {
+    "description": "Toàn bộ 79 video âm tính thực tế được đưa vào hệ thống suy luận.",
+    "video_count": 79,
+    "exposure_seconds": 25672.14,
+    "exposure_hours": 7.1312,
+    "pipeline_a_baseline": {
+      "fp_events_total": 988,
+      "far_per_hour": 138.5471
+    },
+    "pipeline_b2_operating_point": {
+      "fp_events_total": 421,
+      "fp_events_fire": 67,
+      "fp_events_smoke": 354,
+      "far_per_hour_total": 59.0368,
+      "far_per_hour_fire": 9.3954,
+      "far_per_hour_smoke": 49.6414,
+      "exact_garwood_95_ci_total": [
+        53.5314,
+        64.9547
+      ],
+      "exact_garwood_95_ci_fire": [
+        7.2813,
+        11.9318
+      ],
+      "exact_garwood_95_ci_smoke": [
+        44.6043,
+        55.0916
+      ]
+    },
+    "far_reduction_percentage": 57.39,
+    "mt3_target_met": true
+  },
+  "scope_2_clean_streams_only": {
+    "description": "Tập hợp các video âm tính vượt qua kiểm định khắt khe NORMAL_EOF (loại trừ video lỗi luồng container).",
+    "video_count": 77,
+    "exposure_seconds": 25144.67,
+    "exposure_hours": 6.9846,
+    "pipeline_a_baseline": {
+      "fp_events_total": 971,
+      "far_per_hour": 139.0195
+    },
+    "pipeline_b2_operating_point": {
+      "fp_events_total": 417,
+      "fp_events_fire": 66,
+      "fp_events_smoke": 351,
+      "far_per_hour_total": 59.7025,
+      "far_per_hour_fire": 9.4493,
+      "far_per_hour_smoke": 50.2532,
+      "exact_garwood_95_ci_total": [
+        54.1091,
+        65.7172
+      ],
+      "exact_garwood_95_ci_fire": [
+        7.3081,
+        12.0219
+      ],
+      "exact_garwood_95_ci_smoke": [
+        45.1328,
+        55.7954
+      ]
+    },
+    "far_reduction_percentage": 57.05,
+    "mt3_target_met": true
+  }
+}

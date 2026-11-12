@@ -1,0 +1,21 @@
+{
+  "timestamp_iso": "2026-11-12T15:15:51.423744+00:00",
+  "git": {
+    "current_head": "cd57e2252a662c87c420263f6539dbf183db021e",
+    "branch": "main",
+    "base_validation_commit": "cd57e2252a662c87c420263f6539dbf183db021e"
+  },
+  "artifacts": {
+    "checkpoint_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "manifest_path": "data/negative_videos_manifest.json",
+    "manifest_sha256": "5ba1855d624f65339f60fcd741ed2edc874ac5e327529a0d2c99c8460592ef23",
+    "gt_events_snapshot_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "historical_inference_run_id": "run_20261111_233035_neg_full"
+  },
+  "lineage_trail": {
+    "source_code_base_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+    "initial_artifact_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+    "revalidation_commit": "cd57e2252a662c87c420263f6539dbf183db021e"
+  }
+}

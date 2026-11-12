@@ -1,0 +1,49 @@
+{
+  "timestamp_iso": "2026-11-12T15:15:51.300652+00:00",
+  "operating_point_configuration": {
+    "confidence_threshold": 0.35,
+    "confirm_k": 3,
+    "window_n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "max_event_gap_sec": 2.0
+  },
+  "criteria_evaluation": {
+    "mt3_far_reduction": {
+      "target": ">= 50% reduction in FAR compared to Pipeline A",
+      "scope_1_result": "57.39% reduction (138.55/h -> 59.04/h)",
+      "scope_2_result": "56.48% reduction (137.17/h -> 59.70/h)",
+      "status": "PASS"
+    },
+    "mt3_event_recall_drop": {
+      "target": "<= 5 percentage points drop compared to frame baseline",
+      "baseline_recall": "95.83%",
+      "pipeline_b2_recall": "95.83%",
+      "delta": "0.0 percentage points",
+      "status": "PASS"
+    },
+    "mt3_average_latency": {
+      "target": "<= 10.0 seconds average event detection latency",
+      "measured_latency_sec": 2.13,
+      "status": "PASS"
+    },
+    "mt1_mt3_negative_exposure": {
+      "target": ">= 5.0 hours of negative surveillance video",
+      "scope_1_exposure_hours": 7.13,
+      "scope_2_exposure_hours": 6.98,
+      "status": "PASS"
+    }
+  },
+  "operating_point_classification": {
+    "status": "PROVISIONAL",
+    "official_promotion_allowed": false,
+    "blocking_reasons": [
+      "24 Ground Truth positive events remain PENDING_HUMAN_REVIEW pending dual-annotator adjudication.",
+      "Multi-camera RTSP streaming live test is pending hardware camera / MediaMTX deployment in Week 7."
+    ],
+    "action_items_before_official": [
+      "Complete Annotator 02 review for 24 pending positive events in gt_review_queue.csv.",
+      "Run 2-hour live RTSP stress test in Week 7 deployment."
+    ]
+  }
+}

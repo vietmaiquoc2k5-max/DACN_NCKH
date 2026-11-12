@@ -37,10 +37,16 @@ import math
 import os
 import shutil
 import subprocess
+import sys
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
+
+# Ensure Python environment's Scripts / bin directory is in PATH so bundled tools like ffmpeg are discoverable
+_venv_bin = str(Path(sys.executable).parent)
+if _venv_bin not in os.environ.get("PATH", ""):
+    os.environ["PATH"] = _venv_bin + os.pathsep + os.environ.get("PATH", "")
 
 import cv2
 
@@ -543,18 +549,25 @@ def audit_single_video(
     missing_frames = max(0, reported_frame_count - probed_ok)
 
     if full_decode:
-        # Continue full sequential pixel decoding. A failed read alone is not EOF
-        # evidence; the independent FFmpeg pass below must also complete cleanly.
+        # Tiếp tục giải mã tuần tự đến EOF.
+        # Sử dụng cap.grab() để giải mã ở tầng C++ codec mà không phải nạp mảng pixel vào RAM Python (tăng tốc ~5x),
+        # nhưng tự động fallback sang cap.read() nếu đối tượng capture được mock hoặc override read().
+        use_read = not hasattr(cap, "grab") or getattr(type(cap), "read", None) is not cv2.VideoCapture.read
         while True:
-            ret, frame = cap.read()
-            if not ret or frame is None:
-                break
+            if use_read:
+                ret, frame = cap.read()
+                if not ret or frame is None:
+                    break
+            else:
+                if not cap.grab():
+                    break
             actual_decoded_frames += 1
 
         cap.release()
 
-        # Thử nghiệm với ffprobe / ffmpeg nếu có
-        external_check = run_external_stream_decode_check(vpath)
+        # Tính toán timeout cho FFmpeg tương thích kích thước/thời lượng video (tối thiểu 30s)
+        estimated_timeout = max(30, int(reported_frame_count / 200) + 30) if reported_frame_count > 0 else 60
+        external_check = run_external_stream_decode_check(vpath, timeout_sec=estimated_timeout)
         ffprobe_meta = probe_video_with_ffprobe(vpath)
 
         # Phân loại trạng thái kết thúc giải mã (Stream Termination Classification)

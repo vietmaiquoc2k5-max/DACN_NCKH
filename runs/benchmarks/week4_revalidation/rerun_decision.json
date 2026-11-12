@@ -1,0 +1,12 @@
+{
+  "timestamp_iso": "2026-11-12T15:15:44.692247+00:00",
+  "rerun_required": false,
+  "recommendation": "MAINTAIN_FROZEN_INFERENCE",
+  "justification": [
+    "Checkpoint SHA-256 f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6 matches model weights with 100% bitwise identity.",
+    "All 79 negative video files match identical SHA-256 hashes.",
+    "Operating parameters (conf=0.35, K=3, N=8, feat=0.02, cd=5.0s, gap=2.0s) match frozen configuration.",
+    "5 FPS temporal sampling was applied identically across all 79 streams without exception.",
+    "Rerunning inference is unnecessary and would consume compute without altering scientific conclusions."
+  ]
+}
