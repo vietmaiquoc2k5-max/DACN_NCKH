@@ -12,12 +12,11 @@ Quy chuẩn kỹ thuật kiểm định:
 3. audit_single_video: Kiểm định giải mã tuần tự từ frame đầu đến EOF:
    - Phân loại rõ ràng: NORMAL_EOF, TRUNCATED_STREAM, DECODE_ERROR, CANNOT_OPEN,
      PROBE_ONLY, NEEDS_REVIEW.
-   - KHÔNG suy luận NORMAL_EOF chỉ từ read()/grab() trả về False — phải so sánh frame count.
-   - Chính sách dung sai container rõ ràng (Explicit Tolerance Policy):
-     * Delta == 0: NORMAL_EOF (Khớp tuyệt đối).
-     * 1 <= Delta <= 5: NORMAL_EOF (MP4 container index rounding, B-frame PTS offset).
-     * 6 <= Delta <= 10: NORMAL_EOF + WARNING log (B-frame reorder buffer flush).
-     * Delta > 10: TRUNCATED_STREAM (buộc NEEDS_REVIEW).
+   - KHÔNG suy luận NORMAL_EOF chỉ từ read()/grab() trả về False hay metadata.
+   - NORMAL_EOF yêu cầu FFmpeg decode hết stream, exit code 0, progress=end,
+     stderr sạch, và frame count khớp chính xác giữa FFmpeg, OpenCV và container.
+   - Bất kỳ chênh lệch frame count nào cũng NEEDS_REVIEW; chưa có dung sai
+     thực nghiệm được thiết lập cho codec/container/PTS/DTS trong repository.
    - Phân biệt rõ 4 loại frame count:
      * reported_frame_count: từ metadata container
      * full_decoded_frames (decoded_frame_count): frame thực sự decode thành công
@@ -58,22 +57,19 @@ class DecodeStatus(str, Enum):
     nhãn ngữ nghĩa (VERIFIED_NEGATIVE, SURVEILLANCE_NEGATIVE_BATCH, v.v.).
     """
     NORMAL_EOF = "NORMAL_EOF"
-    """Đã decode tuần tự đến EOF; full_decoded_frames <= reported + tolerance
-    CÓ BẰNG CHỨNG (delta <= CONTAINER_BORDERLINE_TOLERANCE).
-    KHÔNG được gán chỉ từ read()/grab() trả về False."""
+    """FFmpeg cleanly decoded the full stream; FFmpeg, OpenCV, and container counts agree."""
 
     TRUNCATED_STREAM = "TRUNCATED_STREAM"
-    """full_decoded_frames < reported - TRUNCATED_STREAM_THRESHOLD (> 10 frame thiếu).
-    Luồng NAL/packet kết thúc sớm bất thường."""
+    """An explicit decoder error occurred after at least one frame was decoded."""
 
     DECODE_ERROR = "DECODE_ERROR"
-    """Decoder báo lỗi (probe 5 frame trả về 0 frame OK, hoặc không decode được frame nào)."""
+    """No frame could be decoded from the input stream."""
 
     CANNOT_OPEN = "CANNOT_OPEN"
     """OpenCV VideoCapture.isOpened() == False."""
 
     PROBE_ONLY = "PROBE_ONLY"
-    """Chỉ probe metadata + 5 frame đầu, chưa decode tuần tự đến EOF."""
+    """Only initial frames were probed; no full-stream EOF check was run."""
 
     NEEDS_REVIEW = "NEEDS_REVIEW"
     """Không đủ bằng chứng phân loại dứt khoát (ví dụ: reported_frame_count == 0)."""
@@ -86,22 +82,15 @@ class DecodeStatus(str, Enum):
 # TOLERANCE POLICY
 # ---------------------------------------------------------------------------
 
-CONTAINER_PADDING_TOLERANCE = 5
-"""<= 5 frames: Container header index padding bình thường.
-Nguồn gốc: MP4 container index rounding (moov atom frame count khác số NAL units
-thực tế do PTS/DTS alignment), B-frame PTS offset trong H.264/H.265 khiến
-reported_frame_count cao hơn actual 1-5 frames.
-Tham khảo: ISO/IEC 14496-12 §8.6.1, FFmpeg lavf/mp4.c."""
+CONTAINER_PADDING_TOLERANCE = 0
+"""No automatic tolerance is evidence-backed in this repository. The historical
+5-frame / 0.25s values are disabled; count discrepancies require review."""
 
-CONTAINER_BORDERLINE_TOLERANCE = 10
-"""<= 10 frames: Container index discrepancy mức cận — PHẢI log WARNING.
-Nguồn gốc: B-frame reorder buffer flush (H.264 Level 4.1, ref frames=4),
-VFR stream với dropped frames ở cuối GOP, container muxer round-up do
-bitrate control. Borderline: ghi nhận nhưng không coi là lỗi luồng."""
+CONTAINER_BORDERLINE_TOLERANCE = 0
+"""No borderline tolerance is evidence-backed; count discrepancies require review."""
 
-TRUNCATED_STREAM_THRESHOLD = 10
-"""Nếu delta = reported - actual > 10 frames: TRUNCATED_STREAM.
-KHÔNG tự động coi là NORMAL_EOF dù file mở được và probe OK."""
+TRUNCATED_STREAM_THRESHOLD = 0
+"""A count delta alone is not proof of truncation; explicit decoder error evidence is required."""
 
 
 def probe_video_with_ffprobe(filepath: str | Path) -> Optional[Dict[str, Any]]:
@@ -131,151 +120,45 @@ def probe_video_with_ffprobe(filepath: str | Path) -> Optional[Dict[str, Any]]:
     return None
 
 
+# Strict full-stream verification.
 def run_external_stream_decode_check(filepath: str | Path, timeout_sec: int = 15) -> Dict[str, Any]:
-    """Sử dụng ffmpeg hoặc ffprobe để kiểm tra giải mã toàn bộ luồng video (stream termination check).
-
-    Kiểm tra:
-    1. Công cụ ngoại vi (ffmpeg hoặc ffprobe) có trên hệ thống không.
-    2. Chạy giải mã toàn bộ stream tới null sink:
-       - ffmpeg: ffmpeg -v error -i <file> -map 0:v:0 -f null -
-       - ffprobe: ffprobe -v error -count_frames -select_streams v:0 -show_entries stream=nb_read_frames -of json <file>
-    3. Kiểm tra exit_code, stderr và phát hiện các thông báo lỗi NAL/packet/header decoding error.
-
-    Returns:
-        Dict:
-        - tool_available (bool)
-        - tool_name (str | None)
-        - exit_code (int | None)
-        - stderr (str)
-        - is_clean_decode (bool | None)
-        - error_detected (bool)
-        - error_message (str)
-        - nb_read_frames (int | None)
-    """
-    path_str = str(filepath)
-    ffprobe_bin = shutil.which("ffprobe")
+    """Decode every video frame with FFmpeg and require a clean end marker."""
     ffmpeg_bin = shutil.which("ffmpeg")
-
-    if not ffprobe_bin and not ffmpeg_bin:
-        return {
-            "tool_available": False,
-            "tool_name": None,
-            "exit_code": None,
-            "stderr": "",
-            "is_clean_decode": None,
-            "error_detected": False,
-            "error_message": "Không tìm thấy ffmpeg/ffprobe trong PATH hệ thống (sử dụng OpenCV fallback)",
-            "nb_read_frames": None,
-        }
-
-    # Ưu tiên ffmpeg để decode toàn bộ luồng tới null sink
-    if ffmpeg_bin:
-        tool_name = "ffmpeg"
-        cmd = [
-            ffmpeg_bin,
-            "-v", "error",
-            "-i", path_str,
-            "-map", "0:v:0",
-            "-f", "null",
-            "-",
-        ]
-        try:
-            res = subprocess.run(
-                cmd,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-                timeout=timeout_sec,
-            )
-            err_text = res.stderr.strip()
-            is_clean = (res.returncode == 0 and len(err_text) == 0)
-            has_error = (res.returncode != 0 or any(
-                kw in err_text.lower() for kw in ("error", "corrupt", "invalid", "truncat", "failed")
-            ))
-            return {
-                "tool_available": True,
-                "tool_name": tool_name,
-                "exit_code": res.returncode,
-                "stderr": err_text,
-                "is_clean_decode": is_clean,
-                "error_detected": has_error,
-                "error_message": err_text if has_error else "",
-                "nb_read_frames": None,
-            }
-        except subprocess.TimeoutExpired:
-            return {
-                "tool_available": True,
-                "tool_name": tool_name,
-                "exit_code": -1,
-                "stderr": "Command timed out",
-                "is_clean_decode": False,
-                "error_detected": True,
-                "error_message": f"FFmpeg giải mã luồng bị treo vượt quá {timeout_sec}s",
-                "nb_read_frames": None,
-            }
-        except Exception as exc:
-            return {
-                "tool_available": True,
-                "tool_name": tool_name,
-                "exit_code": -1,
-                "stderr": str(exc),
-                "is_clean_decode": False,
-                "error_detected": True,
-                "error_message": f"Ngoại lệ khi chạy FFmpeg: {exc}",
-                "nb_read_frames": None,
-            }
-
-    # Nếu chỉ có ffprobe
-    tool_name = "ffprobe"
-    cmd = [
-        ffprobe_bin,
-        "-v", "error",
-        "-count_frames",
-        "-select_streams", "v:0",
-        "-show_entries", "stream=nb_read_frames",
-        "-of", "json",
-        path_str,
-    ]
+    if not ffmpeg_bin:
+        return {"tool_available": False, "tool_name": None, "decode_capable": False,
+                "exit_code": None, "stderr": "", "is_clean_decode": None,
+                "error_detected": False, "error_message": "FFmpeg unavailable; EOF unverified",
+                "nb_read_frames": None, "progress_end": False}
+    cmd = [ffmpeg_bin, "-nostdin", "-nostats", "-v", "error", "-xerror", "-i", str(filepath),
+           "-map", "0:v:0", "-fps_mode", "passthrough", "-f", "null", "-", "-progress", "pipe:1"]
     try:
-        res = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            timeout=timeout_sec,
-        )
-        err_text = res.stderr.strip()
-        nb_read = None
-        if res.returncode == 0 and res.stdout:
-            try:
-                data = json.loads(res.stdout)
-                streams = data.get("streams", [])
-                if streams:
-                    nb_read = int(streams[0].get("nb_read_frames", 0) or 0)
-            except Exception:
-                pass
-        has_error = (res.returncode != 0 or len(err_text) > 0)
-        return {
-            "tool_available": True,
-            "tool_name": tool_name,
-            "exit_code": res.returncode,
-            "stderr": err_text,
-            "is_clean_decode": (res.returncode == 0 and not has_error),
-            "error_detected": has_error,
-            "error_message": err_text if has_error else "",
-            "nb_read_frames": nb_read,
-        }
+        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             text=True, timeout=timeout_sec)
+        progress: Dict[str, str] = {}
+        for line in res.stdout.splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                progress[key.strip()] = value.strip()
+        frame_text = progress.get("frame", "")
+        count = int(frame_text) if frame_text.isdigit() else None
+        err = res.stderr.strip()
+        progress_end = progress.get("progress") == "end"
+        error = res.returncode != 0 or bool(err)
+        clean = res.returncode == 0 and not error and progress_end and count is not None
+        return {"tool_available": True, "tool_name": "ffmpeg", "decode_capable": True,
+                "exit_code": res.returncode, "stderr": err, "is_clean_decode": clean,
+                "error_detected": error, "error_message": err if error else "",
+                "nb_read_frames": count, "progress_end": progress_end}
+    except subprocess.TimeoutExpired:
+        return {"tool_available": True, "tool_name": "ffmpeg", "decode_capable": True,
+                "exit_code": -1, "stderr": "Command timed out", "is_clean_decode": False,
+                "error_detected": True, "error_message": f"FFmpeg timed out after {timeout_sec}s",
+                "nb_read_frames": None, "progress_end": False}
     except Exception as exc:
-        return {
-            "tool_available": True,
-            "tool_name": tool_name,
-            "exit_code": -1,
-            "stderr": str(exc),
-            "is_clean_decode": False,
-            "error_detected": True,
-            "error_message": f"Ngoại lệ khi chạy FFprobe: {exc}",
-            "nb_read_frames": None,
-        }
+        return {"tool_available": True, "tool_name": "ffmpeg", "decode_capable": True,
+                "exit_code": -1, "stderr": str(exc), "is_clean_decode": False,
+                "error_detected": True, "error_message": str(exc),
+                "nb_read_frames": None, "progress_end": False}
 
 
 def classify_decode_termination(
@@ -286,167 +169,35 @@ def classify_decode_termination(
     ffprobe_meta: Optional[Dict[str, Any]] = None,
     external_check: Optional[Dict[str, Any]] = None,
 ) -> Tuple[DecodeStatus, str, bool, int, str, bool]:
-    """Phân loại trạng thái kết thúc giải mã (Stream Termination Classification).
+    """Classify only from full-stream evidence; never infer EOF from OpenCV stop."""
+    ext = external_check or {}
+    ffmpeg_ready = bool(ext.get("tool_available") and ext.get("decode_capable"))
+    ext_count = ext.get("nb_read_frames")
+    if ext.get("error_detected") or (ffmpeg_ready and ext.get("exit_code") != 0):
+        missing = max(0, reported_frame_count - actual_decoded_frames) if reported_frame_count > 0 else 0
+        state = DecodeStatus.TRUNCATED_STREAM if actual_decoded_frames > 0 else DecodeStatus.DECODE_ERROR
+        return state, "NEEDS_REVIEW", False, max(1, missing), str(ext.get("error_message") or ext.get("stderr") or "FFmpeg decode error"), False
+    if actual_decoded_frames <= 0:
+        return DecodeStatus.DECODE_ERROR, "CORRUPTED", False, max(1, reported_frame_count), "No frames decoded", False
+    if not math.isfinite(fps) or fps <= 0 or fps > 240 or reported_frame_count <= 0:
+        return DecodeStatus.NEEDS_REVIEW, "NEEDS_REVIEW", False, 0, "Invalid FPS or missing/zero reported frame count", False
+    if not ffmpeg_ready:
+        missing = max(0, reported_frame_count - actual_decoded_frames)
+        return DecodeStatus.NEEDS_REVIEW, "NEEDS_REVIEW", False, missing, "No FFmpeg full-stream decode evidence; OpenCV stop is inconclusive", False
+    if not ext.get("is_clean_decode") or not ext.get("progress_end") or ext_count is None:
+        return DecodeStatus.NEEDS_REVIEW, "NEEDS_REVIEW", False, 0, "FFmpeg did not establish clean progress=end and decoded-frame count", False
+    if actual_decoded_frames != reported_frame_count or ext_count != reported_frame_count or ext_count != actual_decoded_frames:
+        return DecodeStatus.NEEDS_REVIEW, "NEEDS_REVIEW", False, abs(reported_frame_count - actual_decoded_frames), "OpenCV, FFmpeg, and metadata frame counts disagree; no tolerance is validated", False
+    return DecodeStatus.NORMAL_EOF, "VALID", False, 0, "FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree", True
 
-    Trả về tuple:
-        (decode_status, status, tolerance_applied, decode_errors, err_msg, full_decode_verified)
-
-    Nguyên tắc khoa học bắt buộc:
-    1. full_decode_verified=True CHỈ KHI decode_status == DecodeStatus.NORMAL_EOF.
-    2. Tuyệt đối không dùng (actual_decoded_frames > 0) làm bằng chứng full decode.
-    3. Không xem cap.grab() == False là bằng chứng kết thúc bình thường.
-    4. Không tự động đánh dấu VALID khi decoder kết thúc mà không xác định được nguyên nhân hoặc thiếu metadata.
-    5. FPS bằng 0 hoặc không hợp lệ (NaN, <=0, >240) -> NEEDS_REVIEW, full_decode_verified=False.
-    6. reported_frame_count <= 0 -> NEEDS_REVIEW, full_decode_verified=False.
-    7. Công cụ ngoại vi (ffmpeg/ffprobe) báo exit_code != 0 hoặc error_detected -> DECODE_ERROR hoặc TRUNCATED_STREAM.
-    8. Thiếu frame trong dung sai: bắt buộc thỏa mãn giới hạn thời gian (<= 0.25s / <= 0.35s). Không thỏa mãn -> NEEDS_REVIEW.
-    9. Thiếu > 10 frames -> TRUNCATED_STREAM, status NEEDS_REVIEW, full_decode_verified=False.
-    """
-    # 0. Kiểm tra kết quả từ công cụ ngoại biên (nếu có công cụ và phát hiện lỗi)
-    if external_check and external_check.get("tool_available"):
-        if external_check.get("exit_code") != 0 or external_check.get("error_detected"):
-            tool_n = external_check.get("tool_name", "external_tool")
-            code_ret = external_check.get("exit_code", -1)
-            err_detail = external_check.get("error_message", "Decode error")
-            if actual_decoded_frames == 0:
-                return (
-                    DecodeStatus.DECODE_ERROR,
-                    "CORRUPTED",
-                    False,
-                    1,
-                    f"Bộ giải mã ngoại vi ({tool_n} exit_code={code_ret}) báo lỗi luồng không thể giải mã: {err_detail}",
-                    False,
-                )
-            else:
-                missing = max(1, reported_frame_count - actual_decoded_frames) if reported_frame_count > 0 else 1
-                return (
-                    DecodeStatus.TRUNCATED_STREAM,
-                    "NEEDS_REVIEW",
-                    False,
-                    missing,
-                    f"Bộ giải mã ngoại vi ({tool_n} exit_code={code_ret}) phát hiện lỗi đứt luồng/NAL rác giữa chừng: {err_detail}",
-                    False,
-                )
-
-    # 1. Không giải mã được khung hình nào
-    if actual_decoded_frames == 0:
-        return (
-            DecodeStatus.DECODE_ERROR,
-            "CORRUPTED",
-            False,
-            1,
-            "Không giải mã được khung hình nào từ tệp video",
-            False,
-        )
-
-    # 2. FPS không hợp lệ
-    if fps <= 0.0 or math.isnan(fps) or math.isinf(fps) or fps > 240.0:
-        return (
-            DecodeStatus.NEEDS_REVIEW,
-            "NEEDS_REVIEW",
-            False,
-            0,
-            f"FPS={fps} không hợp lệ — không đủ căn cứ xác nhận thời gian luồng và khoảng cách khung hình",
-            False,
-        )
-
-    # 3. Metadata container frame count không hợp lệ (reported <= 0)
-    if reported_frame_count <= 0:
-        return (
-            DecodeStatus.NEEDS_REVIEW,
-            "NEEDS_REVIEW",
-            False,
-            0,
-            f"reported_frame_count={reported_frame_count} từ metadata container — không đủ bằng chứng đối chiếu EOF bình thường. Đã decode {actual_decoded_frames} frames.",
-            False,
-        )
-
-    missing_frames = max(0, reported_frame_count - actual_decoded_frames)
-    delta_sec = missing_frames / fps
-    missing_ratio = missing_frames / max(1, reported_frame_count)
-
-    # 4. Khớp tuyệt đối 100% (missing_frames == 0)
-    if missing_frames == 0:
-        return (
-            DecodeStatus.NORMAL_EOF,
-            "VALID",
-            False,
-            0,
-            "Khớp tuyệt đối 100% số khung hình container",
-            True,
-        )
-
-    # 5. Dung sai padding container nhỏ (1-5 frames)
-    # Cần điều kiện: thời lượng lệch <= 0.25s (trong phạm vi 1 GOP / B-frame PTS rounding)
-    if missing_frames <= CONTAINER_PADDING_TOLERANCE:
-        if delta_sec <= 0.25:
-            return (
-                DecodeStatus.NORMAL_EOF,
-                "VALID",
-                True,
-                0,
-                f"Khớp trong dung sai container padding thông thường (thiếu {missing_frames} frames <= {CONTAINER_PADDING_TOLERANCE}; delta_t={delta_sec:.3f}s <= 0.25s; MP4 container index rounding / B-frame PTS offset)",
-                True,
-            )
-        else:
-            return (
-                DecodeStatus.NEEDS_REVIEW,
-                "NEEDS_REVIEW",
-                False,
-                missing_frames,
-                f"Sai lệch khung hình trong ngưỡng 5 frame nhưng thời lượng lệch lớn ({delta_sec:.3f}s > 0.25s do FPS thấp) — chuyển NEEDS_REVIEW",
-                False,
-            )
-
-    # 6. Dung sai cận (6-10 frames)
-    # Cần điều kiện: thời lượng lệch <= 0.35s VÀ tỷ lệ thiếu <= 1.0%
-    if missing_frames <= CONTAINER_BORDERLINE_TOLERANCE:
-        if delta_sec <= 0.35 and missing_ratio <= 0.01:
-            LOGGER.warning(
-                "Video %s BORDERLINE_TOLERANCE applied: thiếu %d frames (%.3fs, %.2f%%)",
-                filepath or "unknown", missing_frames, delta_sec, missing_ratio * 100
-            )
-            return (
-                DecodeStatus.NORMAL_EOF,
-                "VALID",
-                True,
-                0,
-                f"Khớp trong dung sai container cận có cảnh báo (thiếu {missing_frames} frames <= {CONTAINER_BORDERLINE_TOLERANCE}; delta_t={delta_sec:.3f}s <= 0.35s; ratio={missing_ratio:.2%})",
-                True,
-            )
-        else:
-            LOGGER.warning(
-                "Video %s BORDERLINE_DISCREPANCY không đủ điều kiện dung sai an toàn: thiếu %d frames (%.3fs, %.2f%%) — chuyển NEEDS_REVIEW",
-                filepath or "unknown", missing_frames, delta_sec, missing_ratio * 100
-            )
-            return (
-                DecodeStatus.NEEDS_REVIEW,
-                "NEEDS_REVIEW",
-                False,
-                missing_frames,
-                f"Sai lệch khung hình cận vượt ngưỡng an toàn thời gian (thiếu {missing_frames} frames, delta_t={delta_sec:.3f}s > 0.35s hoặc ratio={missing_ratio:.2%} > 1.0%) — không đủ bằng chứng kết thúc bình thường",
-                False,
-            )
-
-    # 7. Thiếu > 10 frames: Bắt buộc là TRUNCATED_STREAM
-    LOGGER.warning(
-        "Video %s TRUNCATED_STREAM: Stream kết thúc sớm tại frame %d/%d (thiếu %d frames > %d)",
-        filepath or "unknown", actual_decoded_frames, reported_frame_count, missing_frames, TRUNCATED_STREAM_THRESHOLD
-    )
-    return (
-        DecodeStatus.TRUNCATED_STREAM,
-        "NEEDS_REVIEW",
-        False,
-        missing_frames,
-        f"Stream kết thúc sớm tại frame {actual_decoded_frames}/{reported_frame_count} (thiếu {missing_frames} frames > {TRUNCATED_STREAM_THRESHOLD} do lỗi luồng NAL/packet)",
-        False,
-    )
 
 # ---------------------------------------------------------------------------
 # CACHE SCHEMA VERSION
 # ---------------------------------------------------------------------------
-CACHE_SCHEMA_VERSION = 2
-"""Schema version của cache. Record thiếu 'sha256' hoặc 'schema_version' < 2
+CACHE_SCHEMA_VERSION = 3
+"""Schema version of strict full-decode cache. Older cached VALID results are
+invalidated because previous versions could accept unverified EOF/tolerances.
+Record thiếu 'sha256' hoặc schema_version < 3
 bị invalidate bắt buộc."""
 
 
@@ -681,19 +432,12 @@ def audit_single_video(
       Subset của full_decoded_frames.
     - processed_frame_count: Của inference pipeline — KHÔNG thuộc phạm vi audit.
 
-    Tolerance policy (Explicit Container Tolerance):
-    - Delta = reported_frame_count - full_decoded_frames
-    - Delta == 0           → NORMAL_EOF (khớp tuyệt đối)
-    - 1 <= Delta <= 5      → NORMAL_EOF (MP4 container index rounding, B-frame PTS offset)
-    - 6 <= Delta <= 10     → NORMAL_EOF + WARNING log (B-frame reorder buffer flush)
-    - Delta > 10           → TRUNCATED_STREAM (buộc NEEDS_REVIEW)
-    - reported == 0        → NEEDS_REVIEW (không đủ bằng chứng)
-
-    QUAN TRỌNG: KHÔNG gán NORMAL_EOF chỉ vì cap.read()/cap.grab() trả về False.
-    Phải so sánh full_decoded_frames với reported_frame_count.
+    No frame-count tolerance is applied. NORMAL_EOF requires clean FFmpeg full
+    decode evidence and exact frame-count agreement with OpenCV and container.
+    Any uncorroborated termination or count mismatch is NEEDS_REVIEW.
 
     decode_status tách biệt hoàn toàn với source_label_status và human_review_status.
-    full_decode_verified=True: đã quét tuần tự đến EOF (không phụ thuộc nhãn ngữ nghĩa).
+    full_decode_verified=True only when the strict EOF evidence is complete.
     """
     vpath = Path(filepath).resolve()
     base_root = root_dir.resolve() if root_dir else Path.cwd().resolve()
@@ -743,9 +487,12 @@ def audit_single_video(
 
     w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     h_dim = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps_val = round(float(cap.get(cv2.CAP_PROP_FPS) or 0.0), 2)
+    fps_raw = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
+    # Keep records JSON-safe while still forcing review for invalid metadata.
+    fps_val = round(fps_raw, 2) if math.isfinite(fps_raw) else 0.0
     # reported_frame_count: từ metadata container — có thể không chính xác
-    reported_frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    reported_raw = float(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0.0)
+    reported_frame_count = int(reported_raw) if math.isfinite(reported_raw) else 0
 
     fourcc_int = int(cap.get(cv2.CAP_PROP_FOURCC))
     codec_str = "".join([chr((fourcc_int >> 8 * i) & 0xFF) for i in range(4)]).strip()
@@ -760,6 +507,17 @@ def audit_single_video(
             probed_ok += 1
         else:
             break
+
+    if probed_ok == 0 and reported_frame_count <= 0:
+        cap.release()
+        return _make_error_record(
+            vid=vid, rel_path=rel_path, fname=fname,
+            sha256=sha256_val, sha256_verified=sha256_verified, fsize=fsize,
+            decode_status=DecodeStatus.NEEDS_REVIEW,
+            fps=fps_val, w=w, h=h_dim, reported_frame_count=reported_frame_count,
+            codec=codec_str,
+            error_message="No frames and no positive container frame count; EOF and decodability are unverified",
+        )
 
     if probed_ok == 0:
         cap.release()
@@ -785,10 +543,11 @@ def audit_single_video(
     missing_frames = max(0, reported_frame_count - probed_ok)
 
     if full_decode:
-        # Tiếp tục decode tuần tự từ probe_frames+1 đến EOF
-        # grab() giải mã nhưng không decode pixel — nhanh hơn read()
+        # Continue full sequential pixel decoding. A failed read alone is not EOF
+        # evidence; the independent FFmpeg pass below must also complete cleanly.
         while True:
-            if not cap.grab():
+            ret, frame = cap.read()
+            if not ret or frame is None:
                 break
             actual_decoded_frames += 1
 
@@ -877,6 +636,7 @@ def audit_single_video(
         "duplicate_of": None,
         "stream_verification_backend": stream_backend,
         "external_tool_check": external_check,
+        "ffprobe_metadata": ffprobe_meta,
         "duration_calc_method": dur_calc_method,
         "schema_version": CACHE_SCHEMA_VERSION,
         "last_audited_at": datetime.now(timezone.utc).isoformat(),

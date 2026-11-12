@@ -11,7 +11,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
+import subprocess
 import shutil
 import sys
 import tempfile
@@ -31,9 +33,6 @@ if str(ROOT_DIR) not in sys.path:
 from src.event_eval import exact_poisson_ci
 from src.video_audit import (
     CACHE_SCHEMA_VERSION,
-    CONTAINER_BORDERLINE_TOLERANCE,
-    CONTAINER_PADDING_TOLERANCE,
-    TRUNCATED_STREAM_THRESHOLD,
     DecodeStatus,
     VideoDecodeCacheManager,
     audit_single_video,
@@ -182,7 +181,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertIsNone(mgr.get(p, validate_sha256=True))
 
     def test_10_cache_old_schema_no_sha256(self):
-        """10. Cache bản ghi cũ thiếu SHA-256 hoặc schema_version < 2 bị invalidate bắt buộc."""
+        """10. Old v1/v2 cache records are invalidated after the strict EOF policy change."""
         cache_file = self.test_dir / ".cache.json"
         vpath = self.test_dir / "old_schema.avi"
         create_synthetic_video(vpath, num_frames=10, fps=10.0)
@@ -196,6 +195,16 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
             "full_decoded_frames": 10,
             "schema_version": 1,  # Cũ (< 2)
             "sha256": "",
+        }
+        self.assertIsNone(mgr.get(vpath, validate_sha256=True))
+
+        # A v2 entry may have a valid hash but was produced under the old EOF policy.
+        mgr.cache_data[key] = {
+            "relative_path": key,
+            "file_size_bytes": vpath.stat().st_size,
+            "full_decoded_frames": 10,
+            "schema_version": 2,
+            "sha256": compute_streaming_sha256(vpath),
         }
         self.assertIsNone(mgr.get(vpath, validate_sha256=True))
 
@@ -266,7 +275,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertEqual(res["decode_status"], "TRUNCATED_STREAM")
         self.assertEqual(res["status"], "NEEDS_REVIEW")
         self.assertFalse(res["full_decode_verified"])
-        self.assertGreater(res["missing_frames"], TRUNCATED_STREAM_THRESHOLD)
+        self.assertGreater(res["missing_frames"], 0)
 
     def test_17_decode_midstream_error(self):
         """17. Video bị lỗi rác giữa luồng: dừng sớm, tuyệt đối không chấp nhận NORMAL_EOF, full_decode_verified=False."""
@@ -316,19 +325,19 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         r_full = audit_single_video(vpath, full_decode=True)
         self.assertTrue(r_full["full_decode_verified"])
 
-    def test_22_decode_borderline_tolerance(self):
-        """22. Dung sai cận: gọi trực tiếp classify_decode_termination kiểm tra chặt điều kiện thời gian và tỷ lệ."""
-        # Case A: Dung sai cận hợp lệ (missing 8 frames <= 10, delta_t = 8/30 = 0.267s <= 0.35s, ratio = 8/1000 = 0.8% <= 1%)
+    def test_22_count_discrepancy_needs_review_without_eof_evidence(self):
+        """22. No fixed tolerance accepts mismatches without independent clean EOF evidence."""
+        # Eight frames differ even though the old ratio/time thresholds would have passed.
         status_a, review_a, tol_a, missing_a, notes_a, verified_a = classify_decode_termination(
             actual_decoded_frames=992, reported_frame_count=1000, fps=30.0
         )
-        self.assertEqual(status_a, DecodeStatus.NORMAL_EOF)
-        self.assertEqual(review_a, "VALID")
-        self.assertTrue(tol_a)
-        self.assertTrue(verified_a)
-        self.assertEqual(missing_a, 0)
+        self.assertEqual(status_a, DecodeStatus.NEEDS_REVIEW)
+        self.assertEqual(review_a, "NEEDS_REVIEW")
+        self.assertFalse(tol_a)
+        self.assertFalse(verified_a)
+        self.assertEqual(missing_a, 8)
 
-        # Case B: Sai lệch cận nhưng thời lượng lệch quá lớn do FPS thấp (delta_t = 8/10 = 0.8s > 0.35s) -> Chuyển NEEDS_REVIEW
+        # Lower FPS does not establish a special tolerance.
         status_b, review_b, tol_b, missing_b, notes_b, verified_b = classify_decode_termination(
             actual_decoded_frames=22, reported_frame_count=30, fps=10.0
         )
@@ -338,7 +347,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertFalse(verified_b)
         self.assertEqual(missing_b, 8)
 
-        # Case C: Sai lệch cận nhưng tỷ lệ thiếu quá lớn (ratio = 8/100 = 8.0% > 1.0%) -> Chuyển NEEDS_REVIEW
+        # A large relative discrepancy also requires review.
         status_c, review_c, tol_c, missing_c, notes_c, verified_c = classify_decode_termination(
             actual_decoded_frames=92, reported_frame_count=100, fps=30.0
         )
@@ -347,11 +356,11 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertFalse(tol_c)
         self.assertFalse(verified_c)
 
-        # Case D: Vượt ngưỡng cận (> 10 frames) -> TRUNCATED_STREAM
+        # A count delta alone is not proof of stream truncation.
         status_d, review_d, tol_d, missing_d, notes_d, verified_d = classify_decode_termination(
             actual_decoded_frames=80, reported_frame_count=100, fps=30.0
         )
-        self.assertEqual(status_d, DecodeStatus.TRUNCATED_STREAM)
+        self.assertEqual(status_d, DecodeStatus.NEEDS_REVIEW)
         self.assertEqual(review_d, "NEEDS_REVIEW")
         self.assertFalse(verified_d)
         self.assertEqual(missing_d, 20)
@@ -364,6 +373,156 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         vpath.write_bytes(bytes(raw[: int(len(raw) * 0.3)]))
         res = audit_single_video(vpath, full_decode=True)
         self.assertLessEqual(res["full_decoded_frames"], 25)
+
+    def test_strict_audit_requires_real_ffmpeg_eof_evidence(self):
+        """Actual audit pipeline accepts only clean FFmpeg EOF plus three-way count agreement."""
+        video = self.test_dir / "clean_full_stream.avi"
+        create_synthetic_video(video, 24, 12.0)
+        record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(record["decode_status"], "NORMAL_EOF")
+        self.assertTrue(record["full_decode_verified"])
+        self.assertEqual(record["external_tool_check"]["tool_name"], "ffmpeg")
+        self.assertEqual(record["external_tool_check"]["nb_read_frames"], 24)
+        self.assertTrue(record["external_tool_check"]["progress_end"])
+
+    def test_truncated_video_is_not_accepted_by_pipeline(self):
+        video = self.test_dir / "truncated_pipeline.avi"
+        create_synthetic_video(video, 80, 10.0)
+        video.write_bytes(video.read_bytes()[: int(video.stat().st_size * 0.55)])
+        record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertIn(record["decode_status"], ("TRUNCATED_STREAM", "DECODE_ERROR", "NEEDS_REVIEW"))
+        self.assertNotEqual(record["decode_status"], "NORMAL_EOF")
+        self.assertFalse(record["full_decode_verified"])
+
+    def test_incorrect_container_frame_count_forces_review(self):
+        video = self.test_dir / "wrong_frame_metadata.avi"
+        create_synthetic_video(video, 20, 10.0)
+        original_get = cv2.VideoCapture.get
+        def wrong_count(capture, prop):
+            if prop == cv2.CAP_PROP_FRAME_COUNT:
+                return 19.0
+            return original_get(capture, prop)
+        with patch.object(cv2.VideoCapture, "get", wrong_count):
+            record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(record["full_decoded_frames"], 20)
+        self.assertEqual(record["external_tool_check"]["nb_read_frames"], 20)
+        self.assertEqual(record["decode_status"], "NEEDS_REVIEW")
+        self.assertFalse(record["full_decode_verified"])
+
+    def test_corrupt_packet_nal_is_not_accepted_by_pipeline(self):
+        video = self.test_dir / "corrupt_nal_pipeline.avi"
+        create_synthetic_video(video, 50, 10.0)
+        raw = bytearray(video.read_bytes())
+        start = len(raw) // 2
+        raw[start:start + 1200] = b"\x00\xff" * 600
+        video.write_bytes(raw)
+        record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertNotEqual(record["decode_status"], "NORMAL_EOF")
+        self.assertFalse(record["full_decode_verified"])
+
+    def test_silent_opencv_stop_is_needs_review(self):
+        video = self.test_dir / "silent_stop.avi"
+        create_synthetic_video(video, 30, 10.0)
+        real_capture = cv2.VideoCapture
+
+        class SilentStopCapture:
+            def __init__(self, path):
+                self.inner = real_capture(path)
+                self.reads = 0
+            def isOpened(self): return self.inner.isOpened()
+            def get(self, prop): return self.inner.get(prop)
+            def read(self):
+                self.reads += 1
+                return self.inner.read() if self.reads <= 9 else (False, None)
+            def release(self): self.inner.release()
+
+        with patch("src.video_audit.cv2.VideoCapture", SilentStopCapture):
+            record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(record["full_decoded_frames"], 9)
+        self.assertEqual(record["decode_status"], "NEEDS_REVIEW")
+        self.assertFalse(record["full_decode_verified"])
+
+    def test_invalid_fps_and_zero_frame_metadata_are_review(self):
+        video = self.test_dir / "invalid_metadata.avi"
+        create_synthetic_video(video, 20, 10.0)
+        real_capture = cv2.VideoCapture
+
+        class BadMetadataCapture:
+            bad_prop = None
+            bad_value = 0.0
+            def __init__(self, path): self.inner = real_capture(path)
+            def isOpened(self): return self.inner.isOpened()
+            def get(self, prop):
+                if prop == self.bad_prop: return self.bad_value
+                return self.inner.get(prop)
+            def read(self): return self.inner.read()
+            def release(self): self.inner.release()
+
+        BadMetadataCapture.bad_prop = cv2.CAP_PROP_FPS
+        for invalid_fps in (0.0, -1.0, float("nan"), 300.0):
+            BadMetadataCapture.bad_value = invalid_fps
+            with patch("src.video_audit.cv2.VideoCapture", BadMetadataCapture):
+                bad_fps = audit_single_video(video, root_dir=self.test_dir)
+            self.assertEqual(bad_fps["decode_status"], "NEEDS_REVIEW")
+            self.assertFalse(bad_fps["full_decode_verified"])
+            self.assertTrue(math.isfinite(bad_fps["fps"]))
+        BadMetadataCapture.bad_prop = cv2.CAP_PROP_FRAME_COUNT
+        with patch("src.video_audit.cv2.VideoCapture", BadMetadataCapture):
+            zero_count = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(zero_count["decode_status"], "NEEDS_REVIEW")
+        self.assertFalse(zero_count["full_decode_verified"])
+
+    def test_ffmpeg_absent_or_nonzero_exit_is_not_valid(self):
+        video = self.test_dir / "external_failure.avi"
+        create_synthetic_video(video, 20, 10.0)
+        with patch("src.video_audit.shutil.which", return_value=None):
+            unavailable = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(unavailable["decode_status"], "NEEDS_REVIEW")
+        self.assertFalse(unavailable["full_decode_verified"])
+        failed_check = {"tool_available": True, "decode_capable": True, "tool_name": "ffmpeg",
+                        "exit_code": 1, "error_detected": True, "error_message": "decode failure",
+                        "nb_read_frames": 12, "is_clean_decode": False, "progress_end": False}
+        with patch("src.video_audit.run_external_stream_decode_check", return_value=failed_check):
+            failed = audit_single_video(video, root_dir=self.test_dir)
+        self.assertIn(failed["decode_status"], ("TRUNCATED_STREAM", "DECODE_ERROR"))
+        self.assertFalse(failed["full_decode_verified"])
+
+    def test_ffprobe_error_does_not_replace_ffmpeg_full_decode(self):
+        video = self.test_dir / "ffprobe_error.avi"
+        create_synthetic_video(video, 18, 9.0)
+        real_run = subprocess.run
+        def fail_ffprobe(command, *args, **kwargs):
+            if "ffprobe" in Path(str(command[0])).name.lower():
+                return subprocess.CompletedProcess(command, 1, "", "simulated ffprobe metadata error")
+            return real_run(command, *args, **kwargs)
+        with patch("src.video_audit.subprocess.run", side_effect=fail_ffprobe):
+            record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(record["decode_status"], "NORMAL_EOF")
+        self.assertTrue(record["full_decode_verified"])
+        self.assertIsNone(record["ffprobe_metadata"])
+
+    def test_ffprobe_not_installed_ffmpeg_can_still_verify_full_stream(self):
+        video = self.test_dir / "no_ffprobe_but_ffmpeg.avi"
+        create_synthetic_video(video, 18, 9.0)
+        ffmpeg_path = shutil.which("ffmpeg")
+        with patch("src.video_audit.shutil.which", side_effect=lambda name: None if name == "ffprobe" else ffmpeg_path):
+            record = audit_single_video(video, root_dir=self.test_dir)
+        self.assertEqual(record["decode_status"], "NORMAL_EOF")
+        self.assertTrue(record["full_decode_verified"])
+        self.assertTrue(record["external_tool_check"]["is_clean_decode"])
+
+    def test_same_size_content_change_invalidates_cached_audit(self):
+        video = self.test_dir / "cache_same_size.avi"
+        create_synthetic_video(video, 20, 10.0)
+        manager = VideoDecodeCacheManager(self.test_dir / "cache.json", self.test_dir)
+        first = audit_single_video(video, root_dir=self.test_dir, cache_manager=manager)
+        raw = bytearray(video.read_bytes())
+        raw[len(raw) // 2] ^= 0x01
+        video.write_bytes(raw)
+        second = audit_single_video(video, root_dir=self.test_dir, cache_manager=manager)
+        self.assertEqual(first["file_size_bytes"], second["file_size_bytes"])
+        self.assertNotEqual(first["sha256"], second["sha256"])
+        self.assertNotEqual(first["last_audited_at"], second["last_audited_at"])
 
     # =========================================================================
     # 4. MANIFEST TESTS (24 - 30)
@@ -547,7 +706,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         status, review, tol, missing, notes, verified = classify_decode_termination(
             actual_decoded_frames=75, reported_frame_count=100, fps=25.0
         )
-        self.assertEqual(status, DecodeStatus.TRUNCATED_STREAM)
+        self.assertEqual(status, DecodeStatus.NEEDS_REVIEW)
         self.assertEqual(review, "NEEDS_REVIEW")
         self.assertFalse(verified)
         self.assertEqual(missing, 25)
@@ -559,7 +718,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertEqual(status_zero, DecodeStatus.DECODE_ERROR)
         self.assertEqual(review_zero, "CORRUPTED")
         self.assertFalse(verified_zero)
-        self.assertEqual(missing_zero, 1)
+        self.assertEqual(missing_zero, 100)
 
     def test_44_audit_pipeline_invalid_fps(self):
         """44. Pipeline thực tế: FPS=0 hoặc không hợp lệ -> status=NEEDS_REVIEW, full_decode_verified=False."""
@@ -595,15 +754,14 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
             self.assertFalse(res["full_decode_verified"])
 
     def test_46_audit_pipeline_ffprobe_not_installed(self):
-        """46. Pipeline thực tế: khi FFmpeg/FFprobe không cài đặt -> OpenCV fallback vận hành an toàn và ghi rõ backend."""
+        """46. Pipeline thực tế: FFmpeg thiếu thì không xác nhận EOF qua OpenCV đơn lẻ."""
         vpath = self.test_dir / "no_ffprobe.avi"
         create_synthetic_video(vpath, num_frames=20, fps=10.0)
-        with patch("shutil.which", return_value=None):
+        with patch("src.video_audit.shutil.which", return_value=None):
             res = audit_single_video(vpath, full_decode=True)
-            self.assertEqual(res["decode_status"], "NORMAL_EOF")
-            self.assertEqual(res["status"], "VALID")
-            self.assertTrue(res["full_decode_verified"])
-            self.assertIn("opencv", res["stream_verification_backend"].lower())
+            self.assertEqual(res["decode_status"], "NEEDS_REVIEW")
+            self.assertEqual(res["status"], "NEEDS_REVIEW")
+            self.assertFalse(res["full_decode_verified"])
             self.assertFalse(res["external_tool_check"]["tool_available"])
 
     def test_47_audit_pipeline_external_tool_error_exit_code(self):

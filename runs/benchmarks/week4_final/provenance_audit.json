@@ -1,71 +1,99 @@
 {
-  "audit_title": "Scientific Provenance & Artifact Traceability Audit",
-  "audit_timestamp": "2026-11-12T17:35:00+07:00",
-  "source_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
-  "audit_commit": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
+  "audit_title": "Week 4 reliability and provenance audit (corrected)",
+  "audit_timestamp": "2026-11-12T17:45:00+07:00",
+  "source_commit": null,
+  "audit_commit": null,
+  "audit_base_commit": "3ebd4f45169380c33409faf2e9899ba167d648d7",
+  "working_tree_dirty": true,
   "git_branch": "main",
+  "inference_run_id": "run_20261111_233035_neg_full",
   "authoritative_model_checkpoint": {
     "relative_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
     "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "sha256_recomputed": true,
     "model_architecture": "YOLOv8n",
-    "classes": ["smoke", "fire"],
+    "classes": [
+      "smoke",
+      "fire"
+    ],
     "imgsz": 640
   },
-  "authoritative_datasets": {
-    "dfire_dataset_root": "datasets/dfire_yolo",
-    "vn_dataset_root": "datasets/vn_dataset",
-    "negative_surveillance_videos_root": "datasets/negative_videos",
-    "negative_test_videos_root": "datasets/test_videos/neg"
+  "dataset_manifest": {
+    "relative_path": "data/negative_videos_manifest.json",
+    "sha256": "5413a0328fc6aea70da0f5b22f96514b8bab780a45737f22be0dea896768bfb1",
+    "last_artifact_commit": "091352f7f8b51c5cd65790ca8c7026d988170e76",
+    "run_recorded_sha256": "75626b6b563bae499848543732cfb1a172e1475773674b1acbd36a80e8e0c1ed",
+    "status": "UNSYNCHRONIZED_WITH_INFERENCE_RUN"
+  },
+  "inference_run": {
+    "run_id": "run_20261111_233035_neg_full",
+    "run_manifest_path": "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/run_manifest.json",
+    "created_at": "2026-11-12T00:00:34.195501",
+    "run_code_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+    "source_code_base_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+    "run_checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "run_manifest_sha256": "d6c560cf853d2b7182077f7665ece01932fa54d0311a932c0ec9e267490b7f26",
+    "last_artifact_commit": "6e490bd414f2e3b3240f87c93b0a66e7f96c40ca"
   },
   "artifacts_audited": [
     {
       "artifact_path": "runs/benchmarks/week4_final/metrics.json",
-      "has_timestamp": true,
-      "has_source_commit": true,
-      "has_run_id": true,
-      "status": "VALID_TRACEABLE",
-      "notes": "Đã đồng bộ đầy đủ các mẫu số exposure và 95% Poisson CI"
+      "last_artifact_commit": "3ebd4f45169380c33409faf2e9899ba167d648d7",
+      "embedded_source_commit_before_correction": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
+      "embedded_timestamp": "2026-11-12T17:35:00+07:00",
+      "filesystem_mtime": "2026-11-12T17:26:40+07:00",
+      "status": "UNSYNCHRONIZED_PROVENANCE_AND_TIMESTAMP"
     },
     {
       "artifact_path": "runs/benchmarks/week4_final/operating_point_audit.json",
-      "has_timestamp": true,
-      "has_source_commit": true,
-      "has_run_id": true,
-      "status": "VALID_TRACEABLE",
+      "last_artifact_commit": "3ebd4f45169380c33409faf2e9899ba167d648d7",
+      "embedded_source_commit_before_correction": "bc636ea1e923fcc5588e42a572877b8b5af506a7",
+      "embedded_timestamp": "2026-11-12T17:35:00+07:00",
+      "filesystem_mtime": "2026-11-12T17:26:40+07:00",
       "operating_point_status": "PROVISIONAL",
-      "notes": "Khóa chặt trạng thái PROVISIONAL bảo đảm tính nghiêm cẩn khoa học"
+      "status": "UNSYNCHRONIZED_PROVENANCE_AND_TIMESTAMP"
     },
     {
       "artifact_path": "data/negative_videos_manifest.json",
-      "has_timestamp": true,
-      "has_source_commit": true,
-      "has_run_id": true,
+      "last_artifact_commit": "091352f7f8b51c5cd65790ca8c7026d988170e76",
       "sha256": "5413a0328fc6aea70da0f5b22f96514b8bab780a45737f22be0dea896768bfb1",
-      "status": "VALID_TRACEABLE",
-      "notes": "Manifest version 2.3 lưu trữ đầy đủ full SHA-256 streaming và trạng thái giải mã"
+      "status": "CURRENT_LOCAL_MANIFEST"
     },
     {
       "artifact_path": "runs/benchmarks/week4_final/ground_truth/ground_truth_master.csv",
-      "has_timestamp": true,
-      "has_source_commit": true,
-      "has_run_id": false,
-      "status": "VALID_TRACEABLE",
-      "notes": "Ghi nhận 35 sự kiện dương tính (11 cross_verified, 24 pending)"
+      "last_artifact_commit": "94a1d3b3faac95b9f6431369dd138b7f269099a6",
+      "sha256": "d58cb156e10770df3a194aceb5a4629d6bb3b4b6b54857cb6861f41a4c3ef509",
+      "recorded_ground_truth_state": "11/35 cross-verified; 24 pending Annotator 02",
+      "status": "PRESERVED_NOT_REVERIFIED"
     },
     {
       "artifact_path": "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/video_inference_summary.csv",
-      "has_timestamp": true,
-      "has_source_commit": true,
-      "has_run_id": true,
-      "status": "VALID_TRACEABLE",
-      "notes": "Ghi nhận 79 video hoàn tất inference ở 5 FPS sampling rate"
+      "last_artifact_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+      "inference_run_id": "run_20261111_233035_neg_full",
+      "status": "HISTORICAL_RUN_OUTPUT"
+    },
+    {
+      "artifact_path": "runs/benchmarks/week4_final/inference_reconciliation_report.json",
+      "last_artifact_commit": "091352f7f8b51c5cd65790ca8c7026d988170e76",
+      "embedded_timestamp": "2026-11-12T09:13:00Z",
+      "inference_run_id": "run_20261111_233035_neg_full",
+      "status": "HISTORICAL_RECONCILIATION"
     }
   ],
+  "scientific_limits": {
+    "ground_truth": "11/35 cross-verified; 24 pending Annotator 02; unchanged",
+    "operating_point": "PROVISIONAL",
+    "rtsp": "NOT_TESTED",
+    "full_negative_media_reaudit": "NOT_COMPLETED; 63/79 manifest paths are absent from workspace",
+    "acceptance": "NOT_ACCEPTED_NEEDS_REVIEW"
+  },
   "consistency_summary": {
-    "is_consistent": true,
-    "missing_videos_count": 0,
-    "unexplained_duration_discrepancies": 0,
-    "model_checkpoint_matches": true,
-    "exposure_scope_reconciled": true
+    "is_consistent": false,
+    "current_manifest_matches_inference_run": false,
+    "provenance_source_commit_matches_current_head": false,
+    "audit_commit_exists": false,
+    "checkpoint_matches_run": true,
+    "exposure_counts_recalculated": true,
+    "full_negative_media_reaudited": false
   }
-}
+}\n
