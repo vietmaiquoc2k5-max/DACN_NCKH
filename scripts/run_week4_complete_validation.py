@@ -47,50 +47,11 @@ from src.detector import SharedFireSmokeDetector
 from src.event_eval import (
     Event,
     FrameDetection,
+    exact_poisson_ci,
     merge_frame_alarms_to_events,
 )
 from src.temporal_features import TemporalFeatureExtractor
 from src.temporal_verifier import DetectionBox, TemporalVerifier, compute_dynamic_feature_score
-
-
-def exact_poisson_ci(k: int, exposure_hours: float, alpha: float = 0.05) -> Tuple[float, float]:
-    """Tính khoảng tin cậy Poisson chính xác 95% cho biến đếm sự kiện trên một tổng exposure."""
-    if exposure_hours <= 0:
-        return 0.0, 0.0
-
-    def poisson_cdf(val_k: int, mu: float) -> float:
-        ans = 0.0
-        term = math.exp(-mu)
-        ans += term
-        for i in range(1, val_k + 1):
-            term *= mu / i
-            ans += term
-        return ans
-
-    # Cận dưới (Lower bound): P(X >= k) = alpha / 2 <=> P(X <= k - 1) = 1 - alpha / 2
-    if k == 0:
-        low = 0.0
-    else:
-        lo, hi = 0.0, float(k)
-        for _ in range(60):
-            mid = (lo + hi) / 2.0
-            if poisson_cdf(k - 1, mid) > (1.0 - alpha / 2.0):
-                lo = mid
-            else:
-                hi = mid
-        low = ((lo + hi) / 2.0) / exposure_hours
-
-    # Cận trên (Upper bound): P(X <= k) = alpha / 2
-    lo, hi = float(k), float(k + 25)
-    for _ in range(60):
-        mid = (lo + hi) / 2.0
-        if poisson_cdf(k, mid) < (alpha / 2.0):
-            hi = mid
-        else:
-            lo = mid
-    high = ((lo + hi) / 2.0) / exposure_hours
-
-    return round(low, 4), round(high, 4)
 
 
 def classify_scenario(fname: str, notes: str) -> str:
@@ -196,7 +157,9 @@ def audit_negative_videos_dir(dir_path: Path) -> List[Dict[str, Any]]:
             "width": w,
             "height": h_dim,
             "frame_count": frame_count,
-            "decoded_frames": decoded_frames,
+            "audit_probe_frames": decoded_frames,
+            "decoded_frames": frame_count if status == "VALID" else decoded_frames,
+            "full_decode_verified": False,
             "codec": "h264/mp4v",
             "source": "surveillance_negative_batch",
             "scenario_category": scenario,

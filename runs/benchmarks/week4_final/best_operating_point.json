@@ -1,6 +1,7 @@
 {
-  "status": "OFFICIAL",
+  "status": "PROVISIONAL",
   "feasible": true,
+  "selection_status_reason": "Đạt 100% ràng buộc khoa học trên Validation split và Negative Exposure (FAR giảm 57.39% >= 50%, Delay 2.13s <= 10s, Recall suy giảm 0.0% <= 5%). Giữ trạng thái PROVISIONAL (chưa chuyển OFFICIAL) do 24/35 Ground Truth events trên tập video còn ở trạng thái pending_verification chờ annotator thứ hai thẩm định độc lập.",
   "selected_operating_point": {
     "confidence_threshold": 0.35,
     "k": 3,
@@ -26,7 +27,7 @@
     "false_alarms_per_hour": 58.4511,
     "far_95_ci": [
       53.0003,
-      61.9221
+      64.3103
     ],
     "far_reduction_vs_frame_baseline_pct": 57.39
   },
@@ -37,10 +38,16 @@
     "event_f1": 0.7222,
     "mean_detection_delay_sec": 3.21
   },
+  "official_lock_blockers": [
+    "Cần hoàn tất cross-verification độc lập của annotator thứ 2 cho 24 sự kiện pending trong data/ground_truth/events.jsonl.",
+    "Chạy locked test evaluation chính thức sau khi 100% sự kiện Ground Truth của Test Set được cross-verified."
+  ],
   "verification_history": {
-    "timestamp": "2026-11-12T00:00:34.206379",
-    "git_commit": "256065e7",
+    "timestamp": "2026-11-12T13:15:00",
+    "git_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+    "source_run_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
     "model_checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
     "evaluated_by": "Mai Quốc Việt & Lê Minh Thiên"
   }
 }

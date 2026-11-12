@@ -36,6 +36,49 @@ from typing import Any, Sequence
 LOGGER = logging.getLogger("event_eval")
 
 
+def exact_poisson_ci(k: int, exposure_hours: float, alpha: float = 0.05) -> tuple[float, float]:
+    """Tính khoảng tin cậy Poisson chính xác 95% (Garwood Exact Two-Sided Confidence Interval).
+
+    Công thức chuẩn khoa học dựa trên mối quan hệ giữa biến ngẫu nhiên Poisson và phân phối Gamma/Chi-Square:
+    - Cận dưới: Gamma(shape=k, scale=1).ppf(alpha / 2) / exposure_hours (với k=0 thì lower = 0.0).
+    - Cận trên: Gamma(shape=k+1, scale=1).ppf(1 - alpha / 2) / exposure_hours.
+    Đảm bảo không bị lỗi tràn số hoặc underflow khi k lớn (k > 500) và point estimate luôn nằm trong [low, high].
+    """
+    if exposure_hours <= 0:
+        return 0.0, 0.0
+    if k < 0:
+        raise ValueError("Số sự kiện k phải >= 0")
+
+    import torch
+
+    # Lower bound: P(X >= k; mu_low) = alpha / 2 <=> gammainc(k, mu_low) = alpha / 2
+    if k == 0:
+        low = 0.0
+    else:
+        lo, hi = 0.0, float(k)
+        for _ in range(80):
+            mid = (lo + hi) / 2.0
+            p = float(torch.special.gammainc(torch.tensor(float(k)), torch.tensor(mid)))
+            if p < (alpha / 2.0):
+                lo = mid
+            else:
+                hi = mid
+        low = ((lo + hi) / 2.0) / exposure_hours
+
+    # Upper bound: P(X <= k; mu_high) = alpha / 2 <=> gammaincc(k + 1, mu_high) = alpha / 2
+    lo, hi = float(k), float(k + 5 * max(10.0, (k + 1) ** 0.5))
+    for _ in range(80):
+        mid = (lo + hi) / 2.0
+        p = float(torch.special.gammaincc(torch.tensor(float(k + 1)), torch.tensor(mid)))
+        if p < (alpha / 2.0):
+            hi = mid
+        else:
+            lo = mid
+    high = ((lo + hi) / 2.0) / exposure_hours
+
+    return round(low, 4), round(high, 4)
+
+
 @dataclass(frozen=True)
 class Event:
     """Một sự kiện cháy/khói với khoảng thời gian [start_sec, end_sec] trên một video."""

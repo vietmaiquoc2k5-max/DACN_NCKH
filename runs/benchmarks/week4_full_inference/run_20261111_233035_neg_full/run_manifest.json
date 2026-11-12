@@ -1,9 +1,14 @@
 {
   "run_id": "run_20261111_233035_neg_full",
   "created_at": "2026-11-12T00:00:34.195501",
-  "git_commit": "256065e7",
+  "git_commit_short": "256065e7",
+  "full_git_sha": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+  "source_code_base_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+  "provenance_note": "Tập lệnh được phát triển và chạy thử từ commit 256065e7, sau đó được đóng gói và commit chính thức tại commit 62785d7b.",
   "model_checkpoint": "runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
   "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "manifest_sha256": "75626b6b563bae499848543732cfb1a172e1475773674b1acbd36a80e8e0c1ed",
+  "events_gt_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
   "device": "cuda:0",
   "total_inference_time_sec": 1791.04,
   "average_system_fps": 71.63,
@@ -38,16 +43,16 @@
       "far_per_hour_fire": 50.3985,
       "far_per_hour_smoke": 86.7742,
       "ci_95_total": [
-        103.4534,
-        137.1727
+        128.7516,
+        146.0
       ],
       "ci_95_fire": [
         45.3466,
-        53.8694
+        55.8592
       ],
       "ci_95_smoke": [
         80.1037,
-        90.2452
+        93.852
       ]
     },
     "pipeline_b1": {
@@ -59,15 +64,15 @@
       "far_per_hour_smoke": 56.5074,
       "ci_95_total": [
         69.713,
-        79.4158
+        82.5842
       ],
       "ci_95_fire": [
         16.3511,
-        22.9084
+        22.9369
       ],
       "ci_95_smoke": [
         51.1502,
-        59.9783
+        62.273
       ]
     },
     "pipeline_b2": {
@@ -79,7 +84,7 @@
       "far_per_hour_smoke": 49.1489,
       "ci_95_total": [
         53.0003,
-        61.9221
+        64.3103
       ],
       "ci_95_fire": [
         7.2091,
@@ -87,7 +92,7 @@
       ],
       "ci_95_smoke": [
         44.1618,
-        52.6199
+        54.5451
       ]
     },
     "far_reduction_percentage": 57.39,
