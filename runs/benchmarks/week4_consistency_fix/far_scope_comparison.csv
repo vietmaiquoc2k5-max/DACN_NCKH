@@ -1,0 +1,4 @@
+scope,videos,exposure_hours,pipeline_a_events,pipeline_a_rate,pipeline_b1_events,pipeline_b1_rate,pipeline_b2_events,pipeline_b2_rate,pipeline_b2_exact_poisson_ci,b2_reduction_pct,interpretation
+A,79,,,,,,,,,,BLOCKED_NO_CURRENT_STRICT_EOF_EVIDENCE_FOR_ALL_ROWS
+B,16,0.16229167,27,166.36713735558408,7,43.13222079589217,5,30.808729139922978,"[10.0035, 71.8973]",81.4814814814815,ALERT_EVENT_RATE_ONLY_PENDING_INDEPENDENT_NEGATIVE_LABEL_REVIEW
+C,0,,,,,,,,,,PENDING_HUMAN_NEGATIVE_REVIEW

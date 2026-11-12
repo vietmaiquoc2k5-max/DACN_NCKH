@@ -43,6 +43,7 @@ from src.video_audit import (
     classify_decode_termination,
     compute_streaming_sha256,
     detect_duplicates_and_id_collisions,
+    probe_video_with_ffprobe,
     run_external_stream_decode_check,
     verify_manifest_vs_inference,
 )
@@ -185,7 +186,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertIsNone(mgr.get(p, validate_sha256=True))
 
     def test_10_cache_old_schema_no_sha256(self):
-        """10. Old v1/v2 cache records are invalidated after the strict EOF policy change."""
+        """10. Old schema or policy cache records are invalidated after the strict EOF change."""
         cache_file = self.test_dir / ".cache.json"
         vpath = self.test_dir / "old_schema.avi"
         create_synthetic_video(vpath, num_frames=10, fps=10.0)
@@ -208,6 +209,27 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
             "file_size_bytes": vpath.stat().st_size,
             "full_decoded_frames": 10,
             "schema_version": 2,
+            "sha256": compute_streaming_sha256(vpath),
+        }
+        self.assertIsNone(mgr.get(vpath, validate_sha256=True))
+
+        # A schema-v3 record is also stale even if it has the correct file hash.
+        mgr.cache_data[key] = {
+            "relative_path": key,
+            "file_size_bytes": vpath.stat().st_size,
+            "full_decoded_frames": 10,
+            "schema_version": 3,
+            "sha256": compute_streaming_sha256(vpath),
+        }
+        self.assertIsNone(mgr.get(vpath, validate_sha256=True))
+
+        # Same schema with a different policy is stale too.
+        mgr.cache_data[key] = {
+            "relative_path": key,
+            "file_size_bytes": vpath.stat().st_size,
+            "full_decoded_frames": 10,
+            "schema_version": CACHE_SCHEMA_VERSION,
+            "audit_policy_version": "old_policy",
             "sha256": compute_streaming_sha256(vpath),
         }
         self.assertIsNone(mgr.get(vpath, validate_sha256=True))
@@ -268,6 +290,24 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertEqual(res["status"], "VALID")
         self.assertTrue(res["full_decode_verified"])
         self.assertEqual(res["full_decoded_frames"], 25)
+
+    def test_ffprobe_records_real_packet_pts_dts_fps_codec_and_counts(self):
+        """FFprobe packet timestamps and stream metadata are captured as audit evidence."""
+        if not shutil.which("ffprobe"):
+            self.skipTest("ffprobe is unavailable in this environment")
+        vpath = self.test_dir / "packet_timestamps.avi"
+        create_synthetic_video(vpath, num_frames=25, fps=10.0)
+        metadata = probe_video_with_ffprobe(vpath)
+        self.assertIsNotNone(metadata)
+        stream = metadata["streams"][0]
+        self.assertEqual(stream["codec_name"], "mjpeg")
+        self.assertEqual(stream["r_frame_rate"], "10/1")
+        summary = metadata["packet_timestamp_summary"]
+        self.assertEqual(summary["status"], "AVAILABLE")
+        self.assertEqual(summary["packet_count_with_timestamp_rows"], 25)
+        self.assertEqual(summary["pts_present_count"], 25)
+        self.assertEqual(summary["dts_present_count"], 25)
+        self.assertEqual(summary["dts_regressions_in_packet_order"], 0)
 
     def test_16_decode_truncated_video(self):
         """16. Video bị cắt ngắn (thiếu > 10 frames): TRUNCATED_STREAM, status=NEEDS_REVIEW, full_decode_verified=False."""

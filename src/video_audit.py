@@ -113,14 +113,56 @@ def probe_video_with_ffprobe(filepath: str | Path) -> Optional[Dict[str, Any]]:
             ffprobe_bin,
             "-v", "error",
             "-select_streams", "v:0",
-            "-show_entries", "stream=nb_frames,duration,codec_name,r_frame_rate",
+            "-show_entries", "stream=nb_frames,duration,duration_ts,codec_name,r_frame_rate,avg_frame_rate,time_base,start_time",
             "-show_entries", "format=duration,nb_streams",
             "-of", "json",
             str(filepath),
         ]
         res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=10)
         if res.returncode == 0:
-            return json.loads(res.stdout)
+            metadata = json.loads(res.stdout)
+            packet_cmd = [ffprobe_bin, "-v", "error", "-select_streams", "v:0",
+                          "-show_packets", "-show_entries", "packet=pts_time,dts_time",
+                          "-of", "csv=p=0", str(filepath)]
+            packet_res = subprocess.run(packet_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        text=True, timeout=60)
+            if packet_res.returncode == 0:
+                pts_values: List[float] = []
+                dts_values: List[float] = []
+                missing_pts = missing_dts = 0
+                for line in packet_res.stdout.splitlines():
+                    columns = [column.strip() for column in line.split(",")]
+                    if not columns or not any(columns):
+                        continue
+                    try:
+                        pts_values.append(float(columns[0]))
+                    except (ValueError, IndexError):
+                        missing_pts += 1
+                    try:
+                        dts_values.append(float(columns[1]))
+                    except (ValueError, IndexError):
+                        missing_dts += 1
+                dts_regressions = sum(1 for previous, current in zip(dts_values, dts_values[1:])
+                                      if current < previous)
+                metadata["packet_timestamp_summary"] = {
+                    "status": "AVAILABLE" if pts_values or dts_values else "NO_PACKET_TIMESTAMPS",
+                    "packet_count_with_timestamp_rows": len(pts_values) + missing_pts,
+                    "pts_present_count": len(pts_values), "pts_missing_count": missing_pts,
+                    "pts_min_seconds": min(pts_values) if pts_values else None,
+                    "pts_max_seconds": max(pts_values) if pts_values else None,
+                    "dts_present_count": len(dts_values), "dts_missing_count": missing_dts,
+                    "dts_min_seconds": min(dts_values) if dts_values else None,
+                    "dts_max_seconds": max(dts_values) if dts_values else None,
+                    "dts_regressions_in_packet_order": dts_regressions,
+                    "pts_monotonicity_assumed": False,
+                    "evidence_note": "Packet timestamps are recorded for review; B-frame PTS reordering is permitted and no duration tolerance is inferred from timestamp rounding.",
+                }
+            else:
+                metadata["packet_timestamp_summary"] = {
+                    "status": "PROBE_ERROR", "exit_code": packet_res.returncode,
+                    "stderr": packet_res.stderr.strip(),
+                }
+            return metadata
     except Exception as exc:
         LOGGER.debug("FFprobe không khả dụng hoặc lỗi cho %s: %s", filepath, exc)
     return None
@@ -200,11 +242,9 @@ def classify_decode_termination(
 # ---------------------------------------------------------------------------
 # CACHE SCHEMA VERSION
 # ---------------------------------------------------------------------------
-CACHE_SCHEMA_VERSION = 3
-"""Schema version of strict full-decode cache. Older cached VALID results are
-invalidated because previous versions could accept unverified EOF/tolerances.
-Record thiếu 'sha256' hoặc schema_version < 3
-bị invalidate bắt buộc."""
+CACHE_SCHEMA_VERSION = 4
+AUDIT_POLICY_VERSION = "strict_full_stream_zero_tolerance_v1"
+"""Bump this value whenever cache eligibility or EOF evidence changes."""
 
 
 # ---------------------------------------------------------------------------
@@ -350,11 +390,13 @@ class VideoDecodeCacheManager:
         # Schema version guard: invalidate record cũ thiếu sha256 hoặc schema_version cũ
         cached_sha256 = entry.get("sha256", "")
         schema_ver = entry.get("schema_version", 1)
-        if not cached_sha256 or cached_sha256.startswith("err_") or schema_ver < CACHE_SCHEMA_VERSION:
+        policy_ver = entry.get("audit_policy_version")
+        if (not cached_sha256 or cached_sha256.startswith("err_")
+                or schema_ver < CACHE_SCHEMA_VERSION or policy_ver != AUDIT_POLICY_VERSION):
             LOGGER.warning(
-                "CACHE_INVALIDATED (Schema Version / Missing SHA-256): %s "
-                "(schema_version=%s, sha256_present=%s) — record cũ, buộc re-audit",
-                key, schema_ver,
+                "CACHE_INVALIDATED (Schema / Policy Version / Missing SHA-256): %s "
+                "(schema_version=%s, policy=%s, sha256_present=%s) — record cũ, buộc re-audit",
+                key, schema_ver, policy_ver,
                 bool(cached_sha256 and not cached_sha256.startswith("err_")),
             )
             self.invalidate(key)
@@ -405,6 +447,7 @@ class VideoDecodeCacheManager:
         key = self._normalize_key(filepath)
         rec = dict(record)
         rec["schema_version"] = CACHE_SCHEMA_VERSION
+        rec["audit_policy_version"] = AUDIT_POLICY_VERSION
         self.cache_data[key] = rec
 
     def invalidate(self, filepath: Path | str) -> None:
@@ -652,6 +695,7 @@ def audit_single_video(
         "ffprobe_metadata": ffprobe_meta,
         "duration_calc_method": dur_calc_method,
         "schema_version": CACHE_SCHEMA_VERSION,
+        "audit_policy_version": AUDIT_POLICY_VERSION,
         "last_audited_at": datetime.now(timezone.utc).isoformat(),
     }
 
@@ -710,6 +754,7 @@ def _make_error_record(
         "external_tool_check": None,
         "duration_calc_method": "none",
         "schema_version": CACHE_SCHEMA_VERSION,
+        "audit_policy_version": AUDIT_POLICY_VERSION,
         "last_audited_at": datetime.now(timezone.utc).isoformat(),
     }
 

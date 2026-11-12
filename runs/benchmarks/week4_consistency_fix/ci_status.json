@@ -1,0 +1,11 @@
+{
+  "checked_at_utc": null,
+  "repository": "vietmaiquoc2k5-max/DACN_NCKH",
+  "commit_sha": "9fbdaa6b9179a7ba297ca9816e720741be18eba2",
+  "source": "GitHub combined commit status read-only lookup",
+  "status": "UNVERIFIED_NO_STATUS_CHECKS",
+  "status_check_count": 0,
+  "checks": [],
+  "timestamp_note": "Connector call UTC was not independently timestamped; file mtime is recorded separately.",
+  "note": "The base commit returned no status checks. No remote CI result is asserted for the uncommitted worktree."
+}

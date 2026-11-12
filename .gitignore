@@ -49,6 +49,9 @@ graphify-out/
 # Training outputs
 runs/*
 !runs/benchmarks/
+!runs/benchmarks/week4_consistency_fix/
+!runs/benchmarks/week4_consistency_fix/**
+runs/benchmarks/week4_consistency_fix/.decode_resume_cache.json
 !runs/detect/
 runs/detect/*
 !runs/detect/runs/

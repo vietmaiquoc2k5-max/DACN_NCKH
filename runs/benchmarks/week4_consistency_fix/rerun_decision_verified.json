@@ -1,0 +1,9 @@
+{
+  "generated_at": "2026-11-12T10:26:38.192969+00:00",
+  "run_id": "run_20261111_233035_neg_full",
+  "checkpoint_sha256_match": true,
+  "inference_reuse_status": "MANUAL_REVIEW_REQUIRED",
+  "rerun_required": null,
+  "reason": "Historical manifest digest is not reproduced, most original videos are absent, so per-video input identity cannot be re-established.",
+  "do_not_retrain": true
+}

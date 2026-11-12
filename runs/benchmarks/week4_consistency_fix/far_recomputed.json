@@ -1,0 +1,693 @@
+{
+  "generated_at": "2026-11-12T10:26:40.088423+00:00",
+  "source_run_id": "run_20261111_233035_neg_full",
+  "source_audit_policy_version": "strict_full_stream_zero_tolerance_v1",
+  "scope_A": {
+    "scope": "A_ALL_HISTORICALLY_EVALUATED",
+    "video_count": 79,
+    "exposure_seconds": null,
+    "exposure_hours": null,
+    "counts": null,
+    "b2_far_reduction_vs_a_percent": null,
+    "rate_interpretation": "BLOCKED_NO_CURRENT_STRICT_EOF_EVIDENCE_FOR_ALL_ROWS"
+  },
+  "scope_B": {
+    "scope": "B_STRICT_CURRENT_AUDIT_AND_INFERENCE_MATCH",
+    "video_count": 16,
+    "exposure_seconds": 584.25,
+    "exposure_hours": 0.16229167,
+    "counts": {
+      "A": {
+        "events": {
+          "FIRE": 12,
+          "SMOKE": 15,
+          "total": 27
+        },
+        "far_per_hour": {
+          "FIRE": 73.94094993581514,
+          "SMOKE": 92.42618741976894,
+          "total": 166.36713735558408
+        },
+        "exact_poisson_95_ci_per_hour": {
+          "FIRE": [
+            38.2064,
+            129.16
+          ],
+          "SMOKE": [
+            51.7302,
+            152.4429
+          ],
+          "total": [
+            109.637,
+            242.0554
+          ]
+        }
+      },
+      "B1": {
+        "events": {
+          "FIRE": 2,
+          "SMOKE": 5,
+          "total": 7
+        },
+        "far_per_hour": {
+          "FIRE": 12.32349165596919,
+          "SMOKE": 30.808729139922978,
+          "total": 43.13222079589217
+        },
+        "exact_poisson_95_ci_per_hour": {
+          "FIRE": [
+            1.4924,
+            44.5167
+          ],
+          "SMOKE": [
+            10.0035,
+            71.8973
+          ],
+          "total": [
+            17.3414,
+            88.8689
+          ]
+        }
+      },
+      "B2": {
+        "events": {
+          "FIRE": 1,
+          "SMOKE": 4,
+          "total": 5
+        },
+        "far_per_hour": {
+          "FIRE": 6.161745827984595,
+          "SMOKE": 24.64698331193838,
+          "total": 30.808729139922978
+        },
+        "exact_poisson_95_ci_per_hour": {
+          "FIRE": [
+            0.156,
+            34.3311
+          ],
+          "SMOKE": [
+            6.7155,
+            63.1061
+          ],
+          "total": [
+            10.0035,
+            71.8973
+          ]
+        }
+      }
+    },
+    "b2_far_reduction_vs_a_percent": 81.4814814814815,
+    "rate_interpretation": "ALERT_EVENT_RATE_ONLY_PENDING_INDEPENDENT_NEGATIVE_LABEL_REVIEW"
+  },
+  "scope_C": {
+    "scope": "C_INDEPENDENTLY_VERIFIED_NEGATIVE",
+    "video_count": 0,
+    "exposure_seconds": null,
+    "exposure_hours": null,
+    "counts": null,
+    "b2_far_reduction_vs_a_percent": null,
+    "rate_interpretation": "PENDING_HUMAN_NEGATIVE_REVIEW"
+  },
+  "scope_exclusions": {
+    "scope_B_excluded_video_rows": [
+      {
+        "video_id": "VN_NEG_01",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 3874.03,
+        "pipeline_a_events": 43,
+        "pipeline_b1_events": 6,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_03",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 35.1,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_04",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 5516.0,
+        "pipeline_a_events": 92,
+        "pipeline_b1_events": 53,
+        "pipeline_b2_events": 27
+      },
+      {
+        "video_id": "VN_NEG_06",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 104.77,
+        "pipeline_a_events": 11,
+        "pipeline_b1_events": 4,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_07",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 62.84,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_08",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 205.92,
+        "pipeline_a_events": 8,
+        "pipeline_b1_events": 4,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_09",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 70.08,
+        "pipeline_a_events": 3,
+        "pipeline_b1_events": 2,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_10",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 497.23,
+        "pipeline_a_events": 6,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_11",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 287.72,
+        "pipeline_a_events": 7,
+        "pipeline_b1_events": 4,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_12",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 69.96,
+        "pipeline_a_events": 3,
+        "pipeline_b1_events": 3,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_13",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 94.6,
+        "pipeline_a_events": 8,
+        "pipeline_b1_events": 10,
+        "pipeline_b2_events": 10
+      },
+      {
+        "video_id": "VN_NEG_14",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 128.4,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_15",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 459.52,
+        "pipeline_a_events": 32,
+        "pipeline_b1_events": 28,
+        "pipeline_b2_events": 18
+      },
+      {
+        "video_id": "VN_NEG_16",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 300.28,
+        "pipeline_a_events": 5,
+        "pipeline_b1_events": 5,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_17",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 176.4,
+        "pipeline_a_events": 9,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_18",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 124.4,
+        "pipeline_a_events": 9,
+        "pipeline_b1_events": 12,
+        "pipeline_b2_events": 12
+      },
+      {
+        "video_id": "VN_NEG_19",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 74.8,
+        "pipeline_a_events": 0,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_20",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 928.87,
+        "pipeline_a_events": 49,
+        "pipeline_b1_events": 15,
+        "pipeline_b2_events": 14
+      },
+      {
+        "video_id": "VN_NEG_21",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 999.97,
+        "pipeline_a_events": 35,
+        "pipeline_b1_events": 23,
+        "pipeline_b2_events": 17
+      },
+      {
+        "video_id": "VN_NEG_22",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 247.98,
+        "pipeline_a_events": 18,
+        "pipeline_b1_events": 17,
+        "pipeline_b2_events": 16
+      },
+      {
+        "video_id": "VN_NEG_23",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 138.52,
+        "pipeline_a_events": 3,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_24",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 259.88,
+        "pipeline_a_events": 5,
+        "pipeline_b1_events": 7,
+        "pipeline_b2_events": 6
+      },
+      {
+        "video_id": "VN_NEG_25",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 413.2,
+        "pipeline_a_events": 23,
+        "pipeline_b1_events": 28,
+        "pipeline_b2_events": 25
+      },
+      {
+        "video_id": "VN_NEG_26",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 181.12,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 4,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_27",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 59.8,
+        "pipeline_a_events": 1,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_28",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 76.76,
+        "pipeline_a_events": 8,
+        "pipeline_b1_events": 3,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_29",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 232.32,
+        "pipeline_a_events": 16,
+        "pipeline_b1_events": 4,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_30",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 84.78,
+        "pipeline_a_events": 8,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_31",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 837.52,
+        "pipeline_a_events": 98,
+        "pipeline_b1_events": 35,
+        "pipeline_b2_events": 35
+      },
+      {
+        "video_id": "VN_NEG_32",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 73.88,
+        "pipeline_a_events": 9,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_33",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 89.83,
+        "pipeline_a_events": 5,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_34",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 64.84,
+        "pipeline_a_events": 5,
+        "pipeline_b1_events": 6,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_35",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 113.14,
+        "pipeline_a_events": 7,
+        "pipeline_b1_events": 4,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_36",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 196.8,
+        "pipeline_a_events": 9,
+        "pipeline_b1_events": 6,
+        "pipeline_b2_events": 5
+      },
+      {
+        "video_id": "VN_NEG_37",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 61.72,
+        "pipeline_a_events": 5,
+        "pipeline_b1_events": 2,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_38",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 62.88,
+        "pipeline_a_events": 12,
+        "pipeline_b1_events": 6,
+        "pipeline_b2_events": 5
+      },
+      {
+        "video_id": "VN_NEG_39",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 125.32,
+        "pipeline_a_events": 14,
+        "pipeline_b1_events": 2,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_40",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 104.29,
+        "pipeline_a_events": 3,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_41",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 579.0,
+        "pipeline_a_events": 30,
+        "pipeline_b1_events": 37,
+        "pipeline_b2_events": 17
+      },
+      {
+        "video_id": "VN_NEG_42",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 321.64,
+        "pipeline_a_events": 11,
+        "pipeline_b1_events": 2,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_43",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 48.8,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 8,
+        "pipeline_b2_events": 5
+      },
+      {
+        "video_id": "VN_NEG_44",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 322.12,
+        "pipeline_a_events": 15,
+        "pipeline_b1_events": 19,
+        "pipeline_b2_events": 18
+      },
+      {
+        "video_id": "VN_NEG_45",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 187.92,
+        "pipeline_a_events": 4,
+        "pipeline_b1_events": 2,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_46",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 432.48,
+        "pipeline_a_events": 21,
+        "pipeline_b1_events": 9,
+        "pipeline_b2_events": 7
+      },
+      {
+        "video_id": "VN_NEG_47",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 3286.97,
+        "pipeline_a_events": 157,
+        "pipeline_b1_events": 80,
+        "pipeline_b2_events": 75
+      },
+      {
+        "video_id": "VN_NEG_48",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 281.5,
+        "pipeline_a_events": 11,
+        "pipeline_b1_events": 6,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_49",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 53.04,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_50",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 132.32,
+        "pipeline_a_events": 4,
+        "pipeline_b1_events": 5,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_51",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 67.6,
+        "pipeline_a_events": 1,
+        "pipeline_b1_events": 1,
+        "pipeline_b2_events": 1
+      },
+      {
+        "video_id": "VN_NEG_52",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 85.04,
+        "pipeline_a_events": 1,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_53",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 75.2,
+        "pipeline_a_events": 11,
+        "pipeline_b1_events": 7,
+        "pipeline_b2_events": 6
+      },
+      {
+        "video_id": "VN_NEG_54",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 117.64,
+        "pipeline_a_events": 11,
+        "pipeline_b1_events": 7,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_55",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 189.08,
+        "pipeline_a_events": 6,
+        "pipeline_b1_events": 3,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_56",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 107.12,
+        "pipeline_a_events": 3,
+        "pipeline_b1_events": 3,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_57",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 100.2,
+        "pipeline_a_events": 0,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_58",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 249.77,
+        "pipeline_a_events": 17,
+        "pipeline_b1_events": 7,
+        "pipeline_b2_events": 7
+      },
+      {
+        "video_id": "VN_NEG_59",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 267.35,
+        "pipeline_a_events": 13,
+        "pipeline_b1_events": 7,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_60",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 150.36,
+        "pipeline_a_events": 10,
+        "pipeline_b1_events": 10,
+        "pipeline_b2_events": 5
+      },
+      {
+        "video_id": "VN_NEG_61",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 164.5,
+        "pipeline_a_events": 10,
+        "pipeline_b1_events": 5,
+        "pipeline_b2_events": 3
+      },
+      {
+        "video_id": "VN_NEG_62",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 74.92,
+        "pipeline_a_events": 2,
+        "pipeline_b1_events": 0,
+        "pipeline_b2_events": 0
+      },
+      {
+        "video_id": "VN_NEG_63",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 216.28,
+        "pipeline_a_events": 12,
+        "pipeline_b1_events": 7,
+        "pipeline_b2_events": 4
+      },
+      {
+        "video_id": "VN_NEG_64",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 126.16,
+        "pipeline_a_events": 4,
+        "pipeline_b1_events": 2,
+        "pipeline_b2_events": 2
+      },
+      {
+        "video_id": "VN_NEG_65",
+        "reason": "MISSING_SOURCE_OR_NOT_STRICT_VALID_OR_INFERENCE_NOT_COMPLETE",
+        "historical_exposure_seconds": 272.8,
+        "pipeline_a_events": 26,
+        "pipeline_b1_events": 11,
+        "pipeline_b2_events": 10
+      }
+    ],
+    "scope_B_excluded_video_count": 63,
+    "scope_B_excluded_alert_events_by_pipeline": {
+      "A": 961,
+      "B1": 540,
+      "B2": 416
+    },
+    "scope_C_excluded_video_count": 79
+  },
+  "duplicate_event_rows": {
+    "A": {},
+    "B1": {},
+    "B2": {}
+  },
+  "historical_scope_b_reduction_claims": {
+    "far_comparison_csv_pct": 57.05,
+    "operating_point_audit_pct": 56.48,
+    "reconciliation_status": "HISTORICAL_ARTIFACTS_DISAGREE"
+  },
+  "declared_historical_scope_reconciliation": {
+    "status": "INTERNAL_ROWS_RECONCILED_SCOPE_2_NOT_CLEAN",
+    "source": "runs\\benchmarks\\week4_revalidation\\far_per_video.csv",
+    "truncated_video_ids": [
+      "VN_NEG_10",
+      "VN_NEG_48"
+    ],
+    "scopes": {
+      "scope_1": {
+        "video_count": 79,
+        "claimed_video_count": 79,
+        "exposure_seconds_from_same_rows": 25672.14,
+        "exposure_hours_from_same_rows": 7.13115,
+        "claimed_exposure_hours": 7.1312,
+        "claimed_exposure_matches_per_video_rows": true,
+        "b2_alerts_from_same_rows": 421,
+        "claimed_b2_alerts": 421,
+        "claimed_alert_count_matches_per_video_rows": true,
+        "b2_alerts_per_hour_arithmetic_only": 59.036761251691516,
+        "exact_poisson_95_ci_arithmetic_only": [
+          53.5314,
+          64.9547
+        ],
+        "normal_eof_rows": 19,
+        "needs_review_or_not_verified_rows": 60,
+        "excluded_truncated_video_ids_for_scope_2": [],
+        "far_acceptance_status": "REJECTED_SCOPE_CONTAINS_NEEDS_REVIEW_ROWS"
+      },
+      "scope_2": {
+        "video_count": 77,
+        "claimed_video_count": 77,
+        "exposure_seconds_from_same_rows": 25144.67,
+        "exposure_hours_from_same_rows": 6.98463056,
+        "claimed_exposure_hours": 6.9846,
+        "claimed_exposure_matches_per_video_rows": true,
+        "b2_alerts_from_same_rows": 417,
+        "claimed_b2_alerts": 417,
+        "claimed_alert_count_matches_per_video_rows": true,
+        "b2_alerts_per_hour_arithmetic_only": 59.702513494907656,
+        "exact_poisson_95_ci_arithmetic_only": [
+          54.1091,
+          65.7172
+        ],
+        "normal_eof_rows": 19,
+        "needs_review_or_not_verified_rows": 58,
+        "excluded_truncated_video_ids_for_scope_2": [
+          "VN_NEG_10",
+          "VN_NEG_48"
+        ],
+        "far_acceptance_status": "REJECTED_SCOPE_CONTAINS_NEEDS_REVIEW_ROWS"
+      }
+    },
+    "note": "Historical numerator and denominator sums are paired by per-video rows. Scope 2 removed only the 2 truncated rows but retains all other NEEDS_REVIEW rows; the computed rates and exact intervals are arithmetic diagnostics, not accepted FAR."
+  },
+  "ground_truth_for_negative_videos": "PENDING_HUMAN_NEGATIVE_REVIEW",
+  "status": "PENDING_HUMAN_NEGATIVE_REVIEW",
+  "scientific_note": "The computed counts are alert-event rates on historical rows; they are not semantic false-alarm rates until independent negative labels are verified."
+}

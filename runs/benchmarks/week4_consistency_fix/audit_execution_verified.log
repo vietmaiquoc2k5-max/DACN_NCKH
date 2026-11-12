@@ -1,0 +1,160 @@
+Strict video audit start 2026-11-12T10:26:14.504948+00:00
+policy=strict_full_stream_zero_tolerance_v1 schema=4
+[1/79] VN_NEG_01 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[2/79] VN_NEG_03 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[3/79] VN_NEG_04 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[4/79] VN_NEG_06 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[5/79] VN_NEG_07 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[6/79] VN_NEG_08 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[7/79] VN_NEG_09 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[8/79] VN_NEG_10 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[9/79] VN_NEG_11 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[10/79] VN_NEG_12 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[11/79] VN_NEG_13 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[12/79] VN_NEG_14 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[13/79] VN_NEG_15 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[14/79] VN_NEG_16 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[15/79] VN_NEG_17 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[16/79] VN_NEG_18 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[17/79] VN_NEG_19 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[18/79] VN_NEG_20 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[19/79] VN_NEG_21 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[20/79] VN_NEG_22 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[21/79] VN_NEG_23 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[22/79] VN_NEG_24 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[23/79] VN_NEG_25 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[24/79] VN_NEG_26 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[25/79] VN_NEG_27 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[26/79] VN_NEG_28 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[27/79] VN_NEG_29 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[28/79] VN_NEG_30 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[29/79] VN_NEG_31 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[30/79] VN_NEG_32 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[31/79] VN_NEG_33 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[32/79] VN_NEG_34 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[33/79] VN_NEG_35 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[34/79] VN_NEG_36 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[35/79] VN_NEG_37 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[36/79] VN_NEG_38 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[37/79] VN_NEG_39 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[38/79] VN_NEG_40 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[39/79] VN_NEG_41 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[40/79] VN_NEG_42 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[41/79] VN_NEG_43 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[42/79] VN_NEG_44 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[43/79] VN_NEG_45 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[44/79] VN_NEG_46 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[45/79] VN_NEG_47 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[46/79] VN_NEG_48 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[47/79] VN_NEG_49 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[48/79] VN_NEG_50 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[49/79] VN_NEG_51 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[50/79] VN_NEG_52 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[51/79] VN_NEG_53 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[52/79] VN_NEG_54 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[53/79] VN_NEG_55 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[54/79] VN_NEG_56 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[55/79] VN_NEG_57 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[56/79] VN_NEG_58 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[57/79] VN_NEG_59 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[58/79] VN_NEG_60 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[59/79] VN_NEG_61 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[60/79] VN_NEG_62 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[61/79] VN_NEG_63 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[62/79] VN_NEG_64 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[63/79] VN_NEG_65 result=BLOCKED_INPUT_MISSING decode=None opencv=None ffmpeg=None exit=None manifest_sha_match=None elapsed=0s
+  note=Manifest source file is absent from this workspace; not audited
+[64/79] negsVideo1.858 result=STRICT_VALID decode=NORMAL_EOF opencv=4539 ffmpeg=4539 exit=0 manifest_sha_match=True elapsed=5.563s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[65/79] negsVideo10.1072 result=STRICT_VALID decode=NORMAL_EOF opencv=246 ffmpeg=246 exit=0 manifest_sha_match=True elapsed=0.234s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[66/79] negsVideo11.1073 result=STRICT_VALID decode=NORMAL_EOF opencv=180 ffmpeg=180 exit=0 manifest_sha_match=True elapsed=0.172s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[67/79] negsVideo12.1074 result=STRICT_VALID decode=NORMAL_EOF opencv=514 ffmpeg=514 exit=0 manifest_sha_match=True elapsed=3.359s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[68/79] negsVideo13.1075 result=STRICT_VALID decode=NORMAL_EOF opencv=271 ffmpeg=271 exit=0 manifest_sha_match=True elapsed=0.235s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[69/79] negsVideo14.1076 result=STRICT_VALID decode=NORMAL_EOF opencv=45 ffmpeg=45 exit=0 manifest_sha_match=True elapsed=0.125s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[70/79] negsVideo15.1078 result=STRICT_VALID decode=NORMAL_EOF opencv=58 ffmpeg=58 exit=0 manifest_sha_match=True elapsed=0.843s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[71/79] negsVideo16.1077 result=STRICT_VALID decode=NORMAL_EOF opencv=196 ffmpeg=196 exit=0 manifest_sha_match=True elapsed=1.532s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[72/79] negsVideo2.859 result=STRICT_VALID decode=NORMAL_EOF opencv=155 ffmpeg=155 exit=0 manifest_sha_match=True elapsed=0.172s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[73/79] negsVideo3.860 result=STRICT_VALID decode=NORMAL_EOF opencv=160 ffmpeg=160 exit=0 manifest_sha_match=True elapsed=0.188s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[74/79] negsVideo4.861 result=STRICT_VALID decode=NORMAL_EOF opencv=1931 ffmpeg=1931 exit=0 manifest_sha_match=True elapsed=1.984s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[75/79] negsVideo5.862 result=STRICT_VALID decode=NORMAL_EOF opencv=439 ffmpeg=439 exit=0 manifest_sha_match=True elapsed=0.469s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[76/79] negsVideo6.863 result=STRICT_VALID decode=NORMAL_EOF opencv=1142 ffmpeg=1142 exit=0 manifest_sha_match=True elapsed=1.406s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[77/79] negsVideo7.864 result=STRICT_VALID decode=NORMAL_EOF opencv=541 ffmpeg=541 exit=0 manifest_sha_match=True elapsed=0.609s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[78/79] negsVideo8.865 result=STRICT_VALID decode=NORMAL_EOF opencv=3761 ffmpeg=3761 exit=0 manifest_sha_match=True elapsed=5.813s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree
+[79/79] negsVideo9.866 result=STRICT_VALID decode=NORMAL_EOF opencv=645 ffmpeg=645 exit=0 manifest_sha_match=True elapsed=0.859s
+  note=FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree

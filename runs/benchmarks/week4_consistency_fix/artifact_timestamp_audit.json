@@ -1,0 +1,209 @@
+{
+  "generated_at": "2026-11-12T10:26:40.515580+00:00",
+  "status": "TIMESTAMPS_RECORDED_FOR_PRESENT_INPUTS_AND_GENERATED_OUTPUTS",
+  "artifacts": [
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/artifact_lineage.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.332745+00:00",
+      "size_bytes": 2541,
+      "sha256": "e1a6485d6bf46e1297c4b8080baba577b206131d615bc6ccc49dd88804417f23"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/audit_execution_verified.log",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.176528+00:00",
+      "size_bytes": 16321,
+      "sha256": "784136999bc70a794150aa15a0809e90963b3f05d7a5631283c3cb58e3e53c34"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/ci_status.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:05.795295+00:00",
+      "size_bytes": 515,
+      "sha256": "317a472ecadad659689e42aedc8ab41310500cba8cb45d59047b0573b6d8a8ce"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/far_per_video_verified.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.092975+00:00",
+      "size_bytes": 10056,
+      "sha256": "5ee0c78ace048f320240d2de94fd97befe4bea866bc4844647d7670d20b7a3a8"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/far_recomputed.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.091987+00:00",
+      "size_bytes": 23814,
+      "sha256": "71a3e7ef65badac70de8d2d528d7bd6b5c043f5932ad6405ade7b65835219a60"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/far_scientific_reconciliation.md",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.093976+00:00",
+      "size_bytes": 1049,
+      "sha256": "d4e094a28062b7515870d7617393123f51740e0e9fa3c38d17ce2ffb3988d252"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/far_scope_comparison.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.093976+00:00",
+      "size_bytes": 489,
+      "sha256": "67a4231ab3548233ff6acb036bad42529d6716e86cfe8261228bba463a3fb7e2"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/ground_truth_status_verified.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.333747+00:00",
+      "size_bytes": 388,
+      "sha256": "48e6805bb22a154bebe715cb06d2aaceeb2f7b82a010b74b25a3326bf37e14b7"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/inference_coverage_verified.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.192969+00:00",
+      "size_bytes": 10708,
+      "sha256": "97d5a68f3a19359859cabed3ea9b094cafec6c2c41c5e346a45bb6cb2bef44ae"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/inference_reconciliation_verified.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.191967+00:00",
+      "size_bytes": 42010,
+      "sha256": "00c4fe3ace6f9ab89cefb487c72a87b9819701bfc4a644da79a6c55cf997fde1"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/local_test_result.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:05.485831+00:00",
+      "size_bytes": 548,
+      "sha256": "86a2f8573e27f4bb253f191c958654129246b015c135467e6ec0dc137a50e0ed"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/manifest_hash_reconciliation.md",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.332745+00:00",
+      "size_bytes": 1227,
+      "sha256": "472770c74b546681b775f1a65661ba9125fc71f7fa3dc5772e8b1a87fdff9a5a"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/operating_point_reassessment.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.336267+00:00",
+      "size_bytes": 1779,
+      "sha256": "a59bae09a96db2aceb3f729b3f5af2905049d40da80634415426638a371b8d69"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/preflight_verified.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:14.502922+00:00",
+      "size_bytes": 7253,
+      "sha256": "530559a3457e0b79ce49aa914b4144901b19152f4ac390fa6371f187ef79a983"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/provenance_verified.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.330741+00:00",
+      "size_bytes": 5891,
+      "sha256": "abb7f227855a7056999ac0fad272fd593097c2868c4032fadcd3e87e755c6fee"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/rerun_decision_verified.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.192969+00:00",
+      "size_bytes": 399,
+      "sha256": "d703cf32030b4ba5bf6391cdff1b4154127f303bbb52b41cbadfed6917326cc0"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/scenario_test_results.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.338264+00:00",
+      "size_bytes": 1431,
+      "sha256": "566118b5f9f6db58622d170248f85e427b9eea7ebc31fa8df7b2c3976f8104a7"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/video_audit_failures_verified.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.184070+00:00",
+      "size_bytes": 15247,
+      "sha256": "5e1732d64ec68787cea720495f4d5a7183c4321ccba1fa7106dcc1fe078b4347"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/video_audit_summary_verified.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.183070+00:00",
+      "size_bytes": 21090,
+      "sha256": "2a472b9517bf46c68d46905eba8876f1b4c18303258087a41427b4fc453cca96"
+    },
+    {
+      "path": "runs/benchmarks/week4_consistency_fix/video_audit_verified.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:38.181070+00:00",
+      "size_bytes": 93720,
+      "sha256": "611361827b19c386e05135c9072c226e8174886ff1242aa8b4f0e1341d61c3b1"
+    },
+    {
+      "path": "docs/WEEK4_FINAL_CONSISTENCY_ACCEPTANCE_REPORT.md",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.339773+00:00",
+      "size_bytes": 7107,
+      "sha256": "0a2c5b3aab04d1cf457321a82ecc2a12fdf86c1310643e67a0f57da7a6f0ab1c"
+    },
+    {
+      "path": "docs/WEEK4_FINAL_RELIABILITY_REPORT.md",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.339773+00:00",
+      "size_bytes": 7096,
+      "sha256": "9e0ac3918f5de9c42c3614a7d760c9d582c6de6383d17b3de014dbbce9cc7975"
+    },
+    {
+      "path": "data/negative_videos_manifest.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:52:16.705341+00:00",
+      "size_bytes": 119417,
+      "sha256": "5ba1855d624f65339f60fcd741ed2edc874ac5e327529a0d2c99c8460592ef23"
+    },
+    {
+      "path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+      "exists": true,
+      "modified_at_utc": "2026-10-27T17:55:42.576814+00:00",
+      "size_bytes": 6247332,
+      "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6"
+    },
+    {
+      "path": "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/run_manifest.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.637371+00:00",
+      "size_bytes": 2985,
+      "sha256": "d6c560cf853d2b7182077f7665ece01932fa54d0311a932c0ec9e267490b7f26"
+    },
+    {
+      "path": "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/video_inference_summary.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:26:40.639372+00:00",
+      "size_bytes": 9041,
+      "sha256": "e88e40f86aeb7b996ae036b8b0bb8746e4d8b98e0e2fd9b45af7315351d33433"
+    },
+    {
+      "path": "runs/benchmarks/week4_revalidation/video_audit_full.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:52:16.713292+00:00",
+      "size_bytes": 151215,
+      "sha256": "0efea4a47f4b7e602f13e98f5233a5f9b172a52ac7695f2c05a759dade33191c"
+    },
+    {
+      "path": "runs/benchmarks/week4_revalidation/far_per_video.csv",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:52:16.708750+00:00",
+      "size_bytes": 7955,
+      "sha256": "825a76e88d31f651de569e8072aac56951fe670aeb963ff4a8478f7aaf359216"
+    },
+    {
+      "path": "runs/benchmarks/week4_revalidation/far_report_revalidated.json",
+      "exists": true,
+      "modified_at_utc": "2026-11-12T10:52:16.708750+00:00",
+      "size_bytes": 1913,
+      "sha256": "a95eeefe9a186bd116daad3533ab750476e27f2eca0fee8a1453cb71f2207677"
+    }
+  ]
+}
