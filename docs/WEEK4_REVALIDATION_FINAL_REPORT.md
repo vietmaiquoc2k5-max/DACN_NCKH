@@ -234,3 +234,4 @@ Toàn bộ các nội dung kiểm định và củng cố độ tin cậy của 
 1. **Tính trung thực khoa học:** Không có số liệu giả lập, không tự động xác thực Ground Truth, 24 sự kiện được bàn giao rõ ràng cho Annotator 02.
 2. **Tính vững chắc của giải thuật xác nhận thời gian:** Pipeline B2 đạt mức giảm báo động giả **57.39%**, không suy giảm Recall (**95.83%**), độ trễ cảnh báo chỉ **2.13s**, khẳng định vai trò cốt lõi của bộ Temporal Verifier trong đề tài.
 3. **Sẵn sàng chuyển tiếp:** Toàn bộ codebase ở trạng thái sạch, 171/171 tests xanh, sẵn sàng bước vào **Tuần 5: Nghiên cứu thích nghi miền (Domain Adaptation)** theo đúng Đề cương NCKH.
+
