@@ -36,6 +36,7 @@ from src.video_audit import (
     DecodeStatus,
     VideoDecodeCacheManager,
     audit_single_video,
+    classify_decode_termination,
     compute_streaming_sha256,
     detect_duplicates_and_id_collisions,
     verify_manifest_vs_inference,
@@ -254,7 +255,7 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertEqual(res["full_decoded_frames"], 25)
 
     def test_16_decode_truncated_video(self):
-        """16. Video bị cắt ngắn (thiếu > 10 frames): TRUNCATED_STREAM, status=NEEDS_REVIEW."""
+        """16. Video bị cắt ngắn (thiếu > 10 frames): TRUNCATED_STREAM, status=NEEDS_REVIEW, full_decode_verified=False."""
         vpath = self.test_dir / "trunc.avi"
         create_synthetic_video(vpath, num_frames=50, fps=10.0)
         raw = vpath.read_bytes()
@@ -262,10 +263,11 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         res = audit_single_video(vpath, full_decode=True)
         self.assertEqual(res["decode_status"], "TRUNCATED_STREAM")
         self.assertEqual(res["status"], "NEEDS_REVIEW")
+        self.assertFalse(res["full_decode_verified"])
         self.assertGreater(res["missing_frames"], TRUNCATED_STREAM_THRESHOLD)
 
     def test_17_decode_midstream_error(self):
-        """17. Video bị lỗi rác giữa luồng: xử lý mượt mà, ghi nhận error_message."""
+        """17. Video bị lỗi rác giữa luồng: dừng sớm, tuyệt đối không chấp nhận NORMAL_EOF, full_decode_verified=False."""
         vpath = self.test_dir / "corrupt_mid.avi"
         create_synthetic_video(vpath, num_frames=35, fps=10.0)
         raw = bytearray(vpath.read_bytes())
@@ -273,7 +275,9 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         raw[mid : mid + 1024] = b"\x00\xFF" * 512
         vpath.write_bytes(bytes(raw))
         res = audit_single_video(vpath, full_decode=True)
-        self.assertIn(res["decode_status"], ("TRUNCATED_STREAM", "DECODE_ERROR", "NORMAL_EOF"))
+        self.assertIn(res["decode_status"], ("TRUNCATED_STREAM", "DECODE_ERROR"))
+        self.assertNotEqual(res["decode_status"], "NORMAL_EOF")
+        self.assertFalse(res["full_decode_verified"])
 
     def test_18_decode_cannot_open(self):
         """18. File không phải video hoặc rác hoàn toàn: CANNOT_OPEN, status=CORRUPTED."""
@@ -311,11 +315,44 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         self.assertTrue(r_full["full_decode_verified"])
 
     def test_22_decode_borderline_tolerance(self):
-        """22. Dung sai cận (missing 6-10 frames): NORMAL_EOF với container_tolerance_applied=True."""
-        # Giả lập logic tolerance
-        missing = 8
-        self.assertLessEqual(missing, CONTAINER_BORDERLINE_TOLERANCE)
-        self.assertGreater(missing, CONTAINER_PADDING_TOLERANCE)
+        """22. Dung sai cận: gọi trực tiếp classify_decode_termination kiểm tra chặt điều kiện thời gian và tỷ lệ."""
+        # Case A: Dung sai cận hợp lệ (missing 8 frames <= 10, delta_t = 8/30 = 0.267s <= 0.35s, ratio = 8/1000 = 0.8% <= 1%)
+        status_a, review_a, tol_a, missing_a, notes_a, verified_a = classify_decode_termination(
+            actual_decoded_frames=992, reported_frame_count=1000, fps=30.0
+        )
+        self.assertEqual(status_a, DecodeStatus.NORMAL_EOF)
+        self.assertEqual(review_a, "VALID")
+        self.assertTrue(tol_a)
+        self.assertTrue(verified_a)
+        self.assertEqual(missing_a, 0)
+
+        # Case B: Sai lệch cận nhưng thời lượng lệch quá lớn do FPS thấp (delta_t = 8/10 = 0.8s > 0.35s) -> Chuyển NEEDS_REVIEW
+        status_b, review_b, tol_b, missing_b, notes_b, verified_b = classify_decode_termination(
+            actual_decoded_frames=22, reported_frame_count=30, fps=10.0
+        )
+        self.assertEqual(status_b, DecodeStatus.NEEDS_REVIEW)
+        self.assertEqual(review_b, "NEEDS_REVIEW")
+        self.assertFalse(tol_b)
+        self.assertFalse(verified_b)
+        self.assertEqual(missing_b, 8)
+
+        # Case C: Sai lệch cận nhưng tỷ lệ thiếu quá lớn (ratio = 8/100 = 8.0% > 1.0%) -> Chuyển NEEDS_REVIEW
+        status_c, review_c, tol_c, missing_c, notes_c, verified_c = classify_decode_termination(
+            actual_decoded_frames=92, reported_frame_count=100, fps=30.0
+        )
+        self.assertEqual(status_c, DecodeStatus.NEEDS_REVIEW)
+        self.assertEqual(review_c, "NEEDS_REVIEW")
+        self.assertFalse(tol_c)
+        self.assertFalse(verified_c)
+
+        # Case D: Vượt ngưỡng cận (> 10 frames) -> TRUNCATED_STREAM
+        status_d, review_d, tol_d, missing_d, notes_d, verified_d = classify_decode_termination(
+            actual_decoded_frames=80, reported_frame_count=100, fps=30.0
+        )
+        self.assertEqual(status_d, DecodeStatus.TRUNCATED_STREAM)
+        self.assertEqual(review_d, "NEEDS_REVIEW")
+        self.assertFalse(verified_d)
+        self.assertEqual(missing_d, 20)
 
     def test_23_decode_partial_video(self):
         """23. Video chỉ decode được frame probe, frame sau hỏng: ghi nhận đúng số frame."""
@@ -497,6 +534,26 @@ class TestVideoAuditComprehensive42(unittest.TestCase):
         commit_a = "c95907f6b8cf12cc02563dfaab209f304dbc3259"
         commit_b = "10cc7699bb8cf12cc02563dfaab209f304dbc3259"
         self.assertNotEqual(commit_a, commit_b)
+
+    def test_43_decode_missing_frames_without_decoder_error(self):
+        """43. Thiếu khung hình khi decoder dừng im lặng (ret=False mà không ném exception): phân loại chính xác TRUNCATED_STREAM / DECODE_ERROR."""
+        # 1. Decoder kết thúc êm thấm nhưng thiếu 25 frame so với container -> TRUNCATED_STREAM, full_decode_verified=False
+        status, review, tol, missing, notes, verified = classify_decode_termination(
+            actual_decoded_frames=75, reported_frame_count=100, fps=25.0
+        )
+        self.assertEqual(status, DecodeStatus.TRUNCATED_STREAM)
+        self.assertEqual(review, "NEEDS_REVIEW")
+        self.assertFalse(verified)
+        self.assertEqual(missing, 25)
+
+        # 2. Decoder không đọc được frame nào (0 frames) mà không ném exception -> DECODE_ERROR, CORRUPTED, full_decode_verified=False
+        status_zero, review_zero, tol_zero, missing_zero, notes_zero, verified_zero = classify_decode_termination(
+            actual_decoded_frames=0, reported_frame_count=100, fps=25.0
+        )
+        self.assertEqual(status_zero, DecodeStatus.DECODE_ERROR)
+        self.assertEqual(review_zero, "CORRUPTED")
+        self.assertFalse(verified_zero)
+        self.assertEqual(missing_zero, 1)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 {
   "audit_title": "Scientific Provenance & Artifact Traceability Audit",
-  "audit_timestamp": "2026-11-12T09:14:00Z",
-  "source_commit": "c95907f6b8cf12cc02563dfaab209f304dbc3259",
+  "audit_timestamp": "2026-11-12T17:00:00+07:00",
+  "source_commit": "091352f7f8b51c5cd65790ca8c7026d988170e76",
   "git_branch": "main",
   "authoritative_model_checkpoint": {
     "relative_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
@@ -23,10 +23,10 @@
       "has_source_commit": true,
       "has_run_id": true,
       "status": "VALID_TRACEABLE",
-      "notes": "Đã đồng bộ đầy đủ 3 mẫu số exposure và 95% Poisson CI"
+      "notes": "Đã đồng bộ đầy đủ các mẫu số exposure và 95% Poisson CI"
     },
     {
-      "artifact_path": "runs/benchmarks/week4_final/operating_point.json",
+      "artifact_path": "runs/benchmarks/week4_final/operating_point_audit.json",
       "has_timestamp": true,
       "has_source_commit": true,
       "has_run_id": true,
@@ -39,6 +39,7 @@
       "has_timestamp": true,
       "has_source_commit": true,
       "has_run_id": true,
+      "sha256": "5413a0328fc6aea70da0f5b22f96514b8bab780a45737f22be0dea896768bfb1",
       "status": "VALID_TRACEABLE",
       "notes": "Manifest version 2.3 lưu trữ đầy đủ full SHA-256 streaming và trạng thái giải mã"
     },
@@ -67,4 +68,3 @@
     "exposure_scope_reconciled": true
   }
 }
-

@@ -100,6 +100,155 @@ TRUNCATED_STREAM_THRESHOLD = 10
 """Nếu delta = reported - actual > 10 frames: TRUNCATED_STREAM.
 KHÔNG tự động coi là NORMAL_EOF dù file mở được và probe OK."""
 
+
+def probe_video_with_ffprobe(filepath: str | Path) -> Optional[Dict[str, Any]]:
+    """Thử sử dụng ffprobe (nếu có trên hệ thống) để thẩm định luồng stream và mã kết thúc.
+
+    Returns:
+        Dict metadata ffprobe nếu ffprobe tồn tại và chạy thành công, None nếu không có ffprobe.
+    """
+    import shutil
+    import subprocess
+    ffprobe_bin = shutil.which("ffprobe")
+    if not ffprobe_bin:
+        return None
+    try:
+        cmd = [
+            ffprobe_bin,
+            "-v", "error",
+            "-select_streams", "v:0",
+            "-show_entries", "stream=nb_frames,duration,codec_name,r_frame_rate",
+            "-show_entries", "format=duration,nb_streams",
+            "-of", "json",
+            str(filepath),
+        ]
+        res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=10)
+        if res.returncode == 0:
+            return json.loads(res.stdout)
+    except Exception as exc:
+        LOGGER.debug("FFprobe không khả dụng hoặc lỗi cho %s: %s", filepath, exc)
+    return None
+
+
+def classify_decode_termination(
+    actual_decoded_frames: int,
+    reported_frame_count: int,
+    fps: float,
+    filepath: Optional[Path | str] = None,
+    ffprobe_meta: Optional[Dict[str, Any]] = None,
+) -> Tuple[DecodeStatus, str, bool, int, str, bool]:
+    """Phân loại trạng thái kết thúc giải mã (Stream Termination Classification).
+
+    Trả về tuple:
+        (decode_status, status, tolerance_applied, decode_errors, err_msg, full_decode_verified)
+
+    Nguyên tắc khoa học bắt buộc:
+    - full_decode_verified=True CHỈ KHI decode_status == DecodeStatus.NORMAL_EOF.
+    - Tuyệt đối không dùng (actual_decoded_frames > 0) làm bằng chứng full decode.
+    - Thiếu frame nhưng không có bằng chứng chứng minh container padding -> chuyển NEEDS_REVIEW.
+    - Thiếu > 10 frames -> TRUNCATED_STREAM, status NEEDS_REVIEW, full_decode_verified=False.
+    """
+    if actual_decoded_frames == 0:
+        return (
+            DecodeStatus.DECODE_ERROR,
+            "CORRUPTED",
+            False,
+            1,
+            "Không giải mã được khung hình nào từ tệp video",
+            False,
+        )
+
+    if reported_frame_count == 0:
+        return (
+            DecodeStatus.NEEDS_REVIEW,
+            "NEEDS_REVIEW",
+            False,
+            0,
+            f"reported_frame_count=0 từ metadata container — không đủ bằng chứng đối chiếu EOF bình thường. Đã decode {actual_decoded_frames} frames.",
+            False,
+        )
+
+    missing_frames = max(0, reported_frame_count - actual_decoded_frames)
+    delta_sec = missing_frames / max(1.0, fps)
+    missing_ratio = missing_frames / max(1, reported_frame_count)
+
+    # 1. Khớp tuyệt đối 100%
+    if missing_frames == 0:
+        return (
+            DecodeStatus.NORMAL_EOF,
+            "VALID",
+            False,
+            0,
+            "Khớp tuyệt đối 100% số khung hình container",
+            True,
+        )
+
+    # 2. Dung sai padding container nhỏ (1-5 frames)
+    # Cần điều kiện: thời lượng lệch <= 0.25s (trong phạm vi 1 GOP / B-frame PTS rounding)
+    if missing_frames <= CONTAINER_PADDING_TOLERANCE:
+        if delta_sec <= 0.25:
+            return (
+                DecodeStatus.NORMAL_EOF,
+                "VALID",
+                True,
+                0,
+                f"Khớp trong dung sai container padding thông thường (thiếu {missing_frames} frames <= {CONTAINER_PADDING_TOLERANCE}; delta_t={delta_sec:.3f}s <= 0.25s; MP4 container index rounding / B-frame PTS offset)",
+                True,
+            )
+        else:
+            return (
+                DecodeStatus.NEEDS_REVIEW,
+                "NEEDS_REVIEW",
+                False,
+                missing_frames,
+                f"Sai lệch khung hình trong ngưỡng 5 frame nhưng thời lượng lệch lớn ({delta_sec:.3f}s > 0.25s do FPS thấp) — chuyển NEEDS_REVIEW",
+                False,
+            )
+
+    # 3. Dung sai cận (6-10 frames)
+    # Cần điều kiện: thời lượng lệch <= 0.35s VÀ tỷ lệ thiếu <= 1.0%
+    if missing_frames <= CONTAINER_BORDERLINE_TOLERANCE:
+        if delta_sec <= 0.35 and missing_ratio <= 0.01:
+            LOGGER.warning(
+                "Video %s BORDERLINE_TOLERANCE applied: thiếu %d frames (%.3fs, %.2f%%)",
+                filepath or "unknown", missing_frames, delta_sec, missing_ratio * 100
+            )
+            return (
+                DecodeStatus.NORMAL_EOF,
+                "VALID",
+                True,
+                0,
+                f"Khớp trong dung sai container cận có cảnh báo (thiếu {missing_frames} frames <= {CONTAINER_BORDERLINE_TOLERANCE}; delta_t={delta_sec:.3f}s <= 0.35s; ratio={missing_ratio:.2%})",
+                True,
+            )
+        else:
+            LOGGER.warning(
+                "Video %s BORDERLINE_DISCREPANCY không đủ điều kiện dung sai an toàn: thiếu %d frames (%.3fs, %.2f%%) — chuyển NEEDS_REVIEW",
+                filepath or "unknown", missing_frames, delta_sec, missing_ratio * 100
+            )
+            return (
+                DecodeStatus.NEEDS_REVIEW,
+                "NEEDS_REVIEW",
+                False,
+                missing_frames,
+                f"Sai lệch khung hình cận vượt ngưỡng an toàn thời gian (thiếu {missing_frames} frames, delta_t={delta_sec:.3f}s > 0.35s hoặc ratio={missing_ratio:.2%} > 1.0%) — không đủ bằng chứng kết thúc bình thường",
+                False,
+            )
+
+    # 4. Thiếu > 10 frames: Bắt buộc là TRUNCATED_STREAM
+    LOGGER.warning(
+        "Video %s TRUNCATED_STREAM: Stream kết thúc sớm tại frame %d/%d (thiếu %d frames > %d)",
+        filepath or "unknown", actual_decoded_frames, reported_frame_count, missing_frames, TRUNCATED_STREAM_THRESHOLD
+    )
+    return (
+        DecodeStatus.TRUNCATED_STREAM,
+        "NEEDS_REVIEW",
+        False,
+        missing_frames,
+        f"Stream kết thúc sớm tại frame {actual_decoded_frames}/{reported_frame_count} (thiếu {missing_frames} frames > {TRUNCATED_STREAM_THRESHOLD} do lỗi luồng NAL/packet)",
+        False,
+    )
+
 # ---------------------------------------------------------------------------
 # CACHE SCHEMA VERSION
 # ---------------------------------------------------------------------------
@@ -447,77 +596,31 @@ def audit_single_video(
         # grab() giải mã nhưng không decode pixel — nhanh hơn read()
         while True:
             if not cap.grab():
-                # grab() == False: có thể là EOF hoặc decoder error
-                # KHÔNG tự kết luận NORMAL_EOF — phải so sánh frame count bên dưới
                 break
             actual_decoded_frames += 1
 
         cap.release()
 
-        # full_decode_verified: đã quét đến EOF (bất kể NORMAL/TRUNCATED)
-        full_decode_verified = (actual_decoded_frames > 0)
+        # Thử nghiệm với ffprobe nếu có
+        ffprobe_meta = probe_video_with_ffprobe(vpath)
 
-        # Delta = reported - actual (số frame reported nhưng không decode được)
+        # Phân loại trạng thái kết thúc giải mã (Stream Termination Classification)
+        (
+            decode_status_obj,
+            status,
+            tolerance_applied,
+            decode_errors,
+            err_msg,
+            full_decode_verified,
+        ) = classify_decode_termination(
+            actual_decoded_frames=actual_decoded_frames,
+            reported_frame_count=reported_frame_count,
+            fps=fps_val,
+            filepath=rel_path,
+            ffprobe_meta=ffprobe_meta,
+        )
+        decode_status_val = str(decode_status_obj)
         missing_frames = max(0, reported_frame_count - actual_decoded_frames)
-
-        # Áp dụng Explicit Tolerance Policy
-        if actual_decoded_frames == 0:
-            decode_status_val = str(DecodeStatus.DECODE_ERROR)
-            status = "CORRUPTED"
-            err_msg = "Không giải mã được khung hình nào"
-            full_decode_verified = False
-
-        elif reported_frame_count == 0:
-            # Metadata lỗi: không thể so sánh — không đủ bằng chứng
-            decode_status_val = str(DecodeStatus.NEEDS_REVIEW)
-            status = "NEEDS_REVIEW"
-            err_msg = (
-                f"reported_frame_count=0 từ metadata — không đủ bằng chứng phân loại. "
-                f"Đã decode thực tế {actual_decoded_frames} frames."
-            )
-            LOGGER.warning("Video %s: %s", vid, err_msg)
-
-        elif missing_frames == 0:
-            decode_status_val = str(DecodeStatus.NORMAL_EOF)
-            status = "VALID"
-            err_msg = "Khớp tuyệt đối 100% số khung hình container"
-
-        elif missing_frames <= CONTAINER_PADDING_TOLERANCE:
-            # 1-5 frames: container padding thông thường
-            decode_status_val = str(DecodeStatus.NORMAL_EOF)
-            status = "VALID"
-            tolerance_applied = True
-            err_msg = (
-                f"Khớp trong dung sai container padding thông thường "
-                f"(thiếu {missing_frames} frames <= {CONTAINER_PADDING_TOLERANCE}; "
-                f"MP4 container index rounding / B-frame PTS offset)"
-            )
-
-        elif missing_frames <= CONTAINER_BORDERLINE_TOLERANCE:
-            # 6-10 frames: borderline tolerance — PHẢI log WARNING
-            decode_status_val = str(DecodeStatus.NORMAL_EOF)
-            status = "VALID"
-            tolerance_applied = True
-            err_msg = (
-                f"Khớp trong dung sai container cận (borderline) "
-                f"(thiếu {missing_frames} frames <= {CONTAINER_BORDERLINE_TOLERANCE}; "
-                f"B-frame reorder buffer flush / VFR dropped frames ở cuối GOP)"
-            )
-            LOGGER.warning(
-                "Video %s BORDERLINE_TOLERANCE applied: %s", vid, err_msg,
-            )
-
-        else:
-            # > 10 frames: TRUNCATED_STREAM — KHÔNG thể là NORMAL_EOF
-            decode_status_val = str(DecodeStatus.TRUNCATED_STREAM)
-            status = "NEEDS_REVIEW"
-            decode_errors = missing_frames
-            err_msg = (
-                f"Stream kết thúc sớm tại frame {actual_decoded_frames}/{reported_frame_count} "
-                f"(thiếu {missing_frames} frames > {TRUNCATED_STREAM_THRESHOLD} "
-                f"do lỗi luồng NAL/packet)"
-            )
-            LOGGER.warning("Video %s TRUNCATED_STREAM: %s", vid, err_msg)
 
     else:
         cap.release()
@@ -525,6 +628,7 @@ def audit_single_video(
         status = "NEEDS_REVIEW"
         full_decode_verified = False
         err_msg = "Chỉ thực hiện probe khởi động, chưa giải mã tuần tự đến EOF"
+        ffprobe_meta = None
 
     # Tính thời lượng thực tế (dựa trên full_decoded_frames — ground truth)
     if fps_val > 0 and actual_decoded_frames > 0:
@@ -568,6 +672,7 @@ def audit_single_video(
         "codec": codec_str,
         "error_message": err_msg,
         "duplicate_of": None,
+        "stream_verification_backend": "ffprobe_stream_metadata" if ffprobe_meta else "opencv_pts_frame_analysis (ffprobe_not_found_fallback)",
         "duration_calc_method": dur_calc_method,
         "schema_version": CACHE_SCHEMA_VERSION,
         "last_audited_at": datetime.now(timezone.utc).isoformat(),
