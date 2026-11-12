@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-11-12T19:17:12.774639+00:00",
+  "terminology_note": "Values are formally reported as Alert-Event Rate (/h) on nominal-negative surveillance data. True False Alarm Rate (FAR) requires Scope C dual-annotator ground truth verification.",
+  "scope_a_historical_diagnostic": {
+    "name": "Scope A — Historical Diagnostic",
+    "description": "Toàn bộ 79 video âm tính được đưa vào hệ thống suy luận.",
+    "video_count": 79,
+    "exposure_hours": 7.1312,
+    "pipeline_a_baseline": {
+      "events": 988,
+      "rate_per_hour": 138.5471
+    },
+    "pipeline_b1": {
+      "events": 547,
+      "rate_per_hour": 76.7057
+    },
+    "pipeline_b2_operating_point": {
+      "events_total": 421,
+      "rate_per_hour": 59.0368,
+      "events_fire": 67,
+      "rate_fire": 9.3954,
+      "events_smoke": 354,
+      "rate_smoke": 49.6414,
+      "exact_95_poisson_ci_total": [
+        53.5314,
+        64.9547
+      ],
+      "exact_95_poisson_ci_fire": [
+        7.2813,
+        11.9318
+      ],
+      "exact_95_poisson_ci_smoke": [
+        44.6043,
+        55.0916
+      ]
+    },
+    "rate_reduction_percentage": 57.39,
+    "mt3_target_met": true
+  },
+  "scope_b_strict_technical_validation": {
+    "sub_scope_b1_prior_audit_16_videos": {
+      "description": "Tập 16 video test kiểm định đạt NORMAL_EOF ở lần audit trước.",
+      "video_count": 16,
+      "exposure_hours": 0.1623,
+      "pipeline_a_rate": 166.37,
+      "pipeline_b2_events": 5,
+      "pipeline_b2_rate": 30.81,
+      "exact_95_ci": [
+        10.0,
+        71.9
+      ],
+      "reduction_percentage": 81.48
+    },
+    "sub_scope_b2_full_dataset_19_strict_valid_videos": {
+      "description": "Tập 19 video đạt NORMAL_EOF khớp tuyệt đối ba bên ở đợt audit toàn bộ 79 file (gồm cả VN_NEG_01 và VN_NEG_04).",
+      "video_count": 19,
+      "exposure_hours": 2.7804,
+      "pipeline_a_rate": 58.98,
+      "pipeline_b2_events": 35,
+      "pipeline_b2_rate": 12.5882,
+      "exact_95_ci": [
+        8.7681,
+        17.5071
+      ],
+      "reduction_percentage": 78.66
+    },
+    "sub_scope_b3_untruncated_77_videos": {
+      "description": "Tập 77 video không bị đứt luồng (loại bỏ 2 video lỗi gói tin NAL VN_NEG_10 và VN_NEG_48).",
+      "video_count": 77,
+      "exposure_hours": 6.9846,
+      "pipeline_a_rate": 139.0195,
+      "pipeline_b2_events": 417,
+      "pipeline_b2_rate": 59.7025,
+      "exact_95_ci": [
+        54.1091,
+        65.7172
+      ],
+      "reduction_internal_formula_percent": 57.05,
+      "reduction_global_baseline_percent": 56.48,
+      "reduction_discrepancy_explanation": "57.05% sử dụng mẫu số 77 video nội bộ (139.02/h), trong khi 56.48% so sánh với baseline toàn cục 7.2026h (137.17/h). Cả hai cách tính đều vượt chỉ tiêu Đề cương >= 50%."
+    }
+  },
+  "scope_c_scientifically_verified_negative_exposure": {
+    "status": "BLOCKED_AWAITING_INDEPENDENT_NEGATIVE_GROUND_TRUTH_REVIEW",
+    "verified_exposure_hours": 0.0,
+    "true_far_certifiable": false,
+    "blocking_reason": "Dữ liệu âm tính đang ở trạng thái PENDING_REVIEW; chưa có 2 annotator thẩm định độc lập từng giây video."
+  }
+}

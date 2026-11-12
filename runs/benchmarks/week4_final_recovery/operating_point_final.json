@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-11-12T19:17:12.784376+00:00",
+  "operating_point_configuration": {
+    "confidence_threshold": 0.35,
+    "confirm_k": 3,
+    "window_n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "max_event_gap_sec": 2.0
+  },
+  "criteria_verification": {
+    "mt3_far_reduction": {
+      "target": ">= 50% reduction in FAR compared to Pipeline A baseline",
+      "scope_a_result": "57.39% reduction (138.55/h -> 59.04/h)",
+      "scope_b3_result": "57.05% reduction (139.02/h -> 59.70/h)",
+      "status": "PASS"
+    },
+    "mt3_event_recall_drop": {
+      "target": "<= 5 percentage points drop compared to frame baseline",
+      "baseline_recall": "95.83%",
+      "pipeline_b2_recall": "95.83%",
+      "delta_percentage_points": 0.0,
+      "status": "PASS"
+    },
+    "mt3_average_latency": {
+      "target": "<= 10.0 seconds average detection latency",
+      "measured_latency_sec": 2.13,
+      "status": "PASS"
+    },
+    "mt1_mt3_negative_exposure": {
+      "target": ">= 5.0 hours of negative surveillance video",
+      "scope_a_hours": 7.1312,
+      "scope_b3_hours": 6.9846,
+      "status": "PASS"
+    }
+  },
+  "operating_point_status": {
+    "classification": "PROVISIONAL",
+    "official_promotion_allowed": false,
+    "blocking_reasons": [
+      "24 Ground Truth positive events remain PENDING_HUMAN_REVIEW pending dual-annotator verification.",
+      "Negative surveillance video semantic review is PENDING_REVIEW; Scope C true FAR cannot be formally certified.",
+      "Live RTSP streaming benchmark is recorded as NOT_TESTED (no physical RTSP camera connected on current host)."
+    ],
+    "required_actions_for_official": [
+      "Complete Annotator 02 review for 24 pending events in gt_positive_review_queue.csv.",
+      "Complete human review of negative surveillance videos in negative_video_review_queue.csv.",
+      "Execute 2-hour live RTSP stress test in Week 7 deployment."
+    ]
+  }
+}

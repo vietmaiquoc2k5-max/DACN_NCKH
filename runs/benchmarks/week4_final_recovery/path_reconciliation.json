@@ -1,0 +1,560 @@
+{
+  "generated_at": "2026-11-12T18:36:14.314545+00:00",
+  "total_checked": 79,
+  "valid_count": 79,
+  "reconciliations": [
+    {
+      "video_id": "VN_NEG_01",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_01.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_01.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_03",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_03.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_03.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_04.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_04.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_06.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_06.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_07",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_07.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_07.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_08.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_08.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_09",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_09.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_09.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_10",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_10.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_10.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_11.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_11.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_12.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_12.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_13.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_13.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_14",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_14.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_14.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_15.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_15.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_16.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_16.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_17",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_17.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_17.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_18.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_18.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_19",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_19.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_19.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_20.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_20.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_21.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_21.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_22.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_22.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_23",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_23.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_23.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_24.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_24.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_25.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_25.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_26.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_26.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_27",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_27.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_27.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_28.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_28.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_29.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_29.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_30",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_30.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_30.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_31.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_31.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_32",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_32.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_32.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_33",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_33.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_33.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_34.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_34.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_35.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_35.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_36.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_36.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_37",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_37.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_37.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_38.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_38.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_39",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_39.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_39.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_40",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_40.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_40.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_41.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_41.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_42.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_42.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_43.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_43.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_44.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_44.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_45",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_45.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_45.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_46.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_46.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_47.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_47.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_48.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_48.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_49",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_49.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_49.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_50.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_50.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_51",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_51.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_51.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_52",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_52.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_52.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_53.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_53.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_54.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_54.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_55.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_55.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_56.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_56.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_57",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_57.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_57.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_58.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_58.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_59.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_59.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_60.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_60.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_61.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_61.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_62",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_62.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_62.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_63.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_63.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_64",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_64.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_64.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "raw_manifest_path": "datasets/negative_videos/VN_NEG_65.mp4",
+      "resolved_canonical_path": "datasets/negative_videos/VN_NEG_65.mp4",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo1.858",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo1.858.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo1.858.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo10.1072",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo10.1072.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo10.1072.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo11.1073",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo11.1073.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo11.1073.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo12.1074",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo12.1074.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo12.1074.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo13.1075",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo13.1075.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo13.1075.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo14.1076",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo14.1076.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo14.1076.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo15.1078",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo15.1078.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo15.1078.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo16.1077",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo16.1077.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo16.1077.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo2.859",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo2.859.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo2.859.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo3.860",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo3.860.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo3.860.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo4.861",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo4.861.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo4.861.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo5.862",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo5.862.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo5.862.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo6.863",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo6.863.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo6.863.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo7.864",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo7.864.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo7.864.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo8.865",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo8.865.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo8.865.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    },
+    {
+      "video_id": "negsVideo9.866",
+      "raw_manifest_path": "datasets/test_videos/neg/negsVideo9.866.avi",
+      "resolved_canonical_path": "datasets/test_videos/neg/negsVideo9.866.avi",
+      "is_valid": true,
+      "notes": "Exact match"
+    }
+  ]
+}

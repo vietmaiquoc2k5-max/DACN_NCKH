@@ -1,0 +1,6 @@
+Scope,Sub-Scope / Name,Video Count,Exposure Hours,Pipeline A Rate,Pipeline B2 Events,Pipeline B2 Rate,Exact 95% Poisson CI,Reduction (%),MT3 Target (>=50%)
+Scope A,Historical Diagnostic,79,7.1312,138.55,421,59.04,"[53.53, 64.95]",57.39%,PASS
+Scope B,B1: Prior Audit 16 Videos,16,0.1623,166.37,5,30.81,"[10.00, 71.90]",81.48%,PASS
+Scope B,B2: Full Audit 19 Strict-Valid,19,2.7804,58.98,35,12.5882,"[8.7681, 17.5071]",78.66%,PASS
+Scope B,B3: 77 Untruncated Streams,77,6.9846,139.02,417,59.7,"[54.11, 65.72]",57.05%,PASS
+Scope C,Scientifically Verified GT,0,0.0000,N/A,0,N/A,N/A,N/A,BLOCKED_PENDING_GT
