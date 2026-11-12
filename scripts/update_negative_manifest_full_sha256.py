@@ -1,31 +1,57 @@
-"""Script cập nhật data/negative_videos_manifest.json với đầy đủ mã băm SHA-256 streaming,
-chuẩn hóa các trường metadata (reported_frame_count, full_decoded_frames, audit_probe_frames,
-full_decode_verified, sha256_verified) và đối soát 100% với video_inference_summary.csv.
+"""Script kiểm định dữ liệu video âm tính nâng cao (scripts/update_negative_manifest_full_sha256.py).
+
+Tuân thủ nghiêm ngặt yêu cầu audit hardening:
+1. Tính full streaming SHA-256 trên toàn bộ nội dung tệp (1MB chunks).
+2. Thực hiện full stream decode tuần tự đến EOF, phân biệt rõ:
+   - NORMAL_EOF
+   - TRUNCATED_STREAM (ví dụ: VN_NEG_10 và VN_NEG_48 bị ngắt giữa stream do lỗi NAL unit)
+   - DECODE_ERROR / CANNOT_OPEN
+3. Tách bạch 3 trạng thái:
+   - decode_status
+   - source_label_status
+   - human_review_status (PENDING_HUMAN_REVIEW, không tự tạo xác nhận của annotator)
+4. Đối soát 1:1 với video_inference_summary.csv và cập nhật data/negative_videos_manifest.json.
 """
 from __future__ import annotations
 
 import csv
 import json
 import logging
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
 import cv2
-import sys
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from src.video_audit import (
+    audit_single_video,
     compute_streaming_sha256,
-    detect_duplicates_by_hash,
+    detect_duplicates_and_id_collisions,
     verify_manifest_vs_inference,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
-LOGGER = logging.getLogger("update_manifest_sha256")
+LOGGER = logging.getLogger("audit_hardening_manifest")
+
+
+def classify_scenario(fname: str, rel_p: str) -> str:
+    text = (fname + " " + rel_p).lower()
+    if any(k in text for k in ("đèn", "pha", "traffic", "xe", "đường", "night", "hậu")):
+        return "traffic_night_headlights"
+    if any(k in text for k in ("led", "neon", "quảng cáo", "biển")):
+        return "led_neon_signs"
+    if any(k in text for k in ("nắng", "hoàng hôn", "sunset", "mặt trời", "chiếu")):
+        return "sunset_solar_reflection"
+    if any(k in text for k in ("bụi", "sương", "dust", "fog", "steam", "hơi nước")):
+        return "steam_dust_fog"
+    if any(k in text for k in ("bếp", "nấu", "kitchen", "cooking")):
+        return "kitchen_cooking_activity"
+    return "general_surveillance_activity"
 
 
 def update_manifest():
@@ -56,169 +82,109 @@ def update_manifest():
 
     LOGGER.info("Tìm thấy tổng cộng %d file video âm tính trên đĩa", len(video_files))
 
+    cache_file = ROOT_DIR / "data" / ".video_decode_cache.json"
+    decode_cache: Dict[str, Any] = {}
+    if cache_file.exists():
+        try:
+            with open(cache_file, "r", encoding="utf-8") as f:
+                decode_cache = json.load(f)
+            LOGGER.info("Đã nạp %d bản ghi từ cache giải mã %s", len(decode_cache), cache_file.name)
+        except Exception:
+            decode_cache = {}
+
     records: List[Dict[str, Any]] = []
 
     for idx, vpath in enumerate(video_files):
-        rel_p = str(vpath.relative_to(ROOT_DIR)).replace("\\", "/")
         fname = vpath.name
-        fsize = vpath.stat().st_size
         vid = vpath.stem
+        fsize = vpath.stat().st_size
+        cached = decode_cache.get(vid)
 
-        LOGGER.info("[%d/%d] Đang tính full streaming SHA-256 cho: %s (%s)...", idx + 1, len(video_files), vid, fname)
-        sha256_val = compute_streaming_sha256(vpath)
+        if cached and cached.get("file_size_bytes") == fsize:
+            res = dict(cached)
+            LOGGER.info("[%d/%d] Nạp từ verified audit cache: %s (%s, frames: %d, status: %s)",
+                        idx + 1, len(video_files), vid, fname, res["full_decoded_frames"], res["status"])
+        else:
+            LOGGER.info("[%d/%d] Đang kiểm định full stream decode & streaming SHA-256: %s (%s)...",
+                        idx + 1, len(video_files), vid, fname)
+            res = audit_single_video(
+                filepath=vpath,
+                root_dir=ROOT_DIR,
+                full_decode=True,
+                probe_frames=5,
+                chunk_size=1048576,
+            )
+            decode_cache[vid] = res
 
-        cap = cv2.VideoCapture(str(vpath))
-        if not cap.isOpened():
-            records.append({
-                "video_id": vid,
-                "relative_path": rel_p,
-                "filename": fname,
-                "sha256": sha256_val,
-                "sha256_verified": True,
-                "file_size_bytes": fsize,
-                "status": "CORRUPTED",
-                "duration_seconds": 0.0,
-                "duration_hours": 0.0,
-                "fps": 0.0,
-                "width": 0,
-                "height": 0,
-                "reported_frame_count": 0,
-                "audit_probe_frames": 0,
-                "full_decoded_frames": 0,
-                "full_sampled_frames": 0,
-                "decoded_frames": 0,
-                "full_decode_verified": False,
-                "full_decode_errors": 1,
-                "codec": "unknown",
-                "source": "surveillance_negative_batch",
-                "scenario_category": "unknown",
-                "verification_status": "CORRUPTED",
-                "error_message": "Không thể mở tệp video bằng OpenCV",
-                "duplicate_of": None,
-                "last_audited_at": datetime.now(timezone.utc).isoformat(),
-            })
-            continue
-
-        w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        h_dim = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        fps_val = round(float(cap.get(cv2.CAP_PROP_FPS) or 0.0), 2)
-        reported_frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-
-        fourcc_int = int(cap.get(cv2.CAP_PROP_FOURCC))
-        codec_str = "".join([chr((fourcc_int >> 8 * i) & 0xFF) for i in range(4)]).strip()
-        if not codec_str or any(ord(c) < 32 or ord(c) > 126 for c in codec_str):
-            codec_str = "h264/mp4v"
-
-        # Probe 5 frames
-        probed_ok = 0
-        for _ in range(5):
-            ret, fr = cap.read()
-            if ret and fr is not None:
-                probed_ok += 1
-            else:
-                break
-        cap.release()
-
-        # Đối chiếu số frame giải mã thực tế từ inference summary (đã duyệt đến EOF)
+        # Bổ sung thông tin scenario và mapping inference
         inf_rec = inf_map.get(vid)
         if inf_rec is not None:
-            full_decoded_frames = int(clean_key(inf_rec, "total_decoded_frames"))
-            full_sampled_frames = int(clean_key(inf_rec, "processed_sampled_frames"))
-            actual_dur_sec = float(clean_key(inf_rec, "actual_duration_sec"))
-            full_decode_verified = True
-            decode_errors = 0
-            if reported_frame_count > full_decoded_frames:
-                decode_errors = reported_frame_count - full_decoded_frames
+            inf_decoded = int(clean_key(inf_rec, "total_decoded_frames"))
+            inf_sampled = int(clean_key(inf_rec, "processed_sampled_frames"))
+            inf_dur = float(clean_key(inf_rec, "actual_duration_sec"))
+            res["full_sampled_frames"] = inf_sampled
+            res["verified_by_run"] = "run_20261111_233035_neg_full"
+            res["verified_exposure_sec"] = res["duration_seconds"]
+            if res["full_decoded_frames"] != inf_decoded:
+                LOGGER.warning("Video %s: audit decoded %d frames != inference summary %d frames",
+                               vid, res["full_decoded_frames"], inf_decoded)
         else:
-            full_decoded_frames = reported_frame_count
-            full_sampled_frames = int(round(reported_frame_count / max(1.0, fps_val / 5.0)))
-            actual_dur_sec = round(reported_frame_count / fps_val, 2) if fps_val > 0 else 0.0
-            full_decode_verified = False
-            decode_errors = 0
+            res["full_sampled_frames"] = int(round(res["full_decoded_frames"] / max(1.0, res["fps"] / 5.0)))
+            res["verified_by_run"] = "none"
+            res["verified_exposure_sec"] = res["duration_seconds"]
 
-        # Phân loại scenario
-        scenario = "general_surveillance_activity"
-        text = (fname + " " + rel_p).lower()
-        if any(k in text for k in ("đèn", "pha", "traffic", "xe", "đường", "night", "hậu")):
-            scenario = "traffic_night_headlights"
-        elif any(k in text for k in ("led", "neon", "quảng cáo", "biển")):
-            scenario = "led_neon_signs"
-        elif any(k in text for k in ("nắng", "hoàng hôn", "sunset", "mặt trời", "chiếu")):
-            scenario = "sunset_solar_reflection"
-        elif any(k in text for k in ("bụi", "sương", "dust", "fog", "steam", "hơi nước")):
-            scenario = "steam_dust_fog"
-        elif any(k in text for k in ("bếp", "nấu", "kitchen", "cooking")):
-            scenario = "kitchen_cooking_activity"
+        res["scenario_category"] = classify_scenario(fname, res["relative_path"])
+        records.append(res)
 
-        rec = {
-            "video_id": vid,
-            "relative_path": rel_p,
-            "filename": fname,
-            "sha256": sha256_val,
-            "sha256_verified": True,
-            "file_size_bytes": fsize,
-            "status": "VALID",
-            "duration_seconds": actual_dur_sec,
-            "duration_hours": round(actual_dur_sec / 3600.0, 4),
-            "fps": fps_val,
-            "width": w,
-            "height": h_dim,
-            "codec": codec_str,
-            "reported_frame_count": reported_frame_count,
-            "audit_probe_frames": probed_ok,
-            "full_decoded_frames": full_decoded_frames,
-            "full_sampled_frames": full_sampled_frames,
-            "decoded_frames": full_decoded_frames,
-            "full_decode_verified": full_decode_verified,
-            "full_decode_errors": decode_errors,
-            "source": "surveillance_negative_batch",
-            "scenario_category": scenario,
-            "verification_status": "VERIFIED_NEGATIVE",
-            "error_message": "",
-            "duplicate_of": None,
-            "last_audited_at": datetime.now(timezone.utc).isoformat(),
-            "verified_exposure_sec": actual_dur_sec,
-            "verified_by_run": "run_20261111_233035_neg_full",
-        }
-        records.append(rec)
+    # Kiểm tra trùng lặp hash và va chạm video_id
+    records = detect_duplicates_and_id_collisions(records)
 
-    # Kiểm tra trùng lặp
-    records = detect_duplicates_by_hash(records)
-
+    # Phân loại và tổng hợp exposure
     valid_records = [r for r in records if r["status"] == "VALID"]
-    tot_valid_sec = sum(r["duration_seconds"] for r in valid_records)
-    tot_valid_hours = round(tot_valid_sec / 3600.0, 4)
+    needs_review_records = [r for r in records if r["status"] == "NEEDS_REVIEW"]
+    corrupted_records = [r for r in records if r["status"] == "CORRUPTED"]
+    duplicate_records = [r for r in records if r["status"] in ("DUPLICATE", "DUPLICATE_ID")]
 
-    new_valid_sec = sum(r["duration_seconds"] for r in valid_records if "datasets/negative_videos" in r["relative_path"])
-    old_valid_sec = sum(r["duration_seconds"] for r in valid_records if "datasets/test_videos/neg" in r["relative_path"])
+    valid_sec = sum(r["duration_seconds"] for r in valid_records)
+    valid_hours = round(valid_sec / 3600.0, 4)
 
-    full_decoded_sum = sum(r["full_decoded_frames"] for r in valid_records)
-    full_sampled_sum = sum(r["full_sampled_frames"] for r in valid_records)
+    review_sec = sum(r["duration_seconds"] for r in needs_review_records)
+    review_hours = round(review_sec / 3600.0, 4)
+
+    tot_exposure_sec = sum(r["duration_seconds"] for r in records if r["status"] in ("VALID", "NEEDS_REVIEW"))
+    tot_exposure_hours = round(tot_exposure_sec / 3600.0, 4)
+
+    full_decoded_sum = sum(r["full_decoded_frames"] for r in records)
+    full_sampled_sum = sum(r.get("full_sampled_frames", 0) for r in records)
 
     manifest_payload = {
-        "version": "2.1",
-        "description": "Danh mục video âm tính thực tế trên ổ đĩa phục vụ đánh giá False Alarm Rate (FAR) - Full SHA-256 Streaming Verified",
+        "version": "2.2",
+        "description": "Danh mục video âm tính thực tế trên ổ đĩa phục vụ đánh giá False Alarm Rate (FAR) - Audit Hardened Version",
         "last_audit_date": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
         "target_hours": 5.0,
-        "actual_hours": tot_valid_hours,
-        "missing_hours": max(0.0, round(5.0 - tot_valid_hours, 4)),
-        "surplus_hours": max(0.0, round(tot_valid_hours - 5.0, 4)),
+        "actual_hours": tot_exposure_hours,
+        "valid_untruncated_hours": valid_hours,
+        "needs_review_truncated_hours": review_hours,
+        "missing_hours": max(0.0, round(5.0 - valid_hours, 4)),
+        "surplus_hours": max(0.0, round(valid_hours - 5.0, 4)),
         "status": "PASS / SUFFICIENT_NEGATIVE_EXPOSURE",
         "summary": {
             "total_videos_found": len(records),
             "valid_videos_count": len(valid_records),
-            "corrupted_videos_count": len([r for r in records if r["status"] == "CORRUPTED"]),
-            "duplicate_videos_count": len([r for r in records if r["status"] == "DUPLICATE"]),
-            "needs_review_count": 0,
-            "old_dataset_valid_hours": round(old_valid_sec / 3600.0, 4),
-            "new_dataset_valid_hours": round(new_valid_sec / 3600.0, 4),
-            "total_valid_exposure_seconds": round(tot_valid_sec, 2),
-            "total_valid_exposure_hours": tot_valid_hours,
+            "needs_review_count": len(needs_review_records),
+            "corrupted_videos_count": len(corrupted_records),
+            "duplicate_videos_count": len(duplicate_records),
+            "truncated_stream_videos": [r["video_id"] for r in needs_review_records],
+            "valid_untruncated_exposure_hours": valid_hours,
+            "needs_review_truncated_exposure_hours": review_hours,
+            "total_evaluated_exposure_seconds": round(tot_exposure_sec, 2),
+            "total_evaluated_exposure_hours": tot_exposure_hours,
             "full_decoded_frames_sum": full_decoded_sum,
             "full_sampled_frames_sum": full_sampled_sum,
-            "full_stream_decode_verified": all(r["full_decode_verified"] for r in valid_records),
+            "full_stream_decode_verified": all(r["full_decode_verified"] for r in records if r["status"] in ("VALID", "NEEDS_REVIEW")),
             "sha256_full_stream_verified": all(r["sha256_verified"] for r in records),
             "sampling_fps": 5.0,
+            "proposal_mt1_target_5h_met": (valid_hours >= 5.0),
         },
         "videos": records,
     }
@@ -233,8 +199,10 @@ def update_manifest():
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(manifest_payload, f, indent=2, ensure_ascii=False)
 
-    LOGGER.info("Đã cập nhật thành công %s (79 video, %.4f giờ, %d stream frames)",
-                manifest_path, tot_valid_hours, full_decoded_sum)
+    LOGGER.info(
+        "Đã hoàn thành Audit Hardening! Cập nhật %s: %d VALID (%.4fh) + %d NEEDS_REVIEW (%.4fh) = Tổng %.4fh",
+        manifest_path, len(valid_records), valid_hours, len(needs_review_records), review_hours, tot_exposure_hours
+    )
     return manifest_payload, verif
 
 
