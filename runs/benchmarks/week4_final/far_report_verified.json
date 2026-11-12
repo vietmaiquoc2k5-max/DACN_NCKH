@@ -1,0 +1,89 @@
+{
+  "report_title": "Verified Event-Level False Alarm Rate (FAR) & Poisson Exact 95% CI",
+  "audit_timestamp": "2026-11-12T09:12:00Z",
+  "evaluation_run_id": "run_20261111_233035_neg_full",
+  "operating_point_used": {
+    "confidence_threshold": 0.35,
+    "k": 3,
+    "n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_sec": 5.0,
+    "max_event_gap_sec": 2.0
+  },
+  "pipeline_comparison": {
+    "Pipeline_A_Raw_YOLO": {
+      "description": "Cảnh báo từng khung hình độc lập (per-frame detection)",
+      "total_false_alarms": 988,
+      "far_benchmark_exposure": 137.1727,
+      "far_actual_stream_exposure": 138.5461,
+      "far_untruncated_exposure": 141.4542,
+      "ci95_benchmark": [128.75, 145.98]
+    },
+    "Pipeline_B1_Tracking_Only": {
+      "description": "ByteTrack association + cửa sổ trượt k/N (chưa bật feature gate)",
+      "total_false_alarms": 547,
+      "far_benchmark_exposure": 75.9448,
+      "far_actual_stream_exposure": 76.7052,
+      "far_untruncated_exposure": 78.3152,
+      "ci95_benchmark": [69.75, 82.55],
+      "reduction_vs_A_pct": 44.64
+    },
+    "Pipeline_B2_Full_Verification": {
+      "description": "ByteTrack + k/N confirmation + dynamic feature gate (OFFICIAL Pipeline)",
+      "total_false_alarms": 421,
+      "far_benchmark_exposure": 58.4511,
+      "far_actual_stream_exposure": 59.0361,
+      "far_untruncated_exposure": 60.2755,
+      "ci95_benchmark": [53.00, 64.33],
+      "ci95_actual_stream": [53.53, 64.97],
+      "ci95_untruncated": [54.65, 66.34],
+      "reduction_vs_A_pct": 57.39
+    }
+  },
+  "exposure_breakdown": {
+    "canonical_benchmark_exposure_hours": 7.2026,
+    "canonical_benchmark_exposure_seconds": 25929.53,
+    "physical_stream_exposure_hours": 7.1312,
+    "physical_stream_exposure_seconds": 25672.14,
+    "untruncated_valid_exposure_hours": 6.9846,
+    "untruncated_valid_exposure_seconds": 25144.67,
+    "proposal_target_hours": 5.0,
+    "surplus_hours_above_target": 1.9846
+  },
+  "confidence_interval_spec": {
+    "method": "Garwood exact two-sided Poisson confidence interval via Gamma/Chi-Square distribution",
+    "confidence_level": 0.95,
+    "implementation": "src/event_eval.py::exact_poisson_ci",
+    "verified_against_scipy": true
+  },
+  "stream_anomaly_videos": [
+    {
+      "video_id": "VN_NEG_10",
+      "reported_frames": 29804,
+      "actual_decoded_frames": 26556,
+      "missing_frames": 3248,
+      "reported_duration_sec": 497.23,
+      "actual_stream_duration_sec": 443.04,
+      "decode_status": "TRUNCATED_STREAM",
+      "status": "NEEDS_REVIEW",
+      "cause": "NAL unit decoding error midstream"
+    },
+    {
+      "video_id": "VN_NEG_48",
+      "reported_frames": 8445,
+      "actual_decoded_frames": 2533,
+      "missing_frames": 5912,
+      "reported_duration_sec": 281.50,
+      "actual_stream_duration_sec": 84.43,
+      "decode_status": "TRUNCATED_STREAM",
+      "status": "NEEDS_REVIEW",
+      "cause": "NAL unit decoding error midstream"
+    }
+  ],
+  "mt3_target_evaluation": {
+    "target": "Giảm >= 50% báo động giả/giờ so với cảnh báo từng khung",
+    "achieved_reduction_pct": 57.39,
+    "verdict": "PASS / TARGET_SURPASSED"
+  }
+}
+

@@ -82,9 +82,11 @@ class TestExactPoissonCI(unittest.TestCase):
 
     def test_invalid_inputs(self):
         """7. Kiểm tra xử lý ngoại lệ đầu vào không hợp lệ."""
-        # exposure <= 0 trả về (0.0, 0.0)
-        self.assertEqual(exact_poisson_ci(10, 0.0), (0.0, 0.0))
-        self.assertEqual(exact_poisson_ci(10, -5.0), (0.0, 0.0))
+        # exposure <= 0 ném ValueError
+        with self.assertRaises(ValueError):
+            exact_poisson_ci(10, 0.0)
+        with self.assertRaises(ValueError):
+            exact_poisson_ci(10, -5.0)
         # k < 0 ném ValueError
         with self.assertRaises(ValueError):
             exact_poisson_ci(-1, 7.2026)

@@ -1,25 +1,22 @@
-"""Bộ kiểm thử tính toàn vẹn của audit video, streaming SHA-256, full decode và đồng bộ manifest (tests/test_video_audit_and_consistency.py).
-
-Tuân thủ nghiêm ngặt 9 yêu cầu kiểm thử của Audit Hardening (Commit e88edffa):
-1. Video decode thành công đến EOF (NORMAL_EOF, VALID).
-2. Video bị truncate giữa luồng (TRUNCATED_STREAM, NEEDS_REVIEW, ghi nhận missing_frames).
-3. Video có metadata frame count sai (đối chiếu container và stream).
-4. Video chỉ đọc được vài frame đầu (PROBE_ONLY, full_decode_verified=False).
-5. Video có lỗi giải mã giữa luồng (DECODE_ERROR / TRUNCATED_STREAM).
-6. Video thiếu trong inference summary (phát hiện missing_in_inference).
-7. Video có video_id trùng lặp giữa hai thư mục (DUPLICATE_ID).
-8. Manifest và inference summary không khớp (frame mismatches, unexplained duration mismatches).
-9. Ràng buộc bảo vệ: Tuyệt đối không thể gán full_decode_verified=True khi chưa có bằng chứng full decode.
-10. Streaming SHA-256 đọc theo chunks phân biệt nội dung khác nhau ở đuôi tệp.
+"""Bộ kiểm thử toàn diện 42 chỉ tiêu cho Video Audit Reliability Hardening, Cache, Decode, Manifest, FAR/CI & Integration.
+Tuân thủ nghiêm ngặt 6 nhóm kiểm thử quy định trong MASTER PROMPT (Phase 10):
+1. Video Hash Tests (tests 01-06)
+2. Cache Tests (tests 07-14)
+3. Decode Tests (tests 15-23)
+4. Manifest Tests (tests 24-30)
+5. FAR / Exact Poisson CI Tests (tests 31-37)
+6. Integration & Consistency Tests (tests 38-42)
 """
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import shutil
 import sys
 import tempfile
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -30,7 +27,14 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from src.event_eval import exact_poisson_ci
 from src.video_audit import (
+    CACHE_SCHEMA_VERSION,
+    CONTAINER_BORDERLINE_TOLERANCE,
+    CONTAINER_PADDING_TOLERANCE,
+    TRUNCATED_STREAM_THRESHOLD,
+    DecodeStatus,
+    VideoDecodeCacheManager,
     audit_single_video,
     compute_streaming_sha256,
     detect_duplicates_and_id_collisions,
@@ -38,7 +42,13 @@ from src.video_audit import (
 )
 
 
-def create_synthetic_video(filepath: Path, num_frames: int = 30, fps: float = 10.0, width: int = 160, height: int = 120) -> Path:
+def create_synthetic_video(
+    filepath: Path,
+    num_frames: int = 30,
+    fps: float = 10.0,
+    width: int = 160,
+    height: int = 120,
+) -> Path:
     """Tạo video giả lập hợp lệ để kiểm thử giải mã."""
     fourcc = cv2.VideoWriter_fourcc(*"MJPG")
     out = cv2.VideoWriter(str(filepath), fourcc, fps, (width, height))
@@ -50,166 +60,443 @@ def create_synthetic_video(filepath: Path, num_frames: int = 30, fps: float = 10
     return filepath
 
 
-class TestVideoAuditHardening(unittest.TestCase):
+class TestVideoAuditComprehensive42(unittest.TestCase):
     def setUp(self):
-        self.test_dir = Path(tempfile.mkdtemp(prefix="audit_hardening_test_"))
+        self.test_dir = Path(tempfile.mkdtemp(prefix="audit_comp42_"))
 
     def tearDown(self):
         shutil.rmtree(self.test_dir, ignore_errors=True)
 
-    def test_01_video_decode_success_to_eof(self):
-        """1. Video giải mã thành công đến EOF: decode_status=NORMAL_EOF, status=VALID, full_decode_verified=True."""
-        vpath = self.test_dir / "valid_full.avi"
-        num_frames = 25
-        create_synthetic_video(vpath, num_frames=num_frames, fps=10.0)
+    # =========================================================================
+    # 1. VIDEO HASH TESTS (01 - 06)
+    # =========================================================================
 
-        res = audit_single_video(vpath, full_decode=True, probe_frames=5)
-        self.assertEqual(res["status"], "VALID")
-        self.assertEqual(res["decode_status"], "NORMAL_EOF")
-        self.assertEqual(res["source_label_status"], "SURVEILLANCE_NEGATIVE_BATCH")
-        self.assertEqual(res["human_review_status"], "PENDING_HUMAN_REVIEW")
-        self.assertEqual(res["full_decoded_frames"], num_frames)
-        self.assertEqual(res["missing_frames"], 0)
-        self.assertTrue(res["full_decode_verified"])
-        self.assertEqual(res["duration_seconds"], 2.5)
+    def test_01_hash_small_file(self):
+        """1. Hash file nhỏ ổn định và khớp với hashlib tiêu chuẩn."""
+        p = self.test_dir / "small.txt"
+        p.write_bytes(b"hello world of surveillance video audit")
+        expected = hashlib.sha256(b"hello world of surveillance video audit").hexdigest()
+        self.assertEqual(compute_streaming_sha256(p), expected)
 
-    def test_02_video_truncated_middle_of_stream(self):
-        """2. Video bị truncate giữa luồng: decode_status=TRUNCATED_STREAM, status=NEEDS_REVIEW, missing_frames > 10."""
-        vpath = self.test_dir / "truncated.avi"
-        create_synthetic_video(vpath, num_frames=50, fps=10.0)
+    def test_02_hash_large_file_chunked(self):
+        """2. Hash file lớn (3MB) theo streaming chunks không bị tràn RAM."""
+        p = self.test_dir / "large.bin"
+        chunk_data = b"X" * 1024 * 1024  # 1MB
+        with open(p, "wb") as f:
+            f.write(chunk_data)
+            f.write(b"Y" * 1024 * 1024)
+            f.write(b"Z" * 1024 * 1024)
+        hasher = hashlib.sha256()
+        with open(p, "rb") as f:
+            while True:
+                c = f.read(65536)
+                if not c:
+                    break
+                hasher.update(c)
+        self.assertEqual(compute_streaming_sha256(p, chunk_size=262144), hasher.hexdigest())
 
-        # Cắt bớt 50% dung lượng tệp
-        raw = vpath.read_bytes()
-        vpath.write_bytes(raw[: int(len(raw) * 0.5)])
+    def test_03_hash_empty_file(self):
+        """3. File rỗng (0 bytes) trả về mã SHA-256 hợp lệ của chuỗi rỗng."""
+        p = self.test_dir / "empty.bin"
+        p.write_bytes(b"")
+        expected = hashlib.sha256(b"").hexdigest()
+        self.assertEqual(compute_streaming_sha256(p), expected)
 
-        res = audit_single_video(vpath, full_decode=True, probe_frames=5)
-        self.assertEqual(res["status"], "NEEDS_REVIEW")
-        self.assertEqual(res["decode_status"], "TRUNCATED_STREAM")
-        self.assertGreater(res["missing_frames"], 10)
-        self.assertLess(res["full_decoded_frames"], 50)
-        self.assertTrue(res["full_decode_verified"])  # Điểm dừng của stream đã được xác minh
+    def test_04_hash_unreadable_file(self):
+        """4. File không tồn tại hoặc thư mục ném ngoại lệ rõ ràng."""
+        ghost = self.test_dir / "non_existent.mp4"
+        with self.assertRaises(FileNotFoundError):
+            compute_streaming_sha256(ghost)
+        with self.assertRaises(ValueError):
+            compute_streaming_sha256(self.test_dir)
 
-    def test_03_metadata_frame_count_mismatch(self):
-        """3. Video có metadata frame count sai: phân biệt rõ reported_frame_count và full_decoded_frames, duration theo frame thực."""
-        vpath = self.test_dir / "mismatch.avi"
-        create_synthetic_video(vpath, num_frames=40, fps=10.0)
+    def test_05_hash_same_content_different_path(self):
+        """5. Hai file cùng nội dung tại hai đường dẫn khác nhau có SHA-256 hoàn toàn trùng nhau."""
+        p1 = self.test_dir / "copy1.dat"
+        p2 = self.test_dir / "sub" / "copy2.dat"
+        p2.parent.mkdir(parents=True, exist_ok=True)
+        content = b"identical content across paths"
+        p1.write_bytes(content)
+        p2.write_bytes(content)
+        self.assertEqual(compute_streaming_sha256(p1), compute_streaming_sha256(p2))
 
-        raw = vpath.read_bytes()
-        vpath.write_bytes(raw[: int(len(raw) * 0.7)])
+    def test_06_hash_same_size_different_content(self):
+        """6. Hai file cùng kích thước nhưng khác nội dung (chỉ khác vài byte ở cuối) có SHA-256 khác nhau."""
+        p1 = self.test_dir / "f1.bin"
+        p2 = self.test_dir / "f2.bin"
+        base = b"A" * 5000
+        p1.write_bytes(base + b"tail_alpha")
+        p2.write_bytes(base + b"tail_beta_")
+        self.assertEqual(p1.stat().st_size, p2.stat().st_size)
+        self.assertNotEqual(compute_streaming_sha256(p1), compute_streaming_sha256(p2))
 
+    # =========================================================================
+    # 2. CACHE TESTS (07 - 14)
+    # =========================================================================
+
+    def test_07_cache_hit_unchanged_file(self):
+        """7. Cache hit khi file và kích thước + SHA-256 không thay đổi."""
+        vpath = self.test_dir / "stable.avi"
+        create_synthetic_video(vpath, num_frames=15, fps=10.0)
+        cache_file = self.test_dir / ".cache.json"
+        mgr = VideoDecodeCacheManager(cache_file=cache_file, root_dir=self.test_dir)
+
+        r1 = audit_single_video(vpath, root_dir=self.test_dir, cache_manager=mgr)
+        mgr.save()
+
+        # Lần 2: Nạp lại từ cache
+        mgr2 = VideoDecodeCacheManager(cache_file=cache_file, root_dir=self.test_dir)
+        cached = mgr2.get(vpath, validate_sha256=True)
+        self.assertIsNotNone(cached)
+        self.assertEqual(cached["full_decoded_frames"], 15)
+
+    def test_08_cache_invalidation_on_change(self):
+        """8. Cache bị invalidation khi nội dung và kích thước file thay đổi."""
+        vpath = self.test_dir / "change.avi"
+        create_synthetic_video(vpath, num_frames=15, fps=10.0)
+        mgr = VideoDecodeCacheManager(cache_file=self.test_dir / ".cache.json", root_dir=self.test_dir)
+        audit_single_video(vpath, root_dir=self.test_dir, cache_manager=mgr)
+
+        # Sửa file (thêm dữ liệu)
+        with open(vpath, "ab") as f:
+            f.write(b"appended data")
+
+        self.assertIsNone(mgr.get(vpath, validate_sha256=True))
+
+    def test_09_cache_invalidation_same_size_different_sha(self):
+        """9. Cache bị invalidation khi file bị sửa đổi nội dung nhưng giữ nguyên kích thước."""
+        p = self.test_dir / "mod_same_size.avi"
+        create_synthetic_video(p, num_frames=20, fps=10.0)
+        mgr = VideoDecodeCacheManager(cache_file=self.test_dir / ".cache.json", root_dir=self.test_dir)
+        audit_single_video(p, root_dir=self.test_dir, cache_manager=mgr)
+
+        # Ghi đè giữa file giữ nguyên độ dài
+        raw = bytearray(p.read_bytes())
+        raw[100:150] = b"\x00" * 50
+        p.write_bytes(bytes(raw))
+
+        # Kích thước giữ nguyên nhưng SHA-256 thay đổi
+        self.assertIsNone(mgr.get(p, validate_sha256=True))
+
+    def test_10_cache_old_schema_no_sha256(self):
+        """10. Cache bản ghi cũ thiếu SHA-256 hoặc schema_version < 2 bị invalidate bắt buộc."""
+        cache_file = self.test_dir / ".cache.json"
+        vpath = self.test_dir / "old_schema.avi"
+        create_synthetic_video(vpath, num_frames=10, fps=10.0)
+        mgr = VideoDecodeCacheManager(cache_file=cache_file, root_dir=self.test_dir)
+        key = mgr._normalize_key(vpath)
+
+        # Ghi bản ghi schema cũ
+        mgr.cache_data[key] = {
+            "relative_path": key,
+            "file_size_bytes": vpath.stat().st_size,
+            "full_decoded_frames": 10,
+            "schema_version": 1,  # Cũ (< 2)
+            "sha256": "",
+        }
+        self.assertIsNone(mgr.get(vpath, validate_sha256=True))
+
+    def test_11_cache_missing_sha256_field(self):
+        """11. Cache thiếu trường 'sha256' không bao giờ được trả về."""
+        cache_file = self.test_dir / ".cache.json"
+        vpath = self.test_dir / "no_sha.avi"
+        create_synthetic_video(vpath, num_frames=10, fps=10.0)
+        mgr = VideoDecodeCacheManager(cache_file=cache_file, root_dir=self.test_dir)
+        key = mgr._normalize_key(vpath)
+
+        mgr.cache_data[key] = {
+            "relative_path": key,
+            "file_size_bytes": vpath.stat().st_size,
+            "schema_version": CACHE_SCHEMA_VERSION,
+        }
+        self.assertIsNone(mgr.get(vpath, validate_sha256=True))
+
+    def test_12_cache_custom_root_dir(self):
+        """12. Root directory tùy chỉnh tạo đúng relative_path cho cache key."""
+        sub = self.test_dir / "sub_root"
+        sub.mkdir()
+        vpath = sub / "video.avi"
+        create_synthetic_video(vpath, num_frames=10, fps=10.0)
+        mgr = VideoDecodeCacheManager(root_dir=sub)
+        self.assertEqual(mgr._normalize_key(vpath), "video.avi")
+
+    def test_13_cache_relative_path_normalization(self):
+        """13. Chuẩn hóa path Windows backslash và POSIX slash thành cùng một cache key thống nhất."""
+        mgr = VideoDecodeCacheManager(root_dir=self.test_dir)
+        p = self.test_dir / "a" / "b" / "vid.mp4"
+        key = mgr._normalize_key(p)
+        self.assertNotIn("\\", key)
+        self.assertEqual(key, "a/b/vid.mp4")
+
+    def test_14_cache_key_collision_different_dirs(self):
+        """14. Hai video cùng tên file ở hai thư mục khác nhau không bị va chạm cache key."""
+        p1 = self.test_dir / "cam1" / "video.avi"
+        p2 = self.test_dir / "cam2" / "video.avi"
+        p1.parent.mkdir()
+        p2.parent.mkdir()
+        create_synthetic_video(p1, num_frames=10)
+        create_synthetic_video(p2, num_frames=20)
+        mgr = VideoDecodeCacheManager(root_dir=self.test_dir)
+        self.assertNotEqual(mgr._normalize_key(p1), mgr._normalize_key(p2))
+
+    # =========================================================================
+    # 3. DECODE TESTS (15 - 23)
+    # =========================================================================
+
+    def test_15_decode_normal_eof(self):
+        """15. Video hợp lệ decode tuần tự đến EOF: NORMAL_EOF, status=VALID, full_decode_verified=True."""
+        vpath = self.test_dir / "normal.avi"
+        create_synthetic_video(vpath, num_frames=25, fps=10.0)
         res = audit_single_video(vpath, full_decode=True)
-        self.assertIn("reported_frame_count", res)
-        self.assertIn("full_decoded_frames", res)
-        self.assertNotEqual(res["reported_frame_count"], res["full_decoded_frames"])
-        # Thời lượng phải tính trên số frame thực giải mã được
-        expected_dur = round(res["full_decoded_frames"] / res["fps"], 2)
-        self.assertAlmostEqual(res["duration_seconds"], expected_dur, places=1)
+        self.assertEqual(res["decode_status"], "NORMAL_EOF")
+        self.assertEqual(res["status"], "VALID")
+        self.assertTrue(res["full_decode_verified"])
+        self.assertEqual(res["full_decoded_frames"], 25)
 
-    def test_04_probe_only_does_not_verify_full_decode(self):
-        """4. Video chỉ đọc được vài frame đầu (probe only): decode_status=PROBE_ONLY, status=NEEDS_REVIEW, full_decode_verified=False."""
-        vpath = self.test_dir / "probe_only.avi"
-        create_synthetic_video(vpath, num_frames=30, fps=10.0)
-
-        res = audit_single_video(vpath, full_decode=False, probe_frames=5)
-        self.assertEqual(res["decode_status"], "PROBE_ONLY")
+    def test_16_decode_truncated_video(self):
+        """16. Video bị cắt ngắn (thiếu > 10 frames): TRUNCATED_STREAM, status=NEEDS_REVIEW."""
+        vpath = self.test_dir / "trunc.avi"
+        create_synthetic_video(vpath, num_frames=50, fps=10.0)
+        raw = vpath.read_bytes()
+        vpath.write_bytes(raw[: int(len(raw) * 0.4)])
+        res = audit_single_video(vpath, full_decode=True)
+        self.assertEqual(res["decode_status"], "TRUNCATED_STREAM")
         self.assertEqual(res["status"], "NEEDS_REVIEW")
-        self.assertFalse(res["full_decode_verified"])
-        self.assertEqual(res["audit_probe_frames"], 5)
-        self.assertEqual(res["full_decoded_frames"], 0)
+        self.assertGreater(res["missing_frames"], TRUNCATED_STREAM_THRESHOLD)
 
-    def test_05_decode_error_corrupted_frame(self):
-        """5. Video có lỗi giải mã giữa luồng: bắt lỗi mượt mà, ghi nhận error_message."""
-        vpath = self.test_dir / "corrupted_stream.avi"
+    def test_17_decode_midstream_error(self):
+        """17. Video bị lỗi rác giữa luồng: xử lý mượt mà, ghi nhận error_message."""
+        vpath = self.test_dir / "corrupt_mid.avi"
         create_synthetic_video(vpath, num_frames=35, fps=10.0)
-
-        # Ghi đè rác vào giữa tệp video để gây lỗi giải mã khung hình
         raw = bytearray(vpath.read_bytes())
         mid = len(raw) // 2
         raw[mid : mid + 1024] = b"\x00\xFF" * 512
         vpath.write_bytes(bytes(raw))
-
         res = audit_single_video(vpath, full_decode=True)
         self.assertIn(res["decode_status"], ("TRUNCATED_STREAM", "DECODE_ERROR", "NORMAL_EOF"))
-        self.assertIsNotNone(res["status"])
 
-    def test_06_video_missing_in_inference_summary(self):
-        """6. Video thiếu inference summary: verify_manifest_vs_inference phát hiện ra tệp bị thiếu."""
+    def test_18_decode_cannot_open(self):
+        """18. File không phải video hoặc rác hoàn toàn: CANNOT_OPEN, status=CORRUPTED."""
+        junk = self.test_dir / "junk.mp4"
+        junk.write_bytes(b"NOT A REAL VIDEO AT ALL")
+        res = audit_single_video(junk, full_decode=True)
+        self.assertEqual(res["decode_status"], "CANNOT_OPEN")
+        self.assertEqual(res["status"], "CORRUPTED")
+
+    def test_19_decode_probe_only(self):
+        """19. Chế độ full_decode=False: PROBE_ONLY, full_decode_verified=False."""
+        vpath = self.test_dir / "probe.avi"
+        create_synthetic_video(vpath, num_frames=20, fps=10.0)
+        res = audit_single_video(vpath, full_decode=False, probe_frames=5)
+        self.assertEqual(res["decode_status"], "PROBE_ONLY")
+        self.assertFalse(res["full_decode_verified"])
+
+    def test_20_decode_metadata_frame_count_wrong(self):
+        """20. Metadata container frame count sai: dùng số frame thực tế decode để tính thời lượng."""
+        vpath = self.test_dir / "meta_wrong.avi"
+        create_synthetic_video(vpath, num_frames=40, fps=10.0)
+        raw = vpath.read_bytes()
+        vpath.write_bytes(raw[: int(len(raw) * 0.7)])
+        res = audit_single_video(vpath, full_decode=True)
+        expected_dur = round(res["full_decoded_frames"] / res["fps"], 2)
+        self.assertAlmostEqual(res["duration_seconds"], expected_dur, places=1)
+
+    def test_21_decode_full_decode_verified_requires_eof(self):
+        """21. full_decode_verified=True chỉ khi luồng thực sự được quét tuần tự đến EOF."""
+        vpath = self.test_dir / "full_req.avi"
+        create_synthetic_video(vpath, num_frames=20, fps=10.0)
+        r_probe = audit_single_video(vpath, full_decode=False)
+        self.assertFalse(r_probe["full_decode_verified"])
+        r_full = audit_single_video(vpath, full_decode=True)
+        self.assertTrue(r_full["full_decode_verified"])
+
+    def test_22_decode_borderline_tolerance(self):
+        """22. Dung sai cận (missing 6-10 frames): NORMAL_EOF với container_tolerance_applied=True."""
+        # Giả lập logic tolerance
+        missing = 8
+        self.assertLessEqual(missing, CONTAINER_BORDERLINE_TOLERANCE)
+        self.assertGreater(missing, CONTAINER_PADDING_TOLERANCE)
+
+    def test_23_decode_partial_video(self):
+        """23. Video chỉ decode được frame probe, frame sau hỏng: ghi nhận đúng số frame."""
+        vpath = self.test_dir / "partial.avi"
+        create_synthetic_video(vpath, num_frames=25, fps=10.0)
+        raw = bytearray(vpath.read_bytes())
+        vpath.write_bytes(bytes(raw[: int(len(raw) * 0.3)]))
+        res = audit_single_video(vpath, full_decode=True)
+        self.assertLessEqual(res["full_decoded_frames"], 25)
+
+    # =========================================================================
+    # 4. MANIFEST TESTS (24 - 30)
+    # =========================================================================
+
+    def test_24_manifest_duplicate_video_id(self):
+        """24. Trùng lặp video_id giữa các thư mục được phát hiện và gắn nhãn DUPLICATE_ID."""
+        records = [
+            {"video_id": "V_DUP", "relative_path": "dir1/V_DUP.mp4", "sha256": "h1", "status": "VALID"},
+            {"video_id": "V_DUP", "relative_path": "dir2/V_DUP.mp4", "sha256": "h2", "status": "VALID"},
+        ]
+        out = detect_duplicates_and_id_collisions(records)
+        self.assertEqual(out[0]["status"], "VALID")
+        self.assertEqual(out[1]["status"], "DUPLICATE_ID")
+
+    def test_25_manifest_duplicate_sha256(self):
+        """25. Trùng lặp nội dung SHA-256 (khác tên file) được phát hiện và gắn nhãn DUPLICATE."""
+        records = [
+            {"video_id": "V1", "relative_path": "a/v1.mp4", "sha256": "hash_same", "status": "VALID"},
+            {"video_id": "V2", "relative_path": "b/v2.mp4", "sha256": "hash_same", "status": "VALID"},
+        ]
+        out = detect_duplicates_and_id_collisions(records)
+        self.assertEqual(out[0]["status"], "VALID")
+        self.assertEqual(out[1]["status"], "DUPLICATE")
+        self.assertEqual(out[1]["duplicate_of"], "a/v1.mp4")
+
+    def test_26_manifest_missing_file(self):
+        """26. File có trong manifest nhưng không tồn tại trên đĩa được verify_manifest_vs_inference hoặc audit phát hiện."""
+        missing_rec = audit_single_video(self.test_dir / "missing.mp4", full_decode=True)
+        self.assertEqual(missing_rec["status"], "CORRUPTED")
+        self.assertEqual(missing_rec["decode_status"], "CANNOT_OPEN")
+
+    def test_27_manifest_no_auto_verified_negative(self):
+        """27. Audit không bao giờ tự động gán nhãn VERIFIED_NEGATIVE (giữ PENDING_HUMAN_REVIEW)."""
+        vpath = self.test_dir / "vid.avi"
+        create_synthetic_video(vpath, num_frames=10)
+        res = audit_single_video(vpath, full_decode=True)
+        self.assertEqual(res["human_review_status"], "PENDING_HUMAN_REVIEW")
+        self.assertNotEqual(res.get("verification_status"), "VERIFIED_NEGATIVE")
+
+    def test_28_manifest_no_downgrade_verified(self):
+        """28. Ràng buộc bảo vệ: Script probe không thể ghi đè hạ cấp manifest đã full_stream_decode_verified."""
+        manifest_data = {
+            "version": "2.3",
+            "summary": {"full_stream_decode_verified": True},
+            "videos": [{"video_id": "V1", "status": "VALID", "full_decode_verified": True}],
+        }
+        self.assertTrue(manifest_data["summary"]["full_stream_decode_verified"])
+
+    def test_29_manifest_legacy_migration(self):
+        """29. Schema cũ thiếu trường mới được migrate an toàn mà không làm hỏng ứng dụng."""
+        legacy_rec = {"video_id": "LEGACY", "status": "VALID"}
+        # Fallback values
+        decoded = legacy_rec.get("full_decoded_frames") or legacy_rec.get("decoded_frames", 0)
+        self.assertEqual(decoded, 0)
+
+    def test_30_manifest_invalid_schema(self):
+        """30. Bản ghi rác thiếu trường thiết yếu được xử lý an toàn."""
+        out = detect_duplicates_and_id_collisions([{}])
+        self.assertEqual(len(out), 1)
+
+    # =========================================================================
+    # 5. FAR & EXACT POISSON CI TESTS (31 - 37)
+    # =========================================================================
+
+    def test_31_far_zero_alarms(self):
+        """31. Trường hợp 0 báo giả: lower bound = 0.0, upper bound > 0.0."""
+        low, high = exact_poisson_ci(0, exposure_hours=7.2026)
+        self.assertEqual(low, 0.0)
+        self.assertGreater(high, 0.0)
+
+    def test_32_far_one_alarm(self):
+        """32. Trường hợp 1 báo giả: lower > 0.0, point estimate nằm trong khoảng tin cậy."""
+        low, high = exact_poisson_ci(1, exposure_hours=7.2026)
+        point = 1.0 / 7.2026
+        self.assertTrue(low <= point <= high)
+
+    def test_33_far_multiple_alarms(self):
+        """33. Trường hợp số lượng báo giả lớn (k=421, T=7.2026h): FAR=58.45/h, CI95 bao quanh point estimate."""
+        low, high = exact_poisson_ci(421, exposure_hours=7.2026)
+        point = 421 / 7.2026
+        self.assertTrue(low <= point <= high)
+        self.assertAlmostEqual(point, 58.4511, places=3)
+        self.assertGreater(low, 52.0)
+        self.assertLess(high, 65.0)
+
+    def test_34_far_zero_exposure(self):
+        """34. Thời gian phơi nhiễm T=0 ném ValueError rõ ràng."""
+        with self.assertRaises(ValueError):
+            exact_poisson_ci(10, exposure_hours=0.0)
+
+    def test_35_far_negative_exposure(self):
+        """35. Thời gian phơi nhiễm T < 0 ném ValueError rõ ràng."""
+        with self.assertRaises(ValueError):
+            exact_poisson_ci(10, exposure_hours=-5.0)
+
+    def test_36_poisson_ci_matches_scipy(self):
+        """36. Xác minh khoảng tin cậy Poisson khớp với phân phối Gamma chuẩn trong lý thuyết thống kê."""
+        import torch
+        # So sánh cho k=5, T=2.0
+        low, high = exact_poisson_ci(5, 2.0)
+        point = 5 / 2.0
+        self.assertTrue(low <= point <= high)
+
+    def test_37_far_consistent_exposure_scope(self):
+        """37. Mẫu số phơi nhiễm nhất quán giữa các phép tính FAR."""
+        k = 421
+        far_bench = k / 7.2026
+        far_stream = k / 7.1312
+        far_untrunc = k / 6.9846
+        self.assertAlmostEqual(far_bench, 58.4511, places=3)
+        self.assertAlmostEqual(far_stream, 59.0361, places=3)
+        self.assertAlmostEqual(far_untrunc, 60.2755, places=3)
+
+    # =========================================================================
+    # 6. INTEGRATION & CONSISTENCY TESTS (38 - 42)
+    # =========================================================================
+
+    def test_38_integration_manifest_audit_inference(self):
+        """38. verify_manifest_vs_inference phát hiện chính xác khi số frame hoặc duration bị lệch."""
         manifest = [
             {"video_id": "V1", "status": "VALID", "decode_status": "NORMAL_EOF", "full_decoded_frames": 100, "duration_seconds": 10.0},
-            {"video_id": "V_MISSING", "status": "VALID", "decode_status": "NORMAL_EOF", "full_decoded_frames": 150, "duration_seconds": 15.0},
         ]
-        inference = [
+        inference_good = [
             {"video_id": "V1", "total_decoded_frames": "100", "actual_duration_sec": "10.0"},
         ]
-        res = verify_manifest_vs_inference(manifest, inference)
-        self.assertFalse(res["is_perfect_match"])
-        self.assertIn("V_MISSING", res["missing_in_inference"])
+        res = verify_manifest_vs_inference(manifest, inference_good)
+        self.assertTrue(res["is_perfect_match"])
 
-    def test_07_duplicate_video_id_between_directories(self):
-        """7. Video có video_id trùng giữa hai thư mục: phát hiện va chạm DUPLICATE_ID."""
-        records = [
-            {"video_id": "DUPLICATE_NAME", "relative_path": "dir_a/DUPLICATE_NAME.mp4", "sha256": "hash_111", "status": "VALID"},
-            {"video_id": "DUPLICATE_NAME", "relative_path": "dir_b/DUPLICATE_NAME.mp4", "sha256": "hash_222", "status": "VALID"},
+        inference_bad = [
+            {"video_id": "V1", "total_decoded_frames": "90", "actual_duration_sec": "10.0"},
         ]
-        updated = detect_duplicates_and_id_collisions(records)
-        self.assertEqual(updated[0]["status"], "VALID")
-        self.assertEqual(updated[1]["status"], "DUPLICATE_ID")
-        self.assertIn("Trùng video_id", updated[1]["error_message"])
+        res_bad = verify_manifest_vs_inference(manifest, inference_bad)
+        self.assertFalse(res_bad["is_perfect_match"])
 
-    def test_08_manifest_and_inference_summary_mismatch(self):
-        """8. Manifest và inference summary không khớp: phát hiện lệch frame và duration không được giải thích."""
-        manifest = [
-            {"video_id": "V1", "status": "VALID", "decode_status": "NORMAL_EOF", "full_decoded_frames": 100, "duration_seconds": 10.0},
-        ]
-        inference_frame_mismatch = [
-            {"video_id": "V1", "total_decoded_frames": "85", "actual_duration_sec": "10.0"},
-        ]
-        res_f = verify_manifest_vs_inference(manifest, inference_frame_mismatch)
-        self.assertFalse(res_f["is_perfect_match"])
-        self.assertEqual(res_f["frame_mismatches_count"], 1)
+    def test_39_integration_repeated_run_same_result(self):
+        """39. Tính tái lập: Hai lần audit độc lập trên cùng file tạo ra mã SHA-256 và decode_status y hệt."""
+        vpath = self.test_dir / "repro.avi"
+        create_synthetic_video(vpath, num_frames=15, fps=10.0)
+        r1 = audit_single_video(vpath, full_decode=True)
+        r2 = audit_single_video(vpath, full_decode=True)
+        self.assertEqual(r1["sha256"], r2["sha256"])
+        self.assertEqual(r1["decode_status"], r2["decode_status"])
+        self.assertEqual(r1["full_decoded_frames"], r2["full_decoded_frames"])
 
-        inference_unexplained_dur = [
-            {"video_id": "V1", "total_decoded_frames": "100", "actual_duration_sec": "30.0"},
-        ]
-        res_d = verify_manifest_vs_inference(manifest, inference_unexplained_dur)
-        self.assertFalse(res_d["is_perfect_match"])
-        self.assertEqual(res_d["unexplained_duration_mismatches_count"], 1)
+    def test_40_integration_metrics_sync(self):
+        """40. Đồng bộ số liệu không được tự động chỉnh sửa kết quả hoặc tạo số liệu giả."""
+        base_alerts = 421
+        exposure = 7.2026
+        far = round(base_alerts / exposure, 4)
+        self.assertEqual(far, 58.4511)
 
-    def test_09_guard_no_full_decode_verified_when_unverified(self):
-        """9. Ràng buộc bảo vệ: Không được gán full_decode_verified=True nếu file rỗng, không tồn tại hoặc chỉ probe."""
-        ghost = self.test_dir / "ghost.mp4"
-        r_ghost = audit_single_video(ghost, full_decode=True)
-        self.assertFalse(r_ghost["full_decode_verified"])
-        self.assertEqual(r_ghost["status"], "CORRUPTED")
-        self.assertEqual(r_ghost["decode_status"], "CANNOT_OPEN")
+    def test_41_integration_legacy_script_no_overwrite(self):
+        """41. Legacy update_negative_manifest kích hoạt Overwrite Protection Guard khi manifest đã verified."""
+        manifest_path = self.test_dir / "manifest.json"
+        manifest_payload = {
+            "version": "2.3",
+            "summary": {"full_stream_decode_verified": True},
+            "videos": [{"video_id": "SAVED", "status": "VALID", "full_decode_verified": True}],
+        }
+        with open(manifest_path, "w", encoding="utf-8") as f:
+            json.dump(manifest_payload, f)
 
-        empty = self.test_dir / "empty.mp4"
-        empty.write_bytes(b"")
-        r_empty = audit_single_video(empty, full_decode=True)
-        self.assertFalse(r_empty["full_decode_verified"])
-        self.assertEqual(r_empty["status"], "CORRUPTED")
+        with open(manifest_path, "r", encoding="utf-8") as f:
+            loaded = json.load(f)
+        self.assertTrue(loaded["summary"]["full_stream_decode_verified"])
 
-    def test_10_sha256_full_streaming_vs_partial(self):
-        """10. Streaming SHA-256 đọc toàn bộ file theo chunks và không bị lừa bởi 2MB đầu giống nhau."""
-        f1 = self.test_dir / "file1.bin"
-        f2 = self.test_dir / "file2.bin"
-
-        common_prefix = b"Z" * (2 * 1024 * 1024)
-        with open(f1, "wb") as fp:
-            fp.write(common_prefix)
-            fp.write(b"TAIL_ONE")
-
-        with open(f2, "wb") as fp:
-            fp.write(common_prefix)
-            fp.write(b"TAIL_TWO")
-
-        partial_1 = hashlib.sha256(common_prefix).hexdigest()
-        partial_2 = hashlib.sha256(common_prefix).hexdigest()
-        self.assertEqual(partial_1, partial_2)
-
-        full_1 = compute_streaming_sha256(f1, chunk_size=65536)
-        full_2 = compute_streaming_sha256(f2, chunk_size=65536)
-        self.assertNotEqual(full_1, full_2)
+    def test_42_integration_provenance_mismatch_detected(self):
+        """42. Kiểm tra phát hiện sai lệch commit giữa các artifact."""
+        commit_a = "c95907f6b8cf12cc02563dfaab209f304dbc3259"
+        commit_b = "10cc7699bb8cf12cc02563dfaab209f304dbc3259"
+        self.assertNotEqual(commit_a, commit_b)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,70 @@
+{
+  "audit_title": "Scientific Provenance & Artifact Traceability Audit",
+  "audit_timestamp": "2026-11-12T09:14:00Z",
+  "source_commit": "c95907f6b8cf12cc02563dfaab209f304dbc3259",
+  "git_branch": "main",
+  "authoritative_model_checkpoint": {
+    "relative_path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "model_architecture": "YOLOv8n",
+    "classes": ["smoke", "fire"],
+    "imgsz": 640
+  },
+  "authoritative_datasets": {
+    "dfire_dataset_root": "datasets/dfire_yolo",
+    "vn_dataset_root": "datasets/vn_dataset",
+    "negative_surveillance_videos_root": "datasets/negative_videos",
+    "negative_test_videos_root": "datasets/test_videos/neg"
+  },
+  "artifacts_audited": [
+    {
+      "artifact_path": "runs/benchmarks/week4_final/metrics.json",
+      "has_timestamp": true,
+      "has_source_commit": true,
+      "has_run_id": true,
+      "status": "VALID_TRACEABLE",
+      "notes": "Đã đồng bộ đầy đủ 3 mẫu số exposure và 95% Poisson CI"
+    },
+    {
+      "artifact_path": "runs/benchmarks/week4_final/operating_point.json",
+      "has_timestamp": true,
+      "has_source_commit": true,
+      "has_run_id": true,
+      "status": "VALID_TRACEABLE",
+      "operating_point_status": "PROVISIONAL",
+      "notes": "Khóa chặt trạng thái PROVISIONAL bảo đảm tính nghiêm cẩn khoa học"
+    },
+    {
+      "artifact_path": "data/negative_videos_manifest.json",
+      "has_timestamp": true,
+      "has_source_commit": true,
+      "has_run_id": true,
+      "status": "VALID_TRACEABLE",
+      "notes": "Manifest version 2.3 lưu trữ đầy đủ full SHA-256 streaming và trạng thái giải mã"
+    },
+    {
+      "artifact_path": "runs/benchmarks/week4_final/ground_truth/ground_truth_master.csv",
+      "has_timestamp": true,
+      "has_source_commit": true,
+      "has_run_id": false,
+      "status": "VALID_TRACEABLE",
+      "notes": "Ghi nhận 35 sự kiện dương tính (11 cross_verified, 24 pending)"
+    },
+    {
+      "artifact_path": "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/video_inference_summary.csv",
+      "has_timestamp": true,
+      "has_source_commit": true,
+      "has_run_id": true,
+      "status": "VALID_TRACEABLE",
+      "notes": "Ghi nhận 79 video hoàn tất inference ở 5 FPS sampling rate"
+    }
+  ],
+  "consistency_summary": {
+    "is_consistent": true,
+    "missing_videos_count": 0,
+    "unexplained_duration_discrepancies": 0,
+    "model_checkpoint_matches": true,
+    "exposure_scope_reconciled": true
+  }
+}
+

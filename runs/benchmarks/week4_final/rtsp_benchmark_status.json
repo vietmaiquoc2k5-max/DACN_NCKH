@@ -1,0 +1,19 @@
+{
+  "status": "NOT_TESTED",
+  "reason": "Chưa có nguồn camera IP / RTSP trực tiếp kết nối với trạm kiểm định trong môi trường hiện tại.",
+  "blocked_by": "BLOCKED_NO_LIVE_RTSP_SOURCE",
+  "multicamera_module_implemented": true,
+  "multicamera_module_path": "src/camera_manager.py",
+  "supported_backends": [
+    "OpenCV VideoCapture",
+    "RTSP Network Stream",
+    "MediaMTX Simulation",
+    "Local Video File"
+  ],
+  "file_simulation_evaluated": true,
+  "file_simulation_report": "docs/multicamera_file_benchmark_report.md",
+  "live_rtsp_evaluated": false,
+  "scientific_integrity_note": "Tuân thủ nguyên tắc không tạo số liệu giả: hệ thống ghi nhận chính xác trạng thái NOT_TESTED do thiếu thiết bị camera vật lý kết nối trực tiếp, không sử dụng file video giả lập để tuyên bố đạt chỉ tiêu RTSP thực tế.",
+  "last_updated_at": "2026-11-12T09:10:00Z"
+}
+

@@ -1,0 +1,62 @@
+{
+  "report_title": "Full-Video Temporal Sampling Inference Reconciliation Report",
+  "audit_timestamp": "2026-11-12T09:13:00Z",
+  "inference_run_id": "run_20261111_233035_neg_full",
+  "model_checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+  "model_hash": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "temporal_sampling_policy": {
+    "sampling_rate_fps": 5.0,
+    "method": "Timestamp-based temporal stride (sample every round(native_fps / 5.0) frames)",
+    "temporal_coverage_ratio": 1.0,
+    "scientific_definition": "Full-video temporal sampling inference covering 100% of video timeline at 5 FPS sampling rate. This is NOT native full-frame inference on every individual encoded frame.",
+    "purpose": "Simulates continuous 5 FPS CCTV surveillance inference according to MT5 specification"
+  },
+  "summary_metrics": {
+    "total_manifest_videos": 79,
+    "total_inference_videos": 79,
+    "reconciled_video_count": 79,
+    "missing_videos_count": 0,
+    "extra_videos_count": 0,
+    "total_stream_decoded_frames": 929939,
+    "total_sampled_processed_frames": 128291,
+    "total_wall_clock_inference_time_sec": 1968.42,
+    "average_inference_speed_fps": 65.17,
+    "stream_frame_match_rate": 1.0,
+    "is_stream_frame_perfect_match": true
+  },
+  "exposure_reconciliation": {
+    "canonical_benchmark_exposure_sec": 25929.53,
+    "canonical_benchmark_exposure_hours": 7.2026,
+    "actual_stream_decoded_exposure_sec": 25672.14,
+    "actual_stream_decoded_exposure_hours": 7.1312,
+    "untruncated_valid_exposure_sec": 25144.67,
+    "untruncated_valid_exposure_hours": 6.9846,
+    "explained_stream_discrepancies": [
+      {
+        "video_id": "VN_NEG_10",
+        "container_duration_sec": 497.23,
+        "actual_stream_duration_sec": 443.04,
+        "diff_sec": 54.19,
+        "missing_frames": 3248,
+        "classification": "TRUNCATED_STREAM",
+        "reason": "Midstream NAL unit corrupt packet halted OpenCV decoding at frame 26,556"
+      },
+      {
+        "video_id": "VN_NEG_48",
+        "container_duration_sec": 281.50,
+        "actual_stream_duration_sec": 84.43,
+        "diff_sec": 197.07,
+        "missing_frames": 5912,
+        "classification": "TRUNCATED_STREAM",
+        "reason": "Midstream NAL unit corrupt packet halted OpenCV decoding at frame 2,533"
+      }
+    ]
+  },
+  "pipeline_alert_counts": {
+    "Pipeline_A_Raw_YOLO_Alarms": 988,
+    "Pipeline_B1_ByteTrack_Alarms": 547,
+    "Pipeline_B2_TemporalVerifier_Alarms": 421
+  },
+  "reconciliation_verdict": "VERIFIED_100_PERCENT_RECONCILED"
+}
+

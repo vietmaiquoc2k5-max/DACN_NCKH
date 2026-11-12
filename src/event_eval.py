@@ -45,7 +45,7 @@ def exact_poisson_ci(k: int, exposure_hours: float, alpha: float = 0.05) -> tupl
     Đảm bảo không bị lỗi tràn số hoặc underflow khi k lớn (k > 500) và point estimate luôn nằm trong [low, high].
     """
     if exposure_hours <= 0:
-        return 0.0, 0.0
+        raise ValueError(f"Thời gian phơi nhiễm exposure_hours phải > 0 (nhận được: {exposure_hours})")
     if k < 0:
         raise ValueError("Số sự kiện k phải >= 0")
 

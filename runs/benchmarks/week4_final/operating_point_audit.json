@@ -1,0 +1,54 @@
+{
+  "audit_title": "Operating Point Validation & Status Audit",
+  "audit_timestamp": "2026-11-12T09:11:00Z",
+  "source_commit": "c95907f6b8cf12cc02563dfaab209f304dbc3259",
+  "operating_point_status": "PROVISIONAL",
+  "operating_point_parameters": {
+    "confidence_threshold": 0.35,
+    "k": 3,
+    "n": 8,
+    "feature_threshold": 0.02,
+    "cooldown_seconds": 5.0,
+    "max_event_gap_seconds": 2.0
+  },
+  "constraints_evaluation": {
+    "min_negative_exposure_hours": {
+      "target": ">= 5.0h",
+      "achieved_benchmark_hours": 7.2026,
+      "achieved_actual_stream_hours": 7.1312,
+      "achieved_untruncated_hours": 6.9846,
+      "status": "MET"
+    },
+    "min_far_reduction_percentage": {
+      "target": ">= 50.0%",
+      "achieved": 57.39,
+      "baseline_frame_alarms": 988,
+      "verifier_event_alarms": 421,
+      "status": "MET"
+    },
+    "max_mean_detection_delay_sec": {
+      "target": "<= 10.0s",
+      "achieved": 2.13,
+      "status": "MET"
+    },
+    "max_event_recall_drop_percentage": {
+      "target": "<= 5.0%",
+      "achieved": 0.0,
+      "status": "MET"
+    }
+  },
+  "official_status_blockers": [
+    {
+      "issue_id": "OP_BLOCK_01",
+      "description": "24 trong số 35 sự kiện Ground Truth tích cực vẫn ở trạng thái pending_verification chưa được annotator thứ hai thẩm định chéo độc lập.",
+      "remediation": "Cần hoàn tất quy trình dual-annotator cross-validation cho 24 sự kiện pending trong gt_review_queue.csv trước khi khóa OFFICIAL."
+    },
+    {
+      "issue_id": "OP_BLOCK_02",
+      "description": "Hai video âm tính VN_NEG_10 và VN_NEG_48 bị ngắt luồng sớm (TRUNCATED_STREAM do lỗi bitstream NAL).",
+      "remediation": "Đã cách ly ghi nhận rõ ở trạng thái NEEDS_REVIEW, không tính phần video hỏng vào untruncated valid exposure."
+    }
+  ],
+  "recommendation": "Duy trì nghiêm ngặt trạng thái PROVISIONAL. Không được nâng lên OFFICIAL khi các điều kiện khoa học về Ground Truth chưa hoàn tất 100%."
+}
+
