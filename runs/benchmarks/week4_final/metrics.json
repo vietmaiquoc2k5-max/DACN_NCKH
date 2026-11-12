@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-11-10 02:52:26",
-  "acceptance_status": "PARTIAL (BLOCKED_BY_NEGATIVE_DATA)",
+  "timestamp": "2026-11-12T06:51:50.318288+00:00",
+  "acceptance_status": "PARTIAL (PENDING_24_GT_VERIFICATION)",
   "model_checkpoint": "runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
   "experiment_settings": {
     "seed": 42,
@@ -17,11 +17,13 @@
     "available_positive_videos": 24,
     "available_positive_duration_sec": 863.98,
     "available_positive_hours": 0.24,
-    "available_negative_videos": 0,
-    "available_negative_hours": 0.0,
-    "missing_negative_videos_in_catalog": 28,
-    "missing_negative_hours_in_catalog": 2.8648,
-    "proposal_target_negative_hours": 5.0
+    "available_negative_videos": 79,
+    "available_negative_hours": 7.2026,
+    "negative_stream_frames_decoded": 929939,
+    "negative_sampled_frames_processed": 128291,
+    "proposal_target_negative_hours": 5.0,
+    "surplus_negative_hours": 2.2026,
+    "negative_exposure_target_met": true
   },
   "ground_truth_manifest": {
     "path": "D:\\workspace\\DACN_NCKH\\data\\ground_truth\\events.jsonl",
@@ -6977,390 +6979,104 @@
     }
   },
   "negative_video_evaluation": {
-    "timestamp": "2026-11-10 02:52:16",
-    "status": "BLOCKED_BY_NEGATIVE_DATA",
-    "proposal_required_negative_hours": 5.0,
-    "catalog_negative_videos_count": 28,
-    "catalog_negative_hours": 2.8648,
-    "available_negative_videos_on_disk": 0,
-    "evaluated_negative_hours": 0.0,
-    "additional_negative_hours_needed": 5.0,
-    "empirical_negative_far_summary": {
-      "pipeline_a_frame_level_baseline": {
-        "false_alarm_events_count": 0,
-        "false_alarms_per_hour": null,
-        "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
-      },
-      "pipeline_b1_bytetrack_no_gate": {
-        "false_alarm_events_count": 0,
-        "false_alarms_per_hour": null,
-        "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
-      },
-      "pipeline_b2_bytetrack_feature_gate": {
-        "false_alarm_events_count": 0,
-        "false_alarms_per_hour": null,
-        "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
-      },
-      "pipeline_c_legacy_iou": {
-        "false_alarm_events_count": 0,
-        "false_alarms_per_hour": null,
-        "status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS"
-      }
+    "status": "PASS / SUFFICIENT_NEGATIVE_EXPOSURE",
+    "evaluated_at": "2026-11-12T00:00:34.117138",
+    "total_videos_evaluated": 79,
+    "total_exposure_seconds": 25929.53,
+    "total_exposure_hours": 7.2026,
+    "total_decoded_frames": 929939,
+    "total_processed_frames": 128291,
+    "sampling_fps": 5.0,
+    "pipeline_a": {
+      "fp_events_total": 988,
+      "fp_events_fire": 363,
+      "fp_events_smoke": 625,
+      "far_per_hour_total": 137.1727,
+      "far_per_hour_fire": 50.3985,
+      "far_per_hour_smoke": 86.7742,
+      "ci_95_total": [
+        128.7516,
+        146.0
+      ],
+      "ci_95_fire": [
+        45.3466,
+        55.8592
+      ],
+      "ci_95_smoke": [
+        80.1037,
+        93.852
+      ]
     },
-    "evaluated_negative_videos_details": [],
-    "missing_negative_videos_manifest_file": "missing_negative_videos_manifest.csv",
-    "notes": "Tuyệt đối không gán FAR = 0 khi chưa có video âm tính thực nghiệm. Trạng thái giữ nguyên BLOCKED_BY_NEGATIVE_DATA cho đến khi nạp đủ >= 5 giờ video âm tính."
+    "pipeline_b1": {
+      "fp_events_total": 547,
+      "fp_events_fire": 140,
+      "fp_events_smoke": 407,
+      "far_per_hour_total": 75.9448,
+      "far_per_hour_fire": 19.4374,
+      "far_per_hour_smoke": 56.5074,
+      "ci_95_total": [
+        69.713,
+        82.5842
+      ],
+      "ci_95_fire": [
+        16.3511,
+        22.9369
+      ],
+      "ci_95_smoke": [
+        51.1502,
+        62.273
+      ]
+    },
+    "pipeline_b2": {
+      "fp_events_total": 421,
+      "fp_events_fire": 67,
+      "fp_events_smoke": 354,
+      "far_per_hour_total": 58.4511,
+      "far_per_hour_fire": 9.3022,
+      "far_per_hour_smoke": 49.1489,
+      "ci_95_total": [
+        53.0003,
+        64.3103
+      ],
+      "ci_95_fire": [
+        7.2091,
+        11.8135
+      ],
+      "ci_95_smoke": [
+        44.1618,
+        54.5451
+      ]
+    },
+    "far_reduction_percentage": 57.39,
+    "target_met": true
   },
   "operating_point_selection": {
-    "status": "NO_FEASIBLE_OPERATING_POINT",
-    "feasible": false,
-    "blocked_by_negative_data": true,
-    "selected_operating_point": null,
-    "provisional_candidate_on_positive_val": {
+    "status": "PROVISIONAL",
+    "feasible": true,
+    "reason": "Operating Point (conf=0.35, K=3, N=8, feat=0.02, cooldown=5.0s, gap=2.0s) thỏa mãn 100% ràng buộc MT3: FAR giảm 57.39% (>= 50%), độ trễ TB 2.13s (<= 10s), recall video duy trì 95.83% (suy giảm 0.0% <= 5%). Khóa ở mức PROVISIONAL do 24 sự kiện GT còn pending verification.",
+    "selected_operating_point": {
       "confidence_threshold": 0.35,
-      "k": 5,
-      "n": 12,
-      "feature_threshold": 0.0,
-      "cooldown_sec": 0.0,
-      "baseline_video_event_recall": 1.0,
-      "baseline_far_per_hour": null,
-      "metrics": {
-        "video_event_recall": 1.0,
-        "split_video_event_recall": 0.25,
-        "event_instance_recall": 1.0,
-        "event_precision": 0.21428571428571427,
-        "event_f1": 0.35294117647058826,
-        "false_alarms_per_hour": null,
-        "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
-        "mean_detection_delay_sec": 0.8343333333333334,
-        "negative_video_hours": null,
-        "temporal_tolerance_sec": 10.0
-      },
-      "counts": {
-        "ground_truth_events": 3,
-        "predicted_events": 14,
-        "matched_events": 3,
-        "timely_detections": 3,
-        "late_detections": 0,
-        "early_alerts": 0,
-        "unmatched_gt_events": 0,
-        "unmatched_predicted_events": 11,
-        "positive_unmatched_alerts": 11,
-        "unmatched_positive_predictions": 11,
-        "recalled_positive_videos": 3,
-        "verified_positive_videos": 3,
-        "positive_videos": 12,
-        "negative_videos": 0,
-        "negative_false_alarms": null
-      },
-      "far_reduction_vs_frame_baseline": null,
-      "video_event_recall_drop": 0.0,
-      "feasible": false,
-      "status": "BLOCKED_BY_NEGATIVE_DATA"
+      "k": 3,
+      "n": 8,
+      "feature_threshold": 0.02,
+      "cooldown_sec": 5.0,
+      "max_event_gap_sec": 2.0
     },
-    "reason": "NO_FEASIBLE_OPERATING_POINT (BLOCKED_BY_NEGATIVE_DATA: Chưa có >= 5 giờ video âm tính độc lập trên ổ đĩa để xác minh điều kiện giảm >= 50% FAR/giờ. Đã chọn cấu hình provisional tối ưu Recall và Delay trên tập Validation dương tính).",
-    "locked_test_set_evaluation_of_provisional": {
-      "parameters": {
-        "confidence_threshold": 0.35,
-        "k": 5,
-        "n": 12,
-        "feature_threshold": 0.0,
-        "cooldown_sec": 0.0
-      },
-      "test_set_report": {
-        "status": "BLOCKED_BY_NEGATIVE_DATA",
-        "counts": {
-          "ground_truth_events": 8,
-          "predicted_events": 14,
-          "matched_events": 4,
-          "timely_detections": 4,
-          "late_detections": 2,
-          "early_alerts": 0,
-          "unmatched_gt_events": 4,
-          "unmatched_predicted_events": 10,
-          "positive_unmatched_alerts": 10,
-          "unmatched_positive_predictions": 10,
-          "recalled_positive_videos": 4,
-          "verified_positive_videos": 5,
-          "positive_videos": 12,
-          "negative_videos": 0,
-          "negative_false_alarms": null
-        },
-        "metrics": {
-          "video_event_recall": 0.8,
-          "split_video_event_recall": 0.3333333333333333,
-          "event_instance_recall": 0.5,
-          "event_precision": 0.2857142857142857,
-          "event_f1": 0.36363636363636365,
-          "false_alarms_per_hour": null,
-          "far_status": "UNAVAILABLE_MISSING_NEGATIVE_VIDEOS",
-          "mean_detection_delay_sec": 0.8965749999999999,
-          "negative_video_hours": null,
-          "temporal_tolerance_sec": 10.0
-        },
-        "targets": {
-          "mean_delay_le_10s": true,
-          "has_valid_negative_data": false,
-          "overall_pass": false
-        },
-        "matches": [
-          {
-            "ground_truth": {
-              "video_id": "POS_02",
-              "camera_id": "BENCH_POS_02",
-              "label": "FIRE",
-              "start_sec": 0.1,
-              "end_sec": 7.84,
-              "confidence": 1.0
-            },
-            "prediction": {
-              "video_id": "POS_02",
-              "camera_id": "BENCH_POS_02",
-              "label": "FIRE",
-              "start_sec": 0.8008,
-              "end_sec": 7.8078,
-              "confidence": 0.7738
-            },
-            "delay_sec": 0.7008,
-            "is_timely": true
-          },
-          {
-            "ground_truth": {
-              "video_id": "POS_10",
-              "camera_id": "BENCH_POS_10",
-              "label": "FIRE",
-              "start_sec": 0.1,
-              "end_sec": 17.12,
-              "confidence": 1.0
-            },
-            "prediction": {
-              "video_id": "POS_10",
-              "camera_id": "BENCH_POS_10",
-              "label": "FIRE",
-              "start_sec": 1.4014,
-              "end_sec": 17.017,
-              "confidence": 0.862
-            },
-            "delay_sec": 1.3014,
-            "is_timely": true
-          },
-          {
-            "ground_truth": {
-              "video_id": "POS_12",
-              "camera_id": "BENCH_POS_12",
-              "label": "SMOKE",
-              "start_sec": 1.2,
-              "end_sec": 16.96,
-              "confidence": 1.0
-            },
-            "prediction": {
-              "video_id": "POS_12",
-              "camera_id": "BENCH_POS_12",
-              "label": "SMOKE",
-              "start_sec": 2.0833,
-              "end_sec": 16.875,
-              "confidence": 0.879
-            },
-            "delay_sec": 0.8833,
-            "is_timely": true
-          },
-          {
-            "ground_truth": {
-              "video_id": "POS_24",
-              "camera_id": "BENCH_POS_24",
-              "label": "SMOKE",
-              "start_sec": 0.1,
-              "end_sec": 15.48,
-              "confidence": 1.0
-            },
-            "prediction": {
-              "video_id": "POS_24",
-              "camera_id": "BENCH_POS_24",
-              "label": "SMOKE",
-              "start_sec": 0.8008,
-              "end_sec": 9.2092,
-              "confidence": 0.88
-            },
-            "delay_sec": 0.7008,
-            "is_timely": true
-          }
-        ],
-        "late_detections": [
-          {
-            "video_id": "POS_04",
-            "camera_id": "BENCH_POS_04",
-            "label": "FIRE",
-            "start_sec": 11.4114,
-            "end_sec": 16.2162,
-            "confidence": 0.789
-          },
-          {
-            "video_id": "POS_24",
-            "camera_id": "BENCH_POS_24",
-            "label": "SMOKE",
-            "start_sec": 12.4124,
-            "end_sec": 15.4154,
-            "confidence": 0.8583
-          }
-        ],
-        "early_alerts": [],
-        "unmatched_ground_truth": [
-          {
-            "video_id": "POS_02",
-            "camera_id": "BENCH_POS_02",
-            "label": "SMOKE",
-            "start_sec": 0.1,
-            "end_sec": 7.84,
-            "confidence": 1.0
-          },
-          {
-            "video_id": "POS_04",
-            "camera_id": "BENCH_POS_04",
-            "label": "FIRE",
-            "start_sec": 0.3,
-            "end_sec": 17.02,
-            "confidence": 1.0
-          },
-          {
-            "video_id": "POS_04",
-            "camera_id": "BENCH_POS_04",
-            "label": "SMOKE",
-            "start_sec": 4.2,
-            "end_sec": 17.02,
-            "confidence": 1.0
-          },
-          {
-            "video_id": "POS_12",
-            "camera_id": "BENCH_POS_12",
-            "label": "FIRE",
-            "start_sec": 13.2,
-            "end_sec": 16.96,
-            "confidence": 1.0
-          }
-        ],
-        "unmatched_predictions": [
-          {
-            "video_id": "POS_04",
-            "camera_id": "BENCH_POS_04",
-            "label": "FIRE",
-            "start_sec": 11.4114,
-            "end_sec": 16.2162,
-            "confidence": 0.789,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": true,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_06",
-            "camera_id": "BENCH_POS_06",
-            "label": "FIRE",
-            "start_sec": 0.8008,
-            "end_sec": 55.055,
-            "confidence": 0.8916,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_08",
-            "camera_id": "BENCH_POS_08",
-            "label": "FIRE",
-            "start_sec": 1.0,
-            "end_sec": 25.6,
-            "confidence": 0.8177,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_08",
-            "camera_id": "BENCH_POS_08",
-            "label": "SMOKE",
-            "start_sec": 10.6,
-            "end_sec": 13.0,
-            "confidence": 0.6716,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_08",
-            "camera_id": "BENCH_POS_08",
-            "label": "SMOKE",
-            "start_sec": 23.8,
-            "end_sec": 25.6,
-            "confidence": 0.6765,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_16",
-            "camera_id": "BENCH_POS_16",
-            "label": "SMOKE",
-            "start_sec": 0.8528,
-            "end_sec": 5.1167,
-            "confidence": 0.6704,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_18",
-            "camera_id": "BENCH_POS_18",
-            "label": "SMOKE",
-            "start_sec": 65.4,
-            "end_sec": 70.0,
-            "confidence": 0.6307,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_20",
-            "camera_id": "BENCH_POS_20",
-            "label": "SMOKE",
-            "start_sec": 0.8,
-            "end_sec": 27.4,
-            "confidence": 0.8792,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_22",
-            "camera_id": "BENCH_POS_22",
-            "label": "SMOKE",
-            "start_sec": 1.8,
-            "end_sec": 27.0,
-            "confidence": 0.8917,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": false,
-            "is_early_alert": false
-          },
-          {
-            "video_id": "POS_24",
-            "camera_id": "BENCH_POS_24",
-            "label": "SMOKE",
-            "start_sec": 12.4124,
-            "end_sec": 15.4154,
-            "confidence": 0.8583,
-            "is_negative_video": false,
-            "is_positive_video": true,
-            "is_late_detection": true,
-            "is_early_alert": false
-          }
-        ]
-      }
-    }
+    "blockers_for_official_lock": [
+      "Hoàn tất thẩm định độc lập bởi annotator thứ hai cho 24 sự kiện pending trong data/ground_truth/events.jsonl.",
+      "Khóa locked test set evaluation sau khi 100% nhãn được cross-verified."
+    ]
+  },
+  "acceptance_status_detail": "Chỉ tiêu MT3 về giảm FAR (57.39% >= 50.0%) và thời lượng âm tính (7.2026h >= 5.0h) đã ĐẠT HOÀN TOÀN. Trạng thái tổng thể giữ PARTIAL do 24/35 Ground Truth positive events đang chờ annotator thứ hai thẩm định độc lập.",
+  "provenance": {
+    "run_id": "run_20261111_233035_neg_full",
+    "source_code_run_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+    "initial_artifact_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+    "base_audit_repair_commit": "6e490bd414f2e3b3240f87c93b0a66e7f96c40ca",
+    "model_checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+    "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+    "negative_manifest_sha256": "a32f10e032b06e496f44a19d4bbb6fe8dffc93c034b424704376cf5ee6e06071",
+    "events_gt_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "sampling_mode": "Full-Video Temporal Sampling Inference at 5 FPS (128,291 sampled frames, 929,939 total stream frames to EOF)"
   }
 }

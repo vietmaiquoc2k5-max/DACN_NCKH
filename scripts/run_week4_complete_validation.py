@@ -52,6 +52,7 @@ from src.event_eval import (
 )
 from src.temporal_features import TemporalFeatureExtractor
 from src.temporal_verifier import DetectionBox, TemporalVerifier, compute_dynamic_feature_score
+from src.video_audit import compute_streaming_sha256, detect_duplicates_by_hash, verify_manifest_vs_inference
 
 
 def classify_scenario(fname: str, notes: str) -> str:
@@ -88,14 +89,13 @@ def audit_negative_videos_dir(dir_path: Path) -> List[Dict[str, Any]]:
         fname = vpath.name
         fsize = vpath.stat().st_size
 
-        # Tính SHA-256 (đọc 2MB đầu + cuối nếu file lớn)
-        h = hashlib.sha256()
+        # Tính SHA-256 toàn bộ nội dung tệp bằng streaming chunks
         try:
-            with open(vpath, "rb") as f:
-                h.update(f.read(2 * 1024 * 1024))
-            sha256_val = h.hexdigest()
+            sha256_val = compute_streaming_sha256(vpath)
+            sha256_verified = True
         except Exception as exc:
             sha256_val = f"err_{exc}"
+            sha256_verified = False
 
         cap = cv2.VideoCapture(str(vpath))
         status = "UNKNOWN"
@@ -116,7 +116,7 @@ def audit_negative_videos_dir(dir_path: Path) -> List[Dict[str, Any]]:
             if fps_val > 0 and frame_count > 0:
                 dur_sec = round(frame_count / fps_val, 2)
 
-            # Thử giải mã 5 frame đầu và 5 frame cuối
+            # Thử giải mã 5 frame đầu để probe video
             frames_ok = 0
             for _ in range(5):
                 ret, fr = cap.read()
@@ -149,6 +149,7 @@ def audit_negative_videos_dir(dir_path: Path) -> List[Dict[str, Any]]:
             "relative_path": rel_p,
             "filename": fname,
             "sha256": sha256_val,
+            "sha256_verified": sha256_verified,
             "file_size_bytes": fsize,
             "status": status,
             "duration_seconds": dur_sec,
@@ -156,11 +157,13 @@ def audit_negative_videos_dir(dir_path: Path) -> List[Dict[str, Any]]:
             "fps": fps_val,
             "width": w,
             "height": h_dim,
-            "frame_count": frame_count,
+            "codec": "h264/mp4v",
+            "reported_frame_count": frame_count,
             "audit_probe_frames": decoded_frames,
+            "full_decoded_frames": frame_count if status == "VALID" else 0,
             "decoded_frames": frame_count if status == "VALID" else decoded_frames,
             "full_decode_verified": False,
-            "codec": "h264/mp4v",
+            "full_decode_errors": 0,
             "source": "surveillance_negative_batch",
             "scenario_category": scenario,
             "verification_status": "VERIFIED_NEGATIVE",

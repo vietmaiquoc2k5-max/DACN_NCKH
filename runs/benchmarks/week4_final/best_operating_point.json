@@ -48,6 +48,10 @@
     "source_run_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
     "model_checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
     "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
-    "evaluated_by": "Mai Quốc Việt & Lê Minh Thiên"
+    "evaluated_by": "Mai Quốc Việt & Lê Minh Thiên",
+    "negative_manifest_sha256": "a32f10e032b06e496f44a19d4bbb6fe8dffc93c034b424704376cf5ee6e06071",
+    "events_gt_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "base_audit_repair_commit": "6e490bd414f2e3b3240f87c93b0a66e7f96c40ca",
+    "sampling_mode": "Full-Video Temporal Sampling Inference at 5 FPS (128,291 sampled frames, 929,939 total stream frames to EOF)"
   }
 }
