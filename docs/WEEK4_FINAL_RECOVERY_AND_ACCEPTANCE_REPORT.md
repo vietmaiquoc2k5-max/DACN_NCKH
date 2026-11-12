@@ -283,3 +283,4 @@ Sau khi hoàn tất nghiệm thu Tuần 4, hệ thống đã sẵn sàng tuyệt
 
 ---
 *Báo cáo được lập tự động dựa trên bằng chứng thực nghiệm đầy đủ, lưu trữ tại `runs/benchmarks/week4_final_recovery/` và tuân thủ tuyệt đối Đề cương NCKH.*
+
