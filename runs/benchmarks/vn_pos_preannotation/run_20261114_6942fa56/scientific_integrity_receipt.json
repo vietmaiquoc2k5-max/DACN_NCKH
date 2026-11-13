@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "source_video_hashes_rechecked": 167,
+  "reference_image_hashes_rechecked": 14413,
+  "legacy_vn_image_label_pairs_unchanged": 3121,
+  "historical_week4_artifacts_unchanged": 292,
+  "submitted_human_records_verified_unchanged": 87,
+  "private_export_payloads_unchanged": 6,
+  "studio_status_counts_read_only": {
+    "DRAFT": 3,
+    "SUBMITTED": 87
+  },
+  "vn_pos_review_records": 0,
+  "frozen_gt_and_legacy_manifests_unchanged": true,
+  "provisional_manifest_payloads_verified": 9,
+  "real_split_assignments_reproduced_from_both_input_orders": true,
+  "published_manifest_bytes_unchanged": true,
+  "manifest_canonical_sha256": "24e3064daefd0d108da179caeeb35223966daec586321a6edd401f97c6513d08",
+  "detector_inference_for_split": false,
+  "training_executed": false,
+  "source_or_gt_promotions_performed": false
+}

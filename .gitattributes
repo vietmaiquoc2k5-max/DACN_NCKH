@@ -4,3 +4,9 @@ data/ground_truth/events.jsonl -text whitespace=cr-at-eol
 runs/benchmarks/week4_critical_fix/*_forensic.jsonl -text whitespace=cr-at-eol
 # Preserve the verbatim archived Actions log; its whitespace is evidence.
 runs/benchmarks/week4_critical_fix/github_job_131431501506.log -diff
+# New provisional manifests authenticate exact bytes; retain their CSV/JSON hashes.
+data/vn_pos_*.json -text
+data/vn_pos_*.csv -text whitespace=cr-at-eol
+runs/benchmarks/vn_pos_preannotation/**/*.json -text
+runs/benchmarks/vn_pos_preannotation/**/*.csv -text whitespace=cr-at-eol
+runs/benchmarks/vn_pos_preannotation/**/*.sha256 -text

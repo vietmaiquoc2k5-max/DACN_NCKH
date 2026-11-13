@@ -1,0 +1,30 @@
+[
+  {
+    "name": "targeted_delivery",
+    "command": "python -X utf8 -m pytest -q tests/test_preannotation.py tests/test_preannotation_studio.py tests/test_gt_studio_video.py tests/test_gt_studio_recovery.py tests/test_gt_studio_annotations.py tests/test_gt_studio_independence.py tests/test_gt_studio_ui.py tests/test_video_audit_v2.py",
+    "exit_code": 0,
+    "count": null,
+    "seconds": 93.125,
+    "summary": [
+      "75 passed in 92.37s (0:01:32)"
+    ],
+    "qa_temp_inside_workspace": true,
+    "ffmpeg_on_path": true,
+    "log": ".tools/vn_pos_preannotation_6942fa56/targeted_delivery.log"
+  },
+  {
+    "name": "full_delivery",
+    "command": "python -X utf8 -m unittest discover -s tests -p test_*.py -v",
+    "exit_code": 0,
+    "count": 320,
+    "seconds": 146.13999999999942,
+    "summary": [
+      "test_bound_timestamp_corruption_or_count_mismatch_is_failed_check (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_timestamp_corruption_or_count_mismatch_is_failed_check) ... ok",
+      "Ran 320 tests in 141.786s",
+      "OK"
+    ],
+    "qa_temp_inside_workspace": true,
+    "ffmpeg_on_path": true,
+    "log": ".tools/vn_pos_preannotation_6942fa56/full_delivery.log"
+  }
+]

@@ -43,6 +43,13 @@ class VideoService:
         digest = sha256(path)
         if video.get("expected_sha256") and digest != video["expected_sha256"]:
             raise ValueError("BLOCKED_INPUT: source SHA-256 mismatch")
+        # Reuse authenticated explicit-duration PTS for long audited VN_POS.
+        from ground_truth_studio.preannotation import audited_source_metadata
+        audited = audited_source_metadata(self.settings, video, digest)
+        if audited is not None:
+            with self._lock:
+                self._metadata[key] = audited
+            return audited
         capture = cv2.VideoCapture(str(path))
         try:
             readable, image = capture.read()
@@ -83,10 +90,25 @@ class VideoService:
                 pts = []
         metadata = {"source_sha256": digest, "frame_count": count, "fps": fps, "duration": duration,
                     "resolution": size, "source_pts": pts, "timestamp_provenance": "SOURCE_PTS" if pts else "ESTIMATED_FRAME_INDEX_OVER_FPS",
+                    "playback_time_offset_sec": pts[0] if pts and path.suffix.lower() == ".mp4" else 0.0,
                     "duration_provenance": "LAST_SOURCE_PTS_PLUS_LAST_FRAME_DELTA" if pts else "ESTIMATED_FRAME_COUNT_OVER_FPS"}
         with self._lock:
             self._metadata[key] = metadata
         return metadata
+
+    @staticmethod
+    def source_time_from_playback(metadata: dict[str, Any], seconds: float) -> float:
+        """Convert raw MP4 media time to elapsed source time used by annotations."""
+        if not math.isfinite(seconds):
+            raise ValueError("Playback timestamp must be finite")
+        return max(0.0, seconds - metadata.get("playback_time_offset_sec", 0.0))
+
+    @staticmethod
+    def playback_time_from_source(metadata: dict[str, Any], seconds: float) -> float:
+        """Convert an elapsed source-frame timestamp to the player clock."""
+        if not math.isfinite(seconds):
+            raise ValueError("Source timestamp must be finite")
+        return max(0.0, seconds) + metadata.get("playback_time_offset_sec", 0.0)
 
     @staticmethod
     def index_at_time(metadata: dict[str, Any], seconds: float) -> int:
@@ -205,7 +227,7 @@ class MediaServer:
                                 break
                             self.wfile.write(block)
                             remaining -= len(block)
-                except (BrokenPipeError, ConnectionResetError):
+                except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
                     pass
 
             def log_message(self, *_: Any) -> None:

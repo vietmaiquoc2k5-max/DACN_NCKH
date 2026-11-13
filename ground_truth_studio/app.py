@@ -97,6 +97,15 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
     with st.sidebar:
         status = st.selectbox("Lọc trạng thái của tôi", ["ALL", "PENDING", "REVIEWED", "DISPUTED", "VERIFIED"])
         available = repository.working_videos(kind)
+        split_hints = {}
+        if kind == "positive_candidate":
+            from ground_truth_studio.preannotation import split_metadata
+            try:
+                split_hints = split_metadata(repository.settings)
+                available.sort(key=lambda row: (split_hints.get(row['video_id'], {}).get('annotation_priority', 4), row['video_id']))
+            except (ValueError, OSError, KeyError) as error:
+                st.warning(f"Manifest chia tập cần kiểm tra: {error}")
+            st.caption("Chia tập trước gán nhãn là provisional. Ứng viên test chưa được xác minh độc lập; không chạy detector để chọn nhãn/ngưỡng.")
         st.caption(f"{len(available)} nguồn hiện có; references thiếu được giữ trong catalog, không đưa vào dropdown.")
         def label(row):
             review = own.get(row["video_id"])
@@ -107,7 +116,15 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
         if not filtered:
             st.info("Chưa có bản ghi thuộc trạng thái này. VERIFIED trong Studio chỉ là human adjudicated candidate, chưa phải GT OFFICIAL.")
             return
-        selected = st.selectbox("Video nguồn", [row["video_id"] for row in filtered], format_func=lambda vid: f"{vid} · {label(repository.video(vid))}")
+        selected = st.selectbox("Video nguồn", [row["video_id"] for row in filtered], format_func=lambda vid: f"{vid} · {label(repository.video(vid))}" + (f" · {split_hints[vid]['proposed_split']}" if vid in split_hints else ""))
+        if selected in split_hints:
+            hint = split_hints[selected]
+            if hint['source_sha256'] != repository.video(selected).get('expected_sha256'):
+                st.error("Source pin khác manifest chia tập; cần đối soát trước review.")
+                return
+            st.caption(f"Nhóm cảnh: {hint['scene_group_id']} · {hint['candidate_readiness']} · {hint['independence_status']}")
+            if hint.get('decode_status') != 'NORMAL_EOF':
+                st.warning("Nguồn chưa đạt audit giải mã đầy đủ; không dùng để nghiệm thu test độc lập. Giữ nguyên video gốc.")
         if st.button("Mở / tiếp tục phiên review", type="primary"):
             review = repository.start_review(token, selected)
             st.session_state["active_review"] = review["id"]
@@ -177,10 +194,12 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
         if clock_key in st.session_state:
             pts = metadata["source_pts"]
             seek_time = pts[st.session_state[key]] - pts[0] if pts else st.session_state[key] / metadata["fps"]
+            seek_time = videos.playback_time_from_source(metadata, seek_time)
             action = player(url=st.session_state[clock_key], seek_nonce=st.session_state[key], seek_time=seek_time, key="player_" + review["id"], default=None)
             if action and st.session_state.get("last_player_action") != action["nonce"]:
                 st.session_state["last_player_action"] = action["nonce"]
-                st.session_state[key] = videos.index_at_time(metadata, float(action["timestamp"]))
+                source_time = videos.source_time_from_playback(metadata, float(action["timestamp"]))
+                st.session_state[key] = videos.index_at_time(metadata, source_time)
                 if action["action"] in {"mark_start", "mark_end"}:
                     _, point = videos.frame(video, st.session_state[key])
                     st.session_state[review["id"] + action["action"]] = point
@@ -368,8 +387,9 @@ def main() -> None:
             st.caption("Candidate chưa phải Ground Truth OFFICIAL. CSV gốc và snapshot không đổi.")
 
 
-try:
-    main()
-except (ValueError, PermissionError, OSError) as error:
-    LOGGER.info("Studio operation blocked: %s", type(error).__name__)
-    st.error(str(error))
+if __name__ == "__main__":
+    try:
+        main()
+    except (ValueError, PermissionError, OSError) as error:
+        LOGGER.info("Studio operation blocked: %s", type(error).__name__)
+        st.error(str(error))

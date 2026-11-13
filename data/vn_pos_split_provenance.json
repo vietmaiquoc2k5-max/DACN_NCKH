@@ -1,0 +1,41 @@
+{
+  "status": "PRE_ANNOTATION_SPLIT_PROVISIONAL",
+  "head": "6942fa567683ed9fdc3ef455188db1a74cef2c7f",
+  "timestamp_utc": "2026-11-13T18:27:29.815820+00:00",
+  "policy": "vn_pos_group_preannotation_v1",
+  "seed": 42,
+  "input_catalog_sha256": "1c8facb8d2cfebb24602bbf7093c8b43770aacb6618f966d49d731acff9b7943",
+  "manifest_canonical_sha256": "24e3064daefd0d108da179caeeb35223966daec586321a6edd401f97c6513d08",
+  "manifest_json_sha256": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+  "manifest_csv_sha256": "c13b4612c3ae06280240fec595283a396a1d487c2cb82daa1a36014045f05a39",
+  "input_sha256": {
+    "data/video_dataset_list.csv": "82f33d2464b94df1649ed5cc98faf9985d08a7ab3c8a9951321a2e5c399f1fd3",
+    "datasets/vn_dataset/split_manifest.csv": "2e7567b16d0aa378bb700a52fbc18e025440bb8131083422baa908a86f7c5fd4",
+    "datasets/vn_dataset/review_status.csv": "4787ec05847131c7454cb08ffb260323cbf05a7a43b7cad1d305f8bd48881f18",
+    "data_dfire.yaml": "86cf24bac87b11f8250d33214fe19407d17ecd51e9663170ac269721ddcc6bb7",
+    "data_vn.yaml": "9c268fc886bb2c80b6b00eaa6c1bd5a592ee59c6a10fd83093744c3f6166b7e4"
+  },
+  "implementation_sha256": {
+    "src/preannotation.py": "b01264528e7634693e824fa38fac91367e9ed2528e79ec58fee369e1f1fbdcab",
+    "scripts/prepare_vn_pos_preannotation.py": "0a7ce86248ab50513d004ce983791c26ff585579b1bffa4e8eeeac3f97ed75db",
+    "scripts/fingerprint_vn_pos_sources.py": "80f46dc9416963276d2798b93863f799670c9d0db111fd26b854a4b28b665ab7",
+    "scripts/audit_vn_pos_decode.py": "2228404c0a5d32bf6d05f148da9b7b845c5ef60a0a72c386aa4a4ddeed0c1f4e"
+  },
+  "payload_sha256": {
+    "vn_pos_preannotation_inventory.json": "c74527f02367f700abd94e706602e5eb4887be27b620ed22006a431524c7d535",
+    "vn_pos_preannotation_inventory.csv": "78c0553c66b5a34581a722716cc4d11541f29482140b625e8eaf62b9672076ff",
+    "vn_pos_exact_duplicates.csv": "e521ae159aa167f9d94ce6b1f40d933e654c9de824b7846057f334e00a5f5138",
+    "vn_pos_near_duplicate_candidates.csv": "2b052e49a69e5834bae3c77427278f5802d64b1de16e2fce23af784ac86daaee",
+    "vn_pos_scene_groups.csv": "9a9f58f98075dbe3c3b90c0cc148ba92f1b20ec0c60dca047e8519e7253e7fa9",
+    "vn_pos_scene_review_required.csv": "227cfcb2a0c332bd0ae524801259acc1324e9277ec369fcc14b9a805199486ea",
+    "vn_pos_historical_exposure_audit.csv": "a881e042d2884dffad648125f6386c6fd38e7c3ce56bb43b0fbd66742d7667ba",
+    "vn_pos_preannotation_split_manifest.json": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+    "vn_pos_preannotation_split_manifest.csv": "c13b4612c3ae06280240fec595283a396a1d487c2cb82daa1a36014045f05a39"
+  },
+  "independence_verified": false,
+  "split_manifest_bytes_frozen_for_annotation": true,
+  "model_outputs_or_semantic_labels_used_to_allocate": false,
+  "historical_ai_exposure_used_only_to_flag_non_independence": true,
+  "scene_similarity_is_hypothesis_not_human_confirmation": true,
+  "after_annotation_policy": "Do not rebalance using model/test performance; publish a new explicit manifest version for label-coverage issues, retaining source groups, prior manifest hash and reasons"
+}

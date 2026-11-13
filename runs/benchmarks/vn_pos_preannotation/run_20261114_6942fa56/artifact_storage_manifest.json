@@ -1,0 +1,10 @@
+{
+  "policy": "Raw stays local under existing .gitignore; no stage/commit; source videos never copied/moved/repaired",
+  "files": 978,
+  "bytes": 126698789,
+  "inventory_sha256": "a427b7341facab964496adde5fb02659a4f9389819c61f52823c24703dd78f1e",
+  "raw_examples_ignored": 4,
+  "local_only": "full decode timelines, pixel hashes, screenshots/contact sheets, logs and raw machine-path evidence",
+  "retain_for_annotation": "audited record.json and timeline.stdout are needed for source-bound PTS; archive/restore together if future cleanup is approved",
+  "historical_416_raw_cleanup_authorization": "still pending; not touched"
+}
