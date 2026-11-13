@@ -51,23 +51,90 @@ graphify-out/
 .graphify/
 **/graphify-out/
 
-# Training outputs
-runs/*
-!runs/benchmarks/
-!runs/benchmarks/week4_consistency_fix/
-!runs/benchmarks/week4_consistency_fix/**
-runs/benchmarks/week4_consistency_fix/.decode_resume_cache.json
-!runs/detect/
-runs/detect/*
-!runs/detect/runs/
-runs/detect/runs/*
-!runs/detect/runs/benchmarks/
-!runs/detect/runs/benchmarks/**
-runs/detect/runs/benchmarks/**/weights/epoch*.pt
-runs/detect/runs/benchmarks/**/weights/last.pt
-runs/detect/runs/benchmarks/**/train_batch*.jpg
-runs/detect/runs/benchmarks/**/val_batch*.jpg
-runs/detect/runs/benchmarks/**/labels.jpg
+# Generated run outputs: default deny; explicitly retain curated metadata.
+/runs/*
+!/runs/benchmarks/
+/runs/benchmarks/**
+!/runs/benchmarks/**/
+# Small summary, scope, policy, provenance and acceptance records only.
+!/runs/benchmarks/**/summary.json
+!/runs/benchmarks/**/comparison.csv
+!/runs/benchmarks/**/accepted_videos.json
+!/runs/benchmarks/**/excluded_videos.json
+!/runs/benchmarks/**/preflight.json
+!/runs/benchmarks/**/preflight_verified.json
+!/runs/benchmarks/**/run_manifest.json
+!/runs/benchmarks/**/artifact_sha256.json
+!/runs/benchmarks/**/artifact_storage_manifest.json
+!/runs/benchmarks/**/test_results.json
+!/runs/benchmarks/**/source_integrity_receipt.json
+!/runs/benchmarks/**/scientific_integrity_receipt.json
+!/runs/benchmarks/**/integrity_receipt.json
+!/runs/benchmarks/**/resume_receipt.json
+!/runs/benchmarks/**/five_hour_milestone.json
+!/runs/benchmarks/**/root_cause_analysis.json
+!/runs/benchmarks/**/audit_evidence_table.json
+!/runs/benchmarks/**/technical_audit_63.json
+!/runs/benchmarks/**/technical_audit_summary.json
+!/runs/benchmarks/**/catalog_reconciliation_report.json
+!/runs/benchmarks/**/missing_historical_sources.json
+!/runs/benchmarks/**/video_catalog_local_v2.json
+!/runs/benchmarks/**/video_catalog_post_audit.json
+!/runs/benchmarks/**/current_physical_catalog.json
+!/runs/benchmarks/**/provisional_evaluation.json
+!/runs/benchmarks/**/ground_truth_candidate_status.json
+!/runs/benchmarks/**/historical_claims_reauthentication.json
+!/runs/benchmarks/**/inference_config.json
+!/runs/benchmarks/**/inference_reconciliation.json
+!/runs/benchmarks/**/inference_reconciliation_final.json
+!/runs/benchmarks/**/inference_provenance_gate.json
+!/runs/benchmarks/**/inference_rerun_decision.json
+!/runs/benchmarks/**/negative_exposure_summary.json
+!/runs/benchmarks/**/video_inference_summary.csv
+!/runs/benchmarks/**/metrics.json
+!/runs/benchmarks/**/negative_video_metrics.json
+!/runs/benchmarks/**/benchmark_train_summary.json
+!/runs/benchmarks/**/benchmark_report.md
+!/runs/benchmarks/**/artifact_lineage.json
+!/runs/benchmarks/**/artifact_lineage.csv
+!/runs/benchmarks/**/far_scope_comparison.csv
+!/runs/benchmarks/**/far_comparison.csv
+!/runs/benchmarks/**/far_per_video.csv
+!/runs/benchmarks/**/operating_point.json
+!/runs/benchmarks/**/operating_point_final.json
+!/runs/benchmarks/**/operating_point_final_audit.json
+# Per-video structural evidence records, without raw frame/packet output.
+!/runs/benchmarks/**/records/**/record.json
+!/runs/benchmarks/**/records/**/record.sha256
+!/runs/benchmarks/**/audit_records/*.json
+# Cache/raw output stays local, including empty stderr evidence. Existing tracked
+# scientific artifacts remain tracked until a separately approved migration.
+/runs/benchmarks/**/.video_cache/
+/runs/benchmarks/**/.decode_resume_cache.json
+/runs/benchmarks/**/*.stdout
+/runs/benchmarks/**/*.stderr
+/runs/benchmarks/**/*.stdout.json
+/runs/benchmarks/**/*.log
+/runs/benchmarks/**/*.jsonl
+
+# Curated training reports/configuration; previews and intermediate weights local.
+!/runs/detect/
+/runs/detect/**
+!/runs/detect/**/
+!/runs/detect/runs/benchmarks/**/args.yaml
+!/runs/detect/runs/benchmarks/**/results.csv
+!/runs/detect/runs/benchmarks/**/results.png
+!/runs/detect/runs/benchmarks/**/BoxF1_curve.png
+!/runs/detect/runs/benchmarks/**/BoxPR_curve.png
+!/runs/detect/runs/benchmarks/**/BoxP_curve.png
+!/runs/detect/runs/benchmarks/**/BoxR_curve.png
+!/runs/detect/runs/benchmarks/**/confusion_matrix.png
+!/runs/detect/runs/benchmarks/**/confusion_matrix_normalized.png
+# best.pt already tracked is preserved; new checkpoints require explicit review.
+/runs/detect/**/weights/
+/runs/detect/**/train_batch*.jpg
+/runs/detect/**/val_batch*.jpg
+/runs/detect/**/labels.jpg
 FireSmokeLabeler/runs/
 FireSmokeLabeler/visualized/
 
@@ -86,3 +153,22 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+
+# Local media uploads and source video (existing tracked data is preserved).
+/uploads/
+/FireSmokeLabeler/videos/
+/datasets/vn_dataset/images/
+# Additional local runtime/cache state; never blanket-ignore code or data formats.
+.agent/
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+**/.cache/
+**/.video_cache/
+**/proxy_cache/
+**/*.tmp
+*.bak
+*.orig
+*.prof
+*.pstats
+*.single_reviewer_backup

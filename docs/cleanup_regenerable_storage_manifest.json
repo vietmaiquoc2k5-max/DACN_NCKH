@@ -1,0 +1,612 @@
+{
+  "schema_version": 1,
+  "source_run": "regenerable_training_previews_and_label_cache",
+  "state": "UNTRACKED_LOCAL_FILES_PRESERVED",
+  "archive": {
+    "path": ".tools/repository_cleanup_20261113/regenerable_files.zip",
+    "sha256": "cdbdaa4e0d2293e6cb06c19e86aaeeec62e1e3bf9deb91e6f18a586e3fc7f041",
+    "bytes": 16915612,
+    "members": 66,
+    "verified_by": "CRC + decompress each member and compare SHA256 to local source",
+    "durable_backup": false,
+    "location_verified": true,
+    "same_volume_only": true
+  },
+  "raw_artifacts": [
+    {
+      "artifact_id": "dataset/images/train/labels.cache",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "cfaeda665dceb4489f5aedb6aa1073558c654f01f6d5372909ba3ceaaf4e8656",
+      "bytes": 1841793,
+      "local_path": "dataset/images/train/labels.cache",
+      "archive_member": "dataset/images/train/labels.cache",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c25f843abb7394e03f6f616e13637724b1c3eed13dd77f56d93117e48ddb6119",
+      "bytes": 131047,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch0.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "cf44007b11f7ade5105dd710517531ce1bb849991a7aa954a4078aff014e791e",
+      "bytes": 287927,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch0.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch0.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch1.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "b395406310e709b95150b82e04b53ed1d3c199f85e2bba8b85cf2d63705979b0",
+      "bytes": 325789,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch1.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch1.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch2.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "fe2f08cd8dc14043a8e50a4b71e50dc332c5dfcb7e61c979d97d9315259f3233",
+      "bytes": 337782,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch2.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch2.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86120.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "bcaa91ba358ce6fc331f1c353ae65f6d5c9b8a07f8ce1c3e5106b24fc331a28a",
+      "bytes": 300160,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86120.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86120.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86121.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "bf029c67d655ab9f1790b069fbfa3090fab7fb42968241d8006f1aac1d6e4b98",
+      "bytes": 300913,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86121.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86121.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86122.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "0426da13492a008221813dc2ed41d2b886c6fb040554278bb4cb214cc211c63c",
+      "bytes": 293799,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86122.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/train_batch86122.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch0_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "f5175b12f05ef14dd6ed17cb21ec1fbd68045f1da47adc1dd5663eb6569d1670",
+      "bytes": 292617,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch0_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch0_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch0_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "8d37cdb46efe9ddabdca3ec4d9c60cf33585f8c11993ac05cc65feaae7cd3092",
+      "bytes": 299175,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch0_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch0_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch1_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "41c17229090c13ff2f69d3f220e8475bfdc1717077e77c9556368533ecabdc42",
+      "bytes": 250105,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch1_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch1_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch1_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "1f8be16b8a374c8a908edbc555cca08673ed6ccd585799f68055df53c00e41e4",
+      "bytes": 256539,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch1_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch1_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch2_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "5f446190b371c4ddc70026352ae178462e525f6f568d57f49c84507d5a66318a",
+      "bytes": 328446,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch2_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch2_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch2_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "b158c762f49d37450783d59988842e576c33fb0503d791805578af946ed05b84",
+      "bytes": 336040,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch2_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed123/val_batch2_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c25f843abb7394e03f6f616e13637724b1c3eed13dd77f56d93117e48ddb6119",
+      "bytes": 131047,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch0.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "eba63fac43379ad0de2f2e7aa9ccd27cf8892c1e792f629bd82a5e1bad8bf071",
+      "bytes": 361315,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch0.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch0.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch1.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "235ea25582d889887a35e0a39d11ffd8c6cc3c28c01325a90cbd2c76cabb3bb7",
+      "bytes": 421036,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch1.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch1.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch2.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "69723795bcfa7b58a6e67b128d1e64a2267ee32b7bd662541dce0fda37aebdd7",
+      "bytes": 433206,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch2.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch2.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86120.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "91f13134d4b9d1a968bb08d0372010ce7df36fe1dfc70de873df3edc8f5e6f1e",
+      "bytes": 299410,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86120.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86120.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86121.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "fa329837a1621b28309327d56bc547d38d6f9110f43c9adfc039bf750bcf5db6",
+      "bytes": 287194,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86121.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86121.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86122.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c06b719d38486809c4e7573e077fdcbc7cf9df454a9e82e0b5a1c8c3c0f8ce92",
+      "bytes": 248437,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86122.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/train_batch86122.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch0_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "f5175b12f05ef14dd6ed17cb21ec1fbd68045f1da47adc1dd5663eb6569d1670",
+      "bytes": 292617,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch0_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch0_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch0_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "8c34a5bd1c731367fd96e8e9f0cce5808c1ab32317bbbd1296a4f435f92dcae8",
+      "bytes": 300526,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch0_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch0_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch1_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "41c17229090c13ff2f69d3f220e8475bfdc1717077e77c9556368533ecabdc42",
+      "bytes": 250105,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch1_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch1_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch1_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c083596ca05d94526e22cb994bad47c8c843a10296b4d1dd296077808cdd5d11",
+      "bytes": 258918,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch1_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch1_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch2_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "5f446190b371c4ddc70026352ae178462e525f6f568d57f49c84507d5a66318a",
+      "bytes": 328446,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch2_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch2_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch2_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "d762f2e1ff36916d69f03b803dcb537c56940ae61c49bf97d261948051c8b1ff",
+      "bytes": 335137,
+      "local_path": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch2_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolo11n_seed456/val_batch2_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c25f843abb7394e03f6f616e13637724b1c3eed13dd77f56d93117e48ddb6119",
+      "bytes": 131047,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch0.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "cf44007b11f7ade5105dd710517531ce1bb849991a7aa954a4078aff014e791e",
+      "bytes": 287927,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch0.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch0.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch1.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "b395406310e709b95150b82e04b53ed1d3c199f85e2bba8b85cf2d63705979b0",
+      "bytes": 325789,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch1.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch1.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch2.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "fe2f08cd8dc14043a8e50a4b71e50dc332c5dfcb7e61c979d97d9315259f3233",
+      "bytes": 337782,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch2.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch2.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86120.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "bcaa91ba358ce6fc331f1c353ae65f6d5c9b8a07f8ce1c3e5106b24fc331a28a",
+      "bytes": 300160,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86120.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86120.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86121.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "bf029c67d655ab9f1790b069fbfa3090fab7fb42968241d8006f1aac1d6e4b98",
+      "bytes": 300913,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86121.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86121.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86122.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "0426da13492a008221813dc2ed41d2b886c6fb040554278bb4cb214cc211c63c",
+      "bytes": 293799,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86122.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/train_batch86122.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch0_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "f5175b12f05ef14dd6ed17cb21ec1fbd68045f1da47adc1dd5663eb6569d1670",
+      "bytes": 292617,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch0_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch0_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch0_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "003f3c706a6cf1db515299221da656d09016ad9be1ef667acc9390be8b2f7219",
+      "bytes": 302319,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch0_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch0_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch1_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "41c17229090c13ff2f69d3f220e8475bfdc1717077e77c9556368533ecabdc42",
+      "bytes": 250105,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch1_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch1_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch1_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "62f8abfaa9442274d07579c41e1afd77f8f2b4ec70c390bcdeafb1ce39bad99a",
+      "bytes": 256050,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch1_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch1_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch2_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "5f446190b371c4ddc70026352ae178462e525f6f568d57f49c84507d5a66318a",
+      "bytes": 328446,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch2_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch2_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch2_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "f4f90fe40cf32dd8094528019ba13851324080d6307a56e884e2cdeb5b022c1e",
+      "bytes": 337670,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch2_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed123/val_batch2_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c25f843abb7394e03f6f616e13637724b1c3eed13dd77f56d93117e48ddb6119",
+      "bytes": 131047,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch0.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "a4c270bf89b889b0f281ffaf1f33198e471c93b6890c5d7ef507d4e568b1e055",
+      "bytes": 333360,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch0.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch0.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch1.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "ce13b0ab6285e1910a812d5fe03395941789783f146df0f205f2038c8fdb76ac",
+      "bytes": 345362,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch1.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch1.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch2.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "02031d7fc2396aa599a3496e78651a57b44218dcf1a446409b12f92a0e136175",
+      "bytes": 366295,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch2.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch2.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86120.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "2fbce7a7d28718afdde5bc873f33361a0f40fd6625eba7d6502cba212140e7cb",
+      "bytes": 339601,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86120.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86120.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86121.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "934ca9e3156cabe3ac843a69d000b08161dd6db3e7f644d5036ad1b9ee18ca47",
+      "bytes": 264812,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86121.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86121.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86122.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "54c835dd6a19b985a9b7dd905601b2a8bdb841d224154d34926f74b4fd5085e5",
+      "bytes": 269175,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86122.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/train_batch86122.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch0_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "f5175b12f05ef14dd6ed17cb21ec1fbd68045f1da47adc1dd5663eb6569d1670",
+      "bytes": 292617,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch0_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch0_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch0_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "1984ecf7a3a5fe67041c48144c3b32ffbbae9e8d767dba6354aa9e3730b60e6f",
+      "bytes": 297455,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch0_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch0_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch1_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "41c17229090c13ff2f69d3f220e8475bfdc1717077e77c9556368533ecabdc42",
+      "bytes": 250105,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch1_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch1_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch1_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "7ffac32dc0b031ba66265b3d0a89faeb6ee8d3e86c04b970b48b25bc8b95be3e",
+      "bytes": 257748,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch1_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch1_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch2_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "5f446190b371c4ddc70026352ae178462e525f6f568d57f49c84507d5a66318a",
+      "bytes": 328446,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch2_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch2_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch2_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "e1edfcd062dbdd69d352b24616343bc1c71826da824b1602a14e101792e1c95e",
+      "bytes": 333609,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch2_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed42/val_batch2_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c25f843abb7394e03f6f616e13637724b1c3eed13dd77f56d93117e48ddb6119",
+      "bytes": 131047,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch0.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "eba63fac43379ad0de2f2e7aa9ccd27cf8892c1e792f629bd82a5e1bad8bf071",
+      "bytes": 361315,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch0.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch0.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch1.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "235ea25582d889887a35e0a39d11ffd8c6cc3c28c01325a90cbd2c76cabb3bb7",
+      "bytes": 421036,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch1.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch1.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch2.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "69723795bcfa7b58a6e67b128d1e64a2267ee32b7bd662541dce0fda37aebdd7",
+      "bytes": 433206,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch2.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch2.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86120.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "91f13134d4b9d1a968bb08d0372010ce7df36fe1dfc70de873df3edc8f5e6f1e",
+      "bytes": 299410,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86120.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86120.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86121.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "fa329837a1621b28309327d56bc547d38d6f9110f43c9adfc039bf750bcf5db6",
+      "bytes": 287194,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86121.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86121.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86122.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c06b719d38486809c4e7573e077fdcbc7cf9df454a9e82e0b5a1c8c3c0f8ce92",
+      "bytes": 248437,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86122.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/train_batch86122.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch0_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "f5175b12f05ef14dd6ed17cb21ec1fbd68045f1da47adc1dd5663eb6569d1670",
+      "bytes": 292617,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch0_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch0_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch0_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "16e2ead67f89cdf3be82941e6b554288166f4ed6b4fe6ab130f71347a654fe72",
+      "bytes": 301218,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch0_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch0_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch1_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "41c17229090c13ff2f69d3f220e8475bfdc1717077e77c9556368533ecabdc42",
+      "bytes": 250105,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch1_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch1_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch1_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "7d78ff5d33812508cd5ffe5998b13d535622ba34b9c0e9b807cd5bb6cda35ffe",
+      "bytes": 254921,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch1_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch1_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch2_labels.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "5f446190b371c4ddc70026352ae178462e525f6f568d57f49c84507d5a66318a",
+      "bytes": 328446,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch2_labels.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch2_labels.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    },
+    {
+      "artifact_id": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch2_pred.jpg",
+      "source_run": "regenerable_training_outputs",
+      "sha256": "c3a5578ef802bf33543abce1e2184194e6fc71ce548f37b15961ce360569e7d2",
+      "bytes": 335422,
+      "local_path": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch2_pred.jpg",
+      "archive_member": "runs/detect/runs/benchmarks/yolov8n_seed456/val_batch2_pred.jpg",
+      "restore_method": "Verified restore_cleanup_archive.py; refuse differing existing bytes"
+    }
+  ],
+  "limitation": "Supplementary same-volume copy; originals kept locally; inputs/config/code retained for regeneration"
+}

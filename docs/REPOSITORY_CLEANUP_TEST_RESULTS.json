@@ -1,0 +1,59 @@
+[
+  {
+    "name": "compileall",
+    "command": "python -m compileall -q src ground_truth_studio scripts",
+    "exit_code": 0,
+    "count": null,
+    "elapsed_seconds": 0.375,
+    "result_lines": [],
+    "log": ".tools/repository_cleanup_20261113/compileall_tests.log"
+  },
+  {
+    "name": "studio",
+    "command": "python -m unittest discover -s tests -p test_gt_studio_*.py -v",
+    "exit_code": 0,
+    "count": 38,
+    "elapsed_seconds": 112.68700000000172,
+    "result_lines": [
+      "Ran 38 tests in 110.737s",
+      "OK"
+    ],
+    "log": ".tools/repository_cleanup_20261113/studio_tests.log"
+  },
+  {
+    "name": "audit_v2",
+    "command": "python -m unittest discover -s tests -p test_video_audit_v2.py -v",
+    "exit_code": 0,
+    "count": 23,
+    "elapsed_seconds": 1.5309999999990396,
+    "result_lines": [
+      "Ran 23 tests in 1.163s",
+      "OK"
+    ],
+    "log": ".tools/repository_cleanup_20261113/audit_v2_tests.log"
+  },
+  {
+    "name": "restore",
+    "command": "python -m unittest discover -s tests -p test_cleanup_restore.py -v",
+    "exit_code": 0,
+    "count": 4,
+    "elapsed_seconds": 0.23500000000058208,
+    "result_lines": [
+      "Ran 4 tests in 0.069s",
+      "OK"
+    ],
+    "log": ".tools/repository_cleanup_20261113/restore_tests.log"
+  },
+  {
+    "name": "full",
+    "command": "python -m unittest discover -s tests -p test_*.py -v",
+    "exit_code": 0,
+    "count": 276,
+    "elapsed_seconds": 122.09299999999712,
+    "result_lines": [
+      "Ran 276 tests in 118.136s",
+      "OK"
+    ],
+    "log": ".tools/repository_cleanup_20261113/full_tests.log"
+  }
+]
