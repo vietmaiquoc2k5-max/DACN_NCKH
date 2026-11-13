@@ -1,0 +1,53 @@
+{
+  "recommendation": "BLOCKED_MISSING_INPUT",
+  "checks": {
+    "checkpoint_sha256": true,
+    "confidence_threshold": true,
+    "configuration": true,
+    "decoded_frame_counts": true,
+    "error_records": true,
+    "frame_timestamps": null,
+    "historical_manifest_authenticated": null,
+    "model_preprocessing": null,
+    "run_completion": true,
+    "sampled_count_matches_historical_stride": true,
+    "sampled_frame_count_bounds": true,
+    "sampled_frame_counts_verified": null,
+    "sampling_fps": true,
+    "sampling_strategy": null,
+    "skipped_frames_accounted_for": null,
+    "source_commit_available": true,
+    "source_hashes": null,
+    "video_id_mapping": true
+  },
+  "rerun_required": null,
+  "full_timeline_independently_verified": false,
+  "missing_source_video_ids": [
+    "negsVideo1.858",
+    "negsVideo10.1072",
+    "negsVideo11.1073",
+    "negsVideo12.1074",
+    "negsVideo13.1075",
+    "negsVideo14.1076",
+    "negsVideo15.1078",
+    "negsVideo16.1077",
+    "negsVideo2.859",
+    "negsVideo3.860",
+    "negsVideo4.861",
+    "negsVideo5.862",
+    "negsVideo6.863",
+    "negsVideo7.864",
+    "negsVideo8.865",
+    "negsVideo9.866"
+  ],
+  "limitations": [
+    "source_hashes",
+    "model_preprocessing",
+    "sampling_strategy",
+    "sampled_frame_counts_verified",
+    "frame_timestamps",
+    "skipped_frames_accounted_for",
+    "historical_manifest_authenticated"
+  ],
+  "automatic_inference_executed": false
+}

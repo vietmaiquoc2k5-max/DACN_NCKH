@@ -1,0 +1,4 @@
+warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/week4_acceptance.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/test_week4_critical_acceptance.py', LF will be replaced by CRLF the next time Git touches it
+Recovery complete: D:\workspace\DACN_NCKH\runs\benchmarks\week4_fix4_verification\recalculated; scientific acceptance PARTIAL

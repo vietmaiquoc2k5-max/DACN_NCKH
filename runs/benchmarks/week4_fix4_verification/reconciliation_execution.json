@@ -1,0 +1,4 @@
+{
+  "command": "python scripts/run_phases4_to_8_recovery.py --output-dir D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_fix4_verification\\recalculated",
+  "exit_code": 0
+}

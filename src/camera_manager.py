@@ -350,6 +350,8 @@ class CameraStreamWorker:
         self.thread: Optional[threading.Thread] = None
         self.infer_thread: Optional[threading.Thread] = None
         self.infer_event = threading.Event()
+        self.stop_event = threading.Event()
+        self.lifecycle_lock = threading.RLock()
         self.lock = threading.Lock()
 
         # Chỉ số FPS đọc khung hình và FPS suy luận model riêng biệt
@@ -395,6 +397,11 @@ class CameraStreamWorker:
             self.log_callback(f"[{self.config.cam_id}] {safe_msg}")
 
     def start(self):
+        """Serialize lifecycle operations so manual reconnect cannot duplicate workers."""
+        with self.lifecycle_lock:
+            self._start()
+
+    def _start(self, reconnecting: bool = False):
         """Khởi chạy kết nối camera (tách biệt luồng đọc khung hình và luồng suy luận YOLO)."""
         with self.lock:
             if self.config.source_type == "UNASSIGNED" or (
@@ -413,14 +420,17 @@ class CameraStreamWorker:
                     self.status = "CONNECTED"
                     self.lifecycle_state = "RUNNING"
                 return
+            if any(t and t.is_alive() for t in (self.thread, self.infer_thread)):
+                raise RuntimeError("Previous camera threads have not stopped; refusing duplicate workers")
+            self.stop_event.clear()
             self.running = True
             self.paused = False
             self.reconnect_attempts = 0
             self.frame_count = 0
             self.last_inferred_frame_id = 0
             self.latest_raw_bgr = None
-            self.status = "RECONNECTING"
-            self.lifecycle_state = "CONNECTING"
+            self.status = "RECONNECTING" if reconnecting else "CONNECTING"
+            self.lifecycle_state = self.status
             self.error_detail = f"Đang kết nối tới {self.config.masked_source}..."
             self._set_placeholder("RECONNECTING", self.error_detail)
             self.verifier.reset()
@@ -447,8 +457,14 @@ class CameraStreamWorker:
         self._log("Tạm dừng luồng" if self.paused else "Tiếp tục luồng")
 
     def stop(self):
+        """Stop both threads before allowing the next generation to start."""
+        with self.lifecycle_lock:
+            self._stop()
+
+    def _stop(self):
         """Ngắt kết nối hoàn toàn luồng camera và giải phóng VideoCapture, đưa về trạng thái STOPPED."""
         self.running = False
+        self.stop_event.set()
         self.paused = False
         self.infer_event.set()
         t = self.thread
@@ -457,6 +473,8 @@ class CameraStreamWorker:
         it = self.infer_thread
         if it and it.is_alive() and it is not threading.current_thread():
             it.join(timeout=1.0)
+        if any(t and t.is_alive() for t in (t, it)):
+            raise RuntimeError("Camera shutdown timed out; retained thread handles for safe retry")
         self.thread = None
         self.infer_thread = None
         with self.lock:
@@ -480,9 +498,9 @@ class CameraStreamWorker:
     def reconnect(self):
         """Ngắt kết nối hiện tại và thực hiện kết nối lại ngay lập tức."""
         self._log(f"Kết nối lại thủ công ({self.config.masked_source})...")
-        self.stop()
-        time.sleep(0.05)
-        self.start()
+        with self.lifecycle_lock:
+            self.stop()
+            self._start(reconnecting=True)
 
     def test_connection(self) -> Tuple[bool, str, np.ndarray]:
         """Kiểm tra kết nối thực tế tới nguồn camera và trả về hình ảnh xem trước (Preview)."""
@@ -730,7 +748,7 @@ class CameraStreamWorker:
                                 f"Thử kết nối lại lần {self.reconnect_attempts}/{max_att} sau "
                                 f"{self.config.reconnect_interval_sec}s ({err_msg})"
                             )
-                            time.sleep(self.config.reconnect_interval_sec)
+                            self.stop_event.wait(self.config.reconnect_interval_sec)
                             continue
                         else:
                             with self.lock:
@@ -786,7 +804,7 @@ class CameraStreamWorker:
                                 self.error_detail = "Mất tín hiệu từ camera, đang tự động kết nối lại..."
                                 self._set_placeholder("RECONNECTING", self.error_detail)
                             self._log("Mất tín hiệu hình ảnh. Chuyển sang trạng thái RECONNECTING...")
-                            time.sleep(1.0)
+                            self.stop_event.wait(1.0)
                             continue
                         else:
                             with self.lock:

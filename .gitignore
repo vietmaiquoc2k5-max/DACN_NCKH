@@ -10,6 +10,7 @@ htmlcov/
 .ipynb_checkpoints/
 
 # Virtual environments
+.tools/
 .venv/
 venv/
 env/

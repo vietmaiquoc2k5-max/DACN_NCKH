@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-11-13T06:14:01.444300+00:00",
+  "branch": "fix-4",
+  "head": "30239cc18f07a963b97461e7191b8d11e2e70cbf",
+  "initial_working_tree": "clean",
+  "pr_query": "repo:vietmaiquoc2k5-max/DACN_NCKH head:fix-4 base:main state:all",
+  "pr_matches": {
+    "issues": []
+  },
+  "reviewed_sha_pr_workflow_runs": {
+    "workflow_runs": []
+  },
+  "workflow_query_limit": "Connector lists PR-triggered runs only; no push runs inferred from this result alone. Current workflow push filter excludes fix-4; no matching PR was found.",
+  "reviewed_sha_ci_run_url": null,
+  "reviewed_sha_ci_status": "NOT_VERIFIED_NO_MATCHING_PR_RUN",
+  "push_triggers": [
+    "main",
+    "master"
+  ],
+  "pull_request_base_triggers": [
+    "main",
+    "master"
+  ],
+  "linux_runtime": {
+    "docker_on_path": null,
+    "wsl_list_exit_code": 0,
+    "wsl_distributions": [],
+    "actual_linux_tests": "NOT_EXECUTED"
+  },
+  "engineering_status": "PARTIAL",
+  "scientific_status": "BLOCKED_HUMAN_REVIEW",
+  "no_commit_push_pr_creation": true
+}

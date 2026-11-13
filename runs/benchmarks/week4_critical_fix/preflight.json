@@ -1,0 +1,33 @@
+{
+  "branch": "main",
+  "head": "70f6991deccf16ef0b5d9dae840adc58a3e2799e",
+  "initial_status": "clean; captured before edits",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "ffmpeg": null,
+  "ffprobe": null,
+  "manifest_videos": 79,
+  "physical_files_present": 63,
+  "checkpoint_present": true,
+  "baseline_gt": {
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "log": "baseline_gt.log"
+  },
+  "baseline_camera": {
+    "tests": 22,
+    "failures": 1,
+    "errors": 0,
+    "exit_code": 1,
+    "log": "baseline_camera.log"
+  },
+  "dependencies": {
+    "numpy": "2.4.6",
+    "opencv-python": "5.0.0.93",
+    "scipy": "NOT_INSTALLED",
+    "torch": "2.15.0",
+    "ultralytics": "8.4.198"
+  }
+}

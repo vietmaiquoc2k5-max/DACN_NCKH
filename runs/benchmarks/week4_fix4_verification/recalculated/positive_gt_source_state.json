@@ -1,0 +1,11 @@
+{
+  "snapshot_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "event_count": 35,
+  "verification_status_counts": {
+    "pending_verification": 24,
+    "cross_verified": 11
+  },
+  "source_event_ids_present": false,
+  "legacy_queue_ids": "Legacy ordinal IDs retained; timestamps and video/class identity checked on merge.",
+  "independent_evidence_audit": "Historical cross_verified claims preserved; external annotation records not reauthenticated."
+}

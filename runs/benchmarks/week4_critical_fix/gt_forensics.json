@@ -1,0 +1,20 @@
+{
+  "files": {
+    "data\\ground_truth\\checksums.sha256": "872b74087d4181f27b816c5826abedd76b6c2476fb9e1b4157eec769b405058e",
+    "data\\ground_truth\\checksums_v1.1.sha256": "cfb057620f5c0f453cd5ede01472b7b8d268a9073a7a767ad975c0bf041e3d31",
+    "data\\ground_truth\\events.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "data\\ground_truth\\events_v1.0_snapshot.jsonl": "1271a9badf316813d44ca4abccb959fb6c59bd088da2c6e462c7b09573da1133",
+    "data\\ground_truth\\events_v1.1_snapshot.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "data\\ground_truth\\pending_events_audit_list.csv": "5469a808d3141c5458854486fec23d9e7bf315cb472226f8fbbc4f0c7deacec9",
+    "data\\ground_truth\\pending_events_audit_list.json": "cc7d2f272f19c6389f522fb80b5aaafb33d9560f6411a3ff1d6eb60d3764549d",
+    "data\\ground_truth\\README.md": "2f760edc06b2f4ad3e535f581c1897baf81549022ef077054ecebe8976af7d4c"
+  },
+  "git_blob_sha256": "0ff6dcae59645b70fb08665c79064eec9f3484aec8b1e3c8cfa9dd5679bff405",
+  "frozen_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "reconstructed_crlf_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "records_equal": true,
+  "record_count": 35,
+  "creation_commit": "a41988cf31819472e64786fb9fc4a5d31472d439",
+  "event_ids_present": false,
+  "resolution": "RESTORE_AUTHENTICATED_CRLF_BYTES; checksum unchanged; no annotation transition"
+}

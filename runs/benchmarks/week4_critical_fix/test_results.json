@@ -1,0 +1,54 @@
+{
+  "python": "3.11.9",
+  "ffmpeg_bin": "D:\\workspace\\DACN_NCKH\\.tools\\ffmpeg",
+  "results": [
+    {
+      "command": "python -m unittest discover -s tests -p test_ground_truth_cross_validation.py -v",
+      "started_at": "2026-11-13T05:51:03.194400+00:00",
+      "completed_at": "2026-11-13T05:51:03.386071+00:00",
+      "executed": 8,
+      "passed": 8,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "log": "runs\\benchmarks\\week4_critical_fix\\gt_final.log"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_dynamic_camera_selection.py -v",
+      "started_at": "2026-11-13T05:51:03.387065+00:00",
+      "completed_at": "2026-11-13T05:51:13.974482+00:00",
+      "executed": 24,
+      "passed": 24,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "log": "runs\\benchmarks\\week4_critical_fix\\camera_final.log"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_week4_critical_acceptance.py -v",
+      "started_at": "2026-11-13T05:51:13.974482+00:00",
+      "completed_at": "2026-11-13T05:51:16.829406+00:00",
+      "executed": 10,
+      "passed": 10,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "log": "runs\\benchmarks\\week4_critical_fix\\acceptance_final.log"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_*.py -v",
+      "started_at": "2026-11-13T05:51:16.829406+00:00",
+      "completed_at": "2026-11-13T05:51:30.285371+00:00",
+      "executed": 200,
+      "passed": 200,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "log": "runs\\benchmarks\\week4_critical_fix\\full_final.log"
+    }
+  ]
+}

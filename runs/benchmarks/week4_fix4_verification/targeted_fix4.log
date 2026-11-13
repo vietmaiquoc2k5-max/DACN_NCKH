@@ -1,0 +1,16 @@
+test_aggregate_counts_do_not_replace_missing_frame_fields (test_fix4_evidence_gates.TestFix4EvidenceGates.test_aggregate_counts_do_not_replace_missing_frame_fields) ... ok
+test_bound_frame_evidence_matches_independent_reference (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_frame_evidence_matches_independent_reference) ... ok
+test_bound_timestamp_corruption_or_count_mismatch_is_failed_check (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_timestamp_corruption_or_count_mismatch_is_failed_check) ... ok
+test_clean_checkout_preserves_crlf_in_both_git_modes (test_fix4_evidence_gates.TestFix4EvidenceGates.test_clean_checkout_preserves_crlf_in_both_git_modes)
+Perform real fresh checkouts; this same test executes on Linux CI. ... ok
+test_lf_conversion_is_detected_without_hash_fallback (test_fix4_evidence_gates.TestFix4EvidenceGates.test_lf_conversion_is_detected_without_hash_fallback) ... ok
+test_missing_source_blocks_only_the_affected_video (test_fix4_evidence_gates.TestFix4EvidenceGates.test_missing_source_blocks_only_the_affected_video) ... ok
+test_missing_timestamp_or_frame_index_never_proves_coverage (test_fix4_evidence_gates.TestFix4EvidenceGates.test_missing_timestamp_or_frame_index_never_proves_coverage) ... ok
+test_pending_positive_gt_blocks_official_even_if_other_gates_pass (test_fix4_evidence_gates.TestFix4EvidenceGates.test_pending_positive_gt_blocks_official_even_if_other_gates_pass) ... ok
+test_tracked_historical_output_is_rejected_without_writes (test_fix4_evidence_gates.TestFix4EvidenceGates.test_tracked_historical_output_is_rejected_without_writes) ... ok
+test_wrong_video_or_run_cannot_supply_target_timestamps (test_fix4_evidence_gates.TestFix4EvidenceGates.test_wrong_video_or_run_cannot_supply_target_timestamps) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.508s
+
+OK

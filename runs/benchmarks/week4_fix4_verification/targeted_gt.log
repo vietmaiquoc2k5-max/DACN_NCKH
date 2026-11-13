@@ -1,0 +1,21 @@
+test_frozen_v11_records_preserved_from_creation_commit (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_frozen_v11_records_preserved_from_creation_commit)
+Restoration may change serialization only, never annotations or order. ... ok
+test_independent_fire_and_smoke_separation (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_independent_fire_and_smoke_separation)
+5. Kiểm tra phân tách rõ ràng FIRE và SMOKE trên cùng một video. ... ok
+test_legacy_migration_refuses_frozen_writes (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_legacy_migration_refuses_frozen_writes)
+Rerunning migration cannot regenerate GT or auto-promote pending events. ... ok
+test_no_event_exceeds_video_duration (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_no_event_exceeds_video_duration)
+4. Kiểm tra mọi sự kiện trong events.jsonl không vượt quá thời lượng video. ... ok
+test_pending_cannot_auto_become_verified_without_annotator2 (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_pending_cannot_auto_become_verified_without_annotator2)
+1. Kiểm tra bản ghi thiếu annotator_02 không thể được gắn trạng thái cross_verified/verified. ... ok
+test_snapshot_mutation_rejected (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_snapshot_mutation_rejected)
+Even a one-byte change must fail the frozen named checksum. ... ok
+test_snapshot_v1_1_checksum_integrity (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_snapshot_v1_1_checksum_integrity)
+3. Kiểm tra tính bất biến của Snapshot v1.1 thông qua mã băm SHA256. ... ok
+test_timestamp_discrepancy_greater_than_half_second_marked_disputed (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_timestamp_discrepancy_greater_than_half_second_marked_disputed)
+2. Kiểm tra sai lệch timestamp giữa 2 annotator > 0.5s phải bị coi là disputed. ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.023s
+
+OK

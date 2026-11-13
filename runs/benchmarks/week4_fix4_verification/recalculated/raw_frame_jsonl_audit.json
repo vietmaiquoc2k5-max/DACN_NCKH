@@ -1,0 +1,1600 @@
+[
+  {
+    "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\frame_level_detections.jsonl",
+    "sha256": "230a7dd9dc6da361c11d19cea6b18ad766ef885e7e137020a1448dee722fb0ad",
+    "videos": {
+      "POS_01": {
+        "sampled_frame_records": 147,
+        "empty_detection_records": 15,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 29.2,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_02": {
+        "sampled_frame_records": 40,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 7.8078,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_03": {
+        "sampled_frame_records": 60,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 11.8,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_04": {
+        "sampled_frame_records": 85,
+        "empty_detection_records": 54,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 16.8168,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_05": {
+        "sampled_frame_records": 64,
+        "empty_detection_records": 9,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 12.6126,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_06": {
+        "sampled_frame_records": 276,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 55.055,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_07": {
+        "sampled_frame_records": 401,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 80.08,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_08": {
+        "sampled_frame_records": 129,
+        "empty_detection_records": 1,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 25.6,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_09": {
+        "sampled_frame_records": 274,
+        "empty_detection_records": 274,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 54.6,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_10": {
+        "sampled_frame_records": 86,
+        "empty_detection_records": 1,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 17.017,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_11": {
+        "sampled_frame_records": 111,
+        "empty_detection_records": 1,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 22.022,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_12": {
+        "sampled_frame_records": 82,
+        "empty_detection_records": 10,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 16.875,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_13": {
+        "sampled_frame_records": 288,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 57.4574,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_14": {
+        "sampled_frame_records": 108,
+        "empty_detection_records": 94,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 21.4001,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_15": {
+        "sampled_frame_records": 393,
+        "empty_detection_records": 45,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 78.4,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_16": {
+        "sampled_frame_records": 514,
+        "empty_detection_records": 486,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 109.37,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_17": {
+        "sampled_frame_records": 101,
+        "empty_detection_records": 22,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 20.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_18": {
+        "sampled_frame_records": 351,
+        "empty_detection_records": 297,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 70.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_19": {
+        "sampled_frame_records": 121,
+        "empty_detection_records": 13,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 24.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_20": {
+        "sampled_frame_records": 138,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 27.4,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_21": {
+        "sampled_frame_records": 245,
+        "empty_detection_records": 39,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 48.8488,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_22": {
+        "sampled_frame_records": 136,
+        "empty_detection_records": 23,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 27.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_23": {
+        "sampled_frame_records": 61,
+        "empty_detection_records": 2,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 12.024,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_24": {
+        "sampled_frame_records": 78,
+        "empty_detection_records": 26,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 15.4154,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "malformed_lines": [],
+    "total_frame_records": 4289
+  },
+  {
+    "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\negative_raw_detections.jsonl",
+    "sha256": "564ab34a6c9eded1277b0628473d1dd95cbc122f10f5c6bacb329c18c42712fe",
+    "videos": {
+      "REAL_NEG_01": {
+        "sampled_frame_records": 3364,
+        "empty_detection_records": 3323,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 6726.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_02": {
+        "sampled_frame_records": 42,
+        "empty_detection_records": 41,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 20.5,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_03": {
+        "sampled_frame_records": 71,
+        "empty_detection_records": 68,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 35.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_04": {
+        "sampled_frame_records": 71,
+        "empty_detection_records": 63,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 35.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_05": {
+        "sampled_frame_records": 2758,
+        "empty_detection_records": 2633,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 5514.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "malformed_lines": [],
+    "total_frame_records": 6306
+  },
+  {
+    "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\negative_tracked_detections.jsonl",
+    "sha256": "f19283b0f835d31aaa734f13ff0531d1376bbe62a25c2882b410ffe59d617e87",
+    "videos": {
+      "REAL_NEG_01": {
+        "sampled_frame_records": 3364,
+        "empty_detection_records": 3350,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 6726.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_02": {
+        "sampled_frame_records": 42,
+        "empty_detection_records": 41,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 20.5,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_03": {
+        "sampled_frame_records": 71,
+        "empty_detection_records": 69,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 35.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_04": {
+        "sampled_frame_records": 71,
+        "empty_detection_records": 65,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 35.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "REAL_NEG_05": {
+        "sampled_frame_records": 2758,
+        "empty_detection_records": 2658,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 5514.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "malformed_lines": [],
+    "total_frame_records": 6306
+  },
+  {
+    "path": "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final\\tracked_frame_detections.jsonl",
+    "sha256": "ec7d6f86ef60f986b01b63a1fbadce651ce23bc828709487ff2694f6ba12a8dd",
+    "videos": {
+      "POS_01": {
+        "sampled_frame_records": 147,
+        "empty_detection_records": 17,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 29.2,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_02": {
+        "sampled_frame_records": 40,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 7.8078,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_03": {
+        "sampled_frame_records": 60,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 11.8,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_04": {
+        "sampled_frame_records": 85,
+        "empty_detection_records": 56,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 16.8168,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_05": {
+        "sampled_frame_records": 64,
+        "empty_detection_records": 13,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 12.6126,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_06": {
+        "sampled_frame_records": 276,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 55.055,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_07": {
+        "sampled_frame_records": 401,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 80.08,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_08": {
+        "sampled_frame_records": 129,
+        "empty_detection_records": 1,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 25.6,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_09": {
+        "sampled_frame_records": 274,
+        "empty_detection_records": 274,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 54.6,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_10": {
+        "sampled_frame_records": 86,
+        "empty_detection_records": 1,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 17.017,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_11": {
+        "sampled_frame_records": 111,
+        "empty_detection_records": 1,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 22.022,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_12": {
+        "sampled_frame_records": 82,
+        "empty_detection_records": 10,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 16.875,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_13": {
+        "sampled_frame_records": 288,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 57.4574,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_14": {
+        "sampled_frame_records": 108,
+        "empty_detection_records": 97,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 21.4001,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_15": {
+        "sampled_frame_records": 393,
+        "empty_detection_records": 52,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 78.4,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_16": {
+        "sampled_frame_records": 514,
+        "empty_detection_records": 489,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 109.37,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_17": {
+        "sampled_frame_records": 101,
+        "empty_detection_records": 22,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 20.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_18": {
+        "sampled_frame_records": 351,
+        "empty_detection_records": 305,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 70.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_19": {
+        "sampled_frame_records": 121,
+        "empty_detection_records": 13,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 24.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_20": {
+        "sampled_frame_records": 138,
+        "empty_detection_records": 0,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 27.4,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_21": {
+        "sampled_frame_records": 245,
+        "empty_detection_records": 41,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 48.8488,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_22": {
+        "sampled_frame_records": 136,
+        "empty_detection_records": 23,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 27.0,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_23": {
+        "sampled_frame_records": 61,
+        "empty_detection_records": 3,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 12.024,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "POS_24": {
+        "sampled_frame_records": 78,
+        "empty_detection_records": 26,
+        "frame_indices_present": false,
+        "frame_indices_valid_and_increasing": true,
+        "timestamps_present": true,
+        "timestamps_valid_and_increasing": true,
+        "first_timestamp_sec": 0.0,
+        "last_timestamp_sec": 15.4154,
+        "last_frame_index": null,
+        "run_ids": [
+          null
+        ],
+        "source_sha256_values": [
+          null
+        ],
+        "checkpoint_sha256_values": [
+          null
+        ],
+        "timestamp_sources": [
+          null
+        ],
+        "detector_input_configs": [
+          null
+        ],
+        "frame_timestamp_pairs_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "malformed_lines": [],
+    "total_frame_records": 4289
+  }
+]

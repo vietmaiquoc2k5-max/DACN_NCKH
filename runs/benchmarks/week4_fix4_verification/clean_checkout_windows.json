@@ -1,0 +1,28 @@
+[
+  {
+    "head": "30239cc18f07a963b97461e7191b8d11e2e70cbf",
+    "host_platform": "Windows",
+    "checkout_core_autocrlf": "false",
+    "checkout_directory": "D:\\workspace\\DACN_NCKH\\.tools\\fix4-clean-30239cc1-autocrlf-false",
+    "checkout_exit_code": 0,
+    "sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "frozen_checksum": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "checksum_matches": true,
+    "crlf_count": 35,
+    "lf_count": 35,
+    "json_matches_main": true
+  },
+  {
+    "head": "30239cc18f07a963b97461e7191b8d11e2e70cbf",
+    "host_platform": "Windows",
+    "checkout_core_autocrlf": "true",
+    "checkout_directory": "D:\\workspace\\DACN_NCKH\\.tools\\fix4-clean-30239cc1-autocrlf-true",
+    "checkout_exit_code": 0,
+    "sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "frozen_checksum": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "checksum_matches": true,
+    "crlf_count": 35,
+    "lf_count": 35,
+    "json_matches_main": true
+  }
+]

@@ -1,0 +1,65 @@
+Model summary (fused): 73 layers, 3,006,038 parameters, 0 gradients, 8.1 GFLOPs
+test_01_single_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_01_single_camera_selection)
+1. Chọn 1 camera (SINGLE): chỉ đúng 1 worker chạy. ... ok
+test_02_quad_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_02_quad_camera_selection)
+2. Chọn 4 camera (QUAD): chỉ đúng 4 worker chạy. ... ok
+test_03_full_nine_cameras (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_03_full_nine_cameras)
+3. Chọn 9 camera (FULL): đủ 9 worker chạy. ... ok
+test_04_switch_from_9_to_4_cameras (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_04_switch_from_9_to_4_cameras)
+4. Chuyển từ 9 xuống 4 camera: 5 worker không được chọn phải dừng hoàn toàn. ... ok
+test_05_switch_from_4_to_1_camera (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_05_switch_from_4_to_1_camera)
+5. Chuyển từ 4 xuống 1 camera: 3 worker phải dừng. ... ok
+test_06_custom_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_06_custom_camera_selection)
+6. Chọn camera tùy ý (CAM-01, CAM-03, CAM-05, CAM-08). ... ok
+test_07_no_duplicate_workers_on_multiple_calls (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_07_no_duplicate_workers_on_multiple_calls)
+7. Kiểm tra gọi set_active_camera_selection lặp lại không tạo worker/thread trùng lặp. ... ok
+test_08_stop_releases_resources (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_08_stop_releases_resources)
+8. Kiểm tra stop giải phóng VideoCapture và cập nhật DISCONNECTED. ... ok
+test_09_camera_reconnect (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_09_camera_reconnect)
+9. Kiểm tra cơ chế reconnect camera. ... ok
+test_10_tracker_isolation_between_cameras (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_10_tracker_isolation_between_cameras)
+10. Kiểm tra ByteTrack / Tracker không bị lẫn lộn giữa các camera. ... ok
+test_11_shared_detector (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_11_shared_detector)
+11. Kiểm tra detector dùng chung an toàn trên GPU/CPU. ... ok
+test_12_fault_isolation_no_dashboard_crash (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_12_fault_isolation_no_dashboard_crash)
+12. Kiểm tra dashboard không crash khi camera mất kết nối. ... ok
+test_13_dual_and_hexa_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_13_dual_and_hexa_camera_selection)
+13. Chọn 2 camera (DUAL) và 6 camera (HEXA) theo chuẩn FIREWATCH COMMAND CENTER. ... ok
+test_14_performance_presets_and_roi_and_add_camera (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_14_performance_presets_and_roi_and_add_camera)
+14. Kiểm tra Performance Presets, cập nhật ROI per-camera và thêm camera mới. ... ok
+test_15_preserve_state_of_unchanged_cameras_and_disconnected_info (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_15_preserve_state_of_unchanged_cameras_and_disconnected_info)
+15. Giữ nguyên trạng thái những camera không thay đổi khi chuyển cơ số camera & giữ thông tin nhận diện khi tạm dừng/lỗi. ... ok
+test_16_html_sanitization_and_no_raw_html_leak (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_16_html_sanitization_and_no_raw_html_leak)
+16. Kiểm tra hàm chuẩn hóa HTML không để dòng thụt lề >= 4 khoảng trắng hay dòng trống gây lỗi lộ thẻ HTML thô. ... ok
+test_17_disconnected_camera_timestamp_and_no_infinite_worker_spawn (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_17_disconnected_camera_timestamp_and_no_infinite_worker_spawn)
+17. Kiểm tra camera lỗi ghi nhận thời điểm mất kết nối và không tự tạo lại worker liên tục khi rerun. ... ok
+test_18_database_confirm_dismiss_and_preserve_history (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_18_database_confirm_dismiss_and_preserve_history)
+18. Kiểm tra Xác nhận và Bỏ qua cập nhật đúng SQLite mà không làm mất lịch sử sự kiện. ... ok
+test_19_manual_start_and_stop_monitoring_state_machine (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_19_manual_start_and_stop_monitoring_state_machine)
+19. Kiểm tra V2 Manual Start: khởi động ở STOPPED (0 worker), start_monitoring bật đúng camera được chọn, stop_monitoring trả toàn bộ về STOPPED. ... ok
+test_20_remove_camera_with_confirmation (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_20_remove_camera_with_confirmation)
+20. Kiểm tra thêm và xóa cấu hình camera an toàn trong Quản lý camera. ... ok
+test_21_confirm_event_stops_and_silences_alarm (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_21_confirm_event_stops_and_silences_alarm)
+21. Kiểm tra sau khi xác nhận (hoặc bỏ qua) sự kiện cảnh báo thì âm báo còi hú phải tắt ngay và không tự bật lại. ... ok
+test_22_no_auto_video_and_test_cam_by_file (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_22_no_auto_video_and_test_cam_by_file)
+Kiểm tra: ... Model summary (fused): 73 layers, 3,006,038 parameters, 0 gradients, 8.1 GFLOPs
+[ WARN:0@9.074] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.333] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(MSMF): backend is generally available but can't be used to capture by index
+[ WARN:0@9.335] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.335] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.335] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.449] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.620] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(MSMF): backend is generally available but can't be used to capture by index
+[ WARN:0@9.621] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.621] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@9.621] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+ok
+test_23_disconnect_releases_capture (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_23_disconnect_releases_capture)
+An actual OpenCV capture is closed before disconnect returns. ... ok
+test_24_shutdown_timeout_retains_handles_and_refuses_duplicate (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_24_shutdown_timeout_retains_handles_and_refuses_duplicate)
+A backend that cannot stop must not lose its thread handle or restart. ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 7.471s
+
+OK

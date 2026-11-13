@@ -1,0 +1,241 @@
+{
+  "created_at": "2026-11-13T06:20:41.638575+00:00",
+  "head": "30239cc18f07a963b97461e7191b8d11e2e70cbf",
+  "branch": "fix-4",
+  "state": "UNCOMMITTED_WORKTREE",
+  "engineering": "PARTIAL_CI_LINUX_NOT_VERIFIED",
+  "scientific": "PARTIAL_BLOCKED_HUMAN_REVIEW",
+  "snapshot_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "per_video_reuse_counts": {
+    "REUSE_VERIFIED": 0,
+    "REUSE_WITH_LIMITATIONS": 0,
+    "RERUN_REQUIRED": 0,
+    "BLOCKED_MISSING_INPUT": 16,
+    "UNVERIFIED": 63
+  },
+  "checks": [
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "stderr": "warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/week4_acceptance.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_week4_critical_acceptance.py', LF will be replaced by CRLF the next time Git touches it\n"
+    },
+    {
+      "command": "git diff main...fix-4 --check",
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "command": "git diff --exit-code -- data/ground_truth data/negative_videos_manifest.json runs/benchmarks/week4_critical_fix runs/benchmarks/week4_final_recovery runs/benchmarks/week4_final docs/multicamera_rtsp_benchmark_report.md",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "changed_and_new_files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "81a99f28b6c3d6293d4344d8cac481cb5f27d20873529666031f2bfadcb13ed1",
+      "bytes": 433
+    },
+    {
+      "path": "docs/WEEK4_FIX4_VERIFICATION_REPORT.md",
+      "sha256": "c1283fcf12e3b0d991b2fd7323ddfd43a16b9a8edf83e5b80a85df6bdf416fdd",
+      "bytes": 19151
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/baseline_windows_full.log",
+      "sha256": "254ec2e608948709bcf3d08ec32738cc3d1dae86f2acaa21e5522d0b33a93bef",
+      "bytes": 58508
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/baseline_windows_result.json",
+      "sha256": "120cdb0c98a6b1cc790998b1a38ccb66d678155ff06a9e5aaa493cfc3cb11143",
+      "bytes": 395
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/clean_checkout_windows.json",
+      "sha256": "c3ffa0a9b86afe2196e1547ad8aed651b6e1dacd6328012d76fd43c69df27995",
+      "bytes": 1103
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/fix4_prs.json",
+      "sha256": "32a45b2a0dfc651ccd5a8355d6f4cb56b8a6b1bc10cbd8281506e37622317d19",
+      "bytes": 14
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/fix4_runs.json",
+      "sha256": "8af7ae98b21622f60ebf8ce55fe92e997748828197c931ab3394dc0b11906c6a",
+      "bytes": 21
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/git_ci_verification.json",
+      "sha256": "f32e5cec9daac8a37edb2415c972158bd3956817e11b61dfa58e2d749dbf4b3f",
+      "bytes": 1056
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/historical_preservation.json",
+      "sha256": "a198ffeb25f4a458edec1dc13bb325e07120ea016456947c20203703c95c4bda",
+      "bytes": 465
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/artifact_lineage.json",
+      "sha256": "722a797df28e768ad6e2d1a25b8aa664a2a8bb121fa8ade004477c6a9f041322",
+      "bytes": 14307
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/consistency_report.json",
+      "sha256": "c7def5eb2a120e89e9af8b70dd4dd022c25b14e6faf9d1fbf07cfdfdf45601f2",
+      "bytes": 764
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/far_final.json",
+      "sha256": "04ffdb54e04add46161442ca039089913c7f927efdc12b937921b72ab9544e57",
+      "bytes": 19203
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/far_final_scientific_report.md",
+      "sha256": "aa8c5f0651670d1a887bdc66d01d06e6b994a0b7371fb40582a4f59cf4000971",
+      "bytes": 988
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/far_scope_comparison_final.csv",
+      "sha256": "56e73ea4b35480ab0ed51123178329a78a95a414e9e35e4f55dccb682577ea3c",
+      "bytes": 413
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/gt_positive_review_queue.csv",
+      "sha256": "86d1e20d5a0749cd2677bcfd699b1ffd8aa1fb4e80271bbb45499da12c3412a9",
+      "bytes": 6643
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/inference_reconciliation_final.json",
+      "sha256": "fb7427dadf7fee22cd22b430d41d61d5878de2cd9e2cb7aae001a773a4db2ebe",
+      "bytes": 101456
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/inference_rerun_decision.json",
+      "sha256": "fe3e6578331c6e372aecbcd9ee06f9d8ddb4c6ec9a309c3ac12c2df706058b76",
+      "bytes": 5183
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/inference_reuse_per_video.json",
+      "sha256": "4019b4e6761d5ddea38cd063afe57ef897cd68977641b2b09c1cc63091fd6959",
+      "bytes": 89148
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/negative_ground_truth_master.csv",
+      "sha256": "779433ee6a7702816952fcbe9a57b049ea27550dde276266f443e2bc3d1cd0f7",
+      "bytes": 12190
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/negative_video_review_queue.csv",
+      "sha256": "d3df0c6f7417083392c5e1ed25bc29eae6898c13acac9b30376b170593042051",
+      "bytes": 12704
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/normalized_event_episodes.json",
+      "sha256": "b7467f4f18055977cfa4221fc9f996aae876452d4e848d01523f3e6e7f9e6ecb",
+      "bytes": 317551
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/operating_point_final.json",
+      "sha256": "2ed8505d2a548d7c762bf60955165fda142c351689108eba5e1d00a5f1a9a7a7",
+      "bytes": 1108
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/positive_gt_source_state.json",
+      "sha256": "e35b924b1f92bcc6efef7edcebb105dd9f1a78ce266433539d6a1351a7c1f95c",
+      "bytes": 491
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/recalculated/raw_frame_jsonl_audit.json",
+      "sha256": "0554c8c1e245aa11b2b8cee154ee2c445355243c847f9070325b537149e09f9f",
+      "bytes": 48272
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/reconciliation_execution.json",
+      "sha256": "ecea748a6a01f83ae92bf7b20e9b5efb4c2668d2409feef40f436ba2c601efdc",
+      "bytes": 178
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/reconciliation_execution.log",
+      "sha256": "f6391d3e6dcbf8f67ae71fbe7091034a9944557c940d599a0140f749bcdbff85",
+      "bytes": 482
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/review_regeneration_result.json",
+      "sha256": "15ed0fb110eaeef39ffb10daa79d0847b41345c34b27afb52ad90c4dccda2f7e",
+      "bytes": 515
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/reviewed_commit_diff_check.json",
+      "sha256": "6a34564e9e5cbbc38818a6d2373590cd377aab40d8018d940e53e12ac2461d1a",
+      "bytes": 206
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/reviewed_commit_diff_check.log",
+      "sha256": "a05ff23269fafb8a8c75482e55a4563be24b1802f66c357d13f831df640fdf9c",
+      "bytes": 2455
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/targeted_acceptance.log",
+      "sha256": "9d48e84d29ec5b46424e1fa3bb7aa10751d68e7a19368c1defaac67a46e06295",
+      "bytes": 1702
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/targeted_camera.log",
+      "sha256": "0049e80fd962623a0941af180a6ad8be8b876058deb32d1340c96b16bc98e77c",
+      "bytes": 7740
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/targeted_fix4.log",
+      "sha256": "e6f2d69e9f286be87b439c38659737f4f51141fc9fe95b44c358aa2233b0f9d9",
+      "bytes": 1896
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/targeted_gt.log",
+      "sha256": "af9ab4182bb9a8c64781bc67c5f34dd463367458105d3c14306b99fd8cdfbb43",
+      "bytes": 2131
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/windows_full.log",
+      "sha256": "86966323abdb1c8c3c2f07c7485e09cdd962ce82dad13a4e79c9c9e1b0dc2d4a",
+      "bytes": 60544
+    },
+    {
+      "path": "runs/benchmarks/week4_fix4_verification/windows_test_results.json",
+      "sha256": "c5d78c232518b8841c158c30a43c941ebef62cfc8198a29dda7f6fefd8d3dc4e",
+      "bytes": 2669
+    },
+    {
+      "path": "scripts/run_phases4_to_8_recovery.py",
+      "sha256": "9c8b3338e6f14f173a94c04b742457b53fe637789f573d17f348ce7dacfddc8e",
+      "bytes": 31326
+    },
+    {
+      "path": "src/inference_frame_evidence.py",
+      "sha256": "873868ec51121600860737ad0eaf6ea33ba07ed9ce5e7ce3259a2cac2e3aaf0a",
+      "bytes": 7534
+    },
+    {
+      "path": "src/week4_acceptance.py",
+      "sha256": "8cf9f08d4d52c8b3af4264768fe47f8ea5b0c463cd7710c524d60f0519a8662f",
+      "bytes": 5981
+    },
+    {
+      "path": "tests/test_dynamic_camera_selection.py",
+      "sha256": "03ba1d662a1b7ed2153cba70b881b5c7c328dfd24e27d5c54ab01401d78d5a32",
+      "bytes": 28084
+    },
+    {
+      "path": "tests/test_fix4_evidence_gates.py",
+      "sha256": "abe261bf4c614b4baa1f5ee599b83591f3c0f88b3e9cc606af974ca1915f9e4d",
+      "bytes": 7367
+    },
+    {
+      "path": "tests/test_week4_critical_acceptance.py",
+      "sha256": "8338136d82fb27bf836775633a78b2cd4bcd0c59c3509197736e1fb6ba20f814",
+      "bytes": 7729
+    }
+  ],
+  "inventory_self_hash_excluded": true
+}

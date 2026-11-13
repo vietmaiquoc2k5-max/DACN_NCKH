@@ -1,0 +1,6 @@
+# Frozen v1.1 checksums authenticate CRLF bytes; disable checkout normalization.
+data/ground_truth/events_v1.1_snapshot.jsonl -text whitespace=cr-at-eol
+data/ground_truth/events.jsonl -text whitespace=cr-at-eol
+runs/benchmarks/week4_critical_fix/*_forensic.jsonl -text whitespace=cr-at-eol
+# Preserve the verbatim archived Actions log; its whitespace is evidence.
+runs/benchmarks/week4_critical_fix/github_job_131431501506.log -diff
