@@ -23,6 +23,30 @@ For authenticated RTSP cameras, set a variable such as
 enter credential-bearing URLs in the dashboard. Local video paths must remain
 inside the repository for API registration.
 
+## Telegram alerts
+
+Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in the service environment. The
+Telegram dashboard page never saves a bot token; configure it outside Streamlit
+and restart the service after changing it. The enabled/disabled switch is a
+nonsecret SQLite setting. A blank test form uses the service environment; entered
+test credentials are sent only for that test request and are not saved. Test
+messages use a separate history table and never create fire events.
+Before enabling through the dashboard, run a successful connection test using
+the service environment credentials in the current process. Test authorization
+is held in memory; a test performed with unrelated form credentials cannot
+authorize production alerts.
+
+Use an authenticated administrator API token to unlock the dashboard controls.
+The settings page calls the authenticated `/api/telegram/*` endpoints and submits
+test requests through a background executor. Each connection test is rate-limited
+to one request every 30 seconds and sends an explicitly labeled Telegram message.
+The status indicator reports `READY` only after an event delivery API
+acknowledgment; merely setting a token is not a connection check.
+
+Per-camera Telegram switches control notification delivery only. Confirmed event
+rows and detector behavior remain unchanged when a camera or the global Telegram
+dispatcher has alerts disabled.
+
 ## Docker and MediaMTX simulation
 
 1. Set `FIREWATCH_MODEL_HOST_PATH` in `.env` to an existing local checkpoint path.

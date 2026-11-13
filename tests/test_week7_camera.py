@@ -70,3 +70,21 @@ def test_missing_rtsp_environment_reference_is_reported_without_reassigning_id(t
     assert restored.camera_restore_errors[0]["camera_id"] == "CAM-14"
     assert "CAM-14" not in restored.workers
     restored.telegram_alerts.close()
+
+
+
+
+def test_camera_telegram_preference_persists_without_starting_worker(tmp_path, monkeypatch):
+    database = str(tmp_path / "camera-alert-preference.db")
+    first = MultiCameraManager(db_path=database, auto_assign_videos=False, detector=_detector(monkeypatch))
+    camera_id = first.add_camera("Entry", "0", "WEBCAM", webcam_index=0, auto_start=False)
+    first.set_camera_telegram_enabled(camera_id, False)
+    assert first.workers[camera_id].running is False
+    first.close()
+
+    restored = MultiCameraManager(db_path=database, auto_assign_videos=False, detector=_detector(monkeypatch))
+    try:
+        assert restored.workers[camera_id].config.telegram_enabled is False
+        assert restored.workers[camera_id].running is False
+    finally:
+        restored.close()

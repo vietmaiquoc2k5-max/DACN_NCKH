@@ -13,15 +13,20 @@ Thiết kế theo chuẩn Industrial Command Center (Dark Professional Graphite/
 import base64
 import html
 import os
+import re
+import secrets
 import sys
 import time
+from concurrent.futures import Future, ThreadPoolExecutor
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 
 import cv2
 import numpy as np
 import pandas as pd
+import requests
 import streamlit as st
 
 PROJECT_ROOT = Path(os.path.abspath(__file__)).parent
@@ -109,6 +114,51 @@ def get_firewatch_station() -> MultiCameraManager:
         mgr._fw_api_ready = False
         mgr.add_log(f"Shared camera API unavailable ({type(exc).__name__}); install requirements.txt.")
     return mgr
+
+
+@st.cache_resource
+def get_telegram_api_executor() -> ThreadPoolExecutor:
+    """Provide bounded shared background work for Telegram network actions."""
+    return ThreadPoolExecutor(max_workers=2, thread_name_prefix="firewatch-telegram-ui")
+
+
+def _telegram_api_request(path: str, payload: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Call the local authenticated management API with a fixed timeout."""
+    api_token = os.getenv("FIREWATCH_API_TOKEN", "")
+    if not api_token:
+        raise RuntimeError("FIREWATCH_API_TOKEN is not configured for dashboard administration")
+    base = os.getenv("FIREWATCH_API_INTERNAL_URL", "http://127.0.0.1:8000").rstrip("/")
+    response = requests.post(base + path, json=payload or {},
+                             headers={"Authorization": f"Bearer {api_token}"}, timeout=10)
+    if not response.ok:
+        detail = response.json().get("detail", {}) if response.headers.get("content-type", "").startswith("application/json") else {}
+        if isinstance(detail, dict):
+            raise RuntimeError(f"{detail.get('code', 'API_ERROR')}: {detail.get('message', response.reason)}")
+        raise RuntimeError(f"API_ERROR: {response.reason}")
+    return response.json()
+
+
+def _telegram_summary(manager: MultiCameraManager) -> Dict[str, Any]:
+    dispatcher = manager.telegram_alerts
+    with dispatcher._connect() as conn:
+        pending, failed, last_ack, last_failure = conn.execute("""SELECT
+            SUM(CASE WHEN status IN ('QUEUED','SENDING','RETRY_PENDING') THEN 1 ELSE 0 END),
+            SUM(CASE WHEN status IN ('FAILED','AMBIGUOUS') THEN 1 ELSE 0 END),
+            MAX(telegram_acknowledged_at),
+            MAX(CASE WHEN status IN ('FAILED','AMBIGUOUS') THEN attempt_started_at END)
+            FROM alert_deliveries""").fetchone()
+    configured = bool(dispatcher.token and dispatcher.chat_id)
+    if not configured:
+        state = "NOT CONFIGURED"
+    elif not dispatcher.enabled:
+        state = "DISABLED"
+    elif last_failure and (not last_ack or last_failure > last_ack):
+        state = "ERROR"
+    elif last_ack:
+        state = "READY"
+    else:
+        state = "DEGRADED"
+    return {"state": state, "pending": int(pending or 0), "failed": int(failed or 0), "last_ack": last_ack}
 
 
 cam_system = get_firewatch_station()
@@ -1159,6 +1209,7 @@ with st.sidebar:
         "Lịch sử sự kiện",
         "Quản lý camera và ROI",
         "Cấu hình hệ thống",
+        "Telegram",
     ]
     badge_txt = f" ({unack_count})" if unack_count > 0 else ""
     nav_labels = {
@@ -1168,6 +1219,7 @@ with st.sidebar:
         "Lịch sử sự kiện": "📑  Lịch sử sự kiện",
         "Quản lý camera và ROI": "📷  Quản lý camera",
         "Cấu hình hệ thống": "⚙️  Cấu hình hệ thống",
+        "Telegram": "✉️  Telegram alerts",
     }
 
     picked_nav = st.radio(
@@ -2208,6 +2260,13 @@ def render_live_command_workspace() -> None:
     stopped_cams_count = max(0, total_configured_cams - running_cams_count)
     unack_count = db_summary["unconfirmed"]
 
+    telegram_state = _telegram_summary(cam_system)
+    st.caption(
+        f"Telegram: **{telegram_state['state']}** · {telegram_state['pending']} pending · "
+        f"{telegram_state['failed']} failed/ambiguous · Last API acknowledgment: "
+        f"{telegram_state['last_ack'] or 'none'}"
+    )
+
     ws_left, ws_right = st.columns([2.42, 1.05])
     with ws_left:
         render_left_filter_bar()
@@ -2433,6 +2492,8 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                     final_src = st.text_input("Đường dẫn tệp Video:", value=cfg.source, key=f"ed_vid_{cid}")
 
                 ed_en = st.checkbox("Cho phép kích hoạt camera", value=cfg.enabled, key=f"ed_en_{cid}")
+                ed_telegram = st.checkbox("Send Telegram alerts for this camera", value=cfg.telegram_enabled,
+                                          key=f"ed_telegram_{cid}")
                 ed_fps = st.number_input(
                     "Inference FPS target", min_value=1, max_value=60,
                     value=int(cfg.inference_fps), key=f"ed_fps_{cid}"
@@ -2450,6 +2511,7 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                             source_reference=final_src if ed_type == "IP_CAMERA" else None,
                         )
                         cam_system.update_camera_inference_fps(cid, int(ed_fps))
+                        cam_system.set_camera_telegram_enabled(cid, ed_telegram)
                         st.success(f"Saved {cid}; camera remains disconnected until Connect.")
                         st.rerun()
                     except (ValueError, OSError) as exc:
@@ -2611,3 +2673,132 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
         )
         logs = cam_system.get_recent_logs(limit=20)
         st.text_area("Nhật ký vận hành trạm (Đã ẩn mật khẩu RTSP):", value="\n".join(logs), height=220, disabled=True)
+
+elif st.session_state.nav_page == "Telegram":
+    render_html('<div class="fw-panel-title"><span>Telegram alert delivery</span></div>')
+    st.warning(
+        "Bot tokens are never saved by FireWatch. Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID "
+        "in the service environment for fire/smoke alerts, then restart the service. The test "
+        "form uses temporary credentials in memory and sends a labeled test message."
+    )
+    tg = _telegram_summary(cam_system)
+    t1, t2, t3, t4 = st.columns(4)
+    t1.metric("Status", tg["state"])
+    t2.metric("Pending", tg["pending"])
+    t3.metric("Failed / ambiguous", tg["failed"])
+    t4.metric("Last API acknowledgment", tg["last_ack"] or "None")
+
+    st.markdown("### Administrator access")
+    st.session_state.setdefault("telegram_admin_authorized", False)
+    with st.form("telegram_admin_auth_form"):
+        admin_token = st.text_input("Administrator API token", type="password", key="telegram_admin_token")
+        auth_submit = st.form_submit_button("Unlock Telegram controls")
+    if auth_submit:
+        expected_admin = os.getenv("FIREWATCH_API_TOKEN", "")
+        st.session_state.telegram_admin_authorized = bool(
+            expected_admin and secrets.compare_digest(admin_token, expected_admin)
+        )
+        if st.session_state.telegram_admin_authorized:
+            st.success("Administrator access verified for this browser session.")
+        else:
+            st.session_state.telegram_admin_authorized = False
+            st.error("Administrator token was not accepted.")
+
+    if not st.session_state.telegram_admin_authorized:
+        st.info("Verify the administrator token to test delivery or change the enabled setting.")
+    else:
+        dispatcher = cam_system.telegram_alerts
+        if dispatcher.enabled:
+            if st.button("Disable Telegram event alerts", key="telegram_disable"):
+                st.session_state.telegram_action_future = (
+                    "disable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/disable")
+                )
+        else:
+            if st.button("Enable Telegram event alerts", key="telegram_enable"):
+                st.session_state.telegram_action_future = (
+                    "enable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/enable")
+                )
+        action = st.session_state.get("telegram_action_future")
+        if action:
+            action_name, action_future = action
+            if action_future.done():
+                try:
+                    action_future.result()
+                    st.success(f"Telegram event alerts {action_name}d. Detection and SQLite event logging continue independently.")
+                except Exception as exc:
+                    st.error(f"Telegram setting was not changed: {exc}")
+                del st.session_state.telegram_action_future
+                st.rerun()
+            else:
+                st.info("Updating Telegram setting in the background.")
+                if st.button("Refresh setting status", key="telegram_action_refresh"):
+                    st.rerun()
+
+        st.markdown("### Test connection")
+        with st.form("telegram_test_form"):
+            test_token = st.text_input("Bot Token (blank uses service environment)", type="password")
+            test_chat_id = st.text_input("Chat ID (blank uses service environment)")
+            test_submit = st.form_submit_button("Test Connection")
+        if test_submit:
+            payload = {key: value for key, value in {
+                "token": test_token.strip(), "chat_id": test_chat_id.strip()
+            }.items() if value}
+            st.session_state.telegram_test_future = get_telegram_api_executor().submit(
+                _telegram_api_request, "/api/telegram/test", payload
+            )
+        test_future: Optional[Future] = st.session_state.get("telegram_test_future")
+        if test_future is not None:
+            if test_future.done():
+                try:
+                    result = test_future.result()
+                    st.success(f"{result['message']} Acknowledged at {result['acknowledged_at']}.")
+                except Exception as exc:
+                    st.error(f"Test message failed: {exc}")
+                del st.session_state.telegram_test_future
+                st.rerun()
+            else:
+                st.info("Test message is running in the background.")
+                if st.button("Refresh test result", key="telegram_test_refresh"):
+                    st.rerun()
+
+    st.markdown("### Event delivery history")
+    status_filter = st.selectbox(
+        "Filter by delivery status",
+        ["All", "QUEUED", "SENDING", "RETRY_PENDING", "DELIVERED", "FAILED", "AMBIGUOUS"],
+        key="telegram_delivery_filter",
+    )
+    delivery_sql = """SELECT d.event_id,e.camera_name,e.label,d.event_confirmed_at,d.queued_at,
+        d.attempt_started_at,d.telegram_acknowledged_at,d.status,d.attempt_count,d.error_category,d.error_message
+        FROM alert_deliveries d JOIN alert_logs e ON e.id=d.event_id"""
+    delivery_args: Tuple[Any, ...] = ()
+    if status_filter != "All":
+        delivery_sql += " WHERE d.status=?"
+        delivery_args = (status_filter,)
+    delivery_sql += " ORDER BY d.queued_at DESC LIMIT 250"
+    with cam_system.telegram_alerts._connect() as conn:
+        delivery_rows = conn.execute(delivery_sql, delivery_args).fetchall()
+    history = []
+    for row in delivery_rows:
+        try:
+            latency = (datetime.fromisoformat(row[6]) - datetime.fromisoformat(row[3])).total_seconds() * 1000 if row[6] and row[3] else None
+        except (TypeError, ValueError):
+            latency = None
+        history.append(dict(zip(("Event ID", "Camera", "Event Type", "Confirmed At", "Queued At",
+                                 "Attempt Started At", "Acknowledged At", "Delivery Status",
+                                 "Attempt Count", "Error Category", "Error Message"), row))
+                       | {"Latency ms": round(latency, 3) if latency is not None else None})
+    if history:
+        st.dataframe(pd.DataFrame(history), use_container_width=True, hide_index=True)
+    else:
+        st.info("No Telegram event deliveries have been recorded yet.")
+    if any(item["Delivery Status"] == "AMBIGUOUS" for item in history):
+        st.warning("AMBIGUOUS means Telegram may have accepted a message but its response was lost. Retrying may create a duplicate.")
+
+    with cam_system.telegram_alerts._connect() as conn:
+        test_rows = conn.execute(
+            "SELECT requested_at,status,acknowledged_at,error_category FROM telegram_test_deliveries ORDER BY test_id DESC LIMIT 10"
+        ).fetchall()
+    if test_rows:
+        st.markdown("### Test message history (excluded from fire events)")
+        st.dataframe(pd.DataFrame(test_rows, columns=["Requested At", "Status", "Acknowledged At", "Error Category"]),
+                     use_container_width=True, hide_index=True)

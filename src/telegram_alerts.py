@@ -8,6 +8,7 @@ import sqlite3
 import threading
 import time
 import uuid
+from urllib.parse import urlencode
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -17,6 +18,80 @@ import cv2
 import numpy as np
 
 LOGGER = logging.getLogger(__name__)
+
+
+class TelegramTestError(RuntimeError):
+    """Sanitized test-message error with a stable operator-facing category."""
+
+    def __init__(self, category: str, message: str, ambiguous: bool = False):
+        super().__init__(message)
+        self.category = category
+        self.ambiguous = ambiguous
+
+
+def send_test_message(token: str, chat_id: str, timeout: float = 8.0) -> str:
+    """Verify bot identity and send a labeled non-event test message.
+
+    Credentials are accepted only for this call and are never persisted or logged.
+    Returns the UTC timestamp of Telegram's successful API acknowledgment.
+    """
+    safe_token = str(token or "").strip()
+    safe_chat_id = str(chat_id or "").strip()
+    if not safe_token:
+        raise TelegramTestError("MISSING_TOKEN", "Bot token is not configured")
+    if not safe_chat_id:
+        raise TelegramTestError("MISSING_CHAT_ID", "Chat ID is not configured")
+    try:
+        with urlopen(f"https://api.telegram.org/bot{safe_token}/getMe", timeout=timeout) as response:
+            bot_payload = json.loads(response.read().decode("utf-8"))
+        if not isinstance(bot_payload, dict) or bot_payload.get("ok") is not True:
+            raise TelegramTestError("INVALID_TOKEN", "Telegram could not authenticate this bot token")
+    except HTTPError as exc:
+        category = "INVALID_TOKEN" if exc.code in (401, 403) else "TELEGRAM_HTTP_ERROR"
+        raise TelegramTestError(category, f"Telegram getMe returned HTTP {exc.code}") from None
+    except (TimeoutError, URLError, OSError) as exc:
+        raise TelegramTestError("NETWORK_TIMEOUT" if "timeout" in type(exc).__name__.lower() else "NETWORK_ERROR",
+                                "Telegram API request failed; check network access and timeout") from None
+    except TelegramTestError:
+        raise
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        raise TelegramTestError("INVALID_RESPONSE", "Telegram returned an unreadable response") from None
+    except Exception:
+        raise TelegramTestError("NETWORK_ERROR", "Telegram API request failed; check network access and timeout") from None
+
+    timestamp = datetime.now(timezone.utc)
+    message = (
+        "FIREWATCH — CONNECTION TEST\n\n"
+        "This Telegram bot acknowledged a FireWatch test message.\n\n"
+        "Type: TEST MESSAGE\n"
+        "Source: FireWatch Dashboard\n"
+        f"Time: {timestamp.isoformat(timespec='seconds')}\n\n"
+        "This is not a real fire alarm."
+    )
+    body = urlencode({"chat_id": safe_chat_id, "text": message}).encode("utf-8")
+    request = Request(f"https://api.telegram.org/bot{safe_token}/sendMessage", data=body,
+                      headers={"Content-Type": "application/x-www-form-urlencoded"}, method="POST")
+    try:
+        with urlopen(request, timeout=timeout) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        result = payload.get("result") if isinstance(payload, dict) else None
+        if not isinstance(payload, dict) or payload.get("ok") is not True or not isinstance(result, dict) or not isinstance(result.get("message_id"), int):
+            raise TelegramTestError("DESTINATION_REJECTED", "Bot is valid, but Telegram did not acknowledge the destination")
+    except HTTPError as exc:
+        category = "DESTINATION_REJECTED" if exc.code in (400, 403) else "TELEGRAM_HTTP_ERROR"
+        raise TelegramTestError(category, f"Telegram sendMessage returned HTTP {exc.code}") from None
+    except (TimeoutError, URLError, OSError) as exc:
+        raise TelegramTestError("NETWORK_TIMEOUT" if "timeout" in type(exc).__name__.lower() else "NETWORK_ERROR",
+                                "Telegram message outcome is unknown; check the destination before retrying",
+                                ambiguous=True) from None
+    except TelegramTestError:
+        raise
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        raise TelegramTestError("INVALID_RESPONSE", "Telegram returned an unreadable response") from None
+    except Exception:
+        raise TelegramTestError("NETWORK_ERROR", "Telegram message outcome is unknown; check the destination before retrying",
+                                ambiguous=True) from None
+    return utc_now()
 
 
 def utc_now() -> str:
@@ -42,15 +117,17 @@ class TelegramAlertDispatcher:
         self.max_pending = max(1, int(os.getenv("TELEGRAM_QUEUE_MAX", "256")))
         self.retry_ambiguous = os.getenv("TELEGRAM_RETRY_AMBIGUOUS", "false").lower() in ("1", "true", "yes", "on")
         self.poll_sec = max(0.05, float(os.getenv("TELEGRAM_QUEUE_POLL_SEC", "0.5")))
+        # A successful test of the currently loaded service credentials is
+        # process-local so old test rows cannot authorize a later credential set.
+        self.service_credentials_tested = False
         self.stop_event = threading.Event()
         self.wakeup = threading.Event()
+        self.thread_lock = threading.Lock()
         self.accepting = True
-        self._initialize()
         self.thread: threading.Thread | None = None
+        self._initialize()
         if self.configured:
-            self.thread = threading.Thread(target=self._run, name="telegram-alerts", daemon=True)
-            self.thread.start()
-            self.wakeup.set()
+            self._start_worker()
 
     @property
     def configured(self) -> bool:
@@ -83,6 +160,30 @@ class TelegramAlertDispatcher:
                 error_category TEXT,
                 error_message TEXT,
                 UNIQUE(event_id, channel))""")
+            conn.execute("""CREATE TABLE IF NOT EXISTS telegram_settings (
+                setting_id INTEGER PRIMARY KEY CHECK(setting_id=1),
+                enabled INTEGER NOT NULL,
+                updated_at TEXT NOT NULL)""")
+            conn.execute("""CREATE TABLE IF NOT EXISTS telegram_test_deliveries (
+                test_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                requested_at TEXT NOT NULL,
+                acknowledged_at TEXT,
+                status TEXT NOT NULL,
+                error_category TEXT,
+                used_service_credentials INTEGER NOT NULL DEFAULT 0)""")
+            test_columns = {row[1] for row in conn.execute("PRAGMA table_info(telegram_test_deliveries)")}
+            if "used_service_credentials" not in test_columns:
+                conn.execute("ALTER TABLE telegram_test_deliveries ADD COLUMN used_service_credentials INTEGER NOT NULL DEFAULT 0")
+            # Do not turn an initial environment-default false into a durable
+            # operator override. The first explicit UI action creates the row.
+            if self.enabled:
+                conn.execute("INSERT OR IGNORE INTO telegram_settings(setting_id,enabled,updated_at) VALUES(1,1,?)",
+                             (utc_now(),))
+            persisted_enabled = conn.execute(
+                "SELECT enabled FROM telegram_settings WHERE setting_id=1"
+            ).fetchone()
+            if persisted_enabled is not None:
+                self.enabled = bool(persisted_enabled[0])
             columns = {row[1] for row in conn.execute("PRAGMA table_info(alert_deliveries)")}
             additions = {
                 "event_confirmed_at": "TEXT",
@@ -98,6 +199,35 @@ class TelegramAlertDispatcher:
                     conn.execute(f"ALTER TABLE alert_deliveries ADD COLUMN {column} {sql_type}")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_alert_delivery_pending ON alert_deliveries(status,next_attempt_at,queued_at)")
             self._recover_interrupted(conn)
+
+    def _start_worker(self) -> None:
+        """Start the single delivery worker if it is not already running."""
+        with self.thread_lock:
+            if not self.accepting:
+                raise RuntimeError("Telegram dispatcher is shutting down")
+            if self.thread is None or not self.thread.is_alive():
+                self.thread = threading.Thread(target=self._run, name="telegram-alerts", daemon=True)
+                self.thread.start()
+            self.wakeup.set()
+
+    def set_enabled(self, enabled: bool) -> None:
+        """Persist the nonsecret enabled setting and update the one dispatcher."""
+        enabled = bool(enabled)
+        if enabled and not (self.token and self.chat_id):
+            raise ValueError("Configure TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in the service environment first")
+        if enabled and not self.service_credentials_tested:
+            raise ValueError("Run Test Connection using the service environment credentials before enabling alerts")
+        if not self.accepting:
+            raise RuntimeError("Telegram dispatcher is shutting down")
+        with self._connect() as conn:
+            conn.execute("""INSERT INTO telegram_settings(setting_id,enabled,updated_at) VALUES(1,?,?)
+                ON CONFLICT(setting_id) DO UPDATE SET enabled=excluded.enabled,updated_at=excluded.updated_at""",
+                         (int(enabled), utc_now()))
+        self.enabled = enabled
+        if enabled:
+            self._start_worker()
+        else:
+            self.wakeup.set()
 
     def _recover_interrupted(self, conn: sqlite3.Connection) -> None:
         """Recover queued rows; mark interrupted network attempts as ambiguous."""
@@ -226,8 +356,10 @@ class TelegramAlertDispatcher:
             delivery_id, payload, attempts = claim
             try:
                 self._deliver(delivery_id, payload, attempts)
-            except Exception:
-                LOGGER.exception("Unhandled Telegram worker error for delivery %s", delivery_id)
+            except Exception as exc:
+                # Exception strings and tracebacks can contain the bot token URL.
+                LOGGER.error("Unhandled Telegram worker error for delivery %s (%s)",
+                             delivery_id, type(exc).__name__)
                 self._update(delivery_id, "FAILED", error_category="WORKER_ERROR",
                              error_message="Unhandled delivery worker error")
 

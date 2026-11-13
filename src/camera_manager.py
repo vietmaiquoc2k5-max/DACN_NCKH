@@ -730,7 +730,7 @@ class CameraStreamWorker:
                     is_demo=0,
                     event_confirmed_at=utc_now(),
                 )
-                if self.telegram_alerts is not None:
+                if self.telegram_alerts is not None and self.config.telegram_enabled:
                     saved_event["camera_display_name"] = self.config.name
                     self.telegram_alerts.enqueue(saved_event)
                 if not self.settings.mute_audio and self.config.cam_id not in self.event_db.alert_manager.acknowledged_cameras:
@@ -974,6 +974,7 @@ class CameraStreamWorker:
                 "masked_source": self.config.masked_source,
                 "webcam_index": self.config.webcam_index,
                 "enabled": self.config.enabled,
+                "telegram_enabled": self.config.telegram_enabled,
                 "inference_target_fps": self.config.inference_fps,
                 "auto_reconnect": self.config.auto_reconnect,
                 "status": self.status,  # "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
@@ -1098,6 +1099,7 @@ class MultiCameraManager:
                 source TEXT NOT NULL, webcam_index INTEGER NOT NULL DEFAULT 0,
                 enabled INTEGER NOT NULL DEFAULT 1, auto_reconnect INTEGER NOT NULL DEFAULT 1,
                 inference_fps INTEGER NOT NULL DEFAULT 8, exclusion_zones TEXT NOT NULL DEFAULT '[]',
+                telegram_enabled INTEGER NOT NULL DEFAULT 1,
                 created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)""")
 
@@ -1131,11 +1133,14 @@ class MultiCameraManager:
     def _restore_camera_configs(self) -> None:
         """Restore persisted camera settings while leaving all capture workers stopped."""
         with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+            columns = {row[1] for row in conn.execute("PRAGMA table_info(cameras)")}
+            if "telegram_enabled" not in columns:
+                conn.execute("ALTER TABLE cameras ADD COLUMN telegram_enabled INTEGER NOT NULL DEFAULT 1")
             rows = conn.execute("""SELECT camera_id,name,source_type,source,webcam_index,enabled,
-                auto_reconnect,inference_fps,exclusion_zones FROM cameras ORDER BY camera_id""").fetchall()
+                auto_reconnect,inference_fps,exclusion_zones,telegram_enabled FROM cameras ORDER BY camera_id""").fetchall()
         by_id = {cfg.cam_id: cfg for cfg in self.camera_configs}
         for row in rows:
-            camera_id, name, source_type, source_ref, device, enabled, reconnect, fps, zones_json = row
+            camera_id, name, source_type, source_ref, device, enabled, reconnect, fps, zones_json, telegram_enabled = row
             try:
                 if not re.fullmatch(r"CAM-\d{2,}", str(camera_id)):
                     raise ValueError("Invalid camera id; expected CAM- followed by at least two digits")
@@ -1147,7 +1152,8 @@ class MultiCameraManager:
                 if cfg is None:
                     cfg = CameraConfig(cam_id=camera_id, name=name, source=resolved, source_reference=source_ref,
                                        source_type=source_type, webcam_index=int(device), enabled=bool(enabled),
-                                       inference_fps=int(fps), exclusion_zones=[tuple(z) for z in zones])
+                                       inference_fps=int(fps), exclusion_zones=[tuple(z) for z in zones],
+                                       telegram_enabled=bool(telegram_enabled))
                     self.camera_configs.append(cfg)
                     by_id[camera_id] = cfg
                 else:
@@ -1160,6 +1166,7 @@ class MultiCameraManager:
                     cfg.auto_reconnect = bool(reconnect)
                     cfg.inference_fps = max(1, min(60, int(fps)))
                     cfg.exclusion_zones = [tuple(z) for z in zones]
+                    cfg.telegram_enabled = bool(telegram_enabled)
             except Exception as exc:
                 safe_error = mask_rtsp_credentials(str(exc))
                 self.camera_restore_errors.append({"camera_id": str(camera_id), "error": safe_error})
@@ -1177,14 +1184,16 @@ class MultiCameraManager:
             with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
                 conn.execute("PRAGMA busy_timeout=10000")
                 conn.execute("""INSERT INTO cameras(camera_id,name,source_type,source,webcam_index,enabled,
-                    auto_reconnect,inference_fps,exclusion_zones,updated_at)
-                    VALUES(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
+                    auto_reconnect,inference_fps,exclusion_zones,telegram_enabled,updated_at)
+                    VALUES(?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
                     ON CONFLICT(camera_id) DO UPDATE SET name=excluded.name,source_type=excluded.source_type,
                     source=excluded.source,webcam_index=excluded.webcam_index,enabled=excluded.enabled,
                     auto_reconnect=excluded.auto_reconnect,inference_fps=excluded.inference_fps,
-                    exclusion_zones=excluded.exclusion_zones,updated_at=CURRENT_TIMESTAMP""",
+                    exclusion_zones=excluded.exclusion_zones,telegram_enabled=excluded.telegram_enabled,
+                    updated_at=CURRENT_TIMESTAMP""",
                     (cfg.cam_id,cfg.name,cfg.source_type,source_ref,cfg.webcam_index,int(cfg.enabled),
-                     int(cfg.auto_reconnect),cfg.inference_fps,json.dumps(cfg.exclusion_zones)))
+                     int(cfg.auto_reconnect),cfg.inference_fps,json.dumps(cfg.exclusion_zones),
+                     int(cfg.telegram_enabled)))
             return True
         except sqlite3.Error as exc:
             self.add_log(f"Camera configuration {cfg.cam_id} could not be persisted ({type(exc).__name__}).")
@@ -1223,6 +1232,14 @@ class MultiCameraManager:
                 w.stop()
             self._persist_camera_config(w.config)
             self.add_log(f"Đã chuyển trạng thái kích hoạt {cam_id} -> {'BẬT' if enabled else 'TẮT'}.")
+
+    def set_camera_telegram_enabled(self, cam_id: str, enabled: bool) -> None:
+        """Set the per-camera notification policy without changing detection."""
+        if cam_id not in self.workers:
+            raise ValueError(f"Unknown camera id: {cam_id}")
+        config = self.workers[cam_id].config
+        config.telegram_enabled = bool(enabled)
+        self._persist_camera_config(config)
 
     def update_camera_inference_fps(self, cam_id: str, inference_fps: int) -> None:
         """Persist the per-camera inference scheduling cap."""
@@ -1464,6 +1481,7 @@ class MultiCameraManager:
         inference_fps: int = 24,
         camera_id: Optional[str] = None,
         source_reference: Optional[str] = None,
+        telegram_enabled: bool = True,
     ) -> str:
         """Thêm một camera mới vào hệ thống và khởi tạo CameraStreamWorker độc lập."""
         if camera_id is not None:
@@ -1486,6 +1504,7 @@ class MultiCameraManager:
             name=name.strip() or cam_id,
             source=src_str,
             source_reference=str(webcam_index) if s_type == "WEBCAM" else safe_reference,
+            telegram_enabled=bool(telegram_enabled),
             source_type=s_type,
             webcam_index=int(webcam_index) if s_type == "WEBCAM" else 0,
             enabled=bool(enabled),

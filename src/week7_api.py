@@ -15,16 +15,18 @@ import json
 import threading
 import atexit
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 from urllib.parse import urlsplit
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Query, Request, WebSocket, WebSocketDisconnect
+from fastapi import Body, Depends, FastAPI, Header, HTTPException, Query, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from src.camera_manager import MultiCameraManager
 from src.config import PROJECT_ROOT, mask_rtsp_credentials
+from src.telegram_alerts import TelegramTestError, send_test_message
 
 
 class CameraInput(BaseModel):
@@ -35,11 +37,19 @@ class CameraInput(BaseModel):
     enabled: bool = True
     auto_reconnect: bool = True
     inference_fps: int = Field(default=8, ge=1, le=60)
+    telegram_enabled: bool = True
     exclusion_zones: list[tuple[float, float, float, float]] = Field(default_factory=list, max_length=64)
 
 
 class DismissInput(BaseModel):
     reason: str = Field(min_length=3, max_length=500)
+
+
+class TelegramTestInput(BaseModel):
+    # Length checks happen in the handler so Pydantic's validation response
+    # cannot echo a rejected secret back to the caller.
+    token: Optional[str] = None
+    chat_id: Optional[str] = None
 
 
 def _manager(request: Request) -> MultiCameraManager:
@@ -117,15 +127,16 @@ def _initialize_camera_config(db_path: str):
 def _save_camera_config(manager: MultiCameraManager, camera_id: str, input_data: CameraInput):
     with manager.telegram_alerts._connect() as conn:
         conn.execute("""INSERT INTO cameras(camera_id,name,source_type,source,webcam_index,enabled,
-            auto_reconnect,inference_fps,exclusion_zones,updated_at)
-            VALUES(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
+            auto_reconnect,inference_fps,exclusion_zones,telegram_enabled,updated_at)
+            VALUES(?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
             ON CONFLICT(camera_id) DO UPDATE SET name=excluded.name,source_type=excluded.source_type,
             source=excluded.source,webcam_index=excluded.webcam_index,enabled=excluded.enabled,
             auto_reconnect=excluded.auto_reconnect,inference_fps=excluded.inference_fps,
-            exclusion_zones=excluded.exclusion_zones,updated_at=CURRENT_TIMESTAMP""",
+            exclusion_zones=excluded.exclusion_zones,telegram_enabled=excluded.telegram_enabled,
+            updated_at=CURRENT_TIMESTAMP""",
             (camera_id, input_data.name, input_data.source_type, input_data.source,
              input_data.webcam_index, int(input_data.enabled), int(input_data.auto_reconnect),
-             input_data.inference_fps, json.dumps(input_data.exclusion_zones)))
+             input_data.inference_fps, json.dumps(input_data.exclusion_zones), int(input_data.telegram_enabled)))
 
 
 def _restore_camera_configs(manager: MultiCameraManager):
@@ -184,6 +195,8 @@ async def _lifespan(application: FastAPI):
 app = FastAPI(title="Firewatch Week 7 API", version="1.0.0", lifespan=_lifespan)
 app.state.ws_tickets = {}
 app.state.ws_ticket_lock = threading.Lock()
+_telegram_test_lock = threading.Lock()
+_telegram_last_test_at = 0.0
 
 
 def start_embedded_api(manager: MultiCameraManager, host: str = "0.0.0.0", port: int | None = None):
@@ -284,6 +297,7 @@ def add_camera(payload: CameraInput, manager: MultiCameraManager = Depends(_mana
         auto_reconnect=payload.auto_reconnect, exclusion_zones=payload.exclusion_zones,
         auto_start=False, inference_fps=payload.inference_fps,
         source_reference=payload.source,
+        telegram_enabled=payload.telegram_enabled,
     )
     _save_camera_config(manager, cam_id, payload)
     return {"camera_id": cam_id, "status": "DISCONNECTED", "source": mask_rtsp_credentials(source)}
@@ -299,6 +313,7 @@ def edit_camera(camera_id: str, payload: CameraInput, manager: MultiCameraManage
                                  auto_restart=False, source_reference=payload.source)
     manager.update_camera_roi(camera_id, payload.exclusion_zones)
     manager.workers[camera_id].config.inference_fps = payload.inference_fps
+    manager.set_camera_telegram_enabled(camera_id, payload.telegram_enabled)
     _save_camera_config(manager, camera_id, payload)
     return _public_camera(manager.workers[camera_id].get_snapshot())
 
@@ -427,13 +442,147 @@ def performance(manager: MultiCameraManager = Depends(_manager), _: None = Depen
     return result
 
 
+@app.get("/api/telegram/status")
+def telegram_status(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    dispatcher = manager.telegram_alerts
+    with dispatcher._connect() as conn:
+        row = conn.execute("""SELECT
+            SUM(CASE WHEN status IN ('QUEUED','SENDING','RETRY_PENDING') THEN 1 ELSE 0 END),
+            SUM(CASE WHEN status IN ('FAILED','AMBIGUOUS') THEN 1 ELSE 0 END),
+            MAX(telegram_acknowledged_at),
+            MAX(CASE WHEN status IN ('FAILED','AMBIGUOUS') THEN attempt_started_at END)
+            FROM alert_deliveries""").fetchone()
+    configured = bool(dispatcher.token and dispatcher.chat_id)
+    enabled = bool(dispatcher.enabled)
+    latest_ack = row[2]
+    if not configured:
+        state = "NOT CONFIGURED"
+    elif not enabled:
+        state = "DISABLED"
+    elif row[3] and (not latest_ack or row[3] > latest_ack):
+        state = "ERROR"
+    elif latest_ack:
+        state = "READY"
+    else:
+        state = "DEGRADED"
+    return {"state": state, "enabled": enabled, "credentials_configured": configured,
+            "worker_running": bool(dispatcher.thread and dispatcher.thread.is_alive()),
+            "pending_count": int(row[0] or 0), "failed_count": int(row[1] or 0),
+            "last_api_acknowledged_at": latest_ack}
+
+
+@app.post("/api/telegram/test")
+def telegram_test(payload: Any = Body(default=None), manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    global _telegram_last_test_at
+    if isinstance(payload, TelegramTestInput):
+        payload = payload.model_dump() if hasattr(payload, "model_dump") else payload.dict()
+    if payload is None:
+        payload = {}
+    if not isinstance(payload, dict):
+        raise HTTPException(422, detail={"code": "INVALID_TEST_REQUEST", "message": "Test credentials must be provided as text fields"})
+    raw_token, raw_chat_id = payload.get("token"), payload.get("chat_id")
+    if raw_token is not None and not isinstance(raw_token, str):
+        raise HTTPException(422, detail={"code": "INVALID_TOKEN_FORMAT", "message": "Bot token format is invalid"})
+    if raw_chat_id is not None and not isinstance(raw_chat_id, str):
+        raise HTTPException(422, detail={"code": "INVALID_CHAT_ID", "message": "Chat ID must be a numeric ID or a public @channel username"})
+    token = (raw_token or manager.telegram_alerts.token).strip()
+    chat_id = (raw_chat_id or manager.telegram_alerts.chat_id).strip()
+    if not token:
+        raise HTTPException(422, detail={"code": "MISSING_TOKEN", "message": "Set the bot token in the password field or service environment"})
+    if len(token) > 256 or not re.fullmatch(r"[0-9]{5,}:[A-Za-z0-9_-]{20,}", token):
+        raise HTTPException(422, detail={"code": "INVALID_TOKEN_FORMAT", "message": "Bot token format is invalid"})
+    if not chat_id:
+        raise HTTPException(422, detail={"code": "MISSING_CHAT_ID", "message": "Set the Chat ID in the form or service environment"})
+    if len(chat_id) > 128 or not re.fullmatch(r"-?[0-9]{1,24}|@[A-Za-z0-9_]{5,32}", chat_id):
+        raise HTTPException(422, detail={"code": "INVALID_CHAT_ID", "message": "Chat ID must be a numeric ID or a public @channel username"})
+    now = time.monotonic()
+    global_lock = _telegram_test_lock
+    with global_lock:
+        if now - _telegram_last_test_at < 30.0:
+            retry_after = max(1, int(30.0 - (now - _telegram_last_test_at)))
+            raise HTTPException(429, detail={"code": "TEST_RATE_LIMITED", "retry_after_seconds": retry_after,
+                                             "message": "Wait before sending another test message"})
+        _telegram_last_test_at = now
+    requested_at = datetime.now(timezone.utc).isoformat(timespec="microseconds")
+    used_service_credentials = int(
+        token == manager.telegram_alerts.token and chat_id == manager.telegram_alerts.chat_id
+    )
+    with manager.telegram_alerts._connect() as conn:
+        cursor = conn.execute("INSERT INTO telegram_test_deliveries(requested_at,status,used_service_credentials) VALUES(?, 'SENDING', ?)",
+                              (requested_at, used_service_credentials))
+        test_id = cursor.lastrowid
+    try:
+        ack_at = send_test_message(token, chat_id, timeout=manager.telegram_alerts.timeout)
+    except TelegramTestError as exc:
+        with manager.telegram_alerts._connect() as conn:
+            conn.execute("UPDATE telegram_test_deliveries SET status=?,error_category=? WHERE test_id=?",
+                         ("AMBIGUOUS" if exc.ambiguous else "FAILED", exc.category, test_id))
+        raise HTTPException(502, detail={"code": exc.category, "message": str(exc), "test_id": test_id}) from None
+    with manager.telegram_alerts._connect() as conn:
+        conn.execute("UPDATE telegram_test_deliveries SET status='DELIVERED',acknowledged_at=? WHERE test_id=?",
+                     (ack_at, test_id))
+    if used_service_credentials:
+        manager.telegram_alerts.service_credentials_tested = True
+    return {"test_id": test_id, "status": "DELIVERED", "acknowledged_at": ack_at,
+            "message": "Telegram acknowledged the labeled test message; it is not a fire event."}
+
+
+@app.post("/api/telegram/enable")
+def telegram_enable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    try:
+        manager.telegram_alerts.set_enabled(True)
+    except ValueError as exc:
+        raise HTTPException(409, detail={"code": "CREDENTIALS_NOT_CONFIGURED", "message": str(exc)}) from None
+    except RuntimeError as exc:
+        raise HTTPException(503, detail={"code": "DISPATCHER_UNAVAILABLE", "message": str(exc)}) from None
+    return {"enabled": True, "credentials_configured": bool(manager.telegram_alerts.token and manager.telegram_alerts.chat_id)}
+
+
+@app.post("/api/telegram/disable")
+def telegram_disable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    manager.telegram_alerts.set_enabled(False)
+    return {"enabled": False}
+
+
+@app.get("/api/telegram/deliveries")
+def telegram_deliveries(limit: int = Query(100, ge=1, le=1000), status: str = "",
+                        manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    states = {"QUEUED", "SENDING", "RETRY_PENDING", "DELIVERED", "FAILED", "AMBIGUOUS"}
+    normalized = status.upper().strip()
+    if normalized and normalized not in states:
+        raise HTTPException(422, detail={"code": "INVALID_STATUS", "message": "Unsupported Telegram delivery status"})
+    query = """SELECT d.event_id,e.camera_name,e.label,d.event_confirmed_at,d.queued_at,
+        d.attempt_started_at,d.telegram_acknowledged_at,d.status,d.attempt_count,d.error_category,d.error_message
+        FROM alert_deliveries d JOIN alert_logs e ON e.id=d.event_id"""
+    params: list[Any] = []
+    if normalized:
+        query += " WHERE d.status=?"
+        params.append(normalized)
+    query += " ORDER BY d.queued_at DESC LIMIT ?"
+    params.append(limit)
+    with manager.telegram_alerts._connect() as conn:
+        rows = conn.execute(query, params).fetchall()
+    columns = ("event_id", "camera", "event_type", "event_confirmed_at", "queued_at",
+               "attempt_started_at", "acknowledged_at", "status", "attempt_count",
+               "error_category", "error_message")
+    result = []
+    for row in rows:
+        item = dict(zip(columns, row))
+        try:
+            confirmed = datetime.fromisoformat(item["event_confirmed_at"])
+            acknowledged = datetime.fromisoformat(item["acknowledged_at"]) if item["acknowledged_at"] else None
+            item["latency_ms"] = round((acknowledged - confirmed).total_seconds() * 1000, 3) if acknowledged else None
+        except (TypeError, ValueError):
+            item["latency_ms"] = None
+        result.append(item)
+    return result
+
+
 @app.get("/api/alerts/status")
 def alert_status(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
-    token = os.getenv("TELEGRAM_BOT_TOKEN", "")
-    chat = os.getenv("TELEGRAM_CHAT_ID", "")
-    enabled = os.getenv("ALERTS_ENABLED", "false").lower() in ("1", "true", "yes", "on")
-    return {"telegram_configured": bool(token and chat), "enabled": enabled,
-            "delivery": "active" if manager.telegram_alerts.configured else "disabled"}
+    status = telegram_status(manager)
+    return {"telegram_configured": status["credentials_configured"], "enabled": status["enabled"],
+            "delivery": "active" if manager.telegram_alerts.configured else "disabled", **status}
 
 
 @app.get("/api/alerts/deliveries")
