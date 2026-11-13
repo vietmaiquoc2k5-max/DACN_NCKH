@@ -1,0 +1,26 @@
+[
+  {
+    "name": "targeted",
+    "command": "python -m pytest -q tests/test_scientific_inference.py tests/test_bytetrack_adapter.py tests/test_temporal_verifier_bytetrack.py tests/test_temporal_features.py tests/test_week4_event_eval.py tests/test_poisson_ci.py tests/test_fix4_evidence_gates.py",
+    "exit_code": 0,
+    "count": null,
+    "seconds": 8.468999999997322,
+    "summary": [
+      "61 passed, 10 subtests passed in 6.13s"
+    ],
+    "log": ".tools/week4_experiment_97397091/targeted_tests.log"
+  },
+  {
+    "name": "full",
+    "command": "python -m unittest discover -s tests -p test_*.py -v",
+    "exit_code": 0,
+    "count": 292,
+    "seconds": 190.07800000000134,
+    "summary": [
+      "test_bound_timestamp_corruption_or_count_mismatch_is_failed_check (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_timestamp_corruption_or_count_mismatch_is_failed_check) ... ok",
+      "Ran 292 tests in 182.779s",
+      "OK"
+    ],
+    "log": ".tools/week4_experiment_97397091/full_tests.log"
+  }
+]

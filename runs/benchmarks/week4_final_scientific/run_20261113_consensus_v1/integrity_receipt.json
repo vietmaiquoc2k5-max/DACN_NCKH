@@ -1,0 +1,8 @@
+{
+  "complete": true,
+  "videos": 71,
+  "processed_frames": 107805,
+  "source_before_after_verified": true,
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "scope_sha256": "7737b7d5a47a2c3f9ed0b7aa1e05e5f478a168edeb0c2cbd7d8758d851a827ee"
+}

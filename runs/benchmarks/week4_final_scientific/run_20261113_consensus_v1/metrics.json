@@ -1,0 +1,80 @@
+{
+  "scope": "EXPLORATORY_HOLDOUT_NOT_INDEPENDENT_TEST",
+  "official_acceptance": false,
+  "pipelines": {
+    "A": {
+      "counts": {
+        "ground_truth_events": 14,
+        "predicted_events": 385,
+        "matched_events": 13,
+        "timely_detections": 13,
+        "late_detections": 5,
+        "early_alerts": 0,
+        "unmatched_gt_events": 1,
+        "unmatched_predicted_events": 372,
+        "positive_unmatched_alerts": 10,
+        "unmatched_positive_predictions": 10,
+        "recalled_positive_videos": 12,
+        "verified_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 23,
+        "negative_false_alarms": 362
+      },
+      "metrics": {
+        "video_event_recall": 1.0,
+        "split_video_event_recall": 1.0,
+        "event_instance_recall": 0.9285714285714286,
+        "event_precision": 0.033766233766233764,
+        "event_f1": 0.06516290726817041,
+        "false_alarms_per_hour": 69.27874554720013,
+        "far_status": "VERIFIED",
+        "mean_detection_delay_sec": 1.659196717948718,
+        "negative_video_hours": 5.225267824074075,
+        "temporal_tolerance_sec": 10.0,
+        "poisson_ci_95": [
+          62.3251,
+          76.7961
+        ],
+        "median_delay_sec": 0.2,
+        "p95_delay_sec": 9.0
+      }
+    },
+    "B": {
+      "counts": {
+        "ground_truth_events": 14,
+        "predicted_events": 103,
+        "matched_events": 9,
+        "timely_detections": 9,
+        "late_detections": 15,
+        "early_alerts": 0,
+        "unmatched_gt_events": 5,
+        "unmatched_predicted_events": 94,
+        "positive_unmatched_alerts": 15,
+        "unmatched_positive_predictions": 15,
+        "recalled_positive_videos": 9,
+        "verified_positive_videos": 12,
+        "positive_videos": 12,
+        "negative_videos": 23,
+        "negative_false_alarms": 79
+      },
+      "metrics": {
+        "video_event_recall": 0.75,
+        "split_video_event_recall": 0.75,
+        "event_instance_recall": 0.6428571428571429,
+        "event_precision": 0.08737864077669903,
+        "event_f1": 0.15384615384615385,
+        "false_alarms_per_hour": 15.118842260300582,
+        "far_status": "VERIFIED",
+        "mean_detection_delay_sec": 1.5564907250170967,
+        "negative_video_hours": 5.225267824074075,
+        "temporal_tolerance_sec": 10.0,
+        "poisson_ci_95": [
+          11.9697,
+          18.8426
+        ],
+        "median_delay_sec": 0.8008,
+        "p95_delay_sec": 5.76
+      }
+    }
+  }
+}

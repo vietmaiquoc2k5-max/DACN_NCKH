@@ -1,0 +1,13 @@
+{
+  "run_id": "run_20261113_consensus_v1",
+  "head": "973970918e97cad6ac91d180fb455959601fae67",
+  "checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "config_sha256": "701402b5eb2bb5c2b26f7402cc3892f7be6819740e08e716cca5b0395c237a18",
+  "scope_sha256": "7737b7d5a47a2c3f9ed0b7aa1e05e5f478a168edeb0c2cbd7d8758d851a827ee",
+  "GT_PROTOCOL": "JOINT_HUMAN_CONSENSUS",
+  "status": "PREFLIGHT_COMPLETE",
+  "operating_point": "PROVISIONAL",
+  "independent_test_valid": false,
+  "runner_sha256": "91b8de44bac6d09057af9b2943e1c625e5915403f53f1fe2a20f5ad75a70166d"
+}

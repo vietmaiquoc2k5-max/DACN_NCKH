@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python",
+    "scripts/run_week4_final_scientific.py",
+    "--phase",
+    "infer",
+    "--run-dir",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_final_scientific\\run_20261113_consensus_v1"
+  ],
+  "exit_code": 0,
+  "videos": 71,
+  "frame_jsonl_hashes_and_mtimes_unchanged": true,
+  "model_smoke_test_reinitialized": true,
+  "completed_video_inference_repeated": false,
+  "source_and_config_and_coverage_revalidated": true
+}

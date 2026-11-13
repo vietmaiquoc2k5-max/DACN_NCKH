@@ -1,0 +1,10 @@
+{
+  "read_only_inputs": true,
+  "submitted_sources_rehashed": 87,
+  "export_members_verified": 6,
+  "decode_audit_members_verified": 547,
+  "frozen_gt_unchanged_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "export_file_sha256": "74f6462f2b3c99920d2ac8c8740cdd0c893b343ab124176bfb5c0828df760ffe",
+  "decode_audit_inventory_sha256": "6ec95019e236140942b6d699172df5f918a1c8f5678a609caa560ab524c0ab4c",
+  "no_review_payloads_or_identities_published": true
+}

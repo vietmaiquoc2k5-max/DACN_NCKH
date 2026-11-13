@@ -1,0 +1,14 @@
+metric,A,B
+video_event_recall,1.0,0.75
+split_video_event_recall,1.0,0.75
+event_instance_recall,0.9285714285714286,0.6428571428571429
+event_precision,0.033766233766233764,0.08737864077669903
+event_f1,0.06516290726817041,0.15384615384615385
+false_alarms_per_hour,69.27874554720013,15.118842260300582
+far_status,VERIFIED,VERIFIED
+mean_detection_delay_sec,1.659196717948718,1.5564907250170967
+negative_video_hours,5.225267824074075,5.225267824074075
+temporal_tolerance_sec,10.0,10.0
+poisson_ci_95,"[62.3251, 76.7961]","[11.9697, 18.8426]"
+median_delay_sec,0.2,0.8008
+p95_delay_sec,9.0,5.76

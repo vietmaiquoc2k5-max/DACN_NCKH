@@ -1,0 +1,18 @@
+{
+  "policy": "raw local only; existing .gitignore retained; no staging/commit",
+  "run_id": "run_20261113_consensus_v1",
+  "files": 292,
+  "bytes": 167026384,
+  "inventory_sha256": "259e52fbe4e0147fdd693fa683d2c7c77bc959ae012e7d704b0b8e4632c16400",
+  "curated_small_metadata": [
+    "summary.json",
+    "metrics.json",
+    "comparison.csv",
+    "run_manifest.json",
+    "inference_config.json",
+    "integrity_receipt.json",
+    "source_integrity_receipt.json",
+    "test_results.json"
+  ],
+  "raw_artifacts": "videos/*/frame_level.jsonl, pts/*, logs and detailed metrics/plots stay local; private database/export not copied"
+}

@@ -1,0 +1,83 @@
+{
+  "status": "PARTIAL",
+  "inference_status": "COMPLETE",
+  "operating_point": "PROVISIONAL",
+  "independent_test_valid": false,
+  "GT_PROTOCOL": "JOINT_HUMAN_CONSENSUS",
+  "head": "973970918e97cad6ac91d180fb455959601fae67",
+  "run_id": "run_20261113_consensus_v1",
+  "accepted_positive": 24,
+  "accepted_negative": 47,
+  "negative_hours": 5.749655097037039,
+  "inference": {
+    "complete": true,
+    "videos": 71,
+    "processed_frames": 107805,
+    "expected_frames": 107805,
+    "native_decoded_frames": 798583,
+    "empty_detection_frames": 86035,
+    "pts_ticks_and_seconds_verified": true,
+    "predeclared_code_unchanged": true,
+    "tracking_features_verified": true,
+    "exact_source_duplicate_count": 0,
+    "near_duplicate_and_scene_independence": "NOT_VERIFIED"
+  },
+  "validation_candidates_executed": 36,
+  "legacy_video_recall_feasible_candidates": 34,
+  "strict_instance_feasible_candidates": 0,
+  "selected_diagnostic_config": {
+    "confidence": 0.5,
+    "k": 4,
+    "n": 10,
+    "variation": 0.02,
+    "cooldown": 12.0,
+    "merge_gap": 2.0
+  },
+  "config_sha256": "c34a3ba639bd8f31fb40a819712d5afc4e3a04e2c04c1d3946d4c2091850e18c",
+  "validation_selection_before_holdout_metrics_verified": true,
+  "scope": {
+    "validation": {
+      "positive_videos": 12,
+      "positive_events": 21,
+      "negative_videos": 24,
+      "negative_hours": 0.524387272962963
+    },
+    "exploratory_holdout": {
+      "positive_videos": 12,
+      "positive_events": 14,
+      "negative_videos": 23,
+      "negative_hours": 5.225267824074075
+    }
+  },
+  "blocking_evidence": [
+    "INDEPENDENT_TEST_CONTAMINATION",
+    "TRAINING_AND_SCENE_INDEPENDENCE_UNVERIFIED"
+  ],
+  "validation_warning": "Legacy video-recall constraints have feasible points; the predeclared stricter instance screen has none",
+  "exploratory_far_reduction": 0.781767955801105,
+  "paired_delay": {
+    "shared_matched_events": 9,
+    "A_mean_delay_sec": 0.2853703703703704,
+    "B_mean_delay_sec": 1.5564907250170967,
+    "interpretation": "Compare delay on the same GT events; separate-pipeline means have different matched populations"
+  },
+  "tests": [
+    {
+      "name": "targeted",
+      "exit_code": 0,
+      "summary": [
+        "61 passed, 10 subtests passed in 6.13s"
+      ]
+    },
+    {
+      "name": "full",
+      "exit_code": 0,
+      "summary": [
+        "test_bound_timestamp_corruption_or_count_mismatch_is_failed_check (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_timestamp_corruption_or_count_mismatch_is_failed_check) ... ok",
+        "Ran 292 tests in 182.779s",
+        "OK"
+      ]
+    }
+  ],
+  "preflight_manifest_preserved": true
+}

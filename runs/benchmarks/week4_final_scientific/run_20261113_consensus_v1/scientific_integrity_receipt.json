@@ -1,0 +1,13 @@
+{
+  "scientific_acceptance": "PARTIAL",
+  "frozen_run_implementation_unchanged": true,
+  "verification_script_sha256": "01823f9815257a5895442bc81866d6b032aae45e62d0f1adabddf3ad30a44166",
+  "final_report_sha256": "aeac0dc18f8f11c1d291e665f99e0d1a1918e863a5b1d1f854aaf74c0e8d2852",
+  "full_frame_evidence_verified": true,
+  "actual_resume_exit_code": 0,
+  "validation_legacy_video_feasible": 34,
+  "validation_strict_instance_feasible": 0,
+  "selection_config_unchanged_across_definitions": true,
+  "independent_test_valid": false,
+  "official_operating_point_lock_created": false
+}

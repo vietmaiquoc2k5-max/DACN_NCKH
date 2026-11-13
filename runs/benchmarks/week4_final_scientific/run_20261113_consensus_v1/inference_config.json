@@ -1,0 +1,18 @@
+{
+  "imgsz": 416,
+  "detector_conf": 0.1,
+  "confidences": [
+    0.25,
+    0.35,
+    0.5
+  ],
+  "iou": 0.7,
+  "max_det": 300,
+  "rect": false,
+  "half": false,
+  "batch": 8,
+  "sample_hz": 5,
+  "sampling_protocol": "FULL_DURATION_SAMPLED_5FPS",
+  "sampling_rule": "first source PTS frame at/after elapsed grid; sparse grids skipped without duplicating a frame",
+  "zones": []
+}
