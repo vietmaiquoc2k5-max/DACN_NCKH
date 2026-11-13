@@ -82,3 +82,10 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+
+# MediaMTX generated TLS material (exposed files must never be reused)
+auto.key
+auto.crt
+.tools/mediamtx/*.key
+.tools/mediamtx/*.crt
+

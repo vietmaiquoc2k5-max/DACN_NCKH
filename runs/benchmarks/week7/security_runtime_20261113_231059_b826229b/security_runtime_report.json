@@ -1,0 +1,96 @@
+{
+  "run_id": "20261113_231059_b826229b",
+  "git_head": "a8039301c6f8c0e4f26a5ebd63f757011e581a36",
+  "effective_config": "F:\\D\u1ef1 \u00e1n c\u00e1 nh\u00e2n\\phan mem canh bao chay\\.tools\\mediamtx\\mediamtx.local-benchmark.yml",
+  "phases": {
+    "preflight": {
+      "status": "PASS",
+      "checks": {
+        "mediamtx": true,
+        "ffmpeg": true,
+        "config": true,
+        "video": true,
+        "port_free": true
+      }
+    },
+    "startup": {
+      "status": "PASS",
+      "pid": 26672,
+      "sockets": [
+        {
+          "address": "127.0.0.1",
+          "port": 8554,
+          "pid": 26672
+        }
+      ]
+    },
+    "publisher_ready": {
+      "status": "PASS",
+      "pid": 25424,
+      "running": true
+    },
+    "rtsp": {
+      "status": "PASS",
+      "publisher_pid": 25424,
+      "publisher_running": true,
+      "reader_argv": [
+        "C:\\Users\\vietm\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg.Essentials_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-9.0.1-essentials_build\\bin\\ffmpeg.EXE",
+        "-nostdin",
+        "-hide_banner",
+        "-loglevel",
+        "info",
+        "-rtsp_transport",
+        "tcp",
+        "-i",
+        "rtsp://127.0.0.1:8554/cam1",
+        "-map",
+        "0:v:0",
+        "-an",
+        "-t",
+        "5.0",
+        "-vf",
+        "showinfo",
+        "-f",
+        "null",
+        "NUL"
+      ],
+      "reader_exit_code": 0,
+      "decoded_frames": 42,
+      "codec": "h264 (High)",
+      "warnings": []
+    },
+    "cleanup": {
+      "status": "PASS"
+    }
+  },
+  "failure_reasons": [],
+  "commands": [
+    {
+      "argv": [
+        "F:\\D\u1ef1 \u00e1n c\u00e1 nh\u00e2n\\phan mem canh bao chay\\.tools\\mediamtx\\mediamtx.exe",
+        "F:\\D\u1ef1 \u00e1n c\u00e1 nh\u00e2n\\phan mem canh bao chay\\.tools\\mediamtx\\mediamtx.local-benchmark.yml"
+      ],
+      "exit_code": null
+    }
+  ],
+  "mediamtx_version": "v1.21.3",
+  "cleanup": [
+    {
+      "pid": 25424,
+      "terminated": true,
+      "exit_code": 1,
+      "error": null,
+      "name": "publisher"
+    },
+    {
+      "pid": 26672,
+      "terminated": true,
+      "exit_code": 1,
+      "error": null,
+      "name": "mediamtx"
+    },
+    {
+      "port_8554_closed": true
+    }
+  ]
+}

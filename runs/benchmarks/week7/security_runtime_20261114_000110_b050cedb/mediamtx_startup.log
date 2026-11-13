@@ -1,0 +1,15 @@
+2026/11/14 00:01:13 INF MediaMTX v1.21.3, windows, amd64
+2026/11/14 00:01:13 INF configuration loaded from F:\Dự án cá nhân\phan mem canh bao chay\.tools\mediamtx\mediamtx.local-benchmark.yml
+2026/11/14 00:01:13 INF [RTSP] started with listeners on 127.0.0.1:8554 (TCP/RTSP)
+2026/11/14 00:01:13 INF [RTSP] [conn 127.0.0.1:60151] opened
+2026/11/14 00:01:13 INF [RTSP] [session bb2c1dac] created by 127.0.0.1:60151
+2026/11/14 00:01:13 INF [path cam1] stream is available and online, 2 tracks (H264, MPEG-4 Audio)
+2026/11/14 00:01:13 INF [RTSP] [session bb2c1dac] is publishing to path 'cam1'
+2026/11/14 00:01:13 INF [path cam1] RTP packets are too big (1460 > 1440), remuxing them into smaller ones
+2026/11/14 00:01:15 INF [RTSP] [conn 127.0.0.1:60152] opened
+2026/11/14 00:01:15 INF [RTSP] [session 7ba42ef2] created by 127.0.0.1:60152
+2026/11/14 00:01:15 INF [RTSP] [session 7ba42ef2] is reading from path 'cam1', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/14 00:01:17 INF [RTSP] [session 7ba42ef2] destroyed: torn down by 127.0.0.1:60152
+2026/11/14 00:01:17 INF [RTSP] [conn 127.0.0.1:60152] closed: read tcp 127.0.0.1:8554->127.0.0.1:60152: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/14 00:01:17 INF [RTSP] [conn 127.0.0.1:60151] closed: read tcp 127.0.0.1:8554->127.0.0.1:60151: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/14 00:01:17 INF [RTSP] [session bb2c1dac] destroyed: not in use
