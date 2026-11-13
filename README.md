@@ -127,3 +127,21 @@ Lưu ý: Chỉ kết nối tới các camera mà bạn được cấp quyền qu
 # Kiểm thử tương thích ngược toàn dự án
 .venv\Scripts\python.exe test_integration.py
 ```
+
+## Week 7 API and Docker
+
+The existing Streamlit dashboard remains available with `streamlit run web_app.py`.
+The additional FastAPI backend reuses the camera manager and can be started with:
+
+```powershell
+Copy-Item .env.example .env
+# Set a private FIREWATCH_API_TOKEN and an explicit FIREWATCH_RTSP_HOSTS allowlist in .env
+python -m pip install -r requirements-dev.txt
+uvicorn src.week7_api:app --host 127.0.0.1 --port 8000
+```
+
+Camera workers remain disconnected after API startup. Management endpoints require
+`Authorization: Bearer <FIREWATCH_API_TOKEN>`. RTSP/RTSPS camera hosts must be listed
+in `FIREWATCH_RTSP_HOSTS`; local video paths must remain under the project directory.
+See [Week 7 technical report](docs/WEEK7_TECHNICAL_REPORT.md) for the evidence status
+and [Docker instructions](docs/WEEK7_DEPLOYMENT.md).

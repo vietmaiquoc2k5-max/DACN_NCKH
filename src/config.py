@@ -94,18 +94,18 @@ DEFAULT_USERS: Dict[str, Dict[str, str]] = {
 
 
 def mask_rtsp_credentials(source: str) -> str:
-    """Ẩn mật khẩu xác thực trong URL RTSP/HTTP để không bao giờ lộ trên giao diện hoặc trong log.
+    """Ẩn toàn bộ thông tin xác thực trong URL để không lộ tài khoản trong giao diện hoặc log.
 
     Ví dụ:
       'rtsp://admin:MySecret123@192.168.1.50:554/Streaming/Channels/101'
-      -> 'rtsp://admin:******@192.168.1.50:554/Streaming/Channels/101'
+      -> 'rtsp://***@192.168.1.50:554/Streaming/Channels/101'
     """
     if not source:
         return ""
     s = str(source).strip()
     return re.sub(
-        r"((?:rtsp|rtsps|http|https|rtmp)://[^:/@\s]+:)(.+?)(@[^/@\s]+(?::\d+)?(?:/|$))",
-        r"\1******\3",
+        r"((?:rtsp|rtsps|http|https|rtmp)://)[^/@\s]+@",
+        r"\1***@",
         s,
         flags=re.IGNORECASE,
     )
@@ -130,6 +130,7 @@ class CameraConfig:
     source_type: str = "VIDEO_TEST"  # "VIDEO_TEST" | "WEBCAM" | "IP_CAMERA"
     webcam_index: int = 0
     enabled: bool = True
+    inference_fps: int = 24
     loop_video: bool = True
     auto_reconnect: bool = True
     max_reconnect_attempts: int = 5

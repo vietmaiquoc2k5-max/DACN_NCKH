@@ -1,0 +1,28 @@
+services:
+  firewatch-api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      FIREWATCH_DB_PATH: /data/alerts.db
+      FIREWATCH_MODEL_PATH: /models/best.pt
+    ports:
+      - "8000:8000"
+    volumes:
+      - firewatch-data:/data
+      - firewatch-snapshots:/app/alerts
+      - ./best.pt:/models/best.pt:ro
+    depends_on:
+      mediamtx:
+        condition: service_started
+
+  mediamtx:
+    image: bluenviron/mediamtx:1
+    restart: unless-stopped
+    ports:
+      - "8554:8554"
+      - "8888:8888"
+
+volumes:
+  firewatch-data:
+  firewatch-snapshots:

@@ -213,7 +213,7 @@ def test_real_camera_features_and_rtsp_security():
     raw_rtsp = "rtsp://admin:SuperSecretPass99!@192.168.1.108:554/cam/realmonitor?channel=1&subtype=0"
     masked = mask_rtsp_credentials(raw_rtsp)
     assert "SuperSecretPass99!" not in masked, f"Mật khẩu RTSP bị lộ trong chuỗi đã che: {masked}"
-    assert masked.startswith("rtsp://admin:******@192.168.1.108:554"), f"Định dạng che mật khẩu sai: {masked}"
+    assert masked.startswith("rtsp://***@192.168.1.108:554"), f"Định dạng che thông tin xác thực sai: {masked}"
     print(f"  ✅ Ẩn mật khẩu RTSP an toàn: '{masked}'")
 
     with tempfile.TemporaryDirectory() as tmpdir:

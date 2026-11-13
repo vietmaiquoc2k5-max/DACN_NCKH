@@ -1,0 +1,6 @@
+*
+!requirements.txt
+!src
+!src/**
+!alert_manager.py
+!alarm.wav

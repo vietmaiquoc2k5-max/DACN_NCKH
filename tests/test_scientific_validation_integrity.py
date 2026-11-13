@@ -62,7 +62,8 @@ class TestScientificValidationIntegrity(unittest.TestCase):
         raw_url = "rtsp://admin:P@ssw0rd2026!@192.168.1.100:554/live/ch0"
         masked = mask_rtsp_credentials(raw_url)
         self.assertNotIn("P@ssw0rd2026!", masked, "Mật khẩu gốc không được xuất hiện trong URL đã che.")
-        self.assertIn("admin:******@", masked, "Mật khẩu phải được thay thế bằng ******.")
+        self.assertNotIn("admin", masked, "Tên người dùng cũng phải được ẩn khỏi URL đã che.")
+        self.assertIn("rtsp://***@", masked, "Toàn bộ thông tin xác thực phải được ẩn.")
 
         # Test thêm với URL không có user/pass
         simple_url = "rtsp://192.168.1.200:8554/live"
@@ -72,7 +73,8 @@ class TestScientificValidationIntegrity(unittest.TestCase):
         rtsps_url = "rtsps://viewer:SecretToken99@camera.domain.vn/live"
         masked_rtsps = mask_rtsp_credentials(rtsps_url)
         self.assertNotIn("SecretToken99", masked_rtsps)
-        self.assertIn("viewer:******@", masked_rtsps)
+        self.assertNotIn("viewer", masked_rtsps)
+        self.assertIn("rtsps://***@", masked_rtsps)
 
     def test_negative_audit_duration_accounting_reconciliation(self):
         """5. Kiểm tra tính rạch ròi giữa thời lượng vật lý trên đĩa và thời lượng thực tế đưa vào đánh giá."""

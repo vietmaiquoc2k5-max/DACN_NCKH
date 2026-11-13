@@ -37,6 +37,7 @@ from src.bytetrack_adapter import ByteTrackAdapter
 from src.temporal_features import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
+from src.telegram_alerts import TelegramAlertDispatcher
 
 
 def encode_bgr_to_jpeg_b64(bgr_img: np.ndarray, quality: int = 72) -> str:
@@ -318,10 +319,12 @@ class CameraStreamWorker:
         event_db: EventDatabase,
         settings: SystemSettings,
         log_callback=None,
+        telegram_alerts: Optional[TelegramAlertDispatcher] = None,
     ):
         self.config = config
         self.detector = detector
         self.event_db = event_db
+        self.telegram_alerts = telegram_alerts
         self.settings = settings
         self.log_callback = log_callback
 
@@ -584,6 +587,7 @@ class CameraStreamWorker:
     def _infer_loop(self):
         """Luồng suy luận YOLO bất đồng bộ: chạy song song với luồng đọc video để video luôn đạt 24-30 FPS."""
         infer_fps_win = deque(maxlen=15)
+        last_inference_at = 0.0
         while self.running:
             self.infer_event.wait(timeout=0.05)
             self.infer_event.clear()
@@ -601,6 +605,11 @@ class CameraStreamWorker:
                 continue
 
             self.last_inferred_frame_id = fid
+            min_interval = 1.0 / max(1, min(60, int(self.config.inference_fps)))
+            now_perf = time.perf_counter()
+            if now_perf - last_inference_at < min_interval:
+                continue
+            last_inference_at = now_perf
             infer_input = raw_frame.copy()
 
             self.verifier.update_params(
@@ -676,7 +685,7 @@ class CameraStreamWorker:
                     exclusion_zones=self.config.exclusion_zones,
                     inplace=True,
                 )
-                self.event_db.record_event(
+                saved_event = self.event_db.record_event(
                     frame=snap_bgr,
                     camera_name=self.config.cam_id,
                     label=lbl,
@@ -684,6 +693,9 @@ class CameraStreamWorker:
                     alert_level=ver_res["alert_level"],
                     is_demo=0,
                 )
+                if self.telegram_alerts is not None:
+                    saved_event["camera_display_name"] = self.config.name
+                    self.telegram_alerts.enqueue(saved_event)
                 if not self.settings.mute_audio and self.config.cam_id not in self.event_db.alert_manager.acknowledged_cameras:
                     self.event_db.alert_manager.play_alarm(camera_name=self.config.cam_id)
                 self._log(
@@ -923,6 +935,7 @@ class CameraStreamWorker:
                 "masked_source": self.config.masked_source,
                 "webcam_index": self.config.webcam_index,
                 "enabled": self.config.enabled,
+                "inference_target_fps": self.config.inference_fps,
                 "auto_reconnect": self.config.auto_reconnect,
                 "status": self.status,  # "CONNECTED" | "DISCONNECTED" | "RECONNECTING" | "ERROR" | "PAUSED"
                 "lifecycle_state": self.lifecycle_state,  # "STOPPED" | "CONNECTING" | "RUNNING" | "RECONNECTING" | "ERROR" | "PAUSED"
@@ -975,6 +988,7 @@ class MultiCameraManager:
         self.settings = SystemSettings(model_path=model_path)
         self.alert_manager = AlertManager(db_path=db_path)
         self.event_db = EventDatabase(alert_manager=self.alert_manager, db_path=db_path)
+        self.telegram_alerts = TelegramAlertDispatcher(db_path=db_path)
         self.detector = SharedFireSmokeDetector(
             model_path=self.settings.model_path,
             conf_threshold=self.settings.conf_threshold,
@@ -995,6 +1009,7 @@ class MultiCameraManager:
                 event_db=self.event_db,
                 settings=self.settings,
                 log_callback=self.add_log,
+                telegram_alerts=self.telegram_alerts,
             )
 
         self.add_log("Khởi tạo trung tâm điều hành 9 Camera (3x3 Grid) thành công.")
@@ -1258,6 +1273,7 @@ class MultiCameraManager:
         auto_reconnect: bool = True,
         exclusion_zones: Optional[List[Tuple[float, float, float, float]]] = None,
         auto_start: bool = False,
+        inference_fps: int = 24,
     ) -> str:
         """Thêm một camera mới vào hệ thống và khởi tạo CameraStreamWorker độc lập."""
         next_num = len(self.camera_configs) + 1
@@ -1274,6 +1290,7 @@ class MultiCameraManager:
             source_type=s_type,
             webcam_index=int(webcam_index) if s_type == "WEBCAM" else 0,
             enabled=bool(enabled),
+            inference_fps=max(1, min(60, int(inference_fps))),
             loop_video=True,
             auto_reconnect=bool(auto_reconnect),
             exclusion_zones=list(exclusion_zones) if exclusion_zones else [],
@@ -1285,6 +1302,7 @@ class MultiCameraManager:
             event_db=self.event_db,
             settings=self.settings,
             log_callback=self.add_log,
+            telegram_alerts=self.telegram_alerts,
         )
         self.workers[cam_id] = worker
         self.add_log(f"Đã thêm camera mới {cam_id} ({cfg.name}) -> {cfg.masked_source}")
