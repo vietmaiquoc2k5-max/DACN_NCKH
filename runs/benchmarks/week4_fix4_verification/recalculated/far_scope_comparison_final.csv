@@ -1,0 +1,5 @@
+scope,videos,exposure_seconds,events_a,events_b2,diagnostic_reduction_percent,scientific_acceptance
+scope_a_historical_diagnostic,79,25672.154232869,988,421,57.38866396761133,PARTIAL
+scope_b_strict_technical_validation,0,0.0,0,0,,PARTIAL
+scope_b3_preliminary_nontruncated_diagnostic,77,25144.677856492624,971,417,57.05458290422245,PARTIAL
+scope_c_scientifically_verified_negative_exposure,0,0.0,0,0,,PARTIAL

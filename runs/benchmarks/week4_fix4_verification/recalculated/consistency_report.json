@@ -1,0 +1,18 @@
+{
+  "status": "PARTIAL",
+  "audit_reported_hours": 7.1309,
+  "sum_per_video_rounded_hours": 7.1309000000000005,
+  "sum_per_video_stored_seconds_hours": 7.13115,
+  "decoded_frames_over_native_fps_hours": 7.131153953574723,
+  "historical_inference_exposure_hours": 7.2026,
+  "explanation": "7.1309 is the sum of per-video rounded duration_hours; ~7.1312 uses duration_seconds. Both use the same audit IDs. Inference 7.2026 uses a different historical denominator; timeline evidence remains missing.",
+  "historical_audit_observations_not_rerun": {
+    "total_decoded_frames": 929939,
+    "decode_status_counts": {
+      "NORMAL_EOF": 19,
+      "NEEDS_REVIEW": 58,
+      "TRUNCATED_STREAM": 2
+    }
+  },
+  "full_decode_executed_current_host": false
+}

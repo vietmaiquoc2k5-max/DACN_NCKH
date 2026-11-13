@@ -22,7 +22,7 @@ class TestCriticalAcceptance(unittest.TestCase):
 
     def test_complete_evidence_required_for_acceptance(self):
         self.assertFalse(acceptance(5, 60, True, True, True, True)["operating_point_official_eligible"])
-        self.assertTrue(acceptance(5, 60, True, True, True, True, True)["operating_point_official_eligible"])
+        self.assertTrue(acceptance(5, 60, True, True, True, True, True, positive_gt_complete=True)["operating_point_official_eligible"])
         self.assertFalse(acceptance(5, 60, False, True, True, True, True)["operating_point_official_eligible"])
         self.assertFalse(acceptance(float("inf"), 60, True, True, True, True, True)["operating_point_official_eligible"])
 

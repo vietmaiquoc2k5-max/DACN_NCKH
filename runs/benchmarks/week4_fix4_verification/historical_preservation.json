@@ -1,0 +1,13 @@
+{
+  "git_diff_exit_code": 0,
+  "protected_paths": [
+    "data/ground_truth",
+    "data/negative_videos_manifest.json",
+    "runs/benchmarks/week4_critical_fix",
+    "runs/benchmarks/week4_final_recovery",
+    "runs/benchmarks/week4_final",
+    "docs/multicamera_rtsp_benchmark_report.md"
+  ],
+  "archived_actions_log_git_blob_sha256": "7da4357ba666291ca4351bab382522534bf4218f8df95d302531fa349a415817",
+  "archived_actions_log_content_unchanged": true
+}

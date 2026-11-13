@@ -1,0 +1,10 @@
+{
+  "command": "run_phase5_negative_ground_truth(); run_phase7_positive_ground_truth() on new FIX-4 output only",
+  "exit_code": 0,
+  "all_review_bytes_unchanged": true,
+  "files": {
+    "negative_video_review_queue.csv": "d3df0c6f7417083392c5e1ed25bc29eae6898c13acac9b30376b170593042051",
+    "negative_ground_truth_master.csv": "779433ee6a7702816952fcbe9a57b049ea27550dde276266f443e2bc3d1cd0f7",
+    "gt_positive_review_queue.csv": "86d1e20d5a0749cd2677bcfd699b1ffd8aa1fb4e80271bbb45499da12c3412a9"
+  }
+}

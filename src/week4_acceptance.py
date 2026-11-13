@@ -32,17 +32,19 @@ def strict_technical_eligible(row: dict[str, Any]) -> bool:
 def acceptance(negative_hours: float, reduction: float | None = None,
                recall: bool | None = None, delay: bool | None = None,
                fair_comparison: bool = False, provenance: bool = False,
-               validation_locked: bool = False) -> dict[str, Any]:
+               validation_locked: bool = False,
+               positive_gt_complete: bool | None = None) -> dict[str, Any]:
     """Keep diagnostic reduction separate from independently verified FAR."""
     exposure = math.isfinite(negative_hours) and negative_hours >= 5.0
     far = reduction >= 50 if reduction is not None and fair_comparison and exposure else None
-    official = all(v is True for v in (exposure, far, recall, delay, provenance, validation_locked))
+    official = all(v is True for v in (exposure, far, recall, delay, provenance, validation_locked, positive_gt_complete))
     return {
         "alert_rate_reduction_target_met": reduction >= 50 if reduction is not None else None,
         "far_reduction_verified": far,
         "event_recall_constraint_met": recall,
         "detection_delay_constraint_met": delay,
         "negative_exposure_requirement_met": exposure,
+        "independent_positive_gt_complete": positive_gt_complete,
         "operating_point_official_eligible": official,
         "week4_acceptance_status": "FULL_PASS" if official else "PARTIAL",
     }

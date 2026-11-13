@@ -1,0 +1,234 @@
+{
+  "started_at": "2026-11-13T06:18:52.138607+00:00",
+  "completed_at": "2026-11-13T06:19:03.214498+00:00",
+  "producer_base_commit": "30239cc18f07a963b97461e7191b8d11e2e70cbf",
+  "producer_worktree_diff_sha256": "39c0e7c11b95504c3a8d15b9b779fa8f385d4c6114493db05da25b3f3334c5cc",
+  "producer_state": "UNCOMMITTED_WORKTREE; new source files hashed below",
+  "producer_source_sha256": {
+    "scripts\\run_phases4_to_8_recovery.py": "9c8b3338e6f14f173a94c04b742457b53fe637789f573d17f348ce7dacfddc8e",
+    "src\\week4_acceptance.py": "8cf9f08d4d52c8b3af4264768fe47f8ea5b0c463cd7710c524d60f0519a8662f",
+    "src\\ground_truth_integrity.py": "3f3fe507ad0e2307c4c8f6ec897a593d7f1f6b3f1a630808241b754ac1024ffa",
+    "src\\inference_frame_evidence.py": "873868ec51121600860737ad0eaf6ea33ba07ed9ce5e7ce3259a2cac2e3aaf0a",
+    "src\\event_eval.py": "fe89a94afc0cc05d87a236b814adf99624ca65f3f757fff2906d7a491ffab579"
+  },
+  "historical_inference_source_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+  "historical_inference_packaged_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35",
+  "manifest_sha256": "5ba1855d624f65339f60fcd741ed2edc874ac5e327529a0d2c99c8460592ef23",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "audit_policy_version": "strict_full_stream_zero_tolerance_v1",
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26300-SP0",
+    "opencv": "5.0.0",
+    "ffmpeg": "ffmpeg version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+  },
+  "historical_artifacts": [
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\far_final.json",
+      "sha256": "1ef5ce4cbf092fa39e963e5bffecb7021264a75afbe04ae7dfdaf68b873d3813",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T19:17:12.774639+00:00"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\far_final_scientific_report.md",
+      "sha256": "fbe984eac672fd9ed631d9e9d1d69ac440313a0986f322083428b4e31eca7fca",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\far_per_video_final.csv",
+      "sha256": "9feea6368758fd31e40ddf97236c5778dc35e10b6384ade936fbf13840494349",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\far_scope_comparison_final.csv",
+      "sha256": "7357e411e0a6d54a976211a3a59c83e6991ce4497e12c037ae4bded827ffb6ba",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\gt_positive_review_queue.csv",
+      "sha256": "86d1e20d5a0749cd2677bcfd699b1ffd8aa1fb4e80271bbb45499da12c3412a9",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\inference_coverage_final.csv",
+      "sha256": "99cc01fad45842310274ee09bb94c9ef12c08ffab17c7ee5ac439aa05b2e0fa6",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\inference_reconciliation_final.json",
+      "sha256": "176ec9095d6d653c760fb69abb36b38fdd9587cbb65f6b25a38b52ce706b0228",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T19:17:05.506390+00:00",
+        "source_code_base_commit": "256065e7e54c35c335e6953d0bc373829ac94997",
+        "packaged_commit": "62785d7b4cdd1b499c99abbd016ecedf6fa1ee35"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\inference_rerun_decision.json",
+      "sha256": "f7f5875a54e8e3c19b432e79bdf74d9c4f93b5e1de2b275e7e983ba400c16586",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T19:17:05.507397+00:00"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\missing_videos.csv",
+      "sha256": "2acd6d6f3b6dec6ae43ac81d72b5ead103744564c4540bf8bd97c7a3dcb385f2",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\negative_annotation_guidelines.md",
+      "sha256": "7094a3b11bbdb1466444c472ffb920a013f19a594da4346bf12eb095df6f0d4c",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\negative_ground_truth_master.csv",
+      "sha256": "779433ee6a7702816952fcbe9a57b049ea27550dde276266f443e2bc3d1cd0f7",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\negative_video_review_queue.csv",
+      "sha256": "d3df0c6f7417083392c5e1ed25bc29eae6898c13acac9b30376b170593042051",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\operating_point_final.json",
+      "sha256": "3b3abddabf11b319ef382c4ad24063e3a372dfbe3cc36fb65b39b5a8e45254f7",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T19:17:12.784376+00:00"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\path_reconciliation.json",
+      "sha256": "75715a5e9e71ac955eca3014071384b0b899447db62e0a5dd30b34ea6055ee34",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T18:36:14.314545+00:00"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\video_audit_execution.log",
+      "sha256": "e608d23c94fbee10be0ee35f5805b802e948827089b2ce6538b0e7da678a81f8",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\video_audit_final.json",
+      "sha256": "37a87ed158983991ca91b9097aae52bb25bcbfa3ca9d4613cc0a5e345d76aa97",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T19:15:05.154939+00:00",
+        "audit_policy_version": "strict_full_stream_zero_tolerance_v1"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\video_audit_summary_final.csv",
+      "sha256": "e969b1d6c230982250cca45c2b950beba3b78ca6d953d64cad69543d2e41a4ce",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\video_decode_failures_final.csv",
+      "sha256": "5ca773ab304bee5e909e9323815775211d683f8c470119a40e058eafa18e6e16",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {},
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    },
+    {
+      "path": "runs\\benchmarks\\week4_final_recovery\\video_inventory.json",
+      "sha256": "6be16c86ba29a99a1565b683edd14206c2ba870f51521d815b9c4adf5dcb4917",
+      "artifact_packaging_commit": "8848bc3e6c3dc163e0fbe0f31eb0b9c80c4bf63b",
+      "artifact_executing_commit": null,
+      "embedded_historical_metadata": {
+        "generated_at": "2026-11-12T18:36:14.307631+00:00",
+        "git_head": "015811cad1b44073e51893b80c46ad04a5cc5c0c"
+      },
+      "historical_environment": null,
+      "note": "Packaging commit does not establish the executing dirty worktree; missing historical environment/start/completion remain unknown."
+    }
+  ],
+  "new_artifacts": {
+    "consistency_report.json": "c7def5eb2a120e89e9af8b70dd4dd022c25b14e6faf9d1fbf07cfdfdf45601f2",
+    "far_final.json": "04ffdb54e04add46161442ca039089913c7f927efdc12b937921b72ab9544e57",
+    "far_final_scientific_report.md": "aa8c5f0651670d1a887bdc66d01d06e6b994a0b7371fb40582a4f59cf4000971",
+    "far_scope_comparison_final.csv": "56e73ea4b35480ab0ed51123178329a78a95a414e9e35e4f55dccb682577ea3c",
+    "gt_positive_review_queue.csv": "86d1e20d5a0749cd2677bcfd699b1ffd8aa1fb4e80271bbb45499da12c3412a9",
+    "inference_reconciliation_final.json": "fb7427dadf7fee22cd22b430d41d61d5878de2cd9e2cb7aae001a773a4db2ebe",
+    "inference_rerun_decision.json": "fe3e6578331c6e372aecbcd9ee06f9d8ddb4c6ec9a309c3ac12c2df706058b76",
+    "inference_reuse_per_video.json": "4019b4e6761d5ddea38cd063afe57ef897cd68977641b2b09c1cc63091fd6959",
+    "negative_ground_truth_master.csv": "779433ee6a7702816952fcbe9a57b049ea27550dde276266f443e2bc3d1cd0f7",
+    "negative_video_review_queue.csv": "d3df0c6f7417083392c5e1ed25bc29eae6898c13acac9b30376b170593042051",
+    "normalized_event_episodes.json": "b7467f4f18055977cfa4221fc9f996aae876452d4e848d01523f3e6e7f9e6ecb",
+    "operating_point_final.json": "2ed8505d2a548d7c762bf60955165fda142c351689108eba5e1d00a5f1a9a7a7",
+    "positive_gt_source_state.json": "e35b924b1f92bcc6efef7edcebb105dd9f1a78ce266433539d6a1351a7c1f95c",
+    "raw_frame_jsonl_audit.json": "0554c8c1e245aa11b2b8cee154ee2c445355243c847f9070325b537149e09f9f"
+  },
+  "historical_start_completion": "Use original generated_at/last_audited_at; missing timestamps remain unknown"
+}

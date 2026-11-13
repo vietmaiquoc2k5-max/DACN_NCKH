@@ -1,0 +1,5 @@
+{
+  "command": "git -C D:\\workspace\\DACN_NCKH\\.tools\\fix4-clean-30239cc1-autocrlf-false diff origin/main...HEAD --check",
+  "exit_code": 2,
+  "attributes": "Unmodified reviewed SHA in clean clone"
+}

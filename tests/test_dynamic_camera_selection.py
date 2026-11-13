@@ -22,6 +22,7 @@ import tempfile
 from pathlib import Path
 import numpy as np
 import cv2
+import threading
 from unittest.mock import MagicMock, patch
 
 PROJECT_ROOT = Path(os.path.abspath(__file__)).parent.parent
@@ -195,6 +196,42 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
                 worker.start()
         finally:
             stuck.is_alive.return_value = False
+            worker.stop()
+
+    def test_25_observable_manual_connection_transitions(self):
+        """Synchronize actual capture opening to observe CONNECTING and RECONNECTING."""
+        from src.camera_manager import open_opencv_capture
+        entered, proceed = threading.Event(), threading.Event()
+        worker = self.manager.workers["CAM-07"]
+
+        def gated_open(*args, **kwargs):
+            entered.set()
+            if not proceed.wait(timeout=5.0):
+                raise RuntimeError("Test capture synchronization timed out")
+            return open_opencv_capture(*args, **kwargs)
+
+        self.manager.update_camera_source("CAM-07", "transition", "invalid_transition.mp4", auto_reconnect=False)
+        try:
+            with patch("src.camera_manager.open_opencv_capture", side_effect=gated_open):
+                self.assertEqual(worker.get_snapshot()["status"], "DISCONNECTED")
+                self.manager.start_camera("CAM-07")
+                self.assertTrue(entered.wait(timeout=5.0))
+                self.assertEqual(worker.get_snapshot()["status"], "CONNECTING")
+                proceed.set()
+                self.wait_for_status(worker, "ERROR")
+                self.manager.update_camera_source("CAM-07", "transition", self.video_fixture, auto_reconnect=False)
+                entered.clear()
+                proceed.clear()
+                self.manager.reconnect_camera("CAM-07")
+                self.assertTrue(entered.wait(timeout=5.0))
+                self.assertEqual(worker.get_snapshot()["status"], "RECONNECTING")
+                proceed.set()
+                self.wait_for_status(worker, "CONNECTED")
+                thread = worker.thread
+                self.manager.start_camera("CAM-07")
+                self.assertIs(worker.thread, thread)
+        finally:
+            proceed.set()
             worker.stop()
 
     def test_10_tracker_isolation_between_cameras(self):

@@ -26,10 +26,11 @@ if str(ROOT) not in sys.path:
 from src.event_eval import exact_poisson_ci
 from src.week4_acceptance import acceptance, preserve_review_csv, reuse_decision, strict_technical_eligible
 from src.ground_truth_integrity import validate_frozen_snapshot
+from src.inference_frame_evidence import frame_evidence_for_video, inspect_frame_jsonl
 
 HISTORICAL = ROOT / "runs/benchmarks/week4_final_recovery"
 INF = ROOT / "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full"
-out_dir = ROOT / "runs/benchmarks/week4_critical_fix/recalculated"
+out_dir = ROOT / "runs/benchmarks/week4_fix4_verification/recalculated"
 CONFIG = {"sample_fps": 5.0, "conf_thresh": 0.25, "eval_conf_thresh": 0.35,
           "window_n": 8, "confirm_k": 3, "cooldown_sec": 5.0,
           "feature_threshold": 0.02, "max_event_gap_sec": 2.0}
@@ -90,6 +91,9 @@ def run_phase4_inference_reconciliation() -> dict[str, Any]:
     config = read_json(INF / "inference_config.json")
     checkpoint = ROOT / run["model_checkpoint"].replace("\\", "/")
     current_checkpoint = digest(checkpoint)
+    raw_paths = sorted(set(INF.glob("*.jsonl")) | set((ROOT / "runs/benchmarks/week4_final").glob("*detections.jsonl")))
+    raw_audits = [inspect_frame_jsonl(path) for path in raw_paths]
+    save("raw_frame_jsonl_audit.json", raw_audits)
     coverage = []
     for vid, entry in manifest.items():
         aud, rec = audit.get(vid, {}), records.get(vid, {})
@@ -104,6 +108,9 @@ def run_phase4_inference_reconciliation() -> dict[str, Any]:
         expected_samples = (decoded + stride - 1) // stride if stride else None
         # Aggregate bounds do not prove the exact sampling schedule or timeline coverage.
         sampled_sane = 0 < count <= decoded if decoded else False
+        frame_evidence = frame_evidence_for_video(
+            vid, raw_audits, run_id=run.get("run_id"), source_sha256=expected,
+            checkpoint_sha256=run.get("checkpoint_sha256"), expected_samples=count)
         coverage.append({"video_id": vid, "relative_path": entry["relative_path"],
                          "current_source_sha256": source_hash, "expected_sha256": expected,
                          "source_hash_matches": hash_ok, "decoded_frames_match": frames_match,
@@ -115,8 +122,11 @@ def run_phase4_inference_reconciliation() -> dict[str, Any]:
                          "inference_decoded_frames": decoded,
                          "path_matches": rec.get("relative_path") == entry["relative_path"] == aud.get("relative_path"),
                          "completed": rec.get("status") == "COMPLETED",
-                         "frame_timestamps_verified": None,
-                         "inference_alignment_verified": False})
+                         "frame_evidence": frame_evidence,
+                         "model_preprocessing_verified": frame_evidence["model_preprocessing"],
+                         "sampled_frame_counts_verified": frame_evidence["sampled_frame_counts_verified"],
+                         "frame_timestamps_verified": frame_evidence["frame_timestamps"],
+                         "inference_alignment_verified": frame_evidence["full_timeline_independently_verified"]})
     missing = any(row["current_source_sha256"] is None for row in coverage) or current_checkpoint is None
     def all_evidence(field: str) -> bool | None:
         values = [row[field] for row in coverage]
@@ -129,18 +139,18 @@ def run_phase4_inference_reconciliation() -> dict[str, Any]:
         "source_hashes": all_evidence("source_hash_matches"),
         "video_id_mapping": set(manifest) == set(audit) == set(records) and all_evidence("path_matches"),
         "checkpoint_sha256": current_checkpoint == run.get("checkpoint_sha256") if current_checkpoint else None,
-        "model_preprocessing": None,  # historical manifest lacks image size/preprocessing fingerprint
+        "model_preprocessing": all_evidence("model_preprocessing_verified"),
         "confidence_threshold": config.get("eval_conf_thresh") == CONFIG["eval_conf_thresh"],
         "sampling_fps": config.get("sample_fps") == CONFIG["sample_fps"],
         "sampling_strategy": None,  # no persisted per-frame schedule
         "configuration": config == CONFIG and run.get("config") == config,
-        "source_commit_available": commit_available,
+        "source_commit_available": True if commit_available else None,
         "decoded_frame_counts": all_evidence("decoded_frames_match"),
         "sampled_frame_count_bounds": all_evidence("sampled_count_bounds_valid"),
         "sampled_count_matches_historical_stride": all_evidence("sampled_count_matches_historical_stride"),
-        "sampled_frame_counts_verified": None,
+        "sampled_frame_counts_verified": all_evidence("sampled_frame_counts_verified"),
         "run_completion": all_evidence("completed"),
-        "frame_timestamps": None,
+        "frame_timestamps": all_evidence("frame_timestamps_verified"),
         "error_records": read_json(INF / "inference_errors.json") == [],
         "skipped_frames_accounted_for": None,
         # Current manifest mismatch is unresolved historical lineage, not proof of changed videos.
@@ -150,13 +160,35 @@ def run_phase4_inference_reconciliation() -> dict[str, Any]:
     decision["missing_source_video_ids"] = [row["video_id"] for row in coverage if row["current_source_sha256"] is None]
     decision["limitations"] = [key for key, value in checks.items() if value is None]
     decision["automatic_inference_executed"] = False
+    per_video_decisions = []
+    for row in coverage:
+        local_checks = dict(checks)
+        local_checks.update({"source_hashes": row["source_hash_matches"],
+                             "video_id_mapping": row["path_matches"],
+                             "decoded_frame_counts": row["decoded_frames_match"],
+                             "sampled_frame_count_bounds": row["sampled_count_bounds_valid"],
+                             "sampled_count_matches_historical_stride": row["sampled_count_matches_historical_stride"],
+                             "run_completion": row["completed"],
+                             "frame_timestamps": row["frame_evidence"]["frame_timestamps"],
+                             "sampled_frame_counts_verified": row["frame_evidence"]["sampled_frame_counts_verified"],
+                             "model_preprocessing": row["frame_evidence"]["model_preprocessing"]})
+        local = reuse_decision(local_checks, missing_input=row["current_source_sha256"] is None or current_checkpoint is None)
+        per_video_decisions.append(dict(local, video_id=row["video_id"], frame_evidence=row["frame_evidence"]))
+    save("inference_reuse_per_video.json", per_video_decisions)
+    need_timeline = [row["video_id"] for row in per_video_decisions if not row["full_timeline_independently_verified"]]
+    decision["rerun_scope_if_independent_timeline_required"] = {
+        "video_ids": need_timeline,
+        "executable_when_other_inputs_ready": [vid for vid in need_timeline if vid not in decision["missing_source_video_ids"]],
+        "blocked_missing_source": [vid for vid in need_timeline if vid in decision["missing_source_video_ids"]],
+        "reason": "Only videos lacking bound, independently reconciled frame evidence; retrieve original evidence before choosing rerun.",
+        "inference_started": False}
     save("inference_rerun_decision.json", decision)
     result = {"inference_run_id": run.get("run_id"),
               "source_code_base_commit": source_commit, "packaged_commit": run.get("full_git_sha"),
               "historical_manifest_sha256": run.get("manifest_sha256"),
               "current_manifest_sha256": digest(manifest_path),
               "checkpoint_sha256": current_checkpoint, "coverage": coverage,
-              "timeline_coverage": "UNVERIFIED_TIMESTAMPS_NOT_STORED_PER_FRAME",
+              "timeline_coverage": "VERIFIED" if checks["frame_timestamps"] is True else "UNVERIFIED_FRAME_EVIDENCE",
               "decision": decision}
     save("inference_reconciliation_final.json", result)
     return result
@@ -274,11 +306,18 @@ def run_phase6_far_recalculation() -> dict[str, Any]:
         "scope_c_scientifically_verified_negative_exposure": summarize_scope(semantic, events, False),
     }
     diagnostic_reduction = scopes["scope_a_historical_diagnostic"]["alert_rate_reduction_percent"]
-    criteria = acceptance(scopes["scope_c_scientifically_verified_negative_exposure"]["exposure_hours"], diagnostic_reduction)
+    gt_path = ROOT / "data/ground_truth/events_v1.1_snapshot.jsonl"
+    validate_frozen_snapshot(gt_path, ROOT / "data/ground_truth/checksums_v1.1.sha256")
+    positive_gt = [json.loads(line) for line in gt_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    positive_pending = sum(event.get("verification_status") not in {"verified", "cross_verified"} for event in positive_gt)
+    criteria = acceptance(scopes["scope_c_scientifically_verified_negative_exposure"]["exposure_hours"],
+                          diagnostic_reduction, positive_gt_complete=False if positive_pending else None)
     result = {"terminology": "Diagnostic alert-event rate is not verified FAR.",
               "event_protocol": "Per video/camera/class; clip to [0, decoded_frames/native_fps); merge gaps <=2s for A, B1, B2.",
               "baseline_comparison": "Identical IDs, intervals and episode units; no global cross-scope baseline.",
               "event_reconciliation": episode_reconciliation,
+              "positive_gt_pending_count": positive_pending,
+              "ground_truth_review_status": "BLOCKED_HUMAN_REVIEW" if positive_pending or not semantic else "UNVERIFIED_PROVENANCE",
               "timeline_alignment": "UNVERIFIED; diagnostic comparisons cannot establish scientific improvement",
               "audit_status_counts": dict(Counter(row.get("decode_status") for row in rows)),
               "decode_only_normal_eof": {"video_count": sum(row.get("decode_status") == "NORMAL_EOF" and row.get("full_decode_verified") is True for row in rows),
@@ -390,7 +429,8 @@ def run_lineage(started: str) -> None:
         "producer_base_commit": head, "producer_worktree_diff_sha256": hashlib.sha256(subprocess.check_output(["git", "diff", "--binary"], cwd=ROOT)).hexdigest(),
         "producer_state": "UNCOMMITTED_WORKTREE; new source files hashed below",
         "producer_source_sha256": {str(path.relative_to(ROOT)): digest(path) for path in [
-            Path(__file__), ROOT / "src/week4_acceptance.py", ROOT / "src/ground_truth_integrity.py", ROOT / "src/event_eval.py"]},
+            Path(__file__), ROOT / "src/week4_acceptance.py", ROOT / "src/ground_truth_integrity.py",
+            ROOT / "src/inference_frame_evidence.py", ROOT / "src/event_eval.py"]},
         "historical_inference_source_commit": run.get("source_code_base_commit"),
         "historical_inference_packaged_commit": run.get("full_git_sha"),
         "manifest_sha256": digest(ROOT / "data/negative_videos_manifest.json"),
@@ -412,6 +452,9 @@ def main() -> None:
     out_dir = args.output_dir.resolve()
     if ROOT not in out_dir.parents or out_dir == HISTORICAL or HISTORICAL in out_dir.parents:
         parser.error("Use a new output directory within the workspace, outside historical recovery artifacts")
+    tracked_output = subprocess.check_output(["git", "ls-files", "--", str(out_dir.relative_to(ROOT))], cwd=ROOT, text=True)
+    if tracked_output.strip():
+        parser.error("Output contains tracked historical artifacts; choose a fresh output directory")
     started = datetime.now(timezone.utc).isoformat()
     run_phase4_inference_reconciliation()
     run_phase5_negative_ground_truth()
