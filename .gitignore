@@ -11,6 +11,10 @@ htmlcov/
 
 # Virtual environments
 .tools/
+# Human review, credentials and runtime Studio storage must never be committed.
+ground_truth_studio/private/
+**/ground_truth_studio.sqlite3*
+**/playback_cache/
 .venv/
 venv/
 env/

@@ -1,0 +1,9 @@
+{
+  "source": "POS_01",
+  "images": 1,
+  "errors": [],
+  "exceptions": [],
+  "annotation_events": 0,
+  "submitted": false,
+  "storage": "SYNTHETIC_UI_PRIVATE_DIRECTORY_ONLY"
+}

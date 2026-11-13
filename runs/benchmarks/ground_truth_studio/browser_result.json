@@ -1,0 +1,17 @@
+{
+  "url": "http://127.0.0.1:8514",
+  "test_identity": "SYNTHETIC_UI_TEST_ONLY",
+  "login": true,
+  "opened_video": "POS_01",
+  "frame_image_present": true,
+  "media": {
+    "readyState": 4,
+    "duration": 29.3,
+    "error": null
+  },
+  "annotation_submitted": false,
+  "screenshots": [
+    "studio_login.png",
+    "studio_review.png"
+  ]
+}

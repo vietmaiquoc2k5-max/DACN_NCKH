@@ -1,0 +1,19 @@
+test_unreviewed_gt_reports_blocked_not_zero_metrics (test_week4_recovery.TestEvaluationFailClosed.test_unreviewed_gt_reports_blocked_not_zero_metrics) ... ok
+test_blank_gt_never_verified (test_week4_recovery.TestWeek4Recovery.test_blank_gt_never_verified) ... ok
+test_hash_matches_manifest (test_week4_recovery.TestWeek4Recovery.test_hash_matches_manifest) ... ok
+test_hash_mismatch_fails_closed (test_week4_recovery.TestWeek4Recovery.test_hash_mismatch_fails_closed) ... ok
+test_locator_does_not_touch_sources (test_week4_recovery.TestWeek4Recovery.test_locator_does_not_touch_sources) ... ok
+test_path_traversal_rejected (test_week4_recovery.TestWeek4Recovery.test_path_traversal_rejected) ... ok
+test_restore_is_explicit_and_hash_verified (test_week4_recovery.TestWeek4Recovery.test_restore_is_explicit_and_hash_verified) ... ok
+test_review_forms_never_overwritten (test_week4_recovery.TestWeek4Recovery.test_review_forms_never_overwritten) ... PRESERVED existing human review file: /tmp/tmpzpgovfz6/repo/reviews/negative_annotator_01.csv
+PRESERVED existing human review file: /tmp/tmpzpgovfz6/repo/reviews/negative_annotator_02.csv
+PRESERVED existing human review file: /tmp/tmpzpgovfz6/repo/reviews/negative_adjudication.csv
+PRESERVED existing human review file: /tmp/tmpzpgovfz6/repo/reviews/positive_annotator_02.csv
+PRESERVED existing human review file: /tmp/tmpzpgovfz6/repo/reviews/positive_adjudication.csv
+ok
+test_signed_negative_requires_adjudication_and_source (test_week4_recovery.TestWeek4Recovery.test_signed_negative_requires_adjudication_and_source) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.022s
+
+OK

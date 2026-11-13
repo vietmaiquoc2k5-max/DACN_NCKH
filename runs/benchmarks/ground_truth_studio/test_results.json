@@ -1,0 +1,32 @@
+{
+  "head": "0c13477dd77dde56effeb9b706cdbcedf2549008",
+  "branch": "fix-4",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "results": [
+    {
+      "command": "python -m unittest discover -s tests -p test_gt_studio_*.py -v",
+      "started_at": "2026-11-13T08:18:05.491880+00:00",
+      "completed_at": "2026-11-13T08:19:28.495477+00:00",
+      "executed": 27,
+      "passed": 27,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "log": "runs/benchmarks/ground_truth_studio/targeted_final.log"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_*.py -v",
+      "started_at": "2026-11-13T08:23:55.339091+00:00",
+      "completed_at": "2026-11-13T08:25:34.515650+00:00",
+      "executed": 238,
+      "passed": 238,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "log": "runs/benchmarks/ground_truth_studio/full_suite.log"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><style>
+body{margin:0;background:#101a24;color:#dce6ed;font:14px system-ui}video{width:100%;max-height:390px;background:#050a0e;border-radius:10px}nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 2px}button,select,input{background:#1c2c38;color:#e6f3ef;border:1px solid #355045;border-radius:6px;padding:8px}button{cursor:pointer}small{color:#9eafbd}#clock{margin-left:auto;font-variant-numeric:tabular-nums}
+</style><video id="video" controls preload="metadata"></video><nav>
+<button id="play">Phát / Tạm dừng</button><select id="speed"><option>.25</option><option>.5</option><option selected>1</option><option>1.5</option><option>2</option></select>
+<input id="seek" type="number" min="0" step=".01" value="0" style="width:90px"><button id="go">Tua</button>
+<button id="start">Mark Start</button><button id="end">Mark End</button><small id="clock">0.000 s</small></nav>
+<small>Khung hình và source PTS được đối chiếu ở trình xem frame bên dưới. Không hiển thị dự đoán AI.</small>
+<script>
+const v=document.getElementById('video');let source='',seekNonce=null,presentationTime=null;
+const send=(type,extra={})=>parent.postMessage({isStreamlitMessage:true,type,...extra},'*');
+const value=(action,time)=>send('streamlit:setComponentValue',{value:{action,timestamp:time,nonce:Date.now()+Math.random()},dataType:'json'});
+document.getElementById('play').onclick=()=>v.paused?v.play():v.pause();
+document.getElementById('speed').onchange=e=>v.playbackRate=Number(e.target.value);
+document.getElementById('go').onclick=()=>{v.currentTime=Number(document.getElementById('seek').value);value('seek',v.currentTime)};
+document.getElementById('start').onclick=()=>{v.pause();value('mark_start',presentationTime??v.currentTime)};
+document.getElementById('end').onclick=()=>{v.pause();value('mark_end',presentationTime??v.currentTime)};
+v.ontimeupdate=()=>document.getElementById('clock').textContent=v.currentTime.toFixed(3)+' s';
+v.onerror=()=>{document.getElementById('clock').textContent='Codec trình duyệt không hỗ trợ; dùng trình xem frame nguồn.'};
+if(v.requestVideoFrameCallback){const tick=(t,m)=>{presentationTime=m.mediaTime;v.requestVideoFrameCallback(tick)};v.requestVideoFrameCallback(tick)}
+window.addEventListener('message',e=>{if(e.data.type!=='streamlit:render')return;const a=e.data.args;
+ if(a.url!==source){source=a.url;v.src=source;presentationTime=null}
+ if(a.seek_nonce!==seekNonce){seekNonce=a.seek_nonce;const f=()=>{v.currentTime=a.seek_time??0;presentationTime=null};if(v.readyState)f();else v.addEventListener('loadedmetadata',f,{once:true})}
+ send('streamlit:setFrameHeight',{height:490});});
+send('streamlit:componentReady',{apiVersion:1});send('streamlit:setFrameHeight',{height:490});
+</script></html>

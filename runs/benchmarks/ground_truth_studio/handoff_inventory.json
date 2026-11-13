@@ -1,0 +1,241 @@
+{
+  "created_at": "2026-11-13T08:43:20.639121+00:00",
+  "branch": "fix-4",
+  "head": "0c13477dd77dde56effeb9b706cdbcedf2549008",
+  "committed": false,
+  "pushed": false,
+  "existing_user_directories_preserved": [
+    "week4_recovery_toolkit/",
+    "runs/benchmarks/week4_assisted_recovery/"
+  ],
+  "source_frozen_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "private_csv_unchanged": true,
+  "private_csv_sha256": {
+    "negative_adjudication.csv": "58db769a128d1af2235925866a9741f228a536e8c8ff638a79e0d156148ef7ed",
+    "negative_annotator_01.csv": "5b786bfe7f5cf9f6d51344aef082d7ad3293ed593979a137d70b25af00001126",
+    "negative_annotator_02.csv": "5b786bfe7f5cf9f6d51344aef082d7ad3293ed593979a137d70b25af00001126",
+    "positive_adjudication.csv": "90c9c73c8ec9a490afd38ae37d891640fad188e0f142ab93fc6c65c9d56e649f",
+    "positive_annotator_02.csv": "53ab5d14b765b43e4787af73ab9b33ba4d5f9face0e6d56156fc4f5751e6e859"
+  },
+  "protected_diff_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "engineering": "PASS_LOCAL_WINDOWS_TESTED_SCOPE",
+  "scientific": "BLOCKED_HUMAN_REVIEW",
+  "human_reviews_performed_by_agent": 0,
+  "preview_processes_stopped": [
+    3340,
+    8672
+  ],
+  "created_or_modified_in_scope": [
+    {
+      "path": ".gitignore",
+      "bytes": 1608,
+      "sha256": "600aee72cf8c8fcc4e468930643bf5606da575412340f81e273a56e5b51abc0e"
+    },
+    {
+      "path": "docs/GROUND_TRUTH_STUDIO_IMPLEMENTATION_REPORT.md",
+      "bytes": 16182,
+      "sha256": "a05cd3e681f242fdc1135c4bd6ea81e9cec92ed96b06951834aa6a1957621f48"
+    },
+    {
+      "path": "ground_truth_studio/__init__.py",
+      "bytes": 64,
+      "sha256": "cea9b3a72ec2e5c25bdee4273f4c3f7cec172ee4043e8c70d9746058bd5c6f71"
+    },
+    {
+      "path": "ground_truth_studio/adjudication_service.py",
+      "bytes": 3984,
+      "sha256": "2102c82a88d7f389c49ac9f39c4e142df753550f95f8244fa56f38b4d48fd0e2"
+    },
+    {
+      "path": "ground_truth_studio/admin.py",
+      "bytes": 1709,
+      "sha256": "c939199d37b434dbdf65196107550f8a3c3041568cddcefba1aae6facc932497"
+    },
+    {
+      "path": "ground_truth_studio/annotation_service.py",
+      "bytes": 6804,
+      "sha256": "af6e796229cd8759afa6906fd3375e4601b0114ff229a59b4fffc4c74c9b8f62"
+    },
+    {
+      "path": "ground_truth_studio/app.py",
+      "bytes": 18683,
+      "sha256": "0607209d644c179fe11699842ea6981a7152a24c2b01f20a3fd8374ab1b730c8"
+    },
+    {
+      "path": "ground_truth_studio/config.py",
+      "bytes": 2296,
+      "sha256": "8429da0a19578f46df80975f1b6a462841be87a4efd07187febd5f93b6f11300"
+    },
+    {
+      "path": "ground_truth_studio/EXPORT_SCHEMA.md",
+      "bytes": 3623,
+      "sha256": "7d5005720be35af762c22703769a0f0ceb7de47d8a2588e90884720492a1f0e5"
+    },
+    {
+      "path": "ground_truth_studio/export_service.py",
+      "bytes": 14394,
+      "sha256": "1a36abfce872ef47caea367c90740f13d7f2b8736122886d567af2cedf401c91"
+    },
+    {
+      "path": "ground_truth_studio/integrity_service.py",
+      "bytes": 3160,
+      "sha256": "a2e83b6cf300c7673b7e13cfbbe8a6d8a8a18435bc3756a4822cb07894423236"
+    },
+    {
+      "path": "ground_truth_studio/models.py",
+      "bytes": 5528,
+      "sha256": "35b85c34b409b86c62234932d37cb5f674d030ad5c4c6559841a84b8639d4b57"
+    },
+    {
+      "path": "ground_truth_studio/player/index.html",
+      "bytes": 2844,
+      "sha256": "134482994a5552bfd848e9c900f9608d420af5faab8d1299897ad5788f1d4e3f"
+    },
+    {
+      "path": "ground_truth_studio/README.md",
+      "bytes": 10194,
+      "sha256": "89626305ab66f5b42981e0d60d7b7027971c9210d996d21bf519eadd7c8d4719"
+    },
+    {
+      "path": "ground_truth_studio/requirements.txt",
+      "bytes": 144,
+      "sha256": "2910f320b8290c918d0fd89d48cfe50ae37ff35aaf1abd698221ddabefc48d82"
+    },
+    {
+      "path": "ground_truth_studio/review_repository.py",
+      "bytes": 16819,
+      "sha256": "cd71a31e11fd9c27c1d20840fcf2c0f1c6fa7bef9d86a3c83a9bcd11f1161dd8"
+    },
+    {
+      "path": "ground_truth_studio/settings.example.json",
+      "bytes": 63,
+      "sha256": "ccf685904cd013919ab57ddd62459d2336a9f411f1b3c133303cfe963274ac3d"
+    },
+    {
+      "path": "ground_truth_studio/video_service.py",
+      "bytes": 11210,
+      "sha256": "91abc76169977fce9df555e626c1fd194d29a8d83ea481d412eb464779c471f3"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/browser_result.json",
+      "bytes": 341,
+      "sha256": "0abc5e2bd7340ee77ba420f4c9ead38ab0f5da71d062097c05502efaecf79888"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/export_final_verification.log",
+      "bytes": 1186,
+      "sha256": "79db38434d551c340bf745998528d552deb487b4153fa62778f1f17a25558467"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/export_final_verification_result.json",
+      "bytes": 297,
+      "sha256": "ebb2dcfda471bb1245c25d41d01064ca4b71106fe641b66b5560c68d4b8905ef"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/full_suite.log",
+      "bytes": 65129,
+      "sha256": "7219e25a3167e84ee62ee7c25661d47ec2170e21fa6df729ca203f5521d2a46f"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/playback_result.json",
+      "bytes": 198,
+      "sha256": "2659a0e984e70cc1c25fe6ca96c758bc29cf35fe2cd1c96bd78391eff3f089c7"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/private_initialization.json",
+      "bytes": 1933,
+      "sha256": "6621ac3f71141b946f9dd4b20e7f604709d0a3f6d8b54170afae58be8d89a9ea"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/studio_login.png",
+      "bytes": 110291,
+      "sha256": "b1239a11f5fb7a49cf187f2e8ea59185561946c150911af4fdabfce0da19ce55"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/studio_review.png",
+      "bytes": 314273,
+      "sha256": "42a5d46721a8f9726d1aca074c21fd499d9887df8e47cb4bed9a70a9f1943958"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/targeted_final.log",
+      "bytes": 4690,
+      "sha256": "a012cf34e7aba1b01a798007dd43569ef372d382208c662580c2ad857c9f27ee"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/targeted_initial.log",
+      "bytes": 12248,
+      "sha256": "d0f591510955fe11f55c55abe232f80ad555a6cfb40d176083c49f48d363c007"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/test_results.json",
+      "bytes": 984,
+      "sha256": "909ef2ab5072901917121e63f71a1276c8e0a4ee4bd4f9800496e227e0e8e137"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/ui_complete_flow.log",
+      "bytes": 420,
+      "sha256": "fbe060658d2e77dbcead8855740c22a93cbdeeaeaaebf5a8f6397c45316991e6"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/ui_complete_flow_failed_initial.log",
+      "bytes": 6344,
+      "sha256": "f2a11313da005a06bd58f2157769e7b2153090310f570a5ba1f509f6471a99bf"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/ui_complete_flow_result.json",
+      "bytes": 281,
+      "sha256": "23cc3955bf9f950739cb207e2c2cbb757c54be83cd1e373ca530f3eef6a99790"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/ui_complete_flow_result_failed_initial.json",
+      "bytes": 281,
+      "sha256": "d2897b1704f359fac5c12fd63f7693949976ca86e79a2377e8ed3b75622601bf"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/ui_initial.json",
+      "bytes": 775,
+      "sha256": "48b03a10be32e771a86cef1a265dc502cf48689d5a105c69352c5d4d11ea9ca7"
+    },
+    {
+      "path": "runs/benchmarks/ground_truth_studio/ui_real_source_final.json",
+      "bytes": 183,
+      "sha256": "cd7cf253111ee19fa288a2fcee8b49437d118ca726300ce7dc3c336f3a050dfe"
+    },
+    {
+      "path": "tests/gt_studio_fixtures.py",
+      "bytes": 4444,
+      "sha256": "cbb2ef04921d55ca59810a090f14df5734ba89f92d5013277e7258c3dde4f232"
+    },
+    {
+      "path": "tests/test_gt_studio_adjudication.py",
+      "bytes": 2742,
+      "sha256": "f42a958d677519c596473e52f09b265f938fcc20d020407a41be903b4e5329cd"
+    },
+    {
+      "path": "tests/test_gt_studio_annotations.py",
+      "bytes": 5185,
+      "sha256": "0e7797089f6d19007ccfac56f5817f1f99bce147c4e1be9c6f88bb1731fbc65f"
+    },
+    {
+      "path": "tests/test_gt_studio_independence.py",
+      "bytes": 1673,
+      "sha256": "87b31c1b050c4937f962964958aab05ac1fa2c223132c651275d0fb299579954"
+    },
+    {
+      "path": "tests/test_gt_studio_integrity.py",
+      "bytes": 7016,
+      "sha256": "7fa53a7afb91b5f51bb8cf03e1e585fd69b22b059e891fc7cf8096dc60e74085"
+    },
+    {
+      "path": "tests/test_gt_studio_ui.py",
+      "bytes": 6420,
+      "sha256": "3260b7704255274ade1ae02e63f8c91dfb35c5f11831580779a0d368794ff8ae"
+    },
+    {
+      "path": "tests/test_gt_studio_video.py",
+      "bytes": 4556,
+      "sha256": "75de7658e33e69ed059f306bfbe44424e62339e83412aecee8ae2ac96d6582da"
+    }
+  ]
+}

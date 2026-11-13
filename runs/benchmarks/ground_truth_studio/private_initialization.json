@@ -1,0 +1,39 @@
+{
+  "private_directory": "D:\\workspace\\week4_private_human_review",
+  "existing_csv_unchanged": true,
+  "csv_sha256_before": {
+    "negative_adjudication.csv": "58db769a128d1af2235925866a9741f228a536e8c8ff638a79e0d156148ef7ed",
+    "negative_annotator_01.csv": "5b786bfe7f5cf9f6d51344aef082d7ad3293ed593979a137d70b25af00001126",
+    "negative_annotator_02.csv": "5b786bfe7f5cf9f6d51344aef082d7ad3293ed593979a137d70b25af00001126",
+    "positive_adjudication.csv": "90c9c73c8ec9a490afd38ae37d891640fad188e0f142ab93fc6c65c9d56e649f",
+    "positive_annotator_02.csv": "53ab5d14b765b43e4787af73ab9b33ba4d5f9face0e6d56156fc4f5751e6e859"
+  },
+  "csv_sha256_after": {
+    "negative_adjudication.csv": "58db769a128d1af2235925866a9741f228a536e8c8ff638a79e0d156148ef7ed",
+    "negative_annotator_01.csv": "5b786bfe7f5cf9f6d51344aef082d7ad3293ed593979a137d70b25af00001126",
+    "negative_annotator_02.csv": "5b786bfe7f5cf9f6d51344aef082d7ad3293ed593979a137d70b25af00001126",
+    "positive_adjudication.csv": "90c9c73c8ec9a490afd38ae37d891640fad188e0f142ab93fc6c65c9d56e649f",
+    "positive_annotator_02.csv": "53ab5d14b765b43e4787af73ab9b33ba4d5f9face0e6d56156fc4f5751e6e859"
+  },
+  "csv_snapshots_imported": 5,
+  "accounts_created_by_agent": 0,
+  "actual_accounts": 0,
+  "actual_review_progress": {
+    "positive_videos": 24,
+    "negative_videos": 79,
+    "available_sources": 87,
+    "historical_event_count": 35,
+    "historical_pending_events": 24,
+    "historical_cross_verified_claims": 11,
+    "human_adjudicated_candidate_events": 0,
+    "videos_without_studio_review": 103,
+    "submitted_reviews": 0,
+    "disputed_videos": 0,
+    "adjudicated_videos": 0,
+    "semantic_negative_consensus_videos": 0,
+    "eligible_negative_exposure_seconds": 0.0,
+    "eligible_negative_exposure_hours": 0.0,
+    "scientific_status": "BLOCKED_HUMAN_REVIEW",
+    "operating_point_promotion_allowed": false
+  }
+}

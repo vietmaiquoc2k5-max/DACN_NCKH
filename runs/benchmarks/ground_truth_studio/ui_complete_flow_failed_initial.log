@@ -1,0 +1,89 @@
+test_login_frame_seek_mark_and_save_draft (test_gt_studio_ui.TestStudioUI.test_login_frame_seek_mark_and_save_draft) ... 2026-11-13 15:29:34.003 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ERROR
+test_login_frame_seek_mark_and_save_draft (test_gt_studio_ui.TestStudioUI.test_login_frame_seek_mark_and_save_draft) ... ERROR
+
+======================================================================
+ERROR: test_login_frame_seek_mark_and_save_draft (test_gt_studio_ui.TestStudioUI.test_login_frame_seek_mark_and_save_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\workspace\DACN_NCKH\tests\test_gt_studio_ui.py", line 83, in test_login_frame_seek_mark_and_save_draft
+    app.radio[0].set_value("Export Report").run()
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 474, in run
+    return self.root.run(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 3869, in run
+    widget_states = self.get_widget_states()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 3847, in get_widget_states
+    w = get_widget_state(node)
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 3757, in get_widget_state
+    return node._widget_state
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 2520, in _widget_state
+    if self.index is not None and len(self.options) > 0:
+       ^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 2491, in index
+    return self.options.index(formatted_value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 'Export Report' is not in list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\workspace\DACN_NCKH\tests\test_gt_studio_ui.py", line 89, in test_login_frame_seek_mark_and_save_draft
+    next(button for button in app.button if button.label == "Đăng xuất").click().run()
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 474, in run
+    return self.root.run(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 3869, in run
+    widget_states = self.get_widget_states()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 3847, in get_widget_states
+    w = get_widget_state(node)
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 3757, in get_widget_state
+    return node._widget_state
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 2520, in _widget_state
+    if self.index is not None and len(self.options) > 0:
+       ^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\site-packages\streamlit\testing\v1\element_tree.py", line 2491, in index
+    return self.options.index(formatted_value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 'Export Report' is not in list
+
+======================================================================
+ERROR: test_login_frame_seek_mark_and_save_draft (test_gt_studio_ui.TestStudioUI.test_login_frame_seek_mark_and_save_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 632, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\thien\\AppData\\Local\\Temp\\tmpg7bc5peh\\repo\\datasets\\negative_videos\\negative.avi'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\shutil.py", line 634, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "C:\Users\thien\AppData\Local\Programs\Python\Python311\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\thien\\AppData\\Local\\Temp\\tmpg7bc5peh\\repo\\datasets\\negative_videos\\negative.avi'
+
+----------------------------------------------------------------------
+Ran 1 test in 9.458s
+
+FAILED (errors=2)

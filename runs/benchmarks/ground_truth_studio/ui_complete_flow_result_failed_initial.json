@@ -1,0 +1,7 @@
+{
+  "command": "python -m unittest discover -s tests -p test_gt_studio_ui.py -v",
+  "started_at": "2026-11-13T08:29:30.330628+00:00",
+  "completed_at": "2026-11-13T08:29:41.031146+00:00",
+  "exit_code": 1,
+  "log": "runs/benchmarks/ground_truth_studio/ui_complete_flow.log"
+}

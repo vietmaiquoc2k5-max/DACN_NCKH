@@ -1,0 +1,7 @@
+{
+  "command": "python -m unittest discover -s tests -p test_gt_studio_integrity.py -v",
+  "started_at": "2026-11-13T08:39:27.192721+00:00",
+  "completed_at": "2026-11-13T08:39:45.783817+00:00",
+  "exit_code": 0,
+  "log": "runs/benchmarks/ground_truth_studio/export_final_verification.log"
+}

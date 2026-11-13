@@ -1,0 +1,11 @@
+test_existing_own_external_fire_review_restores_only_draft (test_gt_studio_integrity.TestStudioIntegrity.test_existing_own_external_fire_review_restores_only_draft) ... ok
+test_export_preserves_sources_and_never_promotes_pending (test_gt_studio_integrity.TestStudioIntegrity.test_export_preserves_sources_and_never_promotes_pending) ... ok
+test_external_csv_change_blocks_export_without_overwrite (test_gt_studio_integrity.TestStudioIntegrity.test_external_csv_change_blocks_export_without_overwrite) ... ok
+test_frozen_mutation_blocks_start_and_private_path_cannot_be_source (test_gt_studio_integrity.TestStudioIntegrity.test_frozen_mutation_blocks_start_and_private_path_cannot_be_source) ... ok
+test_human_adjudicated_candidate_is_schema_compatible_but_not_official (test_gt_studio_integrity.TestStudioIntegrity.test_human_adjudicated_candidate_is_schema_compatible_but_not_official) ... ok
+test_negative_exposure_requires_semantic_and_technical_evidence (test_gt_studio_integrity.TestStudioIntegrity.test_negative_exposure_requires_semantic_and_technical_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 18.235s
+
+OK
