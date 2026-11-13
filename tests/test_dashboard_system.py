@@ -19,6 +19,7 @@ import os
 import sys
 import time
 import tempfile
+import pytest
 from pathlib import Path
 
 import cv2
@@ -207,7 +208,10 @@ def test_multi_camera_fault_isolation():
         )
 
 
-def test_real_camera_features_and_rtsp_security():
+        mgr.close()
+
+
+def test_real_camera_features_and_rtsp_security(monkeypatch):
     print("\n[TEST 5] Kiểm tra Chế độ Camera thực tế, Kiểm tra kết nối & Bảo mật ẩn mật khẩu RTSP...")
     # 1. Kiểm tra hàm mask_rtsp_credentials
     raw_rtsp = "rtsp://admin:SuperSecretPass99!@192.168.1.108:554/cam/realmonitor?channel=1&subtype=0"
@@ -226,11 +230,16 @@ def test_real_camera_features_and_rtsp_security():
         assert m_init["overall_level"] == "STANDBY", f"Khi 0 camera kết nối phải là STANDBY, nhận được: {m_init['overall_level']}"
 
         # 3. Lưu cấu hình RTSP chứa mật khẩu và kiểm tra không lộ mật khẩu trong snapshot hay log
+        monkeypatch.setenv("FIREWATCH_RTSP_HOSTS", "192.168.1.108")
+        monkeypatch.setenv("TEST_CAMERA_RTSP", raw_rtsp)
+        with pytest.raises(ValueError, match="Inline RTSP credentials are forbidden"):
+            mgr.update_camera_source("CAM-03", "CAM 03", raw_rtsp, source_type="IP_CAMERA")
         mgr.update_camera_source(
             "CAM-03",
             new_name="CAM 03 - Cổng Chính RTSP",
-            new_source=raw_rtsp,
+            new_source="env:TEST_CAMERA_RTSP",
             source_type="IP_CAMERA",
+            source_reference="env:TEST_CAMERA_RTSP",
             enabled=True,
             auto_reconnect=True,
             auto_restart=False,
@@ -254,6 +263,8 @@ def test_real_camera_features_and_rtsp_security():
         mgr.apply_operating_mode_preset("MULTI_CAMERA", auto_connect=False)
         assert mgr.settings.operating_mode == "MULTI_CAMERA"
         print("  ✅ Chuyển đổi linh hoạt giữa 4 chế độ VIDEO_TEST, WEBCAM, IP_CAMERA và MULTI_CAMERA.")
+
+        mgr.close()
 
 
 if __name__ == "__main__":

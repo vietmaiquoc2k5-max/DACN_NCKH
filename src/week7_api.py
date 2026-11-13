@@ -11,6 +11,7 @@ import time
 import asyncio
 import re
 import sqlite3
+from contextlib import closing
 import json
 import threading
 import atexit
@@ -113,7 +114,7 @@ def _validate_source(source_type: str, source: str, webcam_index: int) -> str:
 
 
 def _initialize_camera_config(db_path: str):
-    with sqlite3.connect(db_path, timeout=10) as conn:
+    with closing(sqlite3.connect(db_path, timeout=10)) as conn, conn:
         conn.execute("PRAGMA busy_timeout=10000")
         conn.execute("""CREATE TABLE IF NOT EXISTS cameras (
             camera_id TEXT PRIMARY KEY, name TEXT NOT NULL, source_type TEXT NOT NULL,

@@ -18,6 +18,7 @@ import base64
 import re
 import json
 import sqlite3
+from contextlib import closing
 import threading
 from pathlib import Path
 from collections import deque
@@ -1091,7 +1092,7 @@ class MultiCameraManager:
 
     def _initialize_camera_config_table(self) -> None:
         """Create the additive camera configuration table without touching event history."""
-        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+        with closing(sqlite3.connect(self.event_db.db_path, timeout=10)) as conn, conn:
             conn.execute("PRAGMA busy_timeout=10000")
             conn.execute("PRAGMA journal_mode=WAL")
             conn.execute("""CREATE TABLE IF NOT EXISTS cameras (
@@ -1132,7 +1133,7 @@ class MultiCameraManager:
 
     def _restore_camera_configs(self) -> None:
         """Restore persisted camera settings while leaving all capture workers stopped."""
-        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+        with closing(sqlite3.connect(self.event_db.db_path, timeout=10)) as conn, conn:
             columns = {row[1] for row in conn.execute("PRAGMA table_info(cameras)")}
             if "telegram_enabled" not in columns:
                 conn.execute("ALTER TABLE cameras ADD COLUMN telegram_enabled INTEGER NOT NULL DEFAULT 1")
@@ -1181,7 +1182,7 @@ class MultiCameraManager:
                 self.add_log(f"{cfg.cam_id} settings were not persisted: authenticated RTSP sources require an environment reference.")
                 return False
         try:
-            with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+            with closing(sqlite3.connect(self.event_db.db_path, timeout=10)) as conn, conn:
                 conn.execute("PRAGMA busy_timeout=10000")
                 conn.execute("""INSERT INTO cameras(camera_id,name,source_type,source,webcam_index,enabled,
                     auto_reconnect,inference_fps,exclusion_zones,telegram_enabled,updated_at)
@@ -1537,7 +1538,7 @@ class MultiCameraManager:
         if w.running:
             w.stop()
         self.camera_configs = [c for c in self.camera_configs if c.cam_id != cam_id]
-        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+        with closing(sqlite3.connect(self.event_db.db_path, timeout=10)) as conn, conn:
             conn.execute("DELETE FROM cameras WHERE camera_id=?", (cam_id,))
         if cam_id in self.default_camera_ids:
             self.default_camera_ids = [c for c in self.default_camera_ids if c != cam_id]
@@ -1686,7 +1687,7 @@ class MultiCameraManager:
             w.lifecycle_state = "STOPPED"
             w.error_detail = "Chưa gán nguồn camera. Hãy chọn Camera đang hoạt động hoặc gắn File Video để test."
             w._set_placeholder("DISCONNECTED", w.error_detail)
-        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+        with closing(sqlite3.connect(self.event_db.db_path, timeout=10)) as conn, conn:
             conn.execute("DELETE FROM cameras WHERE camera_id=?", (cam_id,))
         self.add_log(f"Đã gỡ nguồn khỏi {cam_id} (Trạng thái: Chưa gán nguồn).")
         return True

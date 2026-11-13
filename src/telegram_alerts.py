@@ -5,6 +5,7 @@ import json
 import logging
 import os
 import sqlite3
+from contextlib import contextmanager
 import threading
 import time
 import uuid
@@ -141,9 +142,19 @@ class TelegramAlertDispatcher:
         conn.execute("PRAGMA foreign_keys=ON")
         return conn
 
+    @contextmanager
+    def _connection(self):
+        """Own one short-lived connection, including transaction and close."""
+        conn = self._connect()
+        try:
+            with conn:
+                yield conn
+        finally:
+            conn.close()
+
     def _initialize(self) -> None:
         """Create or migrate the delivery table and recover interrupted work."""
-        with self._connect() as conn:
+        with self._connection() as conn:
             conn.execute("PRAGMA journal_mode=WAL")
             conn.execute("""CREATE TABLE IF NOT EXISTS alert_deliveries (
                 delivery_id TEXT PRIMARY KEY,
@@ -219,7 +230,7 @@ class TelegramAlertDispatcher:
             raise ValueError("Run Test Connection using the service environment credentials before enabling alerts")
         if not self.accepting:
             raise RuntimeError("Telegram dispatcher is shutting down")
-        with self._connect() as conn:
+        with self._connection() as conn:
             conn.execute("""INSERT INTO telegram_settings(setting_id,enabled,updated_at) VALUES(1,?,?)
                 ON CONFLICT(setting_id) DO UPDATE SET enabled=excluded.enabled,updated_at=excluded.updated_at""",
                          (int(enabled), utc_now()))
@@ -283,7 +294,7 @@ class TelegramAlertDispatcher:
         confirmed_at = str(event.get("event_confirmed_at") or payload["timestamp"] or utc_now())
         queued_at = utc_now()
         delivery_id = uuid.uuid4().hex
-        with self._connect() as conn:
+        with self._connection() as conn:
             conn.execute("BEGIN IMMEDIATE")
             pending_count = conn.execute("SELECT COUNT(*) FROM alert_deliveries WHERE status IN ('QUEUED','SENDING','RETRY_PENDING')").fetchone()[0]
             if pending_count >= self.max_pending:
@@ -307,7 +318,7 @@ class TelegramAlertDispatcher:
             LOGGER.error("Telegram preflight failed without an event id (%s)", category)
             return
         payload = {"id": int(event["id"]), "image_path": str(event.get("image_path") or "")}
-        with self._connect() as conn:
+        with self._connection() as conn:
             conn.execute("""INSERT OR IGNORE INTO alert_deliveries
                 (delivery_id,event_id,channel,status,queued_at,event_confirmed_at,payload_json,error_category,error_message)
                 VALUES(?,?,'telegram','FAILED',?,?,?,?,?)""",
@@ -326,7 +337,7 @@ class TelegramAlertDispatcher:
     def _claim_next(self) -> tuple[str, dict, int] | None:
         """Atomically claim one eligible delivery from the persistent queue."""
         now = utc_now()
-        with self._connect() as conn:
+        with self._connection() as conn:
             conn.execute("BEGIN IMMEDIATE")
             row = conn.execute("""SELECT delivery_id,payload_json,attempt_count FROM alert_deliveries
                 WHERE status IN ('QUEUED','RETRY_PENDING') AND (next_attempt_at IS NULL OR next_attempt_at<=?)
@@ -443,7 +454,7 @@ class TelegramAlertDispatcher:
     def _update(self, delivery_id: str, status: str, *, telegram_acknowledged_at: str = "",
                 error_category: str = "", error_message: str = "", next_attempt_at: str = "") -> None:
         """Update one delivery state atomically."""
-        with self._connect() as conn:
+        with self._connection() as conn:
             conn.execute("""UPDATE alert_deliveries SET status=?,telegram_acknowledged_at=?,
                 error_category=?,error_message=?,next_attempt_at=? WHERE delivery_id=?""",
                 (status, telegram_acknowledged_at or None, error_category or None,

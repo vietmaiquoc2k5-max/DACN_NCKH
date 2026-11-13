@@ -63,7 +63,7 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.manager.stop_all()
+        cls.manager.close()
         cls.tmp_dir.cleanup()
 
     def setUp(self):
