@@ -1,0 +1,24 @@
+{
+    "programs": [
+
+    ],
+    "stream_groups": [
+
+    ],
+    "streams": [
+        {
+            "codec_name": "h264",
+            "r_frame_rate": "60/1",
+            "avg_frame_rate": "60/1",
+            "time_base": "1/15360",
+            "start_pts": 256,
+            "duration_ts": 14265856,
+            "duration": "928.766667",
+            "nb_read_frames": "55726",
+            "nb_read_packets": "55726"
+        }
+    ],
+    "format": {
+        "duration": "928.861293"
+    }
+}

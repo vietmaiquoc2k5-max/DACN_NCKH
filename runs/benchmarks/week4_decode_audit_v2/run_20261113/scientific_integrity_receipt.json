@@ -1,0 +1,17 @@
+{
+  "sqlite_access": "READ_ONLY",
+  "review_status_counts": {
+    "DRAFT": 6
+  },
+  "table_counts": {
+    "users": 1,
+    "review_sessions": 6,
+    "adjudications": 0,
+    "audit_log": 10
+  },
+  "audit_code_writes_private_database": false,
+  "ground_truth_promoted": false,
+  "operating_point": "PROVISIONAL",
+  "far_per_hour": null,
+  "scientific_week4": "PARTIAL"
+}

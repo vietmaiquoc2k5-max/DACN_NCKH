@@ -1,0 +1,603 @@
+{
+  "policy": "independent_decode_eof_v2",
+  "created_at_utc": "2026-11-13T11:11:06.562182+00:00",
+  "branch": "fix-4",
+  "head": "6ec06e407ed8a6043d003dbbdca6958080b5fce6",
+  "scope": [
+    {
+      "video_id": "VN_NEG_47",
+      "relative_path": "datasets/negative_videos/VN_NEG_47.mp4",
+      "sha256": "3b6f4e6cda8b6662072408828e020dc9818f76f394a613e5f810b54f120e9bad",
+      "priority_group": "A",
+      "v1_duration_seconds": 3286.77
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "relative_path": "datasets/negative_videos/VN_NEG_21.mp4",
+      "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "priority_group": "A",
+      "v1_duration_seconds": 999.83
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "relative_path": "datasets/negative_videos/VN_NEG_20.mp4",
+      "sha256": "39f72bdf2a04b64aa9a418cfc01572fe659ec44566268b5c97ebcf57920946b6",
+      "priority_group": "A",
+      "v1_duration_seconds": 928.77
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "relative_path": "datasets/negative_videos/VN_NEG_31.mp4",
+      "sha256": "b4b766383b57e8eff74b1479005650345d21978bd511d293d6cd5b134fce42b4",
+      "priority_group": "A",
+      "v1_duration_seconds": 837.44
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "relative_path": "datasets/negative_videos/VN_NEG_41.mp4",
+      "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "priority_group": "A",
+      "v1_duration_seconds": 578.92
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "relative_path": "datasets/negative_videos/VN_NEG_15.mp4",
+      "sha256": "b0a62d91a1b6d717ef08944ae143d4426492d52b6ef7bdb868a1a0a031a2e416",
+      "priority_group": "A",
+      "v1_duration_seconds": 459.44
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "relative_path": "datasets/negative_videos/VN_NEG_46.mp4",
+      "sha256": "346db12914a5f2d51b8681bd33fb494f6f54e84543f071ac281e674d91f65b22",
+      "priority_group": "A",
+      "v1_duration_seconds": 432.36
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "relative_path": "datasets/negative_videos/VN_NEG_25.mp4",
+      "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+      "priority_group": "A",
+      "v1_duration_seconds": 413.1
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "relative_path": "datasets/negative_videos/VN_NEG_44.mp4",
+      "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+      "priority_group": "A",
+      "v1_duration_seconds": 322.0
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "relative_path": "datasets/negative_videos/VN_NEG_42.mp4",
+      "sha256": "0ee3d9e16ed5eaedbdbc47afb5f2f3d954e1c154a31ee8f96ffd7c5995655bb6",
+      "priority_group": "A",
+      "v1_duration_seconds": 321.52
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "relative_path": "datasets/negative_videos/VN_NEG_16.mp4",
+      "sha256": "d03d94a07065ace339b25506d56a70eafadc438b717c980bdcbb164a0a9b6748",
+      "priority_group": "A",
+      "v1_duration_seconds": 300.2
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "relative_path": "datasets/negative_videos/VN_NEG_11.mp4",
+      "sha256": "beea573ebb7a6a856bd40d772530e9bbc5842457c4ed64695793087fed42531c",
+      "priority_group": "A",
+      "v1_duration_seconds": 287.64
+    },
+    {
+      "video_id": "VN_NEG_65",
+      "relative_path": "datasets/negative_videos/VN_NEG_65.mp4",
+      "sha256": "4df50454e18b129f85ec83cdcd1f43941f6e3760fb3dee55a14996a4880f9541",
+      "priority_group": "A",
+      "v1_duration_seconds": 272.68
+    },
+    {
+      "video_id": "VN_NEG_59",
+      "relative_path": "datasets/negative_videos/VN_NEG_59.mp4",
+      "sha256": "e8e2c535d49164f6231c3d6c919f339d3c5fc92cbfea04d62d83eaf1c3564a81",
+      "priority_group": "A",
+      "v1_duration_seconds": 267.27
+    },
+    {
+      "video_id": "VN_NEG_24",
+      "relative_path": "datasets/negative_videos/VN_NEG_24.mp4",
+      "sha256": "d6e0b3d8661b9a8e6293798a0f8b8de767174549caf6ef582bb66b3d9f5adbc9",
+      "priority_group": "A",
+      "v1_duration_seconds": 259.8
+    },
+    {
+      "video_id": "VN_NEG_58",
+      "relative_path": "datasets/negative_videos/VN_NEG_58.mp4",
+      "sha256": "28923fbb7ed9a7102bd02f654061eb073599d687fa596803508c8eb9e3ff4273",
+      "priority_group": "A",
+      "v1_duration_seconds": 249.7
+    },
+    {
+      "video_id": "VN_NEG_22",
+      "relative_path": "datasets/negative_videos/VN_NEG_22.mp4",
+      "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+      "priority_group": "A",
+      "v1_duration_seconds": 247.88
+    },
+    {
+      "video_id": "VN_NEG_29",
+      "relative_path": "datasets/negative_videos/VN_NEG_29.mp4",
+      "sha256": "02594a376735377d85b62b4630ee50e4bab0332a76f02dfc25d1a6693c9cc4da",
+      "priority_group": "A",
+      "v1_duration_seconds": 232.24
+    },
+    {
+      "video_id": "VN_NEG_63",
+      "relative_path": "datasets/negative_videos/VN_NEG_63.mp4",
+      "sha256": "10acf139ef0e18386cb6a006722b2739f270a297461dbc21301b11dab7e547da",
+      "priority_group": "A",
+      "v1_duration_seconds": 216.16
+    },
+    {
+      "video_id": "VN_NEG_08",
+      "relative_path": "datasets/negative_videos/VN_NEG_08.mp4",
+      "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+      "priority_group": "A",
+      "v1_duration_seconds": 205.8
+    },
+    {
+      "video_id": "VN_NEG_36",
+      "relative_path": "datasets/negative_videos/VN_NEG_36.mp4",
+      "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+      "priority_group": "A",
+      "v1_duration_seconds": 196.68
+    },
+    {
+      "video_id": "VN_NEG_55",
+      "relative_path": "datasets/negative_videos/VN_NEG_55.mp4",
+      "sha256": "60411030fcea9f58fb9cdec828d705eeac7cdabebf5ca785289a0a691d8a8642",
+      "priority_group": "A",
+      "v1_duration_seconds": 189.0
+    },
+    {
+      "video_id": "VN_NEG_45",
+      "relative_path": "datasets/negative_videos/VN_NEG_45.mp4",
+      "sha256": "0e6a343c81cea59e54551cee61d30df97d921b9e9c98cf674db91fea57649c28",
+      "priority_group": "A",
+      "v1_duration_seconds": 187.8
+    },
+    {
+      "video_id": "VN_NEG_26",
+      "relative_path": "datasets/negative_videos/VN_NEG_26.mp4",
+      "sha256": "2052a0b8d37cb73c6941ab0eb8b52f0b75d26de99aa59c74b9caa686b8503525",
+      "priority_group": "A",
+      "v1_duration_seconds": 181.04
+    },
+    {
+      "video_id": "VN_NEG_17",
+      "relative_path": "datasets/negative_videos/VN_NEG_17.mp4",
+      "sha256": "fcb18ca2944fba3ad266cee2cc06152abdf0be789573fe16a37f06e4d7a77f65",
+      "priority_group": "A",
+      "v1_duration_seconds": 176.28
+    },
+    {
+      "video_id": "VN_NEG_61",
+      "relative_path": "datasets/negative_videos/VN_NEG_61.mp4",
+      "sha256": "80b494bb648f9fbcfb6c0742da7d0f6f265848a7a1d8e90268e5536b6f079b13",
+      "priority_group": "A",
+      "v1_duration_seconds": 164.4
+    },
+    {
+      "video_id": "VN_NEG_60",
+      "relative_path": "datasets/negative_videos/VN_NEG_60.mp4",
+      "sha256": "c59d5d40880f56d98f7fb56bae047cb992b8c502dc2570aa9189ef2e1e483842",
+      "priority_group": "A",
+      "v1_duration_seconds": 150.16
+    },
+    {
+      "video_id": "VN_NEG_23",
+      "relative_path": "datasets/negative_videos/VN_NEG_23.mp4",
+      "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+      "priority_group": "A",
+      "v1_duration_seconds": 138.4
+    },
+    {
+      "video_id": "VN_NEG_50",
+      "relative_path": "datasets/negative_videos/VN_NEG_50.mp4",
+      "sha256": "712ab0b474690b047bca2bfc83c30d405f76374dd0add83259ec45145bc9f361",
+      "priority_group": "A",
+      "v1_duration_seconds": 132.2
+    },
+    {
+      "video_id": "VN_NEG_14",
+      "relative_path": "datasets/negative_videos/VN_NEG_14.mp4",
+      "sha256": "837cca6113345151a14c02e69aadd795ba5f2bb9bcc9c2933f25725a272ba545",
+      "priority_group": "A",
+      "v1_duration_seconds": 128.32
+    },
+    {
+      "video_id": "VN_NEG_64",
+      "relative_path": "datasets/negative_videos/VN_NEG_64.mp4",
+      "sha256": "c37b81144c37d81e94653d469d8819f46b83ed714224c714a394f51ea714afad",
+      "priority_group": "A",
+      "v1_duration_seconds": 126.08
+    },
+    {
+      "video_id": "VN_NEG_39",
+      "relative_path": "datasets/negative_videos/VN_NEG_39.mp4",
+      "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+      "priority_group": "A",
+      "v1_duration_seconds": 125.24
+    },
+    {
+      "video_id": "VN_NEG_18",
+      "relative_path": "datasets/negative_videos/VN_NEG_18.mp4",
+      "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+      "priority_group": "A",
+      "v1_duration_seconds": 124.28
+    },
+    {
+      "video_id": "VN_NEG_54",
+      "relative_path": "datasets/negative_videos/VN_NEG_54.mp4",
+      "sha256": "122dc64a79a9c4d9c806ee9bd5afe85354d0506fe9cc600de5c22863e06fc4a4",
+      "priority_group": "A",
+      "v1_duration_seconds": 117.56
+    },
+    {
+      "video_id": "VN_NEG_35",
+      "relative_path": "datasets/negative_videos/VN_NEG_35.mp4",
+      "sha256": "6b9827179674cc46d3b07305d8b84c7d69e5efd5a0714d507693592d243cfc4f",
+      "priority_group": "A",
+      "v1_duration_seconds": 113.01
+    },
+    {
+      "video_id": "VN_NEG_56",
+      "relative_path": "datasets/negative_videos/VN_NEG_56.mp4",
+      "sha256": "e9255e00a982d47287f103b306b46ed300ec75c36df45494a4c22566bc8f836c",
+      "priority_group": "A",
+      "v1_duration_seconds": 107.04
+    },
+    {
+      "video_id": "VN_NEG_06",
+      "relative_path": "datasets/negative_videos/VN_NEG_06.mp4",
+      "sha256": "624ec8250d9c227580fc06ffe99ce3b21562070fe9358c47789b9fbb5028a0c1",
+      "priority_group": "A",
+      "v1_duration_seconds": 104.6
+    },
+    {
+      "video_id": "VN_NEG_40",
+      "relative_path": "datasets/negative_videos/VN_NEG_40.mp4",
+      "sha256": "955182cd25ac0ec1601d1e2a65516301d8673c0162b6702eaa8ab118e74a3e98",
+      "priority_group": "A",
+      "v1_duration_seconds": 104.17
+    },
+    {
+      "video_id": "VN_NEG_57",
+      "relative_path": "datasets/negative_videos/VN_NEG_57.mp4",
+      "sha256": "5d1ccd753c9679a4b90ed16ef73ce372d4e5c2fbc04cc527adb457467489f895",
+      "priority_group": "A",
+      "v1_duration_seconds": 100.08
+    },
+    {
+      "video_id": "VN_NEG_13",
+      "relative_path": "datasets/negative_videos/VN_NEG_13.mp4",
+      "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+      "priority_group": "A",
+      "v1_duration_seconds": 94.52
+    },
+    {
+      "video_id": "VN_NEG_33",
+      "relative_path": "datasets/negative_videos/VN_NEG_33.mp4",
+      "sha256": "1a735ce99aebaba1a43bfcf13bcdce6565a1f8f5f9d473d52d1c30aadebf33af",
+      "priority_group": "A",
+      "v1_duration_seconds": 89.73
+    },
+    {
+      "video_id": "VN_NEG_52",
+      "relative_path": "datasets/negative_videos/VN_NEG_52.mp4",
+      "sha256": "273294e4a2c3e2c8ec5902b4c5848e45b7b2a74d3f0079516ac3b68ca44fc160",
+      "priority_group": "A",
+      "v1_duration_seconds": 84.92
+    },
+    {
+      "video_id": "VN_NEG_30",
+      "relative_path": "datasets/negative_videos/VN_NEG_30.mp4",
+      "sha256": "6bd343e24e0a948011b0058ac6f46b281e677268429d27f7ca8f159024da7bff",
+      "priority_group": "A",
+      "v1_duration_seconds": 84.68
+    },
+    {
+      "video_id": "VN_NEG_28",
+      "relative_path": "datasets/negative_videos/VN_NEG_28.mp4",
+      "sha256": "db494e51f8900c965364a297142bc1745413b71319d16916af020e1c5a02d448",
+      "priority_group": "A",
+      "v1_duration_seconds": 76.68
+    },
+    {
+      "video_id": "VN_NEG_53",
+      "relative_path": "datasets/negative_videos/VN_NEG_53.mp4",
+      "sha256": "2c1a0dababe5a006d657d40b28ddc526f0d8e21da28027f4fd944594241ffadb",
+      "priority_group": "A",
+      "v1_duration_seconds": 75.08
+    },
+    {
+      "video_id": "VN_NEG_62",
+      "relative_path": "datasets/negative_videos/VN_NEG_62.mp4",
+      "sha256": "5c8b99f6b17bd0a24f11fa9b0275fe8f9bf10e9dcff0d161ce890559fe7e4da2",
+      "priority_group": "A",
+      "v1_duration_seconds": 74.8
+    },
+    {
+      "video_id": "VN_NEG_19",
+      "relative_path": "datasets/negative_videos/VN_NEG_19.mp4",
+      "sha256": "4ea7a95b4f1d0b2560c4c6383b547394975c2aa392ee3f770cb0be3d31961b5a",
+      "priority_group": "A",
+      "v1_duration_seconds": 74.68
+    },
+    {
+      "video_id": "VN_NEG_32",
+      "relative_path": "datasets/negative_videos/VN_NEG_32.mp4",
+      "sha256": "2828f46f4aca2600082509da8240e407d215f0585fe440833dc84ace831b9f1a",
+      "priority_group": "A",
+      "v1_duration_seconds": 73.8
+    },
+    {
+      "video_id": "VN_NEG_09",
+      "relative_path": "datasets/negative_videos/VN_NEG_09.mp4",
+      "sha256": "140ab2a2b12c5c3a5d2b0b3f8b319e88f2a0eafaea86dec110f7dae45c7c589c",
+      "priority_group": "A",
+      "v1_duration_seconds": 69.96
+    },
+    {
+      "video_id": "VN_NEG_12",
+      "relative_path": "datasets/negative_videos/VN_NEG_12.mp4",
+      "sha256": "6a7dee5d035ee983aab5d811d80c5627f54785edd0e58ca006d7a327d6f6de0a",
+      "priority_group": "A",
+      "v1_duration_seconds": 69.84
+    },
+    {
+      "video_id": "VN_NEG_51",
+      "relative_path": "datasets/negative_videos/VN_NEG_51.mp4",
+      "sha256": "90c0a880490c9c7219c366355ef46603c219db3c8479d070975d5029d8297339",
+      "priority_group": "A",
+      "v1_duration_seconds": 67.48
+    },
+    {
+      "video_id": "VN_NEG_34",
+      "relative_path": "datasets/negative_videos/VN_NEG_34.mp4",
+      "sha256": "21c67fe7388f1092ac95683dc37c37ab5eded6bf2f6a337136027f3d287351c8",
+      "priority_group": "A",
+      "v1_duration_seconds": 64.76
+    },
+    {
+      "video_id": "VN_NEG_38",
+      "relative_path": "datasets/negative_videos/VN_NEG_38.mp4",
+      "sha256": "01b4b563e0e50f23cb999dc7dfa587dabbd86f887b8d7159dcce49abd4eb2644",
+      "priority_group": "A",
+      "v1_duration_seconds": 62.8
+    },
+    {
+      "video_id": "VN_NEG_07",
+      "relative_path": "datasets/negative_videos/VN_NEG_07.mp4",
+      "sha256": "ce46bcb59a421bcde16c34f0601ec941da23d74327284ac9d009b94275145281",
+      "priority_group": "A",
+      "v1_duration_seconds": 62.76
+    },
+    {
+      "video_id": "VN_NEG_37",
+      "relative_path": "datasets/negative_videos/VN_NEG_37.mp4",
+      "sha256": "d94d87467334a576b07dfbefffeeaf7db13ef76cd4a894f01d82849a99fc7e35",
+      "priority_group": "A",
+      "v1_duration_seconds": 61.6
+    },
+    {
+      "video_id": "VN_NEG_27",
+      "relative_path": "datasets/negative_videos/VN_NEG_27.mp4",
+      "sha256": "2cdac58ec5d0ff56d0ca7ee339ba8712fb476cc384c19e38569eeff853c2dac5",
+      "priority_group": "A",
+      "v1_duration_seconds": 59.68
+    },
+    {
+      "video_id": "VN_NEG_49",
+      "relative_path": "datasets/negative_videos/VN_NEG_49.mp4",
+      "sha256": "e0a2599f06c7a9774a1ff391b38828e09d36464d58fe8131eb35a27cfaf75b74",
+      "priority_group": "A",
+      "v1_duration_seconds": 52.96
+    },
+    {
+      "video_id": "VN_NEG_43",
+      "relative_path": "datasets/negative_videos/VN_NEG_43.mp4",
+      "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "priority_group": "A",
+      "v1_duration_seconds": 48.7
+    }
+  ],
+  "execution_rule": "ALL_58; group A/B/C/D, longest v1 duration first; no model outcomes used; no early stopping",
+  "workers": 1,
+  "ffmpeg_decoder_threads": 2,
+  "ffmpeg": "D:\\workspace\\DACN_NCKH\\.tools\\ffmpeg\\ffmpeg.exe",
+  "ffprobe": "D:\\workspace\\DACN_NCKH\\.tools\\ffmpeg\\ffprobe.exe",
+  "implementation_sha256": {
+    "src/video_audit_v2.py": "a7103eb0f0269f22f4ef25d88e2119e45e1bf209532b58fc611e80176dc9946b",
+    "scripts/recover_negative_decode_v2.py": "7818cfa27cd43191507cd57617b9e57040acd743e3e6c6608e94cf97d1cbbc7e"
+  },
+  "protected_sha256": {
+    "data/negative_videos_manifest.json": "5ba1855d624f65339f60fcd741ed2edc874ac5e327529a0d2c99c8460592ef23",
+    "data/video_catalog_local_v2.json": "1c8facb8d2cfebb24602bbf7093c8b43770aacb6618f966d49d731acff9b7943",
+    "data/ground_truth/events_v1.1_snapshot.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "data/ground_truth/checksums_v1.1.sha256": "cfb057620f5c0f453cd5ede01472b7b8d268a9073a7a767ad975c0bf041e3d31",
+    "src/video_audit.py": "515c36664086e5c8bfc710487abb72940352ff8c1ce516d10383172458875492",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/artifact_sha256.json": "1b6a5caf66918df05ea4f64590c6b588fe23c35a67539ea50fab3b1b64a3d2fc",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_execution.log": "461cd7000575a6741f384d7e9b769ba744d0813b07d0a6414b0cd4f5b1f830ef",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/browser_evidence.json": "b56632bcd1730a7143a7023f8937dab8e9c83a2b3d3a485156a11a166cb998e9",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/camera_retry.log": "e0ea64920ab2d3dc39585ef832e729641f7dcba630f25492544bad31d5e1edd5",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/catalog_execution.log": "06323ba4d973fd9e8b39003880bfde3cc5ffdc419f48b1ed5cabe3eed0ec2979",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/catalog_reconciliation_report.json": "1e9c961a03f26584106b51853b67078dc210a52a3039eb78b826657f02e0c295",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/current_physical_catalog.json": "f77b3cba4cb1bbcf559b61e310b408f3a7164c4b1c703a25f49d7d4a16c37d74",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/environment.json": "45bd43ef48ecb933c39ee1b584756061717c39cdd86805a456624fcfaf6b4787",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/evaluation_tests.log": "13a7617e838f6e118e5ee6936e2e3b2f5e47447c8bdc899ed4803f00d71b96bb",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/ground_truth_candidate_status.json": "37c62bd6520ae331f44903d0efb72d36bfc09af878ff41fa571981e0cbd3f59f",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/historical_claims_reauthentication.json": "35156c8bc165b35a50d46853b1a0157819ae1af85d0a13334533a2a3234525d3",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/inference_reconciliation.json": "5422a3f17cfe290100608bf4614674de6a4e0f29228992998dc252a183190c74",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/integrity_receipt.json": "0c0d5682dfcf06395f922a2055a43b67cdbcbae54298cf51c0bd2cbd2dc303a3",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/migration_receipt.json": "d432fdc2c5e9fcd04a291d3c0231a86dcc0dc6606ae045d055e3f545b7291825",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/missing_historical_sources.json": "49e8ccec2766be4daee57f96a93f2bc57c3e10a1a2524978e1faf4084083c5fe",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/p0_complete_tests.log": "caffe0f215a19a0d9b066cd8480258e2346480fc4d1302e9bcd7e60b54a12b80",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/p0_tests.log": "1caff0c7417ba2f564b0b9063dace4d01d74054ad66f92e2f1a90180ba3fa4f2",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/provisional_evaluation.json": "488d9f2f3ffa5419700e0f7f246d00f3055f268daa26f7bd1f2a2f96ce3f953c",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/pytest_final_guards.log": "328b217ae2311e64472e646624e0729d044306b79f0a1822feacbf41a43f7c59",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/pytest_targeted.log": "f1ce5467b921567366c0cb5dae7b6bd15577c99387e695be71f4be1ba2594e13",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/studio_catalog_overview.png": "e7697f59d5bb142ebe27c69f6ceade0751379dd89f8ba6b87047855bfc39b668",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/studio_final.log": "18bfde76751c9ae004f430687bccf279808ef18903c09eb7d5cec25435631fcb",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/studio_single_reviewer.png": "871b9163f0abcc54334cae81357d947868dd2a60d1e0ede46f594cd583030e45",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/studio_tests.log": "3a2b3bd28daa58304bda780e741d91d7ca2e9dc2bea1d9b02f7201f805c8ae11",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/technical_audit_63.json": "36fc0a123efa9b32f2955c2a335f21d413a3aab20de51037c7c23c1ecdeb9acf",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/technical_audit_summary.json": "3d1112b7533185e0e14e3a5263876d9ed0f0959482e69d2fdcf0c75b1fa1944a",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/test_results.json": "0e62597d2b81dec8210a7449e5d3760581875ea02f4d6123a0f0967c0db3bd2c",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/unittest_full.log": "c24063e7c1760cfa252e01238f87d66065ee22e29b1f80be5ea75d678816fcbe",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/unittest_full_retry.log": "54c60a9ac524a4cd9eebebb4e4549ee44d648f92e5b705c8914c4f8b13eb5818",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/video_catalog_local_v2.json": "1c8facb8d2cfebb24602bbf7093c8b43770aacb6618f966d49d731acff9b7943",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/video_catalog_post_audit.json": "6b30c7d7e7ae9eccd4be07717deb3bf44980e940209d7a9611186590ad0040ec",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_01.json": "6dc60108c1f15a5ede8b672a00098e6263c027c3bae348dd34541e3b044cf874",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_01.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_03.json": "2b736c89aaca0f9d8f7a815f95d85027be51e4858385dc3d12162b7541f6a5ef",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_03.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_04.json": "5cfe8631294ddd99d2cb60e85ea65bc8e543d59c2c29a6905bbfaf3bd7dbb9a3",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_04.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_06.json": "302a5c985fb306ef3246ee67bb8b0b6e34614dfe29a00825b891e3e6ed1bed3e",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_06.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_07.json": "327f4dd67677e69ced94443737382c63bed321deb098a4d270bfe09624572255",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_07.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_08.json": "cd4d88a9fa50c5fb461f4d452c17f0ebac058a01e9e3870ee9c03f8be1455c2c",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_08.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_09.json": "73726345ce231db1b08bae84ea4880940691ef514149c6b0d42a209b6a10e4e5",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_09.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_10.json": "bfb7b483b4245062acbad96f781ba8915bf33e8047f959f1e36756681c157ee2",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_10.log": "458b2e9ff758bf109b985a97d267f974dabc32591a426db755724e3bdae87f1c",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_11.json": "5f38526878f9517aa01ca5910e7157a6bd954bed75efe5695e749ad204082750",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_11.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_12.json": "73256c78d212f9e3492619194e612abe53734281d985ef64b5a6eb6cefb4fbbb",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_12.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_13.json": "d8df5d299712985167a98c7e8e29069cc2498d1e08123f326814baf565c2176e",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_13.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_14.json": "3f63b57eaaf62052f675ffd6ba595e49f177fbe30e0bec3607fa4db9f4d77f86",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_14.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_15.json": "f60a5b00c5b10f12300cbdcfd659fe75f8b00dc3d817f178a16d0b36cceadb42",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_15.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_16.json": "5bd59edecc916fb983de0ffaaf82f3bfd410ff8735288eb3458d390161386a2d",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_16.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_17.json": "53ab8eb9682257969a50ebb789d6c2d6aa02e5c14203cb736284fee76d76243b",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_17.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_18.json": "884435f129283cf8398b48d57ac8740dfc41eee2d9431779848e0360f767767f",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_18.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_19.json": "a429b26b9dfe9774d4942c19dfc0f6a7a362eef1d5ef479c12c26f5bfb960a27",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_19.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_20.json": "2f43a3635a80ec3be074bc40681a0391d08b90f1435f4feb3a266ef25a3b74d8",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_20.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_21.json": "6fe5e0830e09f1a1dc843c921147338a7d9633f450269f71074e4d9dec6f425e",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_21.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_22.json": "0c82882633afc5d03240ac05c0f25254a7c0965cf18d952cac3294d59cc16906",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_22.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_23.json": "3311f51f42211d86c656ef07080d7c215e150893f102c787e487367bb4b6584e",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_23.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_24.json": "9979dfad3e2715c2ec97d18555255a8dd73caef5bbc315601ec9757d16fa68e5",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_24.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_25.json": "590b6a4804ed094c5361b4841fc90284aa695ea177890e20867e704236ddf37f",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_25.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_26.json": "1e14454b5c18e31f5e3631b5a40ecbc12c5bd690abeab4fe542036b738357d3a",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_26.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_27.json": "34d4cd2edb265bdcf8e293ddbacb7c1d38f8ad60b16efbe136eda0e8e9987e7d",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_27.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_28.json": "1b40406fd60e032ab80344131fbdb24787b63bd7425c37839aaa85d3763fe0ab",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_28.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_29.json": "4d06d8c4e9c8c5a273df1d24da34da21184400a44b95b30605368e53d6b2ddae",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_29.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_30.json": "223c3cc1ba5f0bd8c6a54c1d00270d26748db8adca7c01733c25300d8077431e",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_30.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_31.json": "550c058e3c56df59342add654b818afc065a409175873d201c201aaad9fb8885",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_31.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_32.json": "e769880b8fa5dcf5afb98d8c2fd4c18d24dd204a1601cb362e53b67a3aba7ce1",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_32.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_33.json": "b347bee9be387ef7723d42412f8d2705727c41604281d0ed654490f93a379102",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_33.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_34.json": "a85af49ef39f12aa82fa1d7236516e2bfc4fb91221715b8e834685565e196b1b",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_34.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_35.json": "d88dc2a9823ab90bf0858c54915613fdb2793ce6296ac33b87a4dd085068fedf",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_35.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_36.json": "cc9a1dd050e26681296e3278b9878065c0af55a37bf3d8c5359fd1512baedd92",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_36.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_37.json": "f64fe8c6cae0dc8c98ba8d86b8e14f60e367d097b37197ff8b7e9a6c96e5f198",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_37.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_38.json": "90d3d1db0d1fe654ad0657df93ba6dc1a05bd475ffd5bcc759502ae16d766e37",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_38.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_39.json": "add55ea1513956b784416cbec94648a1f0df3a99e722f3319f7d8f13cf8da23a",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_39.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_40.json": "edfa90c427a71e5d05563caf450c55b7fc81236337db537997cdff4bbe3fcec6",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_40.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_41.json": "6110d419e643c7fcac8ae9ff16f019d240ec6437bfbe785c592e2c1e130eb7b3",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_41.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_42.json": "ae018e94aa56a070c19c820fdb634928541504c90c475abcfe110827a68e841b",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_42.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_43.json": "ea77b26734f20ace5e5198ed17aaf04a76b64973fd0e4b26abe9cef47cc50e51",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_43.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_44.json": "4a44ac96ff5fa3b94160e28bb441c8e622e12232e75840d2b71ad1739b1d5539",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_44.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_45.json": "061b88d2fc9148506f337a7bf26ad05e8cb6eb5b746522c10ad2d0f7892620af",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_45.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_46.json": "d5dd742b389528667cb4ea47020816442454a8c51e01a63061bc91312369f2b3",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_46.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_47.json": "254ea258368e3e04aa515ad2e0c99b430cc748c3c60c3adaaed3631d963acfec",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_47.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_48.json": "4eecbd3ebfec356d6c4ed6094a1dedf7e77a7fc6026b38c11661be54c354ea99",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_48.log": "cbbc93b835e42280d1311602c81a7295819e2a8b0d1f47d7e845a3b54ccb56b0",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_49.json": "aadbb43e03c9239c2a568f7b49e26abaaf91c6f581c5971fc1286a0852af1ae9",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_49.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_50.json": "3ce05464946462b40eb84eb1523bcae3bbd1374e618916f6ed8a2b68327abf9d",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_50.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_51.json": "0b7a9437cfb677c6c4c420f9e17fa851bb08b267559041cf2cbbec4073c3dc17",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_51.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_52.json": "c46acbac73ddeb8fb19ac41fbdb48f0b5ccbdec7e8c86817bd923d89e6b0a381",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_52.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_53.json": "462b93dcdafcd58d5a87fda9e0de260e95d88fe0301b8be84a24d397a796b3d2",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_53.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_54.json": "18567a697fbf1d0c0a0461de772f7b89851fa23dd6230835235180edab9535f9",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_54.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_55.json": "e6ae6228bb399f76e76f4d0c964adb015150f3a39b3301fa295bf9ba5d4589d0",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_55.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_56.json": "5aff02d229d3350423e1bdf69444b775619e0574f219fa86c89d6e0017e33f70",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_56.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_57.json": "a39a3e9d3ac20dd5c60d0b523407b51784d372cd9caa5b8946e02750b0c254f6",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_57.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_58.json": "fde3ef35394a9dc1aeed391996d4cd25a0d954813d3a8c33a39f04763292661a",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_58.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_59.json": "6cc30365be979fda6c2c6a03d8e5e9b73661473c1f12933a2ca9d7c5ba061d77",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_59.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_60.json": "f4bc9b7a902e6212482cb3671e01f41b29220ed2e052acb332697b54b6bb5a8c",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_60.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_61.json": "6c8db1e66748b32f5342b6dbd9f205f3ddd7ff8a109cc689961f80e8648cf6f8",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_61.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_62.json": "14bdc6c4a609f8fb2c779789b1a94d0a0fc61f049f3d21389ec5539fb4f5c02f",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_62.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_63.json": "74997212cfa71c3170ba87b3a3b4a980feed2f6b33d7274a0e226ff5eaa0df80",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_63.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_64.json": "6b12d92bbd559c81b9e6dc2bb4a56c2ec38c09c710e7176a20983edc06da8759",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_64.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_65.json": "e083fa8e6bcfe448e3e5c2138cb967e2fab2142cd1538e4488332501b5fdd495",
+    "runs/benchmarks/week4_dataset_recovery/run_20261113_v2/audit_records/VN_NEG_65.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/frame_level_events.json": "bd69e72856321336544907c1ca33b7952850ec12363d0f8d9c6a4df845f4aa42",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/inference_config.json": "9cadf550964bf03550214bf9d14a0e2b779f84a53712cc6596fb868c1c7be931",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/inference_errors.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/inference_log.txt": "70abf7ebdb535c8259db9dc36de857060d53fffc191d08a2bd46c9ab3d9ad0b3",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/negative_exposure_summary.json": "2625597ad0b23f79139909bd77fceb7c6a978fe2176e1d15c7e327c79824dae6",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/run_manifest.json": "d6c560cf853d2b7182077f7665ece01932fa54d0311a932c0ec9e267490b7f26",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/temporal_confirmed_events.json": "81e325766c05a6fffe207f8afdb6ea6fd69a907e0ce9c75d518833c49495ce5c",
+    "runs/benchmarks/week4_full_inference/run_20261111_233035_neg_full/video_inference_summary.csv": "e88e40f86aeb7b996ae036b8b0bb8746e4d8b98e0e2fd9b45af7315351d33433",
+    "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6"
+  },
+  "tool_versions": {
+    "ffmpeg": "ffmpeg version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 9.0.2-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+  },
+  "human_review_status": "UNCHANGED_PENDING",
+  "inference_run": false,
+  "scientific_far_per_hour": null
+}

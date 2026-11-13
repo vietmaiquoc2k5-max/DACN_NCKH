@@ -1,0 +1,8 @@
+{
+  "command": "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe scripts/recover_negative_decode_v2.py --mode audit --resume",
+  "exit_code": 0,
+  "completed_records_reused": 58,
+  "all_record_and_raw_artifacts_byte_hashes_unchanged": true,
+  "files_verified": 464,
+  "elapsed_seconds": 13.157000000002881
+}

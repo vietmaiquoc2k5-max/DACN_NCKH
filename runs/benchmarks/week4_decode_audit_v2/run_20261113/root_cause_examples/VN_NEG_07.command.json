@@ -1,0 +1,1 @@
+{"command": ["D:\\workspace\\DACN_NCKH\\.tools\\ffmpeg\\ffprobe.exe", "-v", "error", "-show_entries", "stream=index,codec_type,codec_name,start_time,duration,time_base:format=duration", "-of", "json", "D:\\workspace\\DACN_NCKH\\datasets\\negative_videos\\VN_NEG_07.mp4"], "exit_code": 0}

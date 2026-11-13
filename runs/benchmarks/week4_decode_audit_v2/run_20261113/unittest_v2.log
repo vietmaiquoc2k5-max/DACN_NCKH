@@ -1,0 +1,29 @@
+test_actual_decode_source_and_v1_bytes_preserved (test_video_audit_v2.TestV2ActualDecode.test_actual_decode_source_and_v1_bytes_preserved) ... ok
+test_corrupt_actual_input_not_accepted (test_video_audit_v2.TestV2ActualDecode.test_corrupt_actual_input_not_accepted) ... ok
+test_resume_and_tampered_artifact_blocked (test_video_audit_v2.TestV2ActualDecode.test_resume_and_tampered_artifact_blocked) ... ok
+test_resume_changed_source_blocked (test_video_audit_v2.TestV2ActualDecode.test_resume_changed_source_blocked) ... ok
+test_clean_metadata_mismatch (test_video_audit_v2.TestV2Gates.test_clean_metadata_mismatch) ... ok
+test_counts_equal (test_video_audit_v2.TestV2Gates.test_counts_equal) ... ok
+test_decoder_errors (test_video_audit_v2.TestV2Gates.test_decoder_errors) ... ok
+test_duration_not_container_or_fps_estimate (test_video_audit_v2.TestV2Gates.test_duration_not_container_or_fps_estimate) ... ok
+test_explicit_metadata_sample_count_contradiction_excluded (test_video_audit_v2.TestV2Gates.test_explicit_metadata_sample_count_contradiction_excluded) ... ok
+test_ffprobe_disagrees (test_video_audit_v2.TestV2Gates.test_ffprobe_disagrees) ... ok
+test_missing_progress_end (test_video_audit_v2.TestV2Gates.test_missing_progress_end) ... ok
+test_no_arbitrary_delta_tolerance (test_video_audit_v2.TestV2Gates.test_no_arbitrary_delta_tolerance) ... ok
+test_no_human_promotion (test_video_audit_v2.TestV2Gates.test_no_human_promotion) ... ok
+test_nonzero_exit_not_proof_of_corruption (test_video_audit_v2.TestV2Gates.test_nonzero_exit_not_proof_of_corruption) ... ok
+test_opencv_actual_disagrees (test_video_audit_v2.TestV2Gates.test_opencv_actual_disagrees) ... ok
+test_preflight_refuses_existing_output_without_overwrite (test_video_audit_v2.TestV2Gates.test_preflight_refuses_existing_output_without_overwrite) ... ok
+test_priority_uses_decode_evidence_not_alerts (test_video_audit_v2.TestV2Gates.test_priority_uses_decode_evidence_not_alerts) ... ok
+test_sha_mismatch (test_video_audit_v2.TestV2Gates.test_sha_mismatch) ... ok
+test_technical_hours_not_scientific_exposure (test_video_audit_v2.TestV2Gates.test_technical_hours_not_scientific_exposure) ... ok
+test_timeout (test_video_audit_v2.TestV2Gates.test_timeout) ... ok
+test_timestamp_discontinuity (test_video_audit_v2.TestV2Gates.test_timestamp_discontinuity) ... ok
+test_v1_v2_diff (test_video_audit_v2.TestV2Gates.test_v1_v2_diff) ... ok
+test_vfr_explicit_durations (test_video_audit_v2.TestV2Gates.test_vfr_explicit_durations) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 1.835s
+
+OK
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0000025424abe4c0] moov atom not found

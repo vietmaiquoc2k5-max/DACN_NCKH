@@ -1,0 +1,102 @@
+{
+  "captured_at_utc": "2026-11-13T11:39:08.286236+00:00",
+  "status": "TECHNICAL_TARGET_REACHED_BATCH_CONTINUES",
+  "v2_completed": 12,
+  "retained_v1_sources_rehashed": true,
+  "technical_candidate_hours": 5.164753685185186,
+  "scope": [
+    {
+      "video_id": "VN_NEG_01",
+      "source_sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+      "duration_seconds": 3874.03,
+      "policy": "strict_full_stream_zero_tolerance_v1"
+    },
+    {
+      "video_id": "VN_NEG_03",
+      "source_sha256": "25fda9ea2b1ca96ca51b74fa34b6b75e67ffb06daa0fc0cb4f7eeb1f840e6b94",
+      "duration_seconds": 35.1,
+      "policy": "strict_full_stream_zero_tolerance_v1"
+    },
+    {
+      "video_id": "VN_NEG_04",
+      "source_sha256": "eb242b46c30484c60342201d9d1e5c2514af552fc013cd2bba9f605098b423ec",
+      "duration_seconds": 5516.0,
+      "policy": "strict_full_stream_zero_tolerance_v1"
+    },
+    {
+      "video_id": "VN_NEG_11",
+      "source_sha256": "beea573ebb7a6a856bd40d772530e9bbc5842457c4ed64695793087fed42531c",
+      "duration_seconds": 287.64,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_15",
+      "source_sha256": "b0a62d91a1b6d717ef08944ae143d4426492d52b6ef7bdb868a1a0a031a2e416",
+      "duration_seconds": 459.44,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_16",
+      "source_sha256": "d03d94a07065ace339b25506d56a70eafadc438b717c980bdcbb164a0a9b6748",
+      "duration_seconds": 300.2,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_20",
+      "source_sha256": "39f72bdf2a04b64aa9a418cfc01572fe659ec44566268b5c97ebcf57920946b6",
+      "duration_seconds": 928.7666666666667,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_21",
+      "source_sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "duration_seconds": 999.8333333333334,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_25",
+      "source_sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+      "duration_seconds": 413.1,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_31",
+      "source_sha256": "b4b766383b57e8eff74b1479005650345d21978bd511d293d6cd5b134fce42b4",
+      "duration_seconds": 837.4366,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_41",
+      "source_sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "duration_seconds": 578.92,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_42",
+      "source_sha256": "0ee3d9e16ed5eaedbdbc47afb5f2f3d954e1c154a31ee8f96ffd7c5995655bb6",
+      "duration_seconds": 321.52,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_44",
+      "source_sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+      "duration_seconds": 322.0,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_46",
+      "source_sha256": "346db12914a5f2d51b8681bd33fb494f6f54e84543f071ac281e674d91f65b22",
+      "duration_seconds": 432.36,
+      "policy": "independent_decode_eof_v2"
+    },
+    {
+      "video_id": "VN_NEG_47",
+      "source_sha256": "3b6f4e6cda8b6662072408828e020dc9818f76f394a613e5f810b54f120e9bad",
+      "duration_seconds": 3286.766666666667,
+      "policy": "independent_decode_eof_v2"
+    }
+  ],
+  "scope_sha256": "7c634e64da7219286204118ad41ac29b1f7b8497f6b19f5115f05e292bbb1897",
+  "far_per_hour": null,
+  "scientific_week4": "PARTIAL"
+}
