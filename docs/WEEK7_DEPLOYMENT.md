@@ -1,31 +1,39 @@
-# Week 7 API and Demo Instructions
+# Week 7 Deployment Guide
 
-## Local API
+## Local run
 
-1. Copy `.env.example` to `.env`; set a private random `FIREWATCH_API_TOKEN`, select
-   the intended checkpoint path, and explicitly allowlist RTSP hostnames.
-2. Install `requirements-dev.txt` into the project environment.
-3. Start with `uvicorn src.week7_api:app --host 127.0.0.1 --port 8000`.
-4. Check `/health`; use the bearer token for `/api/*` routes. Camera startup is manual.
-5. Register a webcam, repository-local video, or allowlisted RTSP camera with
-   `POST /api/cameras`, then call `POST /api/cameras/{camera_id}/connect`.
-   Camera settings persist in SQLite and restore as disconnected after restart.
+1. Copy `.env.example` to `.env`. Set a random `FIREWATCH_API_TOKEN`, choose an
+   existing checkpoint with `FIREWATCH_MODEL_PATH`, and configure exact
+   `FIREWATCH_RTSP_HOSTS` entries for any RTSP sources.
+2. Install `requirements-dev.txt` when running tests.
+3. Launch the Streamlit dashboard with `streamlit run web_app.py`. It creates one
+   shared `MultiCameraManager` and starts an embedded FastAPI service on
+   `FIREWATCH_API_HOST:FIREWATCH_API_PORT` (default `127.0.0.1:8000`). The API and
+   dashboard therefore read and control the same manager, workers, detector, and
+   database within that process. Do not also launch a standalone API process on
+   the same port/database expecting shared in-memory workers.
+4. Dashboard startup leaves camera workers disconnected. Configure and explicitly
+   Connect each camera. WebSocket clients first obtain a short-lived ticket via
+   the authenticated management API; the long-lived bearer token stays out of
+   WebSocket URLs.
 
-The API protects management routes with a shared bearer token. Keep it on a trusted
-network or behind TLS and an identity-aware proxy. Do not put bot tokens in frontend
-code. `FIREWATCH_RTSP_HOSTS` is an exact hostname allowlist, not a network range.
-For authenticated RTSP cameras, submit a source such as `env:CAMERA_RTSP_CAM01` and
-define that variable in `.env`. Its RTSP hostname must be allowlisted. The API holds
-the resolved URL in memory and masks the complete user-info portion in responses/logs.
+For authenticated RTSP cameras, set a variable such as
+`CAMERA_RTSP_CAM01=rtsp://user:password@camera.internal/live` in `.env`, allowlist
+`camera.internal`, and save the camera source as `env:CAMERA_RTSP_CAM01`. Do not
+enter credential-bearing URLs in the dashboard. Local video paths must remain
+inside the repository for API registration.
 
 ## Docker and MediaMTX simulation
 
-1. Set `.env` and confirm `best.pt` is present locally. The checkpoint is bind-mounted
-   read-only and is not copied into the image.
-2. Run `docker compose up --build`. The API listens on port 8000; MediaMTX listens on
-   port 8554. Database and snapshots use named volumes.
-3. Publish four authorized local test-video replays from four terminals, replacing the
-   sample path with a permitted local video:
+1. Set `FIREWATCH_MODEL_HOST_PATH` in `.env` to an existing local checkpoint path.
+   Compose mounts it read-only at `/models/firewatch.pt`; the image does not assume
+   a repository-root `best.pt`.
+2. Set `.env` values for the API token, RTSP allowlist, origins, and optional
+   Telegram integration. Then run `docker compose config`, followed by
+   `docker compose up --build`.
+3. The dashboard listens on 8501 and embedded API on 8000. MediaMTX listens on
+   8554. SQLite data and snapshots use named volumes.
+4. Publish four authorized local test-video replays using FFmpeg, for example:
 
    ```powershell
    ffmpeg -re -stream_loop -1 -i videovietnam\VN_POS_01.mp4 -c copy -f rtsp rtsp://127.0.0.1:8554/cam1
@@ -34,27 +42,34 @@ the resolved URL in memory and masks the complete user-info portion in responses
    ffmpeg -re -stream_loop -1 -i videovietnam\VN_POS_01.mp4 -c copy -f rtsp rtsp://127.0.0.1:8554/cam4
    ```
 
-4. Register four RTSP sources as `rtsp://mediamtx:8554/cam1` through `cam4`, then
-   explicitly connect each one. These are **simulated RTSP replays**, not physical
-   camera tests. Observe status, capture/inference rates, reconnection, and event rows.
-5. To capture a demo, record the API health check, disconnected startup, explicit
-   camera connections, all four feeds, an event with its snapshot, event acknowledgment,
-   and orderly disconnect. Label the recording as simulated RTSP unless physical
-   cameras were used.
+5. Allowlist `mediamtx`, register `rtsp://mediamtx:8554/cam1` through `cam4`,
+   and explicitly connect each. These are simulated RTSP streams, not physical
+   camera validation.
 
 ## CPU and GPU
 
-The Docker image uses the installed PyTorch/Ultralytics CPU path unless a compatible
-NVIDIA Container Toolkit and CUDA-enabled PyTorch runtime are configured. GPU access
-must be added to the deployment host's container runtime and measured independently.
-No throughput claim follows from container startup.
+The image uses its installed PyTorch/Ultralytics runtime. GPU use requires a
+compatible NVIDIA container runtime and CUDA-enabled PyTorch build. Measure CPU
+and GPU throughput on the target deployment; application settings and FPS caps
+do not demonstrate throughput.
 
-## Test and benchmark protocol
+## Tests and stability run
 
-Install development dependencies and run `pytest`. For meaningful evidence, record
-the source commit, checkpoint SHA-256, hardware/runtime, input dimensions, stream type,
-per-camera capture and inference FPS, latency percentiles, CPU/GPU/RAM/VRAM, drops,
-reconnects, and timestamps. Run a separate uninterrupted two-hour session. The
-Week 7 acceptance report must remain `PARTIAL` until four stream inference, real
-Telegram acknowledgment, Docker runtime, target measurements, and two-hour stability
-are demonstrated.
+Run `python -m compileall src scripts web_app.py alert_manager.py` and
+`python -m pytest -q`. RTSP and performance tests are opt-in and marked in
+`pytest.ini`. Real Telegram tests require authorized credentials and must be run
+separately from mocked unit tests.
+
+The stability acceptance harness requires four source references and at least
+7,200 seconds:
+
+```powershell
+python scripts/benchmark_week7_stability.py --duration-seconds 7200 `
+  --source env:CAMERA_RTSP_CAM01 --source env:CAMERA_RTSP_CAM02 `
+  --source env:CAMERA_RTSP_CAM03 --source env:CAMERA_RTSP_CAM04
+```
+
+It writes environment metadata, camera metric samples, event timing samples, and
+a summary under `runs/benchmarks/week7/`. An interrupted run is recorded as
+incomplete. Do not infer physical-camera validation from replay streams or claim
+two-hour completion without the generated summary.

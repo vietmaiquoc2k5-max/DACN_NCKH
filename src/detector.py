@@ -68,9 +68,8 @@ class SharedFireSmokeDetector:
             search_list.append(str(p))
             if not p.is_absolute():
                 search_list.append(str(PROJECT_ROOT / custom_path))
-        for cp in CANDIDATE_MODEL_PATHS:
-            if cp not in search_list:
-                search_list.append(cp)
+        else:
+            search_list.extend(CANDIDATE_MODEL_PATHS)
 
         for candidate in search_list:
             if candidate and os.path.exists(candidate) and os.path.isfile(candidate):

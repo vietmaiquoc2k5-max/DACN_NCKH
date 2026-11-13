@@ -91,9 +91,23 @@ def get_firewatch_station() -> MultiCameraManager:
     """Khởi tạo bộ điều phối trung tâm (Shared YOLO Detector + SQLite EventDatabase).
     Mặc định toàn bộ camera ở trạng thái STOPPED và KHÔNG tự động gắn sẵn file video mẫu (`auto_assign_videos=False`).
     """
-    mgr = MultiCameraManager(db_path="alerts.db", model_path="best.pt", auto_assign_videos=False)
+    db_path = os.getenv("FIREWATCH_DB_PATH", "alerts.db")
+    model_path = os.getenv("FIREWATCH_MODEL_PATH", "best.pt")
+    mgr = MultiCameraManager(db_path=db_path, model_path=model_path, auto_assign_videos=False)
     mgr.stop_monitoring()
     mgr._fw_version = "3.0"
+    try:
+        from src.week7_api import start_embedded_api
+
+        start_embedded_api(
+            mgr,
+            host=os.getenv("FIREWATCH_API_HOST", "127.0.0.1"),
+            port=int(os.getenv("FIREWATCH_API_PORT", "8000")),
+        )
+        mgr._fw_api_ready = True
+    except Exception as exc:
+        mgr._fw_api_ready = False
+        mgr.add_log(f"Shared camera API unavailable ({type(exc).__name__}); install requirements.txt.")
     return mgr
 
 
@@ -125,19 +139,12 @@ if getattr(cam_system, "_fw_version", None) != "3.0" or not hasattr(cam_system, 
     importlib.reload(_cm_mod)
     MultiCameraManager = _cm_mod.MultiCameraManager
     cam_system = get_firewatch_station()
-    if hasattr(cam_system, "clear_all_video_sources"):
-        cam_system.clear_all_video_sources()
     cam_system._fw_version = "3.0"
 
-# Khi mới mở ứng dụng hoặc khi người dùng Refresh trang (F5 tạo session mới):
-# BẮT BUỘC đưa toàn bộ camera về trạng thái STOPPED (Manual Start)
+# A browser session must not change shared worker state at page startup. The
+# manager is shared by Streamlit sessions and the embedded FastAPI service.
 default_ids = list(getattr(cam_system, "default_camera_ids", ["CAM-01", "CAM-02", "CAM-03", "CAM-04"]))
 if "fw_initialized" not in st.session_state:
-    if hasattr(cam_system, "stop_monitoring"):
-        cam_system.stop_monitoring()
-    else:
-        cam_system.stop_all()
-    cam_system.set_active_camera_selection(default_ids, auto_start=False)
     st.session_state.fw_initialized = True
 
 # Đảm bảo mọi khóa session_state luôn tồn tại kể cả khi hot-reload trên tab trình duyệt cũ
@@ -768,7 +775,7 @@ def load_image_b64(img_path: str) -> Optional[str]:
 
 
 def select_camera_count(count_n: int) -> None:
-    """Cập nhật lựa chọn số lượng camera (1, 2, 4, 6, 9) tức thì, mượt mà và không gây delay."""
+    """Update the visible camera selection without changing camera workers."""
     all_ids = [cfg.cam_id for cfg in cam_system.camera_configs]
     chosen = all_ids[: min(count_n, len(all_ids))]
     st.session_state.cam_count_preset = count_n
@@ -776,7 +783,6 @@ def select_camera_count(count_n: int) -> None:
     st.session_state.selected_cams = list(chosen)
     if chosen and st.session_state.focus_cam_id not in chosen:
         st.session_state.focus_cam_id = chosen[0]
-    cam_system.set_active_camera_selection(chosen, auto_start=st.session_state.is_monitoring)
 
 
 # ==============================================================================
@@ -1043,6 +1049,27 @@ def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact:
         </div>
         """
     )
+
+    stat_col, action_col = st.columns([1.55, 1])
+    with stat_col:
+        st.caption(
+            f"Capture {snap['capture_fps']:.1f} FPS · Inference {snap['inference_fps']:.1f} FPS · "
+            f"Display ACK {snap.get('display_fps', 0.0):.1f} FPS · "
+            f"{snap.get('dropped_frames', 0)} dropped"
+        )
+    with action_col:
+        if lc_state == "RUNNING":
+            if st.button("■ Disconnect", key=f"{key_prefix}_disconnect_{cid}", use_container_width=True):
+                cam_system.stop_camera(cid)
+                st.rerun()
+        elif lc_state in ("ERROR", "RECONNECTING"):
+            if st.button("↻ Reconnect", key=f"{key_prefix}_reconnect_{cid}", use_container_width=True):
+                cam_system.reconnect_camera(cid)
+                st.rerun()
+        elif snap.get("source_type") != "UNASSIGNED":
+            if st.button("▶ Connect", key=f"{key_prefix}_connect_{cid}", use_container_width=True):
+                cam_system.start_camera(cid)
+                st.rerun()
 
     if lc_state == "ERROR" and not compact:
         if st.button(
@@ -1409,8 +1436,8 @@ def render_left_filter_bar() -> None:
 
     with fb1:
         render_html('<div style="font-size:12px; color:#CBD5E1; font-weight:600; margin-bottom:4px;">Số lượng camera hiển thị:</div>')
-        c_cols = st.columns(5)
-        for i, cnt in enumerate([1, 2, 4, 6, 9]):
+        c_cols = st.columns(3)
+        for i, cnt in enumerate([1, 4, 9]):
             with c_cols[i]:
                 is_sel = (st.session_state.cam_count_preset == cnt)
                 if st.button(
@@ -1485,11 +1512,10 @@ def render_left_filter_bar() -> None:
                 )
                 if st.button("✓ Gán & Chọn các Camera đang hoạt động này", key="btn_bind_active_hw", type="primary", use_container_width=True):
                     if picked_hw:
-                        bound_ids = cam_system.assign_active_hardware_cameras(picked_hw, auto_start=st.session_state.is_monitoring)
+                        bound_ids = cam_system.assign_active_hardware_cameras(picked_hw, auto_start=False)
                         st.session_state.pending_cams = list(bound_ids)
                         st.session_state.selected_cams = list(bound_ids)
                         st.session_state.cam_count_preset = len(bound_ids) if len(bound_ids) in (1, 2, 4, 6, 9) else 0
-                        cam_system.set_active_camera_selection(bound_ids, auto_start=st.session_state.is_monitoring)
                         st.toast(f"Đã gán {len(bound_ids)} camera đang hoạt động vào {', '.join(bound_ids)}!")
                         st.rerun()
             else:
@@ -1512,7 +1538,6 @@ def render_left_filter_bar() -> None:
                     st.session_state.selected_cams = list(assigned_cam_ids)
                     st.session_state.pending_cams = list(assigned_cam_ids)
                     st.session_state.cam_count_preset = len(assigned_cam_ids) if len(assigned_cam_ids) in (1, 2, 4, 6, 9) else 0
-                    cam_system.set_active_camera_selection(assigned_cam_ids, auto_start=st.session_state.is_monitoring)
                     st.rerun()
             with b_all2:
                 if st.button("☑ Chọn tất cả 9 ô", key="pop_all_cams", use_container_width=True):
@@ -1530,7 +1555,6 @@ def render_left_filter_bar() -> None:
                 st.session_state.selected_cams = list(manual_list)
                 st.session_state.pending_cams = list(manual_list)
                 st.session_state.cam_count_preset = len(manual_list) if len(manual_list) in (1, 2, 4, 6, 9) else 0
-                cam_system.set_active_camera_selection(manual_list, auto_start=st.session_state.is_monitoring)
                 st.rerun()
 
             st.markdown("---")
@@ -1669,7 +1693,6 @@ def render_left_filter_bar() -> None:
                 st.session_state.selected_cams = list(st.session_state.pending_cams)
                 if st.session_state.focus_cam_id not in st.session_state.selected_cams:
                     st.session_state.focus_cam_id = st.session_state.selected_cams[0]
-                cam_system.set_active_camera_selection(st.session_state.selected_cams, auto_start=True)
                 st.toast(f"Đã áp dụng cấu hình mới ({len(st.session_state.selected_cams)} camera).")
                 st.rerun()
         with p_col3:
@@ -2281,7 +2304,7 @@ elif st.session_state.nav_page == "Lịch sử sự kiện":
     with h2:
         tl_lbl = st.selectbox("Theo loại sự kiện:", ["Tất cả", "FIRE", "SMOKE"])
     with h3:
-        tl_stt = st.selectbox("Theo trạng thái:", ["Tất cả", "Chưa xác nhận", "Đã xác nhận"])
+        tl_stt = st.selectbox("Theo trạng thái:", ["Tất cả", "UNREAD", "ACKNOWLEDGED", "DISMISSED"])
     with h4:
         tl_start = st.text_input("Từ ngày (YYYY-MM-DD):", value="", placeholder="2026-11-01")
     with h5:
@@ -2300,6 +2323,20 @@ elif st.session_state.nav_page == "Lịch sử sự kiện":
         st.info("Không tìm thấy sự kiện nào khớp với bộ lọc.")
     else:
         df_ev = pd.DataFrame(events)
+        try:
+            with cam_system.telegram_alerts._connect() as conn:
+                delivery_rows = conn.execute(
+                    "SELECT event_id,status,error_category FROM alert_deliveries "
+                    "WHERE channel='telegram' ORDER BY queued_at DESC"
+                ).fetchall()
+            delivery_by_event = {}
+            for event_id, delivery_status, error_category in delivery_rows:
+                delivery_by_event.setdefault(event_id, delivery_status if not error_category else f"{delivery_status} ({error_category})")
+            df_ev["telegram_delivery"] = df_ev["id"].map(delivery_by_event).fillna(
+                "Disabled or no delivery record"
+            )
+        except Exception:
+            df_ev["telegram_delivery"] = "Unavailable"
         csv_bytes = df_ev.to_csv(index=False).encode("utf-8-sig")
         st.download_button(
             "📥 Xuất báo cáo lịch sử sự kiện (CSV)",
@@ -2308,7 +2345,7 @@ elif st.session_state.nav_page == "Lịch sử sự kiện":
             mime="text/csv",
         )
         st.dataframe(
-            df_ev[["id", "timestamp", "camera_name", "label", "alert_level", "confidence", "status", "action_taken", "operator_note"]],
+            df_ev[["id", "timestamp", "camera_name", "label", "alert_level", "confidence", "status", "event_state", "telegram_delivery", "action_taken", "operator_note"]],
             use_container_width=True,
             hide_index=True,
         )
@@ -2329,21 +2366,27 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
             if new_c_type == "WEBCAM":
                 new_c_src = st.text_input("Chỉ số Webcam (0, 1, 2...):", value="0", key="add_cam_src_w")
             elif new_c_type == "IP_CAMERA":
-                new_c_src = st.text_input("Đường dẫn RTSP / HTTP Stream:", value="", type="password", key="add_cam_src_rtsp")
+                new_c_src = st.text_input("RTSP environment reference:", value="env:CAMERA_RTSP_CAM01", key="add_cam_src_rtsp")
+                st.caption("Define this variable in .env. Allowlist its RTSP hostname in FIREWATCH_RTSP_HOSTS.")
             else:
                 new_c_src = st.text_input("Đường dẫn tệp Video:", value="", placeholder="Nhập đường dẫn hoặc dùng nút Test Cam File...", key="add_cam_src_v")
+            new_cam_fps = st.number_input("Inference FPS target", min_value=1, max_value=60, value=8, key="add_cam_fps")
 
             if st.button("Thêm camera (Trạng thái STOPPED)", type="primary", use_container_width=True):
-                added_id = cam_system.add_camera(
-                    name=new_c_name,
-                    source=new_c_src,
-                    source_type=new_c_type,
-                    webcam_index=int(new_c_src) if new_c_src.isdigit() else 0,
-                    enabled=True,
-                    auto_start=False,
-                )
-                st.success(f"Đã thêm camera mới: {added_id} (Trạng thái: Đang chờ kết nối).")
-                st.rerun()
+                try:
+                    added_id = cam_system.add_camera(
+                        name=new_c_name,
+                        source=new_c_src,
+                        source_type=new_c_type,
+                        webcam_index=int(new_c_src) if new_c_src.isdigit() else 0,
+                        enabled=True,
+                        auto_start=False,
+                        inference_fps=int(new_cam_fps),
+                    )
+                    st.success(f"Đã thêm camera mới: {added_id} (Trạng thái: Đang chờ kết nối).")
+                    st.rerun()
+                except (ValueError, OSError) as exc:
+                    st.error(str(exc))
 
     with m_top2:
         with st.expander("⭐ Chọn danh sách camera mặc định", expanded=False):
@@ -2375,13 +2418,12 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                 )
                 if ed_type == "IP_CAMERA":
                     ed_src = st.text_input(
-                        f"RTSP URL (Hiện tại: {cfg.masked_source}):",
-                        value="",
-                        placeholder="Nhập RTSP URL mới nếu muốn thay đổi...",
-                        type="password",
+                        f"RTSP environment reference (Current: {cfg.masked_source}):",
+                        value=getattr(cfg, "source_reference", "") or "",
+                        placeholder="env:CAMERA_RTSP_CAM01",
                         key=f"ed_rtsp_{cid}",
                     )
-                    final_src = ed_src.strip() if ed_src.strip() else cfg.source
+                    final_src = ed_src.strip()
                 elif ed_type == "WEBCAM":
                     sys_cams = list_system_cameras(4)
                     cam_opts = {c["label"]: str(c["index"]) for c in sys_cams}
@@ -2391,18 +2433,27 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                     final_src = st.text_input("Đường dẫn tệp Video:", value=cfg.source, key=f"ed_vid_{cid}")
 
                 ed_en = st.checkbox("Cho phép kích hoạt camera", value=cfg.enabled, key=f"ed_en_{cid}")
+                ed_fps = st.number_input(
+                    "Inference FPS target", min_value=1, max_value=60,
+                    value=int(cfg.inference_fps), key=f"ed_fps_{cid}"
+                )
                 if st.button("💾 Lưu cấu hình", key=f"save_cfg_{cid}", type="primary", use_container_width=True):
-                    cam_system.update_camera_source(
-                        cam_id=cid,
-                        new_name=ed_name,
-                        new_source=final_src,
-                        source_type=ed_type,
-                        webcam_index=int(final_src) if str(final_src).isdigit() else 0,
-                        enabled=ed_en,
-                        auto_restart=False,
-                    )
-                    st.success(f"Đã lưu cấu hình {cid} (không tự mở stream).")
-                    st.rerun()
+                    try:
+                        cam_system.update_camera_source(
+                            cam_id=cid,
+                            new_name=ed_name,
+                            new_source=final_src,
+                            source_type=ed_type,
+                            webcam_index=int(final_src) if str(final_src).isdigit() else 0,
+                            enabled=ed_en,
+                            auto_restart=False,
+                            source_reference=final_src if ed_type == "IP_CAMERA" else None,
+                        )
+                        cam_system.update_camera_inference_fps(cid, int(ed_fps))
+                        st.success(f"Saved {cid}; camera remains disconnected until Connect.")
+                        st.rerun()
+                    except (ValueError, OSError) as exc:
+                        st.error(str(exc))
 
             with c_mid:
                 st.markdown("**Cấu hình vùng loại trừ ROI (x1, y1, x2, y2 trong [0, 1]):**")

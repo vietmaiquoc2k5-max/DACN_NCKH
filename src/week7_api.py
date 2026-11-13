@@ -12,6 +12,8 @@ import asyncio
 import re
 import sqlite3
 import json
+import threading
+import atexit
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any, Optional
@@ -72,14 +74,13 @@ def _validate_source(source_type: str, source: str, webcam_index: int) -> str:
         if not resolved.is_file():
             raise HTTPException(422, detail={"code": "SOURCE_NOT_FOUND", "message": "Video file does not exist"})
         return str(resolved)
+    is_env_reference = value.startswith("env:")
     try:
         parsed = urlsplit(value)
         hostname = parsed.hostname
     except ValueError:
         raise HTTPException(422, detail={"code": "INVALID_RTSP", "message": "Malformed RTSP URL"})
-    is_env_reference = False
-    if not parsed.scheme and value.startswith("env:"):
-        is_env_reference = True
+    if is_env_reference:
         variable = value[4:]
         if not re.fullmatch(r"[A-Z][A-Z0-9_]{0,127}", variable):
             raise HTTPException(422, detail={"code": "INVALID_SECRET_REFERENCE", "message": "Secret reference must use env:VARIABLE_NAME"})
@@ -130,6 +131,7 @@ def _save_camera_config(manager: MultiCameraManager, camera_id: str, input_data:
 def _restore_camera_configs(manager: MultiCameraManager):
     with manager.telegram_alerts._connect() as conn:
         rows = conn.execute("SELECT camera_id,name,source_type,source,webcam_index,enabled,auto_reconnect,inference_fps,exclusion_zones FROM cameras ORDER BY camera_id").fetchall()
+    errors = []
     for camera_id, name, source_type, source, webcam_index, enabled, reconnect, fps, zones_json in rows:
         try:
             actual_source = _validate_source(source_type, source, webcam_index)
@@ -142,11 +144,15 @@ def _restore_camera_configs(manager: MultiCameraManager):
             else:
                 restored_id = manager.add_camera(name, actual_source, source_type, webcam_index,
                                                  bool(enabled), bool(reconnect), zones,
-                                                 auto_start=False, inference_fps=int(fps))
+                                                 auto_start=False, inference_fps=int(fps),
+                                                 camera_id=camera_id)
                 if restored_id != camera_id:
-                    manager.add_log(f"Saved camera id {camera_id} restored as {restored_id}")
+                    raise RuntimeError(f"Saved camera id {camera_id} restored as {restored_id}")
         except Exception as exc:
-            manager.add_log(f"Camera configuration {camera_id} was not restored ({type(exc).__name__})")
+            safe_error = mask_rtsp_credentials(str(exc))
+            manager.add_log(f"Camera configuration {camera_id} was not restored: {safe_error}")
+            errors.append({"camera_id": camera_id, "error": safe_error})
+    return errors
 
 
 def _public_camera(snapshot: dict[str, Any]) -> dict[str, Any]:
@@ -155,35 +161,118 @@ def _public_camera(snapshot: dict[str, Any]) -> dict[str, Any]:
 
 
 @asynccontextmanager
-async def _lifespan(app: FastAPI):
-    db_path = os.getenv("FIREWATCH_DB_PATH", "alerts.db")
-    model_path = os.getenv("FIREWATCH_MODEL_PATH", "best.pt")
-    manager = MultiCameraManager(db_path=db_path, model_path=model_path, auto_assign_videos=False)
-    _initialize_camera_config(db_path)
-    _restore_camera_configs(manager)
-    # Preserve manual-connect behavior even if future defaults change.
+async def _lifespan(application: FastAPI):
+    manager = getattr(application.state, "injected_manager", None)
+    owns_manager = manager is None
+    if owns_manager:
+        db_path = os.getenv("FIREWATCH_DB_PATH", "alerts.db")
+        model_path = os.getenv("FIREWATCH_MODEL_PATH", "best.pt")
+        manager = MultiCameraManager(db_path=db_path, model_path=model_path, auto_assign_videos=False)
+    # This is intentionally idempotent: a shared Streamlit manager is authoritative.
     manager.stop_monitoring()
-    app.state.manager = manager
+    application.state.camera_restore_errors = manager.camera_restore_errors
+    application.state.manager = manager
     try:
         yield
     finally:
-        manager.stop_monitoring()
-        manager.telegram_alerts.close()
-        app.state.manager = None
+        if owns_manager:
+            manager.stop_monitoring()
+            manager.telegram_alerts.close()
+        application.state.manager = None
 
 
 app = FastAPI(title="Firewatch Week 7 API", version="1.0.0", lifespan=_lifespan)
+app.state.ws_tickets = {}
+app.state.ws_ticket_lock = threading.Lock()
+
+
+def start_embedded_api(manager: MultiCameraManager, host: str = "0.0.0.0", port: int | None = None):
+    """Serve the API beside Streamlit using the same manager and detector instance."""
+    if getattr(app.state, "embedded_thread", None) is not None and app.state.embedded_thread.is_alive():
+        app.state.injected_manager = manager
+        app.state.manager = manager
+        return app.state.embedded_server
+    try:
+        import uvicorn
+    except ImportError as exc:
+        raise RuntimeError("uvicorn is required to expose the shared camera API; install requirements.txt") from exc
+    listen_port = int(port or os.getenv("FIREWATCH_API_PORT", "8000"))
+    app.state.injected_manager = manager
+    server = uvicorn.Server(uvicorn.Config(app, host=host, port=listen_port, log_level="warning", access_log=False))
+    thread = threading.Thread(target=server.run, name="firewatch-api", daemon=True)
+    app.state.embedded_server = server
+    app.state.embedded_thread = thread
+    thread.start()
+    deadline = time.monotonic() + 3.0
+    while thread.is_alive() and not server.started and time.monotonic() < deadline:
+        time.sleep(0.01)
+    if not server.started:
+        server.should_exit = True
+        thread.join(timeout=1.0)
+        raise RuntimeError(f"Shared API did not start on port {listen_port}; check the port and API settings")
+
+    def stop_server():
+        server.should_exit = True
+        thread.join(timeout=5.0)
+
+    atexit.register(stop_server)
+    return server
+
+
+def _allowed_websocket_origins() -> set[str]:
+    """Read exact browser origins permitted to open the camera WebSocket."""
+    return {item.strip().rstrip("/") for item in os.getenv("FIREWATCH_ALLOWED_ORIGINS", "").split(",") if item.strip()}
+
+
+def _issue_ticket(application: FastAPI, lifetime_sec: float = 45.0) -> str:
+    """Create and store a random single-use camera WebSocket ticket."""
+    ticket = secrets.token_urlsafe(32)
+    with application.state.ws_ticket_lock:
+        now = time.monotonic()
+        application.state.ws_tickets = {
+            key: expiry for key, expiry in application.state.ws_tickets.items() if expiry > now
+        }
+        application.state.ws_tickets[ticket] = now + lifetime_sec
+    return ticket
+
+
+def _consume_ticket(application: FastAPI, ticket: str, now: float | None = None) -> bool:
+    """Consume a WebSocket ticket exactly once and reject expired values."""
+    with application.state.ws_ticket_lock:
+        expires_at = application.state.ws_tickets.pop(ticket, None)
+    return expires_at is not None and expires_at > (time.monotonic() if now is None else now)
+
+
+def _origin_is_allowed(origin: str, allowed: set[str]) -> bool:
+    """Check a browser Origin against the exact configured allowlist."""
+    return bool(origin) and origin.rstrip("/") in allowed
+
+
+@app.post("/api/ws-tickets")
+def create_websocket_ticket(request: Request, _: None = Depends(_authorized)):
+    """Issue a short-lived, single-use ticket scoped to opening the camera feed."""
+    ticket = _issue_ticket(request.app)
+    return {"ticket": ticket, "expires_in_seconds": 45, "scope": "camera_stream"}
 
 
 @app.get("/health")
 def health(request: Request):
     manager = getattr(request.app.state, "manager", None)
-    return {"status": "ok" if manager else "starting", "model": manager.detector.get_model_info() if manager else None}
+    if manager is None:
+        return {"status": "starting", "model": None}
+    model_info = manager.detector.get_model_info()
+    return {"status": "ok" if model_info.get("loaded") else "degraded", "model": model_info}
 
 
 @app.get("/api/cameras")
 def list_cameras(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
     return [_public_camera(item) for item in manager.get_all_snapshots()]
+
+
+@app.get("/api/cameras/config-errors")
+def camera_restore_errors(request: Request, _: None = Depends(_authorized)):
+    manager = getattr(request.app.state, "manager", None)
+    return manager.camera_restore_errors if manager is not None else getattr(request.app.state, "camera_restore_errors", [])
 
 
 @app.post("/api/cameras", status_code=201)
@@ -194,6 +283,7 @@ def add_camera(payload: CameraInput, manager: MultiCameraManager = Depends(_mana
         webcam_index=payload.webcam_index, enabled=payload.enabled,
         auto_reconnect=payload.auto_reconnect, exclusion_zones=payload.exclusion_zones,
         auto_start=False, inference_fps=payload.inference_fps,
+        source_reference=payload.source,
     )
     _save_camera_config(manager, cam_id, payload)
     return {"camera_id": cam_id, "status": "DISCONNECTED", "source": mask_rtsp_credentials(source)}
@@ -206,7 +296,7 @@ def edit_camera(camera_id: str, payload: CameraInput, manager: MultiCameraManage
     source = _validate_source(payload.source_type, payload.source, payload.webcam_index)
     manager.update_camera_source(camera_id, payload.name, source, payload.source_type,
                                  payload.webcam_index, payload.enabled, payload.auto_reconnect,
-                                 auto_restart=False)
+                                 auto_restart=False, source_reference=payload.source)
     manager.update_camera_roi(camera_id, payload.exclusion_zones)
     manager.workers[camera_id].config.inference_fps = payload.inference_fps
     _save_camera_config(manager, camera_id, payload)
@@ -233,6 +323,8 @@ def connect_camera(camera_id: str, manager: MultiCameraManager = Depends(_manage
     if not worker.config.source.strip():
         raise HTTPException(409, detail={"code": "SOURCE_UNASSIGNED", "message": "Configure a source before connecting"})
     manager.start_camera(camera_id)
+    if worker.status == "ERROR" and not worker.running:
+        raise HTTPException(503, detail={"code": "CAMERA_START_FAILED", "message": worker.error_detail})
     return _public_camera(worker.get_snapshot())
 
 
@@ -272,7 +364,7 @@ def list_events(limit: int = Query(100, ge=1, le=1000), camera: str = "", event_
     params.append(limit)
     with manager.telegram_alerts._connect() as conn:
         conn.row_factory = sqlite3.Row
-        rows = conn.execute("SELECT id,timestamp,camera_name,label,confidence,alert_level,image_path,status,action_taken,operator_note FROM alert_logs WHERE " + " AND ".join(clauses) + " ORDER BY id DESC LIMIT ?", params).fetchall()
+        rows = conn.execute("SELECT id,timestamp,camera_name,label,confidence,alert_level,image_path,status,event_state,event_confirmed_at,acknowledged_at,dismissed_at,dismissal_reason,action_taken,operator_note FROM alert_logs WHERE " + " AND ".join(clauses) + " ORDER BY id DESC LIMIT ?", params).fetchall()
     return [dict(row) for row in rows]
 
 
@@ -318,7 +410,20 @@ def performance(manager: MultiCameraManager = Depends(_manager), _: None = Depen
     snapshots = manager.get_all_snapshots()
     result = manager.get_system_metrics(snapshots)
     result["model"] = manager.detector.get_model_info()
-    result["camera_metrics"] = [{"camera_id": s["cam_id"], "capture_fps": s["capture_fps"], "inference_fps": s["inference_fps"], "inference_latency_ms": s["infer_ms"], "status": s["status"]} for s in snapshots]
+    result["camera_metrics"] = [{
+        "camera_id": s["cam_id"],
+        "capture_fps": s["capture_fps"],
+        "inference_fps": s["inference_fps"],
+        "display_fps": s["display_fps"],
+        "inference_latency_ms": s["infer_ms"],
+        "end_to_end_latency_ms": s["end_to_end_latency_ms"],
+        "captured_frames": s["captured_frames"],
+        "processed_frames": s["processed_frames"],
+        "dropped_frames": s["dropped_frames"],
+        "queue_depth": s["queue_depth"],
+        "displayed_frames": s["displayed_frames"],
+        "status": s["status"],
+    } for s in snapshots]
     return result
 
 
@@ -334,16 +439,24 @@ def alert_status(manager: MultiCameraManager = Depends(_manager), _: None = Depe
 @app.get("/api/alerts/deliveries")
 def alert_deliveries(limit: int = Query(100, ge=1, le=1000), manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
     with manager.telegram_alerts._connect() as conn:
-        rows = conn.execute("SELECT delivery_id,event_id,channel,status,queued_at,sent_at,confirmed_at,error_message FROM alert_deliveries ORDER BY queued_at DESC LIMIT ?", (limit,)).fetchall()
-    columns = ("delivery_id", "event_id", "channel", "status", "queued_at", "sent_at", "confirmed_at", "error_message")
+        rows = conn.execute("""SELECT delivery_id,event_id,channel,status,queued_at,event_confirmed_at,
+            attempt_started_at,telegram_acknowledged_at,next_attempt_at,attempt_count,error_category,error_message
+            FROM alert_deliveries ORDER BY queued_at DESC LIMIT ?""", (limit,)).fetchall()
+    columns = ("delivery_id", "event_id", "channel", "status", "queued_at", "event_confirmed_at",
+               "attempt_started_at", "telegram_acknowledged_at", "next_attempt_at", "attempt_count",
+               "error_category", "error_message")
     return [dict(zip(columns, row)) for row in rows]
 
 
 @app.websocket("/ws/cameras")
 async def camera_updates(websocket: WebSocket):
-    expected = os.getenv("FIREWATCH_API_TOKEN", "")
-    supplied = websocket.query_params.get("token", "")
-    if not expected or not secrets.compare_digest(supplied, expected):
+    origin = websocket.headers.get("origin", "").rstrip("/")
+    allowed_origins = _allowed_websocket_origins()
+    if not _origin_is_allowed(origin, allowed_origins):
+        await websocket.close(code=4403)
+        return
+    ticket = websocket.query_params.get("ticket", "")
+    if not _consume_ticket(websocket.app, ticket):
         await websocket.close(code=4401)
         return
     manager = getattr(websocket.app.state, "manager", None)
@@ -351,10 +464,33 @@ async def camera_updates(websocket: WebSocket):
         await websocket.close(code=1013)
         return
     await websocket.accept()
+    client_id = secrets.token_urlsafe(12)
     try:
         while True:
-            await websocket.send_json({"timestamp": time.time(), "cameras": [_public_camera(s) for s in manager.get_all_snapshots()]})
-            await asyncio.sleep(1.0)
+            snapshots = manager.get_all_snapshots()
+            cameras = []
+            for snapshot in snapshots:
+                item = _public_camera(snapshot)
+                item["frame_id"] = manager.workers[snapshot["cam_id"]].frame_count
+                item["jpeg_b64"] = snapshot.get("jpeg_b64", "")
+                cameras.append(item)
+            await websocket.send_json({"timestamp": time.time(), "cameras": cameras})
+            try:
+                message = await asyncio.wait_for(websocket.receive_json(), timeout=1.0)
+            except asyncio.TimeoutError:
+                continue
+            displayed = message.get("displayed", {}) if isinstance(message, dict) else {}
+            if isinstance(displayed, dict):
+                for camera_id, frame_id in displayed.items():
+                    worker = manager.workers.get(str(camera_id))
+                    if worker is not None:
+                        try:
+                            worker.record_displayed_frame(client_id, int(frame_id))
+                        except (TypeError, ValueError):
+                            continue
     except WebSocketDisconnect:
-        return
+        pass
+    finally:
+        for worker in manager.workers.values():
+            worker.remove_display_client(client_id)
 

@@ -24,6 +24,7 @@ class EventDatabase:
         confidence: float,
         alert_level: str = "FIRE",
         is_demo: int = 0,
+        event_confirmed_at: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Ghi nhận một sự kiện cảnh báo mới kèm ảnh chụp bằng chứng vào SQLite."""
         return self.alert_manager.save_alert_event(
@@ -33,6 +34,7 @@ class EventDatabase:
             camera_name=camera_name,
             alert_level=alert_level,
             is_demo=is_demo,
+            event_confirmed_at=event_confirmed_at,
         )
 
     def query_events(
@@ -75,7 +77,7 @@ class EventDatabase:
             alert_id=event_id,
             action_taken="Báo động giả (Đã bỏ qua)",
             operator_note=note,
-            status="ACKNOWLEDGED",
+            status="DISMISSED",
         )
         self.alert_manager.stop_alarm()
         return ok
@@ -111,7 +113,8 @@ class EventDatabase:
         fire_count = sum(1 for r in real_records if "FIRE" in str(r.get("label", "")).upper() or "LỬA" in str(r.get("label", "")).upper())
         smoke_count = sum(1 for r in real_records if "SMOKE" in str(r.get("label", "")).upper() or "KHÓI" in str(r.get("label", "")).upper())
         confirmed_count = sum(1 for r in real_records if r.get("status") == "ACKNOWLEDGED")
-        unconfirmed_count = len(real_records) - confirmed_count
+        unconfirmed_count = sum(1 for r in real_records if r.get("status") == "UNREAD")
+        dismissed_count = sum(1 for r in real_records if r.get("status") == "DISMISSED")
 
         return {
             "total_all": len(all_records),
@@ -121,6 +124,7 @@ class EventDatabase:
             "real_smoke": smoke_count,
             "confirmed": confirmed_count,
             "unconfirmed": unconfirmed_count,
+            "dismissed": dismissed_count,
             "real_records": real_records,
             "all_records": all_records,
         }

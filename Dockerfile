@@ -14,10 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src ./src
 COPY alert_manager.py ./alert_manager.py
 COPY alarm.wav ./alarm.wav
+COPY web_app.py ./web_app.py
 
-RUN mkdir -p /data /snapshots
-EXPOSE 8000
+RUN mkdir -p /data /app/alerts
+EXPOSE 8000 8501
 HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
   CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"
 
-CMD ["uvicorn", "src.week7_api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["streamlit", "run", "web_app.py", "--server.address=0.0.0.0", "--server.port=8501", "--server.headless=true"]

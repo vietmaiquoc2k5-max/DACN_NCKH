@@ -15,10 +15,14 @@ import os
 import sys
 import time
 import base64
+import re
+import json
+import sqlite3
 import threading
 from pathlib import Path
 from collections import deque
 from typing import Dict, List, Optional, Tuple, Any
+from urllib.parse import urlsplit
 
 import cv2
 import numpy as np
@@ -37,7 +41,7 @@ from src.bytetrack_adapter import ByteTrackAdapter
 from src.temporal_features import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
-from src.telegram_alerts import TelegramAlertDispatcher
+from src.telegram_alerts import TelegramAlertDispatcher, utc_now
 
 
 def encode_bgr_to_jpeg_b64(bgr_img: np.ndarray, quality: int = 72) -> str:
@@ -360,7 +364,16 @@ class CameraStreamWorker:
         # Chỉ số FPS đọc khung hình và FPS suy luận model riêng biệt
         self.capture_fps: float = 0.0
         self.inference_fps: float = 0.0
+        self.display_fps: float = 0.0
         self.infer_ms: float = 0.0
+        self.end_to_end_latency_ms: float = 0.0
+        self.inference_frames: int = 0
+        self.dropped_frames: int = 0
+        self.queue_depth: int = 0
+        self._inference_ticks = deque(maxlen=50)
+        self._display_ticks = deque(maxlen=100)
+        self._displayed_by_client: Dict[str, int] = {}
+        self.displayed_frames = 0
         self.last_update_ts: float = 0.0
         self.last_update_str: str = "--:--:--"
         self.disconnected_at_str: str = time.strftime("%H:%M:%S")
@@ -369,6 +382,7 @@ class CameraStreamWorker:
         self.reconnect_attempts: int = 0
         self.resolution_str: str = "N/A"
         self.latest_raw_bgr: Optional[np.ndarray] = None
+        self.latest_capture_monotonic: float = 0.0
 
         # Trạng thái phát hiện hiện tại
         self.alert_level: str = "SAFE"  # "SAFE" | "SUSPECT" | "FIRE" | "CONN_ERROR"
@@ -407,6 +421,15 @@ class CameraStreamWorker:
     def _start(self, reconnecting: bool = False):
         """Khởi chạy kết nối camera (tách biệt luồng đọc khung hình và luồng suy luận YOLO)."""
         with self.lock:
+            if getattr(self.detector, "model_loaded", True) is False:
+                detail = getattr(self.detector, "error_message", "") or "A valid fire/smoke checkpoint is not loaded."
+                self.running = False
+                self.status = "ERROR"
+                self.lifecycle_state = "ERROR"
+                self.error_detail = str(detail)
+                self._set_placeholder("ERROR", self.error_detail)
+                self._log(f"Camera connect rejected: {self.error_detail}")
+                return
             if self.config.source_type == "UNASSIGNED" or (
                 self.config.source_type != "WEBCAM" and not str(self.config.source).strip()
             ):
@@ -431,6 +454,13 @@ class CameraStreamWorker:
             self.reconnect_attempts = 0
             self.frame_count = 0
             self.last_inferred_frame_id = 0
+            self.inference_frames = 0
+            self.dropped_frames = 0
+            self.queue_depth = 0
+            self.inference_fps = 0.0
+            self.infer_ms = 0.0
+            self.end_to_end_latency_ms = 0.0
+            self._inference_ticks.clear()
             self.latest_raw_bgr = None
             self.status = "RECONNECTING" if reconnecting else "CONNECTING"
             self.lifecycle_state = self.status
@@ -586,7 +616,6 @@ class CameraStreamWorker:
 
     def _infer_loop(self):
         """Luồng suy luận YOLO bất đồng bộ: chạy song song với luồng đọc video để video luôn đạt 24-30 FPS."""
-        infer_fps_win = deque(maxlen=15)
         last_inference_at = 0.0
         while self.running:
             self.infer_event.wait(timeout=0.05)
@@ -600,6 +629,7 @@ class CameraStreamWorker:
             with self.lock:
                 raw_frame = self.latest_raw_bgr
                 fid = self.frame_count
+                captured_at = self.latest_capture_monotonic
 
             if raw_frame is None or fid <= self.last_inferred_frame_id:
                 continue
@@ -628,6 +658,17 @@ class CameraStreamWorker:
             )
             if raw_boxes is None or not self.running:
                 continue
+            processed_at = time.perf_counter()
+            with self.lock:
+                self.inference_frames += 1
+                self._inference_ticks.append(processed_at)
+                self.inference_fps = (
+                    round((len(self._inference_ticks) - 1) / max(1e-6, self._inference_ticks[-1] - self._inference_ticks[0]), 2)
+                    if len(self._inference_ticks) > 1 else 0.0
+                )
+                self.end_to_end_latency_ms = round(max(0.0, processed_at - captured_at) * 1000.0, 2)
+                self.dropped_frames = max(0, self.frame_count - self.inference_frames)
+                self.queue_depth = min(1, max(0, self.frame_count - fid))
 
             # 1. ByteTrack Association (gán track_id ổn định 2 giai đoạn)
             tracked_boxes = self.tracker.update(raw_boxes, frame=infer_input)
@@ -656,14 +697,9 @@ class CameraStreamWorker:
                 timestamp_sec=now_ts,
             )
             valid_boxes = ver_res["valid_boxes"]
-            if new_infer_ms > 0:
-                infer_fps_win.append(1000.0 / new_infer_ms)
-            actual_infer_fps = float(sum(infer_fps_win) / len(infer_fps_win)) if infer_fps_win else 0.0
-
             with self.lock:
                 self.last_boxes = valid_boxes
                 self.infer_ms = round(new_infer_ms, 1)
-                self.inference_fps = round(actual_infer_fps, 1)
                 if self.status == "CONNECTED":
                     self.alert_level = ver_res["alert_level"]
                 self.primary_label = ver_res["primary_label"]
@@ -692,6 +728,7 @@ class CameraStreamWorker:
                     confidence=conf_val,
                     alert_level=ver_res["alert_level"],
                     is_demo=0,
+                    event_confirmed_at=utc_now(),
                 )
                 if self.telegram_alerts is not None:
                     saved_event["camera_display_name"] = self.config.name
@@ -707,14 +744,12 @@ class CameraStreamWorker:
         """Vòng lặp đọc frame tốc độ cao (24-30 FPS), hoàn toàn không bị chặn bởi thời gian suy luận YOLO."""
         cap: Optional[cv2.VideoCapture] = None
         is_file: bool = False
-        capture_fps_win = deque(maxlen=25)
-        last_tick = time.perf_counter()
+        capture_ticks = deque(maxlen=25)
 
         try:
             while self.running:
                 if self.paused:
                     time.sleep(0.08)
-                    last_tick = time.perf_counter()
                     continue
 
                 # 1. Mở kết nối (hoặc tự kết nối lại khi mất tín hiệu)
@@ -788,7 +823,6 @@ class CameraStreamWorker:
                         if self.alert_level == "CONN_ERROR":
                             self.alert_level = "SAFE"
                     self._log(f"Đã kết nối thành công ({self.config.masked_source}).")
-                    last_tick = time.perf_counter()
 
                 # 2. Đọc khung hình từ VideoCapture
                 loop_start = time.perf_counter()
@@ -830,9 +864,10 @@ class CameraStreamWorker:
                             self._log("Mất tín hiệu hoặc kết thúc luồng video.")
                             break
 
-                self.frame_count += 1
+                next_frame_count = self.frame_count + 1
+                captured_at = time.perf_counter()
                 fh, fw = frame.shape[:2]
-                if self.frame_count == 1 or self.frame_count % 30 == 0:
+                if next_frame_count == 1 or next_frame_count % 30 == 0:
                     self.resolution_str = f"{fw}x{fh}"
 
                 # Thu phóng khung hình xử lý cực nhanh bằng INTER_LINEAR, giới hạn cạnh dài nhất theo capture_width
@@ -849,19 +884,23 @@ class CameraStreamWorker:
                 # Gửi khung hình mới cho luồng _infer_loop theo chu kỳ frame_skip mà không chặn luồng hiển thị
                 skip_n = max(1, int(self.settings.frame_skip))
                 with self.lock:
+                    self.frame_count = next_frame_count
                     self.latest_raw_bgr = proc_frame
+                    self.latest_capture_monotonic = captured_at
+                    self.queue_depth = min(1, max(0, self.frame_count - self.last_inferred_frame_id))
                     valid_boxes = list(self.last_boxes)
                     curr_alert_level = self.alert_level if self.alert_level != "CONN_ERROR" else "SAFE"
 
-                if (self.frame_count % skip_n == 0) or (self.frame_count == 1):
+                if (next_frame_count % skip_n == 0) or (next_frame_count == 1):
                     self.infer_event.set()
 
                 # Tính FPS đọc khung hình (capture_fps)
                 now_perf = time.perf_counter()
-                dt = max(1e-4, now_perf - last_tick)
-                last_tick = now_perf
-                capture_fps_win.append(1.0 / dt)
-                actual_capture_fps = float(sum(capture_fps_win) / len(capture_fps_win))
+                capture_ticks.append(now_perf)
+                actual_capture_fps = (
+                    (len(capture_ticks) - 1) / max(1e-6, capture_ticks[-1] - capture_ticks[0])
+                    if len(capture_ticks) > 1 else 0.0
+                )
 
                 # Vẽ bounding box mới nhất lên bản sao hiển thị
                 disp_canvas = proc_frame.copy()
@@ -944,7 +983,14 @@ class CameraStreamWorker:
                 "fps": self.capture_fps,
                 "capture_fps": self.capture_fps,
                 "inference_fps": self.inference_fps,
+                "display_fps": self.display_fps,
                 "infer_ms": self.infer_ms,
+                "end_to_end_latency_ms": self.end_to_end_latency_ms,
+                "captured_frames": self.frame_count,
+                "processed_frames": self.inference_frames,
+                "dropped_frames": self.dropped_frames,
+                "queue_depth": self.queue_depth,
+                "displayed_frames": self.displayed_frames,
                 "resolution": self.resolution_str,
                 "last_update_str": self.last_update_str,
                 "disconnected_at_str": self.disconnected_at_str,
@@ -972,6 +1018,23 @@ class CameraStreamWorker:
                 "reconnect_attempts": self.reconnect_attempts,
             }
 
+    def record_displayed_frame(self, client_id: str, frame_id: int) -> None:
+        """Record client display acknowledgment without doing image encoding."""
+        with self.lock:
+            previous = self._displayed_by_client.get(client_id, 0)
+            if frame_id > previous:
+                self._displayed_by_client[client_id] = frame_id
+                self._display_ticks.append(time.perf_counter())
+                self.displayed_frames += 1
+                if len(self._display_ticks) > 1:
+                    elapsed = self._display_ticks[-1] - self._display_ticks[0]
+                    self.display_fps = round((len(self._display_ticks) - 1) / max(1e-6, elapsed), 2)
+
+    def remove_display_client(self, client_id: str) -> None:
+        """Release per-client display accounting after a WebSocket closes."""
+        with self.lock:
+            self._displayed_by_client.pop(client_id, None)
+
 
 class MultiCameraManager:
     """Bộ điều phối trung tâm quản lý 9 luồng camera (bố cục 3x3), Detector dùng chung và SQLite."""
@@ -981,6 +1044,7 @@ class MultiCameraManager:
         db_path: str = "alerts.db",
         model_path: str = "best.pt",
         auto_assign_videos: bool = True,
+        detector: Optional[SharedFireSmokeDetector] = None,
     ):
         self.start_time = time.time()
         self.performance_preset = "Balanced"
@@ -989,7 +1053,7 @@ class MultiCameraManager:
         self.alert_manager = AlertManager(db_path=db_path)
         self.event_db = EventDatabase(alert_manager=self.alert_manager, db_path=db_path)
         self.telegram_alerts = TelegramAlertDispatcher(db_path=db_path)
-        self.detector = SharedFireSmokeDetector(
+        self.detector = detector or SharedFireSmokeDetector(
             model_path=self.settings.model_path,
             conf_threshold=self.settings.conf_threshold,
             imgsz=self.settings.imgsz,
@@ -1001,6 +1065,9 @@ class MultiCameraManager:
         self.camera_configs: List[CameraConfig] = get_default_9_cameras(
             auto_assign_videos=auto_assign_videos
         )
+        self.camera_restore_errors: List[Dict[str, str]] = []
+        self._initialize_camera_config_table()
+        self._restore_camera_configs()
         self.workers: Dict[str, CameraStreamWorker] = {}
         for cfg in self.camera_configs:
             self.workers[cfg.cam_id] = CameraStreamWorker(
@@ -1020,6 +1087,108 @@ class MultiCameraManager:
             )
         else:
             self.add_log(f"⚠️ CẢNH BÁO MODEL: {model_info['error']}")
+
+    def _initialize_camera_config_table(self) -> None:
+        """Create the additive camera configuration table without touching event history."""
+        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+            conn.execute("PRAGMA busy_timeout=10000")
+            conn.execute("PRAGMA journal_mode=WAL")
+            conn.execute("""CREATE TABLE IF NOT EXISTS cameras (
+                camera_id TEXT PRIMARY KEY, name TEXT NOT NULL, source_type TEXT NOT NULL,
+                source TEXT NOT NULL, webcam_index INTEGER NOT NULL DEFAULT 0,
+                enabled INTEGER NOT NULL DEFAULT 1, auto_reconnect INTEGER NOT NULL DEFAULT 1,
+                inference_fps INTEGER NOT NULL DEFAULT 8, exclusion_zones TEXT NOT NULL DEFAULT '[]',
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)""")
+
+    def _resolve_persisted_source(self, source_type: str, source_reference: str, webcam_index: int) -> str:
+        """Resolve a safe source reference only in memory when restoring a camera."""
+        if source_type == "WEBCAM":
+            return str(webcam_index)
+        if source_type == "IP_CAMERA" and source_reference.startswith("env:"):
+            variable = source_reference[4:]
+            if not re.fullmatch(r"[A-Z][A-Z0-9_]{0,127}", variable):
+                raise ValueError("Invalid environment reference (expected env:VARIABLE_NAME)")
+            resolved = os.getenv(variable, "").strip()
+            if not resolved:
+                raise ValueError(f"Environment reference {variable} is not configured")
+            parsed = urlsplit(resolved)
+            allowed = {host.strip().lower() for host in os.getenv("FIREWATCH_RTSP_HOSTS", "").split(",") if host.strip()}
+            if parsed.scheme not in ("rtsp", "rtsps") or not parsed.hostname or parsed.hostname.lower() not in allowed:
+                raise ValueError("Referenced RTSP URL is invalid or its hostname is not allowlisted")
+            return resolved
+        if source_type == "IP_CAMERA":
+            parsed = urlsplit(source_reference)
+            if parsed.username is not None or parsed.password is not None:
+                raise ValueError("Inline RTSP credentials are forbidden; use env:VARIABLE_NAME")
+            allowed = {host.strip().lower() for host in os.getenv("FIREWATCH_RTSP_HOSTS", "").split(",") if host.strip()}
+            if parsed.scheme not in ("rtsp", "rtsps") or not parsed.hostname:
+                raise ValueError("IP camera source must be an RTSP or RTSPS URL")
+            if parsed.hostname.lower() not in allowed:
+                raise ValueError("RTSP host is not present in FIREWATCH_RTSP_HOSTS")
+        return source_reference
+
+    def _restore_camera_configs(self) -> None:
+        """Restore persisted camera settings while leaving all capture workers stopped."""
+        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+            rows = conn.execute("""SELECT camera_id,name,source_type,source,webcam_index,enabled,
+                auto_reconnect,inference_fps,exclusion_zones FROM cameras ORDER BY camera_id""").fetchall()
+        by_id = {cfg.cam_id: cfg for cfg in self.camera_configs}
+        for row in rows:
+            camera_id, name, source_type, source_ref, device, enabled, reconnect, fps, zones_json = row
+            try:
+                if not re.fullmatch(r"CAM-\d{2,}", str(camera_id)):
+                    raise ValueError("Invalid camera id; expected CAM- followed by at least two digits")
+                zones = json.loads(zones_json or "[]")
+                if not isinstance(zones, list):
+                    raise ValueError("Exclusion zones must be a list")
+                resolved = self._resolve_persisted_source(source_type, source_ref, int(device))
+                cfg = by_id.get(camera_id)
+                if cfg is None:
+                    cfg = CameraConfig(cam_id=camera_id, name=name, source=resolved, source_reference=source_ref,
+                                       source_type=source_type, webcam_index=int(device), enabled=bool(enabled),
+                                       inference_fps=int(fps), exclusion_zones=[tuple(z) for z in zones])
+                    self.camera_configs.append(cfg)
+                    by_id[camera_id] = cfg
+                else:
+                    cfg.name = name
+                    cfg.source = resolved
+                    cfg.source_reference = source_ref
+                    cfg.source_type = source_type
+                    cfg.webcam_index = int(device)
+                    cfg.enabled = bool(enabled)
+                    cfg.auto_reconnect = bool(reconnect)
+                    cfg.inference_fps = max(1, min(60, int(fps)))
+                    cfg.exclusion_zones = [tuple(z) for z in zones]
+            except Exception as exc:
+                safe_error = mask_rtsp_credentials(str(exc))
+                self.camera_restore_errors.append({"camera_id": str(camera_id), "error": safe_error})
+                self.add_log(f"Camera configuration {camera_id} restore failed: {safe_error}")
+
+    def _persist_camera_config(self, cfg: CameraConfig) -> bool:
+        """Persist only the safe source reference, never a resolved credential URL."""
+        source_ref = cfg.source_reference or cfg.source
+        if cfg.source_type == "IP_CAMERA":
+            parsed = urlsplit(source_ref) if not source_ref.startswith("env:") else None
+            if parsed and (parsed.username is not None or parsed.password is not None):
+                self.add_log(f"{cfg.cam_id} settings were not persisted: authenticated RTSP sources require an environment reference.")
+                return False
+        try:
+            with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+                conn.execute("PRAGMA busy_timeout=10000")
+                conn.execute("""INSERT INTO cameras(camera_id,name,source_type,source,webcam_index,enabled,
+                    auto_reconnect,inference_fps,exclusion_zones,updated_at)
+                    VALUES(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)
+                    ON CONFLICT(camera_id) DO UPDATE SET name=excluded.name,source_type=excluded.source_type,
+                    source=excluded.source,webcam_index=excluded.webcam_index,enabled=excluded.enabled,
+                    auto_reconnect=excluded.auto_reconnect,inference_fps=excluded.inference_fps,
+                    exclusion_zones=excluded.exclusion_zones,updated_at=CURRENT_TIMESTAMP""",
+                    (cfg.cam_id,cfg.name,cfg.source_type,source_ref,cfg.webcam_index,int(cfg.enabled),
+                     int(cfg.auto_reconnect),cfg.inference_fps,json.dumps(cfg.exclusion_zones)))
+            return True
+        except sqlite3.Error as exc:
+            self.add_log(f"Camera configuration {cfg.cam_id} could not be persisted ({type(exc).__name__}).")
+            return False
 
     def add_log(self, message: str):
         """Ghi nhật ký hệ thống, tự động che mật khẩu RTSP nếu có."""
@@ -1052,11 +1221,24 @@ class MultiCameraManager:
             w.config.enabled = bool(enabled)
             if not enabled and w.running:
                 w.stop()
+            self._persist_camera_config(w.config)
             self.add_log(f"Đã chuyển trạng thái kích hoạt {cam_id} -> {'BẬT' if enabled else 'TẮT'}.")
+
+    def update_camera_inference_fps(self, cam_id: str, inference_fps: int) -> None:
+        """Persist the per-camera inference scheduling cap."""
+        if cam_id not in self.workers:
+            raise ValueError(f"Unknown camera id: {cam_id}")
+        fps = int(inference_fps)
+        if not 1 <= fps <= 60:
+            raise ValueError("inference_fps must be between 1 and 60")
+        worker = self.workers[cam_id]
+        worker.config.inference_fps = fps
+        self._persist_camera_config(worker.config)
 
     def start_camera(self, cam_id: str):
         if cam_id in self.workers:
             self.workers[cam_id].config.enabled = True
+            self._persist_camera_config(self.workers[cam_id].config)
             self.workers[cam_id].start()
 
     def pause_camera(self, cam_id: str):
@@ -1114,6 +1296,7 @@ class MultiCameraManager:
         enabled: Optional[bool] = None,
         auto_reconnect: Optional[bool] = None,
         auto_restart: bool = False,
+        source_reference: Optional[str] = None,
     ):
         """Lưu cấu hình mới cho một camera (che mật khẩu RTSP trong log)."""
         if cam_id not in self.workers:
@@ -1128,11 +1311,14 @@ class MultiCameraManager:
         else:
             w.config.source_type = infer_source_type(new_source)
 
+        safe_reference = str(source_reference if source_reference is not None else new_source).strip()
         if w.config.source_type == "WEBCAM":
             w.config.webcam_index = int(webcam_index)
             w.config.source = str(webcam_index)
+            w.config.source_reference = str(webcam_index)
         else:
-            w.config.source = new_source.strip()
+            w.config.source = self._resolve_persisted_source(w.config.source_type, safe_reference, int(webcam_index))
+            w.config.source_reference = safe_reference
 
         if enabled is not None:
             w.config.enabled = bool(enabled)
@@ -1144,6 +1330,7 @@ class MultiCameraManager:
         self.add_log(
             f"Đã lưu cấu hình {cam_id} [{w.config.source_type}]: '{w.config.name}' -> '{w.config.masked_source}'"
         )
+        self._persist_camera_config(w.config)
         if auto_restart:
             w.start()
         else:
@@ -1226,6 +1413,7 @@ class MultiCameraManager:
                 w.config.enabled = False
                 if w.running:
                     w.stop()
+            self._persist_camera_config(cfg)
 
         # Khởi chạy bất đồng bộ hoàn toàn không block luồng Streamlit (0ms delay)
         self.add_log(f"Đã cập nhật danh sách camera giám sát: {sorted(list(target_ids))}")
@@ -1274,19 +1462,30 @@ class MultiCameraManager:
         exclusion_zones: Optional[List[Tuple[float, float, float, float]]] = None,
         auto_start: bool = False,
         inference_fps: int = 24,
+        camera_id: Optional[str] = None,
+        source_reference: Optional[str] = None,
     ) -> str:
         """Thêm một camera mới vào hệ thống và khởi tạo CameraStreamWorker độc lập."""
-        next_num = len(self.camera_configs) + 1
-        while f"CAM-{next_num:02d}" in self.workers:
-            next_num += 1
-        cam_id = f"CAM-{next_num:02d}"
+        if camera_id is not None:
+            if not re.fullmatch(r"CAM-\d{2,}", str(camera_id)):
+                raise ValueError("camera_id must match CAM- followed by at least two digits")
+            if camera_id in self.workers:
+                raise ValueError(f"Camera id already exists: {camera_id}")
+            cam_id = str(camera_id)
+        else:
+            next_num = 1
+            while f"CAM-{next_num:02d}" in self.workers:
+                next_num += 1
+            cam_id = f"CAM-{next_num:02d}"
         s_type = source_type if source_type in ("VIDEO_TEST", "WEBCAM", "IP_CAMERA") else infer_source_type(source)
-        src_str = str(webcam_index) if s_type == "WEBCAM" else source.strip()
+        safe_reference = str(source_reference if source_reference is not None else source).strip()
+        src_str = str(webcam_index) if s_type == "WEBCAM" else self._resolve_persisted_source(s_type, safe_reference, webcam_index)
 
         cfg = CameraConfig(
             cam_id=cam_id,
             name=name.strip() or cam_id,
             source=src_str,
+            source_reference=str(webcam_index) if s_type == "WEBCAM" else safe_reference,
             source_type=s_type,
             webcam_index=int(webcam_index) if s_type == "WEBCAM" else 0,
             enabled=bool(enabled),
@@ -1305,6 +1504,7 @@ class MultiCameraManager:
             telegram_alerts=self.telegram_alerts,
         )
         self.workers[cam_id] = worker
+        self._persist_camera_config(cfg)
         self.add_log(f"Đã thêm camera mới {cam_id} ({cfg.name}) -> {cfg.masked_source}")
         if auto_start and cfg.enabled:
             worker.start()
@@ -1318,6 +1518,8 @@ class MultiCameraManager:
         if w.running:
             w.stop()
         self.camera_configs = [c for c in self.camera_configs if c.cam_id != cam_id]
+        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+            conn.execute("DELETE FROM cameras WHERE camera_id=?", (cam_id,))
         if cam_id in self.default_camera_ids:
             self.default_camera_ids = [c for c in self.default_camera_ids if c != cam_id]
             if not self.default_camera_ids and self.camera_configs:
@@ -1344,7 +1546,16 @@ class MultiCameraManager:
             if w.status == "ERROR" and not w.running:
                 w.status = "DISCONNECTED"
                 w.lifecycle_state = "STOPPED"
-        self.set_active_camera_selection(target_ids, auto_start=bool(assigned_ids))
+        # Connecting a chosen camera must not stop already-running cameras that
+        # are hidden by the current dashboard layout or another browser session.
+        for cid in assigned_ids:
+            worker = self.workers[cid]
+            worker.config.enabled = True
+            self._persist_camera_config(worker.config)
+            if worker.status == "ERROR" and not worker.running:
+                worker.status = "DISCONNECTED"
+                worker.lifecycle_state = "STOPPED"
+            worker.start()
         snaps = self.get_selected_snapshots(target_ids)
         return {
             "requested": target_ids,
@@ -1450,11 +1661,14 @@ class MultiCameraManager:
         w.stop()
         with w.lock:
             w.config.source = ""
+            w.config.source_reference = ""
             w.config.source_type = "UNASSIGNED"
             w.status = "DISCONNECTED"
             w.lifecycle_state = "STOPPED"
             w.error_detail = "Chưa gán nguồn camera. Hãy chọn Camera đang hoạt động hoặc gắn File Video để test."
             w._set_placeholder("DISCONNECTED", w.error_detail)
+        with sqlite3.connect(self.event_db.db_path, timeout=10) as conn:
+            conn.execute("DELETE FROM cameras WHERE camera_id=?", (cam_id,))
         self.add_log(f"Đã gỡ nguồn khỏi {cam_id} (Trạng thái: Chưa gán nguồn).")
         return True
 
@@ -1469,6 +1683,11 @@ class MultiCameraManager:
         self.stop_all()
         self.alert_manager.reset_alarm_acknowledgment()
         self.add_log("Đã dừng giám sát toàn bộ camera (Tất cả trở về trạng thái STOPPED).")
+
+    def close(self) -> None:
+        """Release camera workers and background delivery resources."""
+        self.stop_all()
+        self.telegram_alerts.close(timeout=10.0)
 
     def acknowledge_event(
         self,
@@ -1523,6 +1742,7 @@ class MultiCameraManager:
             w.config.exclusion_zones = list(clean_zones)
             w.verifier.exclusion_zones = list(clean_zones)
         self.add_log(f"Đã cập nhật {len(clean_zones)} vùng loại trừ ROI cho {cam_id}.")
+        self._persist_camera_config(w.config)
 
     def set_default_cameras(self, cam_ids: List[str]):
         """Thiết lập danh sách camera mặc định khi khởi động trung tâm chỉ huy."""

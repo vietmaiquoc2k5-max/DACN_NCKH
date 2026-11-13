@@ -1,36 +1,52 @@
-# Week 7 Implementation Status
+# Week 7 Technical Report
 
-## Repository audit
+## Repository and provenance
 
-- Branch: `main`
-- Audited HEAD: `32472318d25d4f14a52551fed8d2f1b70d424ce6`
-- Working tree before edits: clean
-- Existing pipeline reused: `MultiCameraManager`, `CameraStreamWorker`, shared YOLO detector, per-camera ByteTrack and temporal verifier, SQLite event store, and Streamlit dashboard.
-- Week 4 operating point remains **PROVISIONAL**. No scientific threshold status was changed.
+- Initial branch: `main`
+- Initial HEAD: `1f9aab396ba7cb9a3a671e174700f7f474560897`
+- Initial working tree: clean
+- Reference commit: `1f9aab396ba7cb9a3a671e174700f7f474560897` (same as initial HEAD)
+- Final HEAD: unchanged; this work is uncommitted.
+- Week 4 operating point: **PROVISIONAL**. Week 7 work did not modify datasets,
+  Ground Truth, test split, model checkpoints, or historical benchmark artifacts.
 
-## Implemented in this change
+## Implementation status
 
-- Added an authenticated FastAPI management API for camera configuration and explicit connect, disconnect and reconnect, event history and actions, performance metrics, alert status, and camera status WebSocket updates.
-- API-created managers use unassigned camera slots and stop monitoring at startup. The source handler checks local video paths remain within the repository and requires RTSP host allowlisting.
-- Camera configuration is stored in an additive SQLite `cameras` table and restored disconnected at startup. Authenticated RTSP URLs must be referenced by environment variable; inline URL credentials are rejected.
-- Added per-camera inference FPS caps while retaining the system-wide cap.
-- Added a background Telegram photo dispatcher. It records queued, delivered or failed state in an additive SQLite table and suppresses duplicate event/channel deliveries. A Telegram `message_id` is required before status becomes `DELIVERED`.
-- Added Docker/API configuration, persistent database and snapshot volumes, and local MediaMTX service configuration.
+The existing `MultiCameraManager`, camera workers, shared detector, ByteTrack,
+temporal verification, event evaluator, SQLite event store, and Streamlit UI were
+retained. Changes add persistent safe camera references, a durable SQLite-backed
+Telegram queue with explicit ambiguous-outcome handling, scoped short-lived
+WebSocket tickets, measured per-camera processing/display metrics, and an embedded
+FastAPI service that uses the same manager instance as Streamlit. Camera layout
+selection is a presentation choice; individual controls perform connect,
+disconnect, and reconnect actions.
 
-## Verification record
+Camera settings restore disconnected with stable IDs. RTSP credentials are held
+in environment variables and source configurations persist references such as
+`env:CAMERA_RTSP_CAM01`. Model selection no longer falls through from an explicit
+missing checkpoint to an unrelated checkpoint.
 
-- Initial `git status`, branch and HEAD captured before editing.
-- Python syntax compilation: **PASSED** for the changed API, alert, camera, configuration, and test modules. RTSP credential masking smoke check: **PASSED**.
-- Automated suite: **NOT RUN**. The active `.venv` does not have FastAPI, uvicorn, pytest, or httpx installed. Install `requirements-dev.txt` before running the suite.
-- Physical or simulated RTSP streams: **NOT VERIFIED**. MediaMTX is defined but no four-stream publish/decode/inference run was executed.
-- Telegram: **NOT VERIFIED**. No credentials were supplied and no real message was sent.
-- Docker: **NOT VERIFIED**. The Docker CLI is unavailable in this environment, so build or runtime was not executed.
-- Two-hour stability and hardware performance: **NOT RUN**. Existing benchmark scripts are available, but there is no new measurement in this change.
+## Verification evidence
 
-## Remaining acceptance work
+| Area | Status | Evidence / limitation |
+|---|---|---|
+| Python syntax | TESTED | `python -m compileall src scripts web_app.py alert_manager.py tests`; passed. Two pre-existing invalid escape warnings remain in `scripts/evaluate_full_frame_far.py`. |
+| Week 7 automated tests | TESTED | Targeted Week 7 command: 26 passed, 4 skipped in Python 3.14.3 / pytest 8.2.1. Skips require RTSP or hardware. |
+| Full automated suite | FAIL / ENVIRONMENT LIMITED | `python -m pytest -q`: 200 passed, 4 skipped, 14 failed, 25 errors. The failures/errors predominantly require the missing `lap` ByteTrack dependency; Ultralytics attempted an automatic install but could not write into the user site. `lap>=0.5.12` is now declared in runtime requirements. |
+| RTSP and detector | NOT VERIFIED | No authorized RTSP sources were available. Opt-in test is `tests/test_week7_integration.py`. |
+| Telegram | NOT VERIFIED | No credentials were available; unit tests use mocks and do not imply Telegram acceptance. |
+| Docker/MediaMTX | BLOCKED | Docker CLI is unavailable; compose validation, image build, service health, and simulated RTSP were not run. |
+| Performance targets | NOT VERIFIED | No measured 1/4/9-camera hardware run. The performance test records observed inference FPS; configured caps are not evidence. |
+| Two-hour stability | NOT VERIFIED | Harness added at `scripts/benchmark_week7_stability.py`; no runtime result is claimed. |
 
-The current Streamlit dashboard remains the existing monitoring UI and continues to use its own in-process manager; it is not yet driven by this API. API token provisioning, installing optional dependencies, a four-stream MediaMTX run, real Telegram delivery, container execution, and the continuous stability benchmark remain needed before acceptance.
+The available Python environment also lacks Streamlit and `lap`; the dashboard
+could not be launched and repository tests requiring ByteTrack could not execute.
+Compile success is syntax evidence only and does not establish runtime correctness.
+See `docs/WEEK7_REPAIR_AUDIT.md` and
+`docs/WEEK7_ACCEPTANCE.md` for detailed findings and outstanding criteria.
 
 ## Conclusion
 
-**PARTIAL — NOT VERIFIED.** The source-level management and alerting pieces were added, but Week 7 acceptance requires live integration and measured execution evidence that is not available from this run.
+**PARTIAL — NOT ACCEPTED.** Source fixes and test/benchmark tooling are present,
+but the project does not yet have the four-stream, real Telegram, Docker,
+hardware-throughput, and two-hour runtime evidence required for Week 7 acceptance.

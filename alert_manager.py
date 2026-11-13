@@ -8,6 +8,7 @@ import cv2
 import sys
 import sqlite3
 import csv
+from datetime import datetime, timezone
 
 # Import sound modules conditionally
 IS_WINDOWS = sys.platform == "win32"
@@ -70,9 +71,14 @@ class AlertManager:
                         alert_level TEXT DEFAULT 'FIRE',
                         image_path TEXT,
                         status TEXT DEFAULT 'UNREAD',
+                        event_state TEXT DEFAULT 'CONFIRMED',
+                        acknowledged_at TEXT,
+                        dismissed_at TEXT,
+                        dismissal_reason TEXT,
                         action_taken TEXT DEFAULT 'Chưa xử lý',
                         operator_note TEXT DEFAULT '',
-                        is_demo INTEGER DEFAULT 0
+                        is_demo INTEGER DEFAULT 0,
+                        event_confirmed_at TEXT
                     )
                 """)
                 # Safe migrations for existing database files
@@ -82,6 +88,11 @@ class AlertManager:
                     "ALTER TABLE alert_logs ADD COLUMN camera_name TEXT DEFAULT 'CAM-01'",
                     "ALTER TABLE alert_logs ADD COLUMN alert_level TEXT DEFAULT 'FIRE'",
                     "ALTER TABLE alert_logs ADD COLUMN is_demo INTEGER DEFAULT 0",
+                    "ALTER TABLE alert_logs ADD COLUMN event_confirmed_at TEXT",
+                    "ALTER TABLE alert_logs ADD COLUMN event_state TEXT DEFAULT 'CONFIRMED'",
+                    "ALTER TABLE alert_logs ADD COLUMN acknowledged_at TEXT",
+                    "ALTER TABLE alert_logs ADD COLUMN dismissed_at TEXT",
+                    "ALTER TABLE alert_logs ADD COLUMN dismissal_reason TEXT",
                 ]
                 for sql in migrations:
                     try:
@@ -253,10 +264,12 @@ class AlertManager:
         camera_name="CAM-01",
         alert_level="FIRE",
         is_demo=0,
+        event_confirmed_at=None,
     ):
         """Saves alert snapshot image to disk and inserts alert record into SQLite DB."""
         self.ensure_alerts_dir()
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+        confirmed_at = event_confirmed_at or datetime.now(timezone.utc).isoformat(timespec="microseconds")
         file_timestamp = time.strftime("%Y%m%d_%H%M%S")
         safe_cam = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in str(camera_name))
         image_filename = f"alert_{safe_cam}_{file_timestamp}_{int(float(confidence)*100)}.jpg"
@@ -282,9 +295,9 @@ class AlertManager:
                     """
                     INSERT INTO alert_logs (
                         timestamp, camera_name, label, confidence, alert_level,
-                        image_path, status, action_taken, operator_note, is_demo
+                        image_path, status, event_state, action_taken, operator_note, is_demo, event_confirmed_at
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, 'UNREAD', 'Chưa xử lý', '', ?)
+                    VALUES (?, ?, ?, ?, ?, ?, 'UNREAD', 'CONFIRMED', 'Chưa xử lý', '', ?, ?)
                 """,
                     (
                         timestamp,
@@ -294,6 +307,7 @@ class AlertManager:
                         str(alert_level),
                         filepath,
                         int(bool(is_demo)),
+                        confirmed_at,
                     ),
                 )
                 conn.commit()
@@ -305,6 +319,7 @@ class AlertManager:
         noti_item = {
             "id": alert_id,
             "timestamp": timestamp,
+            "event_confirmed_at": confirmed_at,
             "camera_name": str(camera_name),
             "label": str(label),
             "confidence": float(confidence),
@@ -342,14 +357,20 @@ class AlertManager:
                 if row and row[0]:
                     cam_name = str(row[0])
 
+                normalized_status = str(status).upper()
+                now_utc = datetime.now(timezone.utc).isoformat(timespec="microseconds")
                 cursor.execute(
-                    """
-                    UPDATE alert_logs 
-                    SET action_taken = ?, operator_note = ?, status = ?
-                    WHERE id = ?
-                """,
-                    (action_taken, operator_note, status, alert_id),
+                    """UPDATE alert_logs
+                    SET action_taken=?, operator_note=?, status=?,
+                        acknowledged_at=CASE WHEN ?='ACKNOWLEDGED' THEN ? ELSE acknowledged_at END,
+                        dismissed_at=CASE WHEN ?='DISMISSED' THEN ? ELSE dismissed_at END,
+                        dismissal_reason=CASE WHEN ?='DISMISSED' THEN ? ELSE dismissal_reason END
+                    WHERE id=?""",
+                    (action_taken, operator_note, normalized_status,
+                     normalized_status, now_utc, normalized_status, now_utc,
+                     normalized_status, operator_note, alert_id),
                 )
+                updated = cursor.rowcount > 0
                 conn.commit()
                 conn.close()
                 for item in self.active_notifications:
@@ -362,7 +383,7 @@ class AlertManager:
                         self.acknowledged_cameras.add(cam_name)
                     self.alarm_silenced_by_ack = True
                     self.stop_alarm()
-                return True
+                return updated
             except Exception as e:
                 print(f"Lỗi cập nhật nhật ký xử lý vụ việc #{alert_id}: {e}")
                 return False
@@ -443,7 +464,10 @@ class AlertManager:
                     conditions.append("UPPER(label) LIKE ?")
                     params.append(f"%{label_filter.upper()}%")
 
-                if status_filter and status_filter != "Tất cả":
+                if status_filter and str(status_filter).upper() in ("UNREAD", "ACKNOWLEDGED", "DISMISSED"):
+                    conditions.append("status = ?")
+                    params.append(str(status_filter).upper())
+                elif status_filter and status_filter != "Tất cả":
                     if status_filter == "Đã xác nhận":
                         conditions.append("status = 'ACKNOWLEDGED'")
                     elif status_filter == "Chưa xác nhận":
@@ -468,7 +492,8 @@ class AlertManager:
                     SELECT id, timestamp, COALESCE(camera_name, 'CAM-01'), label, confidence,
                            COALESCE(alert_level, 'FIRE'), image_path, status,
                            COALESCE(action_taken, 'Chưa xử lý'), COALESCE(operator_note, ''),
-                           COALESCE(is_demo, 0)
+                           COALESCE(is_demo, 0), event_state, event_confirmed_at,
+                           acknowledged_at, dismissed_at, dismissal_reason
                     FROM alert_logs
                     {where_clause}
                     ORDER BY id DESC LIMIT ?
@@ -495,6 +520,11 @@ class AlertManager:
                             "action_taken": row[8] or "Chưa xử lý",
                             "operator_note": row[9] or "",
                             "is_demo": is_demo_flag,
+                            "event_state": row[11] or "CONFIRMED",
+                            "event_confirmed_at": row[12],
+                            "acknowledged_at": row[13],
+                            "dismissed_at": row[14],
+                            "dismissal_reason": row[15],
                         }
                     )
             except Exception as e:

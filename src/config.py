@@ -136,6 +136,7 @@ class CameraConfig:
     max_reconnect_attempts: int = 5
     reconnect_interval_sec: float = 2.5
     exclusion_zones: List[Tuple[float, float, float, float]] = field(default_factory=list)
+    source_reference: str = ""
 
     @property
     def masked_source(self) -> str:

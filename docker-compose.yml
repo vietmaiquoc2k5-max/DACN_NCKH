@@ -5,13 +5,16 @@ services:
     env_file: .env
     environment:
       FIREWATCH_DB_PATH: /data/alerts.db
-      FIREWATCH_MODEL_PATH: /models/best.pt
+      FIREWATCH_MODEL_PATH: /models/firewatch.pt
+      FIREWATCH_API_HOST: 0.0.0.0
+      FIREWATCH_ALLOWED_ORIGINS: ${FIREWATCH_ALLOWED_ORIGINS:-http://localhost:8501,http://127.0.0.1:8501}
     ports:
       - "8000:8000"
+      - "8501:8501"
     volumes:
       - firewatch-data:/data
       - firewatch-snapshots:/app/alerts
-      - ./best.pt:/models/best.pt:ro
+      - ${FIREWATCH_MODEL_HOST_PATH:?Set FIREWATCH_MODEL_HOST_PATH to a local checkpoint}:/models/firewatch.pt:ro
     depends_on:
       mediamtx:
         condition: service_started
