@@ -361,6 +361,7 @@ class CameraStreamWorker:
         self.stop_event = threading.Event()
         self.lifecycle_lock = threading.RLock()
         self.lock = threading.Lock()
+        self.pipeline_counters = {"detector_inference_calls": 0, "detector_output_detections": 0, "tracker_calls": 0, "tracker_input_detections": 0, "tracker_output_tracks": 0, "temporal_verifier_calls": 0, "temporal_input_tracks_detections": 0, "temporal_confirmation_outputs": 0, "event_evaluation_calls": 0, "confirmed_events": 0}
 
         # Chỉ số FPS đọc khung hình và FPS suy luận model riêng biệt
         self.capture_fps: float = 0.0
@@ -657,6 +658,9 @@ class CameraStreamWorker:
                 imgsz=self.settings.imgsz,
                 non_blocking=False,
             )
+            with self.lock:
+                self.pipeline_counters["detector_inference_calls"] += 1
+                self.pipeline_counters["detector_output_detections"] += len(raw_boxes or [])
             if raw_boxes is None or not self.running:
                 continue
             processed_at = time.perf_counter()
@@ -673,6 +677,10 @@ class CameraStreamWorker:
 
             # 1. ByteTrack Association (gán track_id ổn định 2 giai đoạn)
             tracked_boxes = self.tracker.update(raw_boxes, frame=infer_input)
+            with self.lock:
+                self.pipeline_counters["tracker_calls"] += 1
+                self.pipeline_counters["tracker_input_detections"] += len(raw_boxes)
+                self.pipeline_counters["tracker_output_tracks"] += sum(1 for b in tracked_boxes if b.track_id > 0)
 
             # 2. Cập nhật Temporal Visual Features cho từng track
             now_ts = time.time()
@@ -697,6 +705,11 @@ class CameraStreamWorker:
                 feature_map=feature_map,
                 timestamp_sec=now_ts,
             )
+            with self.lock:
+                self.pipeline_counters["temporal_verifier_calls"] += 1
+                self.pipeline_counters["temporal_input_tracks_detections"] += len(tracked_boxes)
+                self.pipeline_counters["temporal_confirmation_outputs"] += len(ver_res.get("confirmed_track_ids", []))
+                self.pipeline_counters["event_evaluation_calls"] += 1
             valid_boxes = ver_res["valid_boxes"]
             with self.lock:
                 self.last_boxes = valid_boxes
@@ -711,6 +724,8 @@ class CameraStreamWorker:
                 curr_cap_fps = self.capture_fps
 
             if ver_res["should_trigger_db_alert"]:
+                with self.lock:
+                    self.pipeline_counters["confirmed_events"] += 1
                 lbl = ver_res["primary_label"] or "FIRE"
                 conf_val = ver_res["max_confidence"]
                 snap_bgr = SharedFireSmokeDetector.draw_annotations(
