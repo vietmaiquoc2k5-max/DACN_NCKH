@@ -1,0 +1,81 @@
+2026/11/13 23:38:33 INF MediaMTX v1.21.3, windows, amd64
+2026/11/13 23:38:33 INF configuration loaded from F:\Dự án cá nhân\phan mem canh bao chay\.tools\mediamtx\mediamtx.yml
+2026/11/13 23:38:33 INF [RTSP] started with listeners on 127.0.0.1:8554 (TCP/RTSP), :8000 (UDP/RTP), :8001 (UDP/RTCP)
+2026/11/13 23:38:33 INF [RTMP] started with listener on :1935 (TCP/RTMP)
+2026/11/13 23:38:33 INF [HLS] started with listener on :8888 (TCP/HTTP)
+2026/11/13 23:38:33 INF [WebRTC] started with listeners on :8889 (TCP/HTTP), :8189 (UDP/ICE)
+2026/11/13 23:38:33 INF [SRT] started with listener on :8890 (UDP/SRT)
+2026/11/13 23:38:33 WAR [MoQ] certificate auto.key not found, generating it from scratch
+2026/11/13 23:38:33 INF [MoQ] started with listeners on :8892 (TCP/HTTP2), :8892 (UDP/HTTP3), :8893 (UDP/QUIC)
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60135] opened
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60135] closed: EOF
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60136] opened
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60136] closed: no stream is available on path 'cam1'
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60137] opened
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60138] opened
+2026/11/13 23:38:34 INF [RTSP] [session 5f11612d] created by 127.0.0.1:60137
+2026/11/13 23:38:34 INF [RTSP] [session 007f4b44] created by 127.0.0.1:60138
+2026/11/13 23:38:34 INF [path cam2] stream is available and online, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:34 INF [RTSP] [session 007f4b44] is publishing to path 'cam2'
+2026/11/13 23:38:34 INF [path cam1] stream is available and online, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:34 INF [RTSP] [session 5f11612d] is publishing to path 'cam1'
+2026/11/13 23:38:34 INF [path cam2] RTP packets are too big (1460 > 1440), remuxing them into smaller ones
+2026/11/13 23:38:34 INF [path cam1] RTP packets are too big (1460 > 1440), remuxing them into smaller ones
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60139] opened
+2026/11/13 23:38:34 INF [RTSP] [session e15baace] created by 127.0.0.1:60139
+2026/11/13 23:38:34 INF [path cam3] stream is available and online, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:34 INF [RTSP] [session e15baace] is publishing to path 'cam3'
+2026/11/13 23:38:34 INF [path cam3] RTP packets are too big (1460 > 1440), remuxing them into smaller ones
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60140] opened
+2026/11/13 23:38:34 INF [RTSP] [session 2acd2502] created by 127.0.0.1:60140
+2026/11/13 23:38:34 INF [path cam4] stream is available and online, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:34 INF [RTSP] [session 2acd2502] is publishing to path 'cam4'
+2026/11/13 23:38:34 INF [path cam4] RTP packets are too big (1460 > 1440), remuxing them into smaller ones
+2026/11/13 23:38:34 INF [RTSP] [conn 127.0.0.1:60141] opened
+2026/11/13 23:38:34 INF [RTSP] [session 816dfb32] created by 127.0.0.1:60141
+2026/11/13 23:38:34 INF [RTSP] [session 816dfb32] is reading from path 'cam1', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:38 INF [RTSP] [session 816dfb32] destroyed: torn down by 127.0.0.1:60141
+2026/11/13 23:38:38 INF [RTSP] [conn 127.0.0.1:60141] closed: read tcp 127.0.0.1:8554->127.0.0.1:60141: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:38:38 INF [RTSP] [conn 127.0.0.1:59273] opened
+2026/11/13 23:38:38 INF [RTSP] [session b71dad9c] created by 127.0.0.1:59273
+2026/11/13 23:38:38 INF [RTSP] [session b71dad9c] is reading from path 'cam2', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:41 INF [RTSP] [session b71dad9c] destroyed: torn down by 127.0.0.1:59273
+2026/11/13 23:38:41 INF [RTSP] [conn 127.0.0.1:59273] closed: read tcp 127.0.0.1:8554->127.0.0.1:59273: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:38:41 INF [RTSP] [conn 127.0.0.1:59274] opened
+2026/11/13 23:38:41 INF [RTSP] [session 0120041c] created by 127.0.0.1:59274
+2026/11/13 23:38:41 INF [RTSP] [session 0120041c] is reading from path 'cam3', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:47 INF [RTSP] [session 0120041c] destroyed: torn down by 127.0.0.1:59274
+2026/11/13 23:38:47 INF [RTSP] [conn 127.0.0.1:59274] closed: read tcp 127.0.0.1:8554->127.0.0.1:59274: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:38:47 INF [RTSP] [conn 127.0.0.1:51371] opened
+2026/11/13 23:38:47 INF [RTSP] [session 6a9e1b35] created by 127.0.0.1:51371
+2026/11/13 23:38:47 INF [RTSP] [session 6a9e1b35] is reading from path 'cam4', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:52 INF [RTSP] [session 6a9e1b35] destroyed: torn down by 127.0.0.1:51371
+2026/11/13 23:38:52 INF [RTSP] [conn 127.0.0.1:51371] closed: read tcp 127.0.0.1:8554->127.0.0.1:51371: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:38:55 INF [RTSP] [conn 127.0.0.1:55102] opened
+2026/11/13 23:38:55 INF [RTSP] [session 5d903513] created by 127.0.0.1:55102
+2026/11/13 23:38:55 INF [RTSP] [session 5d903513] is reading from path 'cam1', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:56 INF [RTSP] [conn 127.0.0.1:55103] opened
+2026/11/13 23:38:56 INF [RTSP] [session f849493b] created by 127.0.0.1:55103
+2026/11/13 23:38:56 INF [RTSP] [session f849493b] is reading from path 'cam2', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:57 INF [RTSP] [conn 127.0.0.1:55104] opened
+2026/11/13 23:38:57 INF [RTSP] [session 4d497695] created by 127.0.0.1:55104
+2026/11/13 23:38:57 INF [RTSP] [session 4d497695] is reading from path 'cam4', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:38:58 INF [RTSP] [conn 127.0.0.1:55105] opened
+2026/11/13 23:38:58 INF [RTSP] [session 4e5522d9] created by 127.0.0.1:55105
+2026/11/13 23:38:58 INF [RTSP] [session 4e5522d9] is reading from path 'cam3', with TCP, 2 tracks (H264, MPEG-4 Audio)
+2026/11/13 23:39:12 INF [RTSP] [session 5d903513] destroyed: torn down by 127.0.0.1:55102
+2026/11/13 23:39:12 INF [RTSP] [conn 127.0.0.1:55102] closed: read tcp 127.0.0.1:8554->127.0.0.1:55102: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:12 INF [RTSP] [session f849493b] destroyed: torn down by 127.0.0.1:55103
+2026/11/13 23:39:12 INF [RTSP] [conn 127.0.0.1:55103] closed: read tcp 127.0.0.1:8554->127.0.0.1:55103: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [session 4e5522d9] destroyed: torn down by 127.0.0.1:55105
+2026/11/13 23:39:13 INF [RTSP] [conn 127.0.0.1:55105] closed: read tcp 127.0.0.1:8554->127.0.0.1:55105: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [session 4d497695] destroyed: torn down by 127.0.0.1:55104
+2026/11/13 23:39:13 INF [RTSP] [conn 127.0.0.1:55104] closed: read tcp 127.0.0.1:8554->127.0.0.1:55104: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [conn 127.0.0.1:60137] closed: read tcp 127.0.0.1:8554->127.0.0.1:60137: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [session 5f11612d] destroyed: not in use
+2026/11/13 23:39:13 INF [RTSP] [conn 127.0.0.1:60138] closed: read tcp 127.0.0.1:8554->127.0.0.1:60138: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [session 007f4b44] destroyed: not in use
+2026/11/13 23:39:13 INF [RTSP] [conn 127.0.0.1:60139] closed: read tcp 127.0.0.1:8554->127.0.0.1:60139: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [session e15baace] destroyed: not in use
+2026/11/13 23:39:13 INF [RTSP] [conn 127.0.0.1:60140] closed: read tcp 127.0.0.1:8554->127.0.0.1:60140: wsarecv: An existing connection was forcibly closed by the remote host.
+2026/11/13 23:39:13 INF [RTSP] [session 2acd2502] destroyed: not in use
