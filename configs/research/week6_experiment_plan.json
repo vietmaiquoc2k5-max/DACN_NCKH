@@ -1,0 +1,154 @@
+{
+  "status": "PLANNED",
+  "ablation_one_factor_matrix": [
+    {
+      "axis": "imgsz",
+      "value": 416,
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "imgsz",
+      "value": 640,
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "imgsz",
+      "value": 960,
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "conf",
+      "value": 0.25,
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "conf",
+      "value": 0.35,
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "conf",
+      "value": 0.5,
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "k_n",
+      "value": [
+        2,
+        8
+      ],
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "k_n",
+      "value": [
+        3,
+        8
+      ],
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    },
+    {
+      "axis": "k_n",
+      "value": [
+        4,
+        10
+      ],
+      "baseline": {
+        "imgsz": 640,
+        "conf": 0.35,
+        "k": 3,
+        "n": 8
+      },
+      "day_night": "HUMAN_METADATA_REQUIRED",
+      "status": "PLANNED"
+    }
+  ],
+  "backends": {
+    "torch": "INSTALLED_NOT_BENCHMARKED",
+    "onnxruntime": "NOT_TESTED_ENVIRONMENT_UNAVAILABLE",
+    "openvino": "NOT_TESTED_ENVIRONMENT_UNAVAILABLE",
+    "tensorrt": "NOT_TESTED_ENVIRONMENT_UNAVAILABLE"
+  },
+  "cuda_available": false,
+  "gpu": null,
+  "cpu": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+  "fps": null,
+  "latency": null,
+  "verified_error_cases": 0,
+  "benchmark_protocol": {
+    "warmup_frames": 50,
+    "measured_frames": 1000,
+    "batch_size": 1,
+    "camera_counts": [
+      1,
+      4,
+      9
+    ],
+    "record": [
+      "throughput_fps",
+      "inference_latency",
+      "end_to_end_latency",
+      "RAM",
+      "VRAM",
+      "versions",
+      "resolution",
+      "source_scope"
+    ]
+  }
+}

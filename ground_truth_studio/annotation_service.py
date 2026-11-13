@@ -37,6 +37,10 @@ class AnnotationService:
             if submit and decision in {"CONTAINS_FIRE", "CONTAINS_SMOKE"} and decision.removeprefix("CONTAINS_") not in labels:
                 raise ValueError("A positive interval is required for this decision")
         if submit:
+            with self.repository.connection() as db:
+                independent = db.execute("SELECT 1 FROM audit_log WHERE ref=? AND action IN ('INDEPENDENT_REVIEW_ROUND_A','INDEPENDENT_REVIEW_ROUND_B')", (review_id,)).fetchone()
+            if independent and value.get("attest_independent") is not True:
+                raise ValueError("Explicit independent-view attestation required; do not consult joint prior or other labels")
             frozen(self.repository.settings)
             if not value.get("evidence_ref", "").strip() or value.get("attest_full_view") is not True:
                 raise ValueError("Explicit full-source-view attestation and evidence reference required")

@@ -244,6 +244,9 @@ class ReviewRepository:
         actor = self.actor(token, {"adjudicator"})
         with self.connection() as db:
             rows = list(db.execute("SELECT r.*,u.person_id FROM review_sessions r JOIN review_heads h ON h.review_id=r.id JOIN users u ON u.id=r.user_id WHERE r.video_id=? AND r.status='SUBMITTED' ORDER BY r.slot", (video_id,)))
+            independent_flags = [bool(db.execute("SELECT 1 FROM audit_log WHERE ref=? AND action IN ('INDEPENDENT_REVIEW_ROUND_A','INDEPENDENT_REVIEW_ROUND_B')", (row['id'],)).fetchone()) for row in rows]
+            if any(independent_flags) and (not all(independent_flags) or any(json.loads(row['payload']).get('attest_independent') is not True for row in rows)):
+                raise PermissionError("Do not mix independent rounds with prior consensus submissions")
             latest = db.execute("SELECT decision,data FROM adjudications WHERE video_id=? ORDER BY rowid DESC LIMIT 1", (video_id,)).fetchone()
         if latest and latest["decision"] == "REQUIRE_REVIEW" and any(row["id"] in json.loads(latest["data"])["review_ids"] for row in rows):
             raise PermissionError("Both requested re-reviews must be independently submitted")

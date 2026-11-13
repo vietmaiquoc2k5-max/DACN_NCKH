@@ -1,0 +1,45 @@
+{
+  "status": "BLOCKED_VALIDATION_EVIDENCE",
+  "grid": {
+    "confidence": [
+      0.25,
+      0.35,
+      0.5
+    ],
+    "k_n": [
+      [
+        2,
+        8
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        4,
+        10
+      ]
+    ],
+    "variation_threshold": [
+      0,
+      0.02
+    ],
+    "cooldown_sec": [
+      5,
+      12
+    ],
+    "merge_gap_sec": [
+      2
+    ],
+    "zones": [
+      "disabled",
+      "predeclared_camera_config"
+    ]
+  },
+  "candidate_count": 72,
+  "validation_scope": null,
+  "test_scope": null,
+  "locked": false,
+  "selection_objective": "max event F1 subject to predeclared recall, delay and FAR constraints; lock before independent test",
+  "metrics": null
+}

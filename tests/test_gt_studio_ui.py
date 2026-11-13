@@ -75,7 +75,7 @@ class TestStudioUI(StudioCase):
                 next(button for button in app.button if button.label == "Add Event").click().run()
                 next(box for box in app.selectbox if box.label == "Quyết định semantic").set_value("CONTAINS_FIRE").run()
                 next(item for item in app.text_input if item.label == "Evidence reference").set_value("SYNTHETIC_UI_FIXTURE_ONLY")
-                app.checkbox[0].check()
+                next(item for item in app.checkbox if item.label == "Tôi đã xem toàn bộ nguồn gốc và chịu trách nhiệm cho review này").check()
                 next(button for button in app.button if button.label == "Submit Review").click().run()
                 self.assertFalse(app.error)
                 self.submit("first", "NEG_01", [self.event("NEG_01")], "CONTAINS_FIRE")

@@ -1,0 +1,20 @@
+{
+  "status": "JOINT_CONSENSUS_PRIOR",
+  "export_id": "single_reviewer_1d11dd80c2c7427a8c00ea6a2803382b",
+  "files": {
+    "ground_truth_provenance.json": "49820d02af8a6ad12638e11336b9e35a58a912b38dab5556608edc6afae00d98",
+    "intra_annotator_consistency.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "single_negative_reviews.json": "704e7a5cc8bf03c8ebf8522b996df4e23ea4ec3136b01e85f90459b4c33f9e1f",
+    "single_review_records.json": "81029faeb05696623d00a29ff45dc5f5a55906899341b7b2d3d669e2e579d3f2",
+    "single_review_summary.json": "d19a405e32bb79f2a023866279a6ac7f6a12a226bc3857f1aa232a93cb1f320d",
+    "single_reviewer_gt_candidate.jsonl": "09094af83da6e93bb3702761681500cb086a03571a7eb7214b7c8de4dcf164a9"
+  },
+  "submitted_records": 87,
+  "kind_counts": {
+    "negative": 63,
+    "positive": 24
+  },
+  "independent": false,
+  "declaration_basis": "User explicitly reports two people jointly watched and agreed",
+  "identity_provenance": "Retained in original private ground_truth_provenance.json; no second identity invented"
+}

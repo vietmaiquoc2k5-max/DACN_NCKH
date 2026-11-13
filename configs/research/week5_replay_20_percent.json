@@ -1,0 +1,23 @@
+{
+  "strategy": "replay_20_percent",
+  "checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "epochs": 30,
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "imgsz": 640,
+  "data": "data_vn.yaml",
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "freeze_module_indices": [],
+  "replay": {
+    "unit": "20% combined epoch image presentations; ceil(VN_train/4) D-Fire train only",
+    "status": "BLOCKED_DFIRE_MISSING"
+  },
+  "status": "PLAN_ONLY_NOT_TRAINED"
+}

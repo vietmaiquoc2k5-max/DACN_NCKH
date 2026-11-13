@@ -120,6 +120,20 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
         st.info("Nhấn Mở / tiếp tục để chuyển sang video đã chọn.")
         return
     video = repository.video(selected)
+    from ground_truth_studio.independent_review import IndependentReview
+    with st.expander("Đánh giá độc lập A/B — giữ nguyên nhãn chung cũ"):
+        prior_joint = st.checkbox("Bản trước là JOINT_CONSENSUS_PRIOR", key="joint_" + review["id"])
+        if st.button("Mở lượt độc lập trắng A/B"):
+            fresh = IndependentReview(repository).start(token, selected, joint_prior=prior_joint)
+            st.session_state["active_review"] = fresh["id"]
+            st.session_state.pop("editing_review", None)
+            st.rerun()
+        st.caption("Chỉ thực hiện sau khi hai người đã có tài khoản/person_id riêng; không xem nhãn cũ, nhãn người kia hoặc detector trong lượt mới.")
+        if st.button("Xuất hai lượt độc lập đã Submit"):
+            try:
+                st.success(str(IndependentReview(repository).export(token, selected)))
+            except (PermissionError, ValueError) as error:
+                st.error(str(error))
     st.subheader(f"{selected} · Review độc lập")
     st.caption(f"Nguồn catalog: {video['relative_path']} · Trạng thái: {review['status']} · Revision {review['revision']}")
     if review["status"] == "SUBMITTED":
@@ -232,6 +246,7 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
         payload["evidence_ref"] = st.text_input("Evidence reference", value=payload.get("evidence_ref", ""), key="evidence_" + review["id"])
         payload["notes"] = st.text_area("Ghi chú của ngài", value=payload.get("notes", ""), key="notes_" + review["id"])
         payload["attest_full_view"] = st.checkbox("Tôi đã xem toàn bộ nguồn gốc và chịu trách nhiệm cho review này", value=payload.get("attest_full_view", False), key="attest_" + review["id"])
+        payload["attest_independent"] = st.checkbox("Tôi đánh giá lượt này độc lập, không xem nhãn chung/nhãn người kia/detector", value=payload.get("attest_independent", False), key="independent_" + review["id"])
         service = AnnotationService(repository, videos)
         save, submit = st.columns(2)
         if save.button("Save Draft", type="primary"):
