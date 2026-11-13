@@ -1,0 +1,9 @@
+{
+  "recalculation_exit_code": 0,
+  "repeated_review_generation_byte_identical": true,
+  "files_checked": [
+    "negative_video_review_queue.csv",
+    "negative_ground_truth_master.csv",
+    "gt_positive_review_queue.csv"
+  ]
+}

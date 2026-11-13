@@ -16,6 +16,8 @@ import hashlib
 import json
 import unittest
 from pathlib import Path
+import tempfile
+from src.ground_truth_integrity import validate_frozen_snapshot
 
 from src.ground_truth_validator import (
     VALID_STATUSES,
@@ -88,10 +90,35 @@ class TestGroundTruthCrossValidation(unittest.TestCase):
         self.assertTrue(self.snapshot_v1_1_path.exists(), "Snapshot v1.1 phải tồn tại trên đĩa.")
         self.assertTrue(self.checksum_path.exists(), "Tệp checksums_v1.1.sha256 phải tồn tại.")
 
-        actual_sha = compute_file_sha256(self.snapshot_v1_1_path)
+        actual_sha = validate_frozen_snapshot(self.snapshot_v1_1_path, self.checksum_path)
         with self.checksum_path.open("r", encoding="utf-8") as f:
             content = f.read()
         self.assertIn(actual_sha, content, "Mã SHA256 thực tế của snapshot v1.1 phải khớp với checksum đã freeze.")
+
+    def test_snapshot_mutation_rejected(self):
+        """Even a one-byte change must fail the frozen named checksum."""
+        with tempfile.TemporaryDirectory() as directory:
+            copy = Path(directory) / self.snapshot_v1_1_path.name
+            copy.write_bytes(self.snapshot_v1_1_path.read_bytes() + b" ")
+            with self.assertRaisesRegex(ValueError, "BLOCKED_GT_INTEGRITY"):
+                validate_frozen_snapshot(copy, self.checksum_path)
+
+    def test_legacy_migration_refuses_frozen_writes(self):
+        """Rerunning migration cannot regenerate GT or auto-promote pending events."""
+        from scripts.standardize_ground_truth_v1_1 import main
+        before = self.snapshot_v1_1_path.read_bytes(), self.events_path.read_bytes(), self.checksum_path.read_bytes()
+        with self.assertRaisesRegex(SystemExit, "frozen"):
+            main()
+        self.assertEqual(before, (self.snapshot_v1_1_path.read_bytes(), self.events_path.read_bytes(), self.checksum_path.read_bytes()))
+
+    def test_frozen_v11_records_preserved_from_creation_commit(self):
+        """Restoration may change serialization only, never annotations or order."""
+        # The authenticated forensic copy supports Actions' shallow checkout too.
+        original = (PROJECT_ROOT / "runs/benchmarks/week4_critical_fix/events_v1.1_git_lf_forensic.jsonl").read_bytes()
+        self.assertEqual(hashlib.sha256(original).hexdigest(),
+                         "0ff6dcae59645b70fb08665c79064eec9f3484aec8b1e3c8cfa9dd5679bff405")
+        self.assertEqual([json.loads(line) for line in original.splitlines()],
+                         [json.loads(line) for line in self.snapshot_v1_1_path.read_bytes().splitlines()])
 
     def test_no_event_exceeds_video_duration(self):
         """4. Kiểm tra mọi sự kiện trong events.jsonl không vượt quá thời lượng video."""

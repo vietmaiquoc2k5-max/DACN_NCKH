@@ -1,0 +1,31 @@
+{
+  "operating_point_configuration": {
+    "sample_fps": 5.0,
+    "conf_thresh": 0.25,
+    "eval_conf_thresh": 0.35,
+    "window_n": 8,
+    "confirm_k": 3,
+    "cooldown_sec": 5.0,
+    "feature_threshold": 0.02,
+    "max_event_gap_sec": 2.0
+  },
+  "classification": "PROVISIONAL",
+  "official_promotion_allowed": false,
+  "criteria_verification": {
+    "alert_rate_reduction_target_met": true,
+    "far_reduction_verified": null,
+    "event_recall_constraint_met": null,
+    "detection_delay_constraint_met": null,
+    "negative_exposure_requirement_met": false,
+    "operating_point_official_eligible": false,
+    "week4_acceptance_status": "PARTIAL"
+  },
+  "blocking_reasons": [
+    "Independent negative exposure <5h",
+    "Positive GT provenance and eligibility incomplete",
+    "Event Recall and Delay not verified on independent eligible events",
+    "Inference frame timestamps/preprocessing/sampling lineage unverified",
+    "Validation lock provenance not independently authenticated"
+  ],
+  "retuning_performed": false
+}

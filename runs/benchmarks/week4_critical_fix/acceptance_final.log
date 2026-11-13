@@ -1,0 +1,15 @@
+test_complete_evidence_required_for_acceptance (test_week4_critical_acceptance.TestCriticalAcceptance.test_complete_evidence_required_for_acceptance) ... ok
+test_duplicate_video_mapping_rejected (test_week4_critical_acceptance.TestCriticalAcceptance.test_duplicate_video_mapping_rejected) ... ok
+test_duration_uses_unrounded_frame_evidence (test_week4_critical_acceptance.TestCriticalAcceptance.test_duration_uses_unrounded_frame_evidence) ... ok
+test_episodes_clipped_and_merged_under_common_protocol (test_week4_critical_acceptance.TestCriticalAcceptance.test_episodes_clipped_and_merged_under_common_protocol) ... ok
+test_malformed_review_rejected_without_modifying_bytes (test_week4_critical_acceptance.TestCriticalAcceptance.test_malformed_review_rejected_without_modifying_bytes) ... ok
+test_missing_gt_cannot_pass_despite_large_reduction (test_week4_critical_acceptance.TestCriticalAcceptance.test_missing_gt_cannot_pass_despite_large_reduction) ... ok
+test_reuse_decision_states (test_week4_critical_acceptance.TestCriticalAcceptance.test_reuse_decision_states) ... ok
+test_review_regeneration_preserves_partial_and_verified_records (test_week4_critical_acceptance.TestCriticalAcceptance.test_review_regeneration_preserves_partial_and_verified_records) ... ok
+test_scope_counts_identical_videos_and_intervals (test_week4_critical_acceptance.TestCriticalAcceptance.test_scope_counts_identical_videos_and_intervals) ... ok
+test_strict_scope_requires_every_evidence_field (test_week4_critical_acceptance.TestCriticalAcceptance.test_strict_scope_requires_every_evidence_field) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.343s
+
+OK

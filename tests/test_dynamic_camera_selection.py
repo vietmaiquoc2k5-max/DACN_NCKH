@@ -21,6 +21,8 @@ import unittest
 import tempfile
 from pathlib import Path
 import numpy as np
+import cv2
+from unittest.mock import MagicMock, patch
 
 PROJECT_ROOT = Path(os.path.abspath(__file__)).parent.parent
 if str(PROJECT_ROOT) not in sys.path:
@@ -37,10 +39,26 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.tmp_dir = tempfile.TemporaryDirectory()
+        cls.video_fixture = str(Path(cls.tmp_dir.name) / "camera.avi")
+        writer = cv2.VideoWriter(cls.video_fixture, cv2.VideoWriter_fourcc(*"MJPG"), 10.0, (64, 48))
+        if not writer.isOpened():
+            raise RuntimeError("Cannot create deterministic MJPG camera fixture")
+        try:
+            for i in range(30):
+                writer.write(np.full((48, 64, 3), i, dtype=np.uint8))
+        finally:
+            writer.release()
+        capture = cv2.VideoCapture(cls.video_fixture)
+        try:
+            assert capture.isOpened() and capture.read()[0], "Fixture cannot be decoded"
+        finally:
+            capture.release()
         cls.db_path = os.path.join(cls.tmp_dir.name, "test_dynamic.db")
         cls.manager = MultiCameraManager(db_path=cls.db_path, model_path="best.pt")
         cls.manager.settings.mute_audio = True
         cls.manager.alert_manager.update_config(True)
+        for cid in cls.manager.workers:
+            cls.manager.update_camera_source(cid, cid, cls.video_fixture, auto_reconnect=False)
 
     @classmethod
     def tearDownClass(cls):
@@ -50,6 +68,16 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
     def setUp(self):
         # Dừng tất cả trước mỗi test
         self.manager.stop_all()
+        self.addCleanup(self.manager.stop_all)
+
+    def wait_for_status(self, worker, expected, timeout=5.0):
+        """Wait for an observable state with a bounded monotonic deadline."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            if worker.get_snapshot()["status"] == expected:
+                return
+            time.sleep(0.01)
+        self.fail(f"Expected {expected}: {worker.get_snapshot()}")
 
     def test_01_single_camera_selection(self):
         """1. Chọn 1 camera (SINGLE): chỉ đúng 1 worker chạy."""
@@ -124,10 +152,50 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         """9. Kiểm tra cơ chế reconnect camera."""
         w = self.manager.workers["CAM-01"]
         w.start()
-        time.sleep(0.1)
+        self.wait_for_status(w, "CONNECTED")
+        old_reader, old_infer = w.thread, w.infer_thread
         w.reconnect()
+        self.wait_for_status(w, "CONNECTED")
         self.assertTrue(w.running)
+        self.assertIsNot(old_reader, w.thread)
+        self.assertFalse(old_reader.is_alive())
+        self.assertFalse(old_infer.is_alive())
         w.stop()
+
+    def test_23_disconnect_releases_capture(self):
+        """An actual OpenCV capture is closed before disconnect returns."""
+        from src.camera_manager import open_opencv_capture
+        opened = []
+
+        def tracked_open(*args, **kwargs):
+            result = open_opencv_capture(*args, **kwargs)
+            if result[0] is not None:
+                opened.append(result[0])
+            return result
+
+        worker = self.manager.workers["CAM-01"]
+        with patch("src.camera_manager.open_opencv_capture", side_effect=tracked_open):
+            worker.start()
+            self.wait_for_status(worker, "CONNECTED")
+            worker.stop()
+        self.assertTrue(opened)
+        self.assertTrue(all(not capture.isOpened() for capture in opened))
+
+    def test_24_shutdown_timeout_retains_handles_and_refuses_duplicate(self):
+        """A backend that cannot stop must not lose its thread handle or restart."""
+        worker = self.manager.workers["CAM-01"]
+        stuck = MagicMock()
+        stuck.is_alive.return_value = True
+        worker.thread = stuck
+        try:
+            with self.assertRaisesRegex(RuntimeError, "shutdown timed out"):
+                worker.stop()
+            self.assertIs(worker.thread, stuck)
+            with self.assertRaisesRegex(RuntimeError, "refusing duplicate"):
+                worker.start()
+        finally:
+            stuck.is_alive.return_value = False
+            worker.stop()
 
     def test_10_tracker_isolation_between_cameras(self):
         """10. Kiểm tra ByteTrack / Tracker không bị lẫn lộn giữa các camera."""
@@ -256,7 +324,7 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         """17. Kiểm tra camera lỗi ghi nhận thời điểm mất kết nối và không tự tạo lại worker liên tục khi rerun."""
         self.manager.update_camera_source("CAM-08", "CAM-08 Offline Test", "non_existent_stream_999.mp4", auto_reconnect=False)
         self.manager.set_active_camera_selection(["CAM-08"], auto_start=True)
-        time.sleep(0.3)
+        self.wait_for_status(self.manager.workers["CAM-08"], "ERROR")
 
         w8 = self.manager.workers["CAM-08"]
         snap8 = w8.get_snapshot()
@@ -271,11 +339,18 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         self.assertIs(w8.thread, old_thread)
 
         # Khôi phục nguồn hợp lệ và kết nối lại thủ công
-        valid_sample = "negative_videos/VN_POS_08.mp4" if os.path.exists("negative_videos/VN_POS_08.mp4") else "datasets/test_videos/pos/posVideo1.868.avi"
+        valid_sample = self.video_fixture
         self.manager.update_camera_source("CAM-08", "CAM 08 - Sân Thượng", valid_sample, auto_reconnect=True)
         self.manager.reconnect_camera("CAM-08")
-        time.sleep(0.2)
+        self.wait_for_status(w8, "CONNECTED")
         self.assertEqual(w8.get_snapshot()["status"], "CONNECTED")
+        active_thread = w8.thread
+        self.manager.set_active_camera_selection(["CAM-08"], auto_start=True)
+        self.assertIs(w8.thread, active_thread)
+        w8.stop()
+        self.assertFalse(active_thread.is_alive())
+        self.assertIsNone(w8.thread)
+        self.assertIsNone(w8.infer_thread)
 
     def test_18_database_confirm_dismiss_and_preserve_history(self):
         """18. Kiểm tra Xác nhận và Bỏ qua cập nhật đúng SQLite mà không làm mất lịch sử sự kiện."""
@@ -311,7 +386,7 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
 
         # Nhấn Bắt đầu giám sát cho CAM-01
         self.manager.start_monitoring(["CAM-01"])
-        time.sleep(0.25)
+        self.wait_for_status(self.manager.workers["CAM-01"], "CONNECTED")
         self.assertEqual(self.manager.get_active_worker_count(), 1)
         snap1 = self.manager.workers["CAM-01"].get_snapshot()
         self.assertEqual(snap1["lifecycle_state"], "RUNNING")
