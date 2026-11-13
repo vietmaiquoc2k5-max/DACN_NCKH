@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from unittest.mock import patch
 
@@ -10,6 +11,14 @@ from gt_studio_fixtures import StudioCase
 
 
 class TestStudioUI(StudioCase):
+    def settle(self, app):
+        deadline = time.monotonic() + 15
+        while any("PREPARING_SOURCE" in item.value for item in app.info):
+            if time.monotonic() > deadline:
+                self.fail("Background source preparation exceeded fixture timeout")
+            time.sleep(.05)
+            app.run()
+
     def test_login_frame_seek_mark_and_save_draft(self):
         config = self.private / "ui_test_settings.json"
         config.write_text(json.dumps({"repo_root": str(self.root), "private_dir": str(self.private)}))
@@ -23,6 +32,7 @@ class TestStudioUI(StudioCase):
             self.assertNotIn("Adjudication", app.radio[0].options)
             app.radio[0].set_value("Positive Review").run()
             next(button for button in app.button if button.label == "Mở / tiếp tục phiên review").click().run()
+            self.settle(app)
             try:
                 self.assertFalse(app.exception)
                 self.assertFalse(app.error)
@@ -57,6 +67,7 @@ class TestStudioUI(StudioCase):
                 self.assertEqual(self.repository.own_reviews(self.tokens["second"])[0]["payload"]["events"], [])
                 app.radio[0].set_value("Negative Review").run()
                 next(button for button in app.button if button.label == "Mở / tiếp tục phiên review").click().run()
+                self.settle(app)
                 app.number_input[0].set_value(2).run()
                 next(button for button in app.button if button.label == "Mark Start").click().run()
                 app.number_input[0].set_value(8).run()

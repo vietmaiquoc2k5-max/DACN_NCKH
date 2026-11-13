@@ -1,0 +1,81 @@
+{
+  "video_id": "VN_NEG_01",
+  "relative_path": "datasets/negative_videos/VN_NEG_01.mp4",
+  "filename": "VN_NEG_01.mp4",
+  "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+  "sha256_verified": true,
+  "file_size_bytes": 1045063415,
+  "status": "VALID",
+  "decode_status": "NORMAL_EOF",
+  "source_label_status": "SURVEILLANCE_NEGATIVE_BATCH",
+  "human_review_status": "PENDING_HUMAN_REVIEW",
+  "duration_seconds": 3874.03,
+  "duration_hours": 1.0761,
+  "fps": 60.0,
+  "width": 1280,
+  "height": 720,
+  "reported_frame_count": 232442,
+  "audit_probe_frames": 5,
+  "full_decoded_frames": 232442,
+  "missing_frames": 0,
+  "decoded_frames": 232442,
+  "full_decode_verified": true,
+  "full_decode_errors": 0,
+  "container_tolerance_applied": false,
+  "codec": "h264",
+  "error_message": "FFmpeg clean exit at progress=end; OpenCV, FFmpeg, and metadata frame counts agree",
+  "duplicate_of": null,
+  "stream_verification_backend": "external_ffmpeg_full_decode",
+  "external_tool_check": {
+    "tool_available": true,
+    "tool_name": "ffmpeg",
+    "decode_capable": true,
+    "exit_code": 0,
+    "stderr": "",
+    "is_clean_decode": true,
+    "error_detected": false,
+    "error_message": "",
+    "nb_read_frames": 232442,
+    "progress_end": true
+  },
+  "ffprobe_metadata": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "r_frame_rate": "60/1",
+        "avg_frame_rate": "60/1",
+        "time_base": "1/15360",
+        "start_time": "0.000000",
+        "duration_ts": 59505152,
+        "duration": "3874.033333",
+        "nb_frames": "232442"
+      }
+    ],
+    "format": {
+      "nb_streams": 2,
+      "duration": "3874.086893"
+    },
+    "packet_timestamp_summary": {
+      "status": "AVAILABLE",
+      "packet_count_with_timestamp_rows": 232442,
+      "pts_present_count": 232442,
+      "pts_missing_count": 0,
+      "pts_min_seconds": 0.0,
+      "pts_max_seconds": 3874.016667,
+      "dts_present_count": 232442,
+      "dts_missing_count": 0,
+      "dts_min_seconds": -0.016667,
+      "dts_max_seconds": 3874.0,
+      "dts_regressions_in_packet_order": 0,
+      "pts_monotonicity_assumed": false,
+      "evidence_note": "Packet timestamps are recorded for review; B-frame PTS reordering is permitted and no duration tolerance is inferred from timestamp rounding."
+    }
+  },
+  "duration_calc_method": "actual_decoded_frames / native_fps",
+  "schema_version": 4,
+  "audit_policy_version": "strict_full_stream_zero_tolerance_v1",
+  "last_audited_at": "2026-11-13T10:08:27.880753+00:00",
+  "source_sha256_after_decode": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a"
+}

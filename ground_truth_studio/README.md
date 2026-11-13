@@ -23,6 +23,10 @@ Các file `positive_annotator_02.csv`, `positive_adjudication.csv`, `negative_an
 
 ## Người quản lý cấp tài khoản trước khi review
 
+Nếu ngài review một mình, dùng tài khoản annotator thật hiện có và trang
+**Single Reviewer Export**. Không cần tạo Annotator 02 hay Adjudicator để xuất
+candidate một người. Các lệnh nhiều tài khoản dưới đây dành cho nhiều người thật.
+
 Không có tài khoản/mật khẩu mặc định hoặc đăng ký tự do. Chạy từng lệnh bằng người quản lý trên máy local; thay placeholder bằng ID thực đã được kiểm tra. Mật khẩu được nhập kín bằng getpass, không đưa lên command line.
 
 ```powershell
@@ -87,6 +91,54 @@ Adjudicator/admin nhấn **Xuất bundle mới**. Mỗi lần tạo UUID directo
 Chỉ cộng negative exposure khi có hai negative submissions độc lập, ACCEPT có evidence, không positive/uncertain intervals, hash nguồn khớp và strict technical allowlist (`NORMAL_EOF`, full decode, no decode errors, inference alignment). Decode thành công hoặc giờ video vật lý không thay thế các gate này.
 
 ## Kiểm chứng
+
+### Catalog local v2 và Single-Reviewer Research Mode
+
+Catalog giữ riêng 24 Positive Review lịch sử, 80 VN_POS Candidate Review và
+63 Negative Review đang có file. 16 nguồn lịch sử thiếu vẫn ở catalog, được ẩn
+khỏi dropdown. Nhóm tên file là candidate; metadata hours không phải FAR exposure.
+`data/video_catalog_local_v2.json` ghi SHA thực tế; không tự chia train/val/test.
+
+Save Draft để lưu, Submit Review sau khi ngài thực sự xem nguồn và ghi evidence.
+Trang Review Progress chỉ hiển thị phiên của chính tài khoản. Single Reviewer
+Export ghi bundle mới `single_reviewer_<uuid>` vào private directory; không sửa
+CSV gốc hay snapshot frozen. Trạng thái là `SINGLE_HUMAN_REVIEWED_PROVISIONAL`.
+Sau submit, nút blind re-review tạo draft trắng; bản đã khóa vẫn được giữ.
+So sánh hai lượt chỉ là intra-annotator consistency, không phải kiểm tra chéo.
+UNCERTAIN dùng được cho cả ba nhóm video và chặn scope đánh giá tương ứng.
+
+Kiểm tra nguồn/PTS và tạo proxy chạy trên worker nền, có timeout ffprobe/FFmpeg;
+UI hiện PREPARING_SOURCE rồi cập nhật. Không có detector hay inference trong Studio.
+
+```powershell
+# Dùng thư mục output mới cho lần thu thập mới; không đè run lịch sử.
+$out = 'runs/benchmarks/week4_dataset_recovery/MY_NEW_RUN'
+python scripts/recover_week4_dataset.py --phase catalog --output-dir $out
+python scripts/recover_week4_dataset.py --phase audit --output-dir $out
+python scripts/recover_week4_dataset.py --phase reconcile --output-dir $out
+python scripts/recover_week4_dataset.py --phase evaluate --output-dir $out
+# Có export thật: thêm --review-export <private exports/single_reviewer_uuid>
+```
+
+`--publish-catalog` chỉ dùng khi chưa có `data/video_catalog_local_v2.json`, từ chối
+ghi đè file đó. Audit fresh dùng strict zero tolerance, giải mã toàn bộ 63 VN_NEG,
+không dùng cache lịch sử; có thể resume cùng run nếu policy và SHA vẫn khớp.
+Giữ nguyên file NEEDS_REVIEW/TRUNCATED_STREAM, không tự sửa nguồn.
+
+API `evaluate_provisional` yêu cầu cùng hash/interval A và B, full decode NORMAL_EOF
+và log sampled-frame đối chiếu reference PTS giải mã độc lập. API hỗ trợ stride
+`max(1, round(native_fps/5))`, không gọi đây là native-frame inference. Reference
+phải chứa đủ ordinal theo audit; duration khác review bị loại để hòa giải riêng.
+Episode gộp cùng video/camera/class, gap 2 giây. CLI chỉ đọc inference lịch sử chưa
+đủ provenance, nên chưa mở khóa metrics kể cả có review; instrumented inference
+và nối evidence API là bước tiếp theo sau human review/preflight.
+Không có review export: HUMAN_REVIEW_PENDING. FAR/CI thiếu bằng chứng trả null;
+dưới 5 giờ trả PARTIAL_INSUFFICIENT_VERIFIED_EXPOSURE. Scientific luôn PARTIAL,
+Operating Point luôn PROVISIONAL.
+
+SQLite schema v2 tạo backup trước migration, không xóa user/review/audit cũ.
+Rollback: dừng Studio rồi phục hồi bằng SQLite backup trong private/backups;
+không copy DB đang chạy/WAL. Code schema cũ không được mở DB schema v2.
 
 ```powershell
 $env:PATH = (Join-Path $PWD '.tools\ffmpeg') + ';' + $env:PATH

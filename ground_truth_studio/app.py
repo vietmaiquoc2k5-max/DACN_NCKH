@@ -6,7 +6,9 @@ import copy
 import json
 import logging
 import sys
+from concurrent.futures import TimeoutError as FutureTimeout
 from pathlib import Path
+from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
@@ -21,10 +23,32 @@ from ground_truth_studio.config import Settings
 from ground_truth_studio.export_service import ExportService, summary
 from ground_truth_studio.models import Annotation
 from ground_truth_studio.review_repository import ReviewRepository
+from ground_truth_studio.single_reviewer import export_single_reviewer
 from ground_truth_studio.video_service import MediaServer, VideoService
+from ground_truth_studio.background_jobs import BackgroundJobs
 
 LOGGER = logging.getLogger(__name__)
 player = components.declare_component("gt_source_player", path=str(Path(__file__).parent / "player"))
+
+
+@st.cache_resource
+def preparation_jobs() -> BackgroundJobs:
+    return BackgroundJobs()
+
+
+def prepared(key: tuple[Any, ...], operation: Callable[[], Any]) -> Any:
+    """Render preparation progress while bounded workers inspect/transcode sources."""
+    future = preparation_jobs().request(key, operation)
+    try:
+        return future.result(timeout=.1)
+    except FutureTimeout:
+        @st.fragment(run_every=1)
+        def progress():
+            if future.done():
+                st.rerun()
+            st.info("PREPARING_SOURCE · Đang chuẩn bị video ở background; ngài có thể chuyển trang.")
+        progress()
+        return None
 
 
 @st.cache_resource
@@ -46,12 +70,15 @@ def media_server(repo: str, private: str):
 def overview(repository: ReviewRepository) -> None:
     metrics = summary(repository)
     st.subheader("Hồ sơ độc lập, bằng chứng có nguồn")
-    st.caption("Video gốc → Hai phiên review riêng → Đối chiếu → Candidate có provenance")
+    st.caption("Nguồn gốc → Human review → Candidate PROVISIONAL; single-reviewer không phải kiểm định chéo")
     columns = st.columns(4)
-    for column, (label, value) in zip(columns, [("Video dương tính", metrics["positive_videos"]), ("Video âm tính", metrics["negative_videos"]),
-                                               ("Sự kiện pending lịch sử", metrics["historical_pending_events"]),
-                                               ("Giờ âm tính đủ điều kiện", f"{metrics['eligible_negative_exposure_hours']:.4f}")]):
+    for column, (label, value) in zip(columns, [("Positive historical", metrics["positive_videos"]), ("VN_POS candidates", metrics["positive_candidate_videos"]),
+                                               ("Negative candidates có nguồn", metrics["negative_candidates_available"]),
+                                               ("Missing historical references", metrics["missing_historical_references"])]):
         column.metric(label, value)
+    st.write({"Technical verified (audit hiện tại)": metrics["technical_verified_available"],
+              "Human reviewed / submitted": metrics["submitted_reviews"],
+              "Scientific eligible negative hours": metrics["eligible_negative_exposure_hours"]})
     left, right = st.columns([1.5, 1])
     with left, st.container(border=True):
         st.markdown("**Tiến độ thực tế trong Studio**")
@@ -69,7 +96,8 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
     own = {row["video_id"]: row for row in repository.own_reviews(token)}
     with st.sidebar:
         status = st.selectbox("Lọc trạng thái của tôi", ["ALL", "PENDING", "REVIEWED", "DISPUTED", "VERIFIED"])
-        available = [row for row in repository.videos() if row["kind"] == kind]
+        available = repository.working_videos(kind)
+        st.caption(f"{len(available)} nguồn hiện có; references thiếu được giữ trong catalog, không đưa vào dropdown.")
         def label(row):
             review = own.get(row["video_id"])
             if review and review.get("adjudication_status") in {"DISPUTED", "ACCEPT"}:
@@ -95,12 +123,23 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
     st.subheader(f"{selected} · Review độc lập")
     st.caption(f"Nguồn catalog: {video['relative_path']} · Trạng thái: {review['status']} · Revision {review['revision']}")
     if review["status"] == "SUBMITTED":
+        if st.button("Bắt đầu blind re-review của chính tôi"):
+            fresh = repository.start_blind_rereview(token, selected)
+            st.session_state["active_review"] = fresh["id"]
+            st.session_state.pop("editing_review", None)
+            st.rerun()
         st.success("Review đã khóa. Chỉ bản ghi của ngài được hiển thị ở đây; chờ phân xử hoặc yêu cầu review lại.")
         st.json(review["payload"])
         return
     try:
-        metadata = videos.inspect(video)
-    except ValueError as error:
+        from ground_truth_studio.config import confined
+        source_path = confined(repository.settings.repo, video["relative_path"])
+        stat = source_path.stat()
+        # Stat is a cache invalidation hint only; SHA verification remains in VideoService/submission.
+        metadata = prepared(("inspect", str(repository.settings.private), selected, video.get("expected_sha256"), stat.st_size, stat.st_mtime_ns), lambda: videos.inspect(video))
+        if metadata is None:
+            return
+    except (ValueError, OSError) as error:
         st.error(str(error))
         return
     key = "frame_" + review["id"]
@@ -113,9 +152,14 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
     with left:
         clock_key = "media_" + review["id"]
         if st.button("Bật trình phát video", help="AVI được tạo proxy MP4 riêng; video gốc không đổi. Không nạp toàn bộ video vào RAM."):
-            path = videos.playback_path(video, metadata)
+            st.session_state["play_requested_" + review["id"]] = True
+        if st.session_state.get("play_requested_" + review["id"]):
+            path = prepared(("playback", str(repository.settings.private), metadata["source_sha256"]), lambda: videos.playback_path(video, metadata))
+            if path is None:
+                return
             server = media_server(str(repository.settings.repo), str(repository.settings.private))
             st.session_state[clock_key] = server.grant(token, path)
+            st.session_state.pop("play_requested_" + review["id"], None)
         if clock_key in st.session_state:
             pts = metadata["source_pts"]
             seek_time = pts[st.session_state[key]] - pts[0] if pts else st.session_state[key] / metadata["fps"]
@@ -145,7 +189,7 @@ def review_page(repository: ReviewRepository, videos: VideoService, token: str, 
             st.caption("Timestamp: SOURCE_PTS · Frame được decode theo ordinal nguồn, không seek bằng FPS giả định.")
     with right, st.container(border=True):
         st.markdown("**Gán interval của ngài**")
-        choice = st.selectbox("Nhãn", ["FIRE", "SMOKE", "UNCERTAIN"] if kind == "negative" else ["FIRE", "SMOKE"])
+        choice = st.selectbox("Nhãn", ["FIRE", "SMOKE", "UNCERTAIN"])
         marks = st.columns(2)
         if marks[0].button("Mark Start"):
             st.session_state[review["id"] + "mark_start"] = point
@@ -265,7 +309,7 @@ def main() -> None:
         st.caption(actor["role"])
         pages = ["Overview"]
         if actor["role"].startswith("annotator_"):
-            pages += ["Positive Review", "Negative Review"]
+            pages += ["Positive Review", "VN_POS Candidate Review", "Negative Review", "Single Reviewer Export", "Review Progress"]
         if actor["role"] == "adjudicator":
             pages += ["Adjudication"]
         if actor["role"] in {"adjudicator", "admin"}:
@@ -279,7 +323,22 @@ def main() -> None:
     if page == "Overview":
         overview(repository)
     elif page.endswith("Review"):
-        review_page(repository, videos, token, "positive" if page.startswith("Positive") else "negative")
+        review_page(repository, videos, token, "positive_candidate" if page.startswith("VN_POS") else "positive" if page.startswith("Positive") else "negative")
+    elif page == "Review Progress":
+        st.subheader("Tiến độ của ngài — không phải independent cross-verification")
+        st.dataframe([{"video_id": row["video_id"], "status": row["status"], "revision": row["revision"], "submitted_at_utc": row["submitted_at"]}
+                      for row in repository.own_reviews(token)])
+    elif page == "Single Reviewer Export":
+        st.subheader("Single-Reviewer Research Mode")
+        st.warning("Dữ liệu một người đánh giá: PROVISIONAL. Không phải CROSS_VERIFIED, không phải FAR/Recall/Delay chính thức.")
+        own = repository.own_review_history(token)
+        submitted = [r for r in own if r["status"] == "SUBMITTED"]
+        st.metric("Video đã Submit", len(submitted))
+        st.metric("Video còn Draft", len([r for r in own if r["status"] == "DRAFT"]))
+        st.caption("Dùng Positive/Negative Review như hiện tại. Save Draft để lưu; Submit để khóa review. Không cần tạo tài khoản giả thứ hai.")
+        if st.button("Xuất kết quả một người (PROVISIONAL)", disabled=not submitted, type="primary"):
+            destination = export_single_reviewer(repository, token)
+            st.success(f"Đã tạo bundle riêng, không sửa CSV hay GT frozen: {destination}")
     elif page == "Adjudication":
         adjudication_page(repository, videos, token)
     else:

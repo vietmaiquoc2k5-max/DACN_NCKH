@@ -1,0 +1,80 @@
+{
+  "video_id": "VN_NEG_10",
+  "relative_path": "datasets/negative_videos/VN_NEG_10.mp4",
+  "filename": "VN_NEG_10.mp4",
+  "sha256": "3ed5b015393ce74d1da992dece66ce4a4b7abcd4b77ce5d3d23264794c4eacbe",
+  "sha256_verified": true,
+  "file_size_bytes": 291944941,
+  "status": "NEEDS_REVIEW",
+  "decode_status": "TRUNCATED_STREAM",
+  "source_label_status": "SURVEILLANCE_NEGATIVE_BATCH",
+  "human_review_status": "PENDING_HUMAN_REVIEW",
+  "duration_seconds": 443.04,
+  "duration_hours": 0.1231,
+  "fps": 59.94,
+  "width": 1920,
+  "height": 1080,
+  "reported_frame_count": 29804,
+  "audit_probe_frames": 5,
+  "full_decoded_frames": 26556,
+  "missing_frames": 3248,
+  "decoded_frames": 26556,
+  "full_decode_verified": false,
+  "full_decode_errors": 3248,
+  "container_tolerance_applied": false,
+  "codec": "h264",
+  "error_message": "[h264 @ 00000191a0ccec00] Invalid NAL unit size (7937 > 7149).\n[h264 @ 00000191a0ccec00] missing picture in access unit with size 7153\n[h264 @ 000001919f134400] Invalid NAL unit size (7937 > 7149).\n[h264 @ 000001919f134400] Error splitting the input into NAL units.\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Decoding error: Invalid data found when processing input\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Error processing packet in decoder: Invalid data found when processing input\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Task finished with error code: -1094995529 (Invalid data found when processing input)\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Terminating thread with return code -1094995529 (Invalid data found when processing input)",
+  "duplicate_of": null,
+  "stream_verification_backend": "ffprobe_stream_metadata",
+  "external_tool_check": {
+    "tool_available": true,
+    "tool_name": "ffmpeg",
+    "decode_capable": true,
+    "exit_code": 3199971767,
+    "stderr": "[h264 @ 00000191a0ccec00] Invalid NAL unit size (7937 > 7149).\n[h264 @ 00000191a0ccec00] missing picture in access unit with size 7153\n[h264 @ 000001919f134400] Invalid NAL unit size (7937 > 7149).\n[h264 @ 000001919f134400] Error splitting the input into NAL units.\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Decoding error: Invalid data found when processing input\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Error processing packet in decoder: Invalid data found when processing input\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Task finished with error code: -1094995529 (Invalid data found when processing input)\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Terminating thread with return code -1094995529 (Invalid data found when processing input)",
+    "is_clean_decode": false,
+    "error_detected": true,
+    "error_message": "[h264 @ 00000191a0ccec00] Invalid NAL unit size (7937 > 7149).\n[h264 @ 00000191a0ccec00] missing picture in access unit with size 7153\n[h264 @ 000001919f134400] Invalid NAL unit size (7937 > 7149).\n[h264 @ 000001919f134400] Error splitting the input into NAL units.\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Decoding error: Invalid data found when processing input\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Error processing packet in decoder: Invalid data found when processing input\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Task finished with error code: -1094995529 (Invalid data found when processing input)\n[vist#0:0/h264 @ 00000191a0ecb640] [dec:h264 @ 00000191a133c040] Terminating thread with return code -1094995529 (Invalid data found when processing input)",
+    "nb_read_frames": 26556,
+    "progress_end": true
+  },
+  "ffprobe_metadata": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "r_frame_rate": "60000/1001",
+        "avg_frame_rate": "60000/1001",
+        "time_base": "1/60000",
+        "start_time": "0.016683",
+        "duration_ts": 26584558,
+        "duration": "443.075967"
+      }
+    ],
+    "format": {
+      "nb_streams": 2,
+      "duration": "497.225578"
+    },
+    "packet_timestamp_summary": {
+      "status": "AVAILABLE",
+      "packet_count_with_timestamp_rows": 26558,
+      "pts_present_count": 26558,
+      "pts_missing_count": 0,
+      "pts_min_seconds": 0.016683,
+      "pts_max_seconds": 443.075967,
+      "dts_present_count": 26558,
+      "dts_missing_count": 0,
+      "dts_min_seconds": 0.0,
+      "dts_max_seconds": 443.059283,
+      "dts_regressions_in_packet_order": 0,
+      "pts_monotonicity_assumed": false,
+      "evidence_note": "Packet timestamps are recorded for review; B-frame PTS reordering is permitted and no duration tolerance is inferred from timestamp rounding."
+    }
+  },
+  "duration_calc_method": "actual_decoded_frames / native_fps",
+  "schema_version": 4,
+  "audit_policy_version": "strict_full_stream_zero_tolerance_v1",
+  "last_audited_at": "2026-11-13T10:11:12.955473+00:00",
+  "source_sha256_after_decode": "3ed5b015393ce74d1da992dece66ce4a4b7abcd4b77ce5d3d23264794c4eacbe"
+}

@@ -40,8 +40,18 @@ class ReviewRepository:
         frozen(settings)
         settings.private.mkdir(parents=True, exist_ok=True)
         self.path = settings.private / "ground_truth_studio.sqlite3"
+        old_version = None
+        if self.path.exists():
+            with closing(sqlite3.connect(self.path)) as existing:
+                old_version = existing.execute("PRAGMA user_version").fetchone()[0]
+                has_reviews = existing.execute("SELECT 1 FROM sqlite_master WHERE name='review_sessions'").fetchone()
+            if old_version > 2:
+                raise ValueError("Database schema is newer than this Studio; no downgrade allowed")
+            if old_version < 2 and has_reviews:
+                self.backup()  # Coherent backup BEFORE any migration or catalog update.
         with self.connection() as db:
             db.executescript("""
+            BEGIN IMMEDIATE;
             CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY, person_id TEXT UNIQUE NOT NULL,
               role TEXT NOT NULL, identity_ref TEXT NOT NULL, salt TEXT NOT NULL, password TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS auth_sessions(token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL, expires REAL NOT NULL);
@@ -58,8 +68,12 @@ class ReviewRepository:
             CREATE TABLE IF NOT EXISTS audit_log(id INTEGER PRIMARY KEY, actor TEXT NOT NULL,
               action TEXT NOT NULL, ref TEXT NOT NULL, data TEXT NOT NULL, created_at TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS exports(id TEXT PRIMARY KEY, data TEXT NOT NULL, created_at TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS blind_review_links(review_id TEXT PRIMARY KEY, original_review_id TEXT NOT NULL,
+              person_id TEXT NOT NULL, round_index INTEGER NOT NULL);
             CREATE TRIGGER IF NOT EXISTS immutable_submission BEFORE UPDATE ON review_sessions
               WHEN OLD.status='SUBMITTED' BEGIN SELECT RAISE(ABORT,'Submitted review is locked'); END;
+            PRAGMA user_version=2;
+            COMMIT;
             """)
             for row in catalog(settings):
                 db.execute("INSERT INTO videos VALUES(?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data",
@@ -133,6 +147,29 @@ class ReviewRepository:
             raise ValueError("Unknown catalog video ID")
         return rows[video_id]
 
+    def working_videos(self, kind: str) -> list[dict[str, Any]]:
+        """Only physically available sources enter a normal review dropdown."""
+        from ground_truth_studio.config import confined
+        return [row for row in self.videos() if row["kind"] == kind and row.get("available") is True
+                and confined(self.settings.repo, row["relative_path"]).is_file()]
+
+    def start_blind_rereview(self, token: str, video_id: str) -> dict[str, Any]:
+        """Start an EMPTY own-account round; prior human data is retained, not copied."""
+        actor = self.actor(token, {"annotator_01", "annotator_02"})
+        with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            previous = db.execute("SELECT r.* FROM review_heads h JOIN review_sessions r ON r.id=h.review_id WHERE h.video_id=? AND h.slot=?", (video_id, actor["role"])).fetchone()
+            if previous is None or previous["user_id"] != actor["id"] or previous["status"] != "SUBMITTED":
+                raise ValueError("Submit your own initial review before a blind re-review")
+            review_id = str(uuid.uuid4())
+            rounds = db.execute("SELECT COUNT(*) FROM blind_review_links WHERE person_id=? AND original_review_id IN (SELECT id FROM review_sessions WHERE video_id=?)", (actor["person_id"], video_id)).fetchone()[0]
+            payload = {"events": [], "uncertain_intervals": [], "decision": "", "evidence_ref": "", "notes": "", "attest_full_view": False}
+            db.execute("INSERT INTO review_sessions VALUES(?,?,?,?,?,?,?,?,?)", (review_id, video_id, actor["id"], actor["role"], "DRAFT", 0, None, json.dumps(payload), None))
+            db.execute("INSERT INTO blind_review_links VALUES(?,?,?,?)", (review_id, previous["id"], actor["person_id"], rounds + 1))
+            db.execute("UPDATE review_heads SET review_id=? WHERE video_id=? AND slot=?", (review_id, video_id, actor["role"]))
+            self.log(db, actor["id"], "START_BLIND_INTRA_ANNOTATOR_REVIEW", review_id, {"independent_cross_verification": False})
+        return self.review(token, review_id)
+
     def own_reviews(self, token: str) -> list[dict[str, Any]]:
         actor = self.actor(token)
         with self.connection() as db:
@@ -142,6 +179,12 @@ class ReviewRepository:
                 review["adjudication_status"] = latest["decision"] if (latest and review["status"] == "SUBMITTED"
                     and review["id"] in json.loads(latest["data"])["review_ids"]) else None
             return reviews
+
+    def own_review_history(self, token: str) -> list[dict[str, Any]]:
+        """Return only this account's retained rounds, for provisional export/history."""
+        actor = self.actor(token, {"annotator_01", "annotator_02"})
+        with self.connection() as db:
+            return [self.decode_review(row) for row in db.execute("SELECT * FROM review_sessions WHERE user_id=? ORDER BY submitted_at,id", (actor["id"],))]
 
     @staticmethod
     def decode_review(row: sqlite3.Row) -> dict[str, Any]:

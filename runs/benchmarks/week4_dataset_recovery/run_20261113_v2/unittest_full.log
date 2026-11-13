@@ -1,0 +1,703 @@
+test_class_separation_fire_and_smoke (test_bytetrack_adapter.TestByteTrackAdapter.test_class_separation_fire_and_smoke)
+6. Kiểm tra hai lớp FIRE và SMOKE xuất hiện đồng thời không bị gán nhầm track hoặc nhầm class. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_empty_detections_no_crash (test_bytetrack_adapter.TestByteTrackAdapter.test_empty_detections_no_crash)
+4. Kiểm tra cập nhật danh sách rỗng liên tục không gây ngoại lệ và đếm đúng số track. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_invalid_frame_resilience (test_bytetrack_adapter.TestByteTrackAdapter.test_invalid_frame_resilience)
+5. Kiểm tra hệ thống không crash khi frame là None hoặc định dạng đặc biệt. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_low_confidence_rejection (test_bytetrack_adapter.TestByteTrackAdapter.test_low_confidence_rejection)
+3. Kiểm tra detection có confidence quá thấp không được tạo track mới. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_reset_clears_state (test_bytetrack_adapter.TestByteTrackAdapter.test_reset_clears_state)
+7. Kiểm tra reset() xóa sạch toàn bộ track và khởi tạo lại bộ đếm ID. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_track_id_stability_slight_motion (test_bytetrack_adapter.TestByteTrackAdapter.test_track_id_stability_slight_motion)
+1. Kiểm tra Track ID ổn định khi bounding box di chuyển nhẹ qua các khung hình liên tiếp. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_track_recovery_short_occlusion (test_bytetrack_adapter.TestByteTrackAdapter.test_track_recovery_short_occlusion)
+2. Kiểm tra Track ID được duy trì khi detection bị mất trong thời gian ngắn (1-2 khung). ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.50, low_thresh=0.10, new_thresh=0.60, buffer=30, per_class=True)
+ok
+test_detection_box_format_compatibility (test_camera_tracker_isolation.TestCameraTrackerIsolation.test_detection_box_format_compatibility)
+5. Kiểm tra định dạng DetectionBox sau khi qua tracker và verifier vẫn đúng chuẩn cho Dashboard. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+test_distinct_tracker_and_feature_instances (test_camera_tracker_isolation.TestCameraTrackerIsolation.test_distinct_tracker_and_feature_instances)
+1. Kiểm tra hai worker không trỏ tới cùng một instance tracker hoặc extractor. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+test_independent_tracking_states (test_camera_tracker_isolation.TestCameraTrackerIsolation.test_independent_tracking_states)
+2. Kiểm tra tracking state độc lập: đối tượng ở camera 1 không liên quan camera 2. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+test_reconnect_clears_old_tracks (test_camera_tracker_isolation.TestCameraTrackerIsolation.test_reconnect_clears_old_tracks)
+4. Kiểm tra reconnect xóa sạch track cũ của camera đó. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+test_reset_isolation (test_camera_tracker_isolation.TestCameraTrackerIsolation.test_reset_isolation)
+3. Kiểm tra reset worker 1 không làm mất trạng thái tracking của worker 2. ... 2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:35 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+Model summary (fused): 73 layers, 3,006,038 parameters, 0 gradients, 8.1 GFLOPs
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:42 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+test_01_single_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_01_single_camera_selection)
+1. Chọn 1 camera (SINGLE): chỉ đúng 1 worker chạy. ... ok
+test_02_quad_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_02_quad_camera_selection)
+2. Chọn 4 camera (QUAD): chỉ đúng 4 worker chạy. ... ok
+test_03_full_nine_cameras (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_03_full_nine_cameras)
+3. Chọn 9 camera (FULL): đủ 9 worker chạy. ... ok
+test_04_switch_from_9_to_4_cameras (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_04_switch_from_9_to_4_cameras)
+4. Chuyển từ 9 xuống 4 camera: 5 worker không được chọn phải dừng hoàn toàn. ... ok
+test_05_switch_from_4_to_1_camera (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_05_switch_from_4_to_1_camera)
+5. Chuyển từ 4 xuống 1 camera: 3 worker phải dừng. ... ok
+test_06_custom_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_06_custom_camera_selection)
+6. Chọn camera tùy ý (CAM-01, CAM-03, CAM-05, CAM-08). ... ok
+test_07_no_duplicate_workers_on_multiple_calls (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_07_no_duplicate_workers_on_multiple_calls)
+7. Kiểm tra gọi set_active_camera_selection lặp lại không tạo worker/thread trùng lặp. ... ok
+test_08_stop_releases_resources (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_08_stop_releases_resources)
+8. Kiểm tra stop giải phóng VideoCapture và cập nhật DISCONNECTED. ... ok
+test_09_camera_reconnect (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_09_camera_reconnect)
+9. Kiểm tra cơ chế reconnect camera. ... ok
+test_10_tracker_isolation_between_cameras (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_10_tracker_isolation_between_cameras)
+10. Kiểm tra ByteTrack / Tracker không bị lẫn lộn giữa các camera. ... ok
+test_11_shared_detector (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_11_shared_detector)
+11. Kiểm tra detector dùng chung an toàn trên GPU/CPU. ... ok
+test_12_fault_isolation_no_dashboard_crash (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_12_fault_isolation_no_dashboard_crash)
+12. Kiểm tra dashboard không crash khi camera mất kết nối. ... ok
+test_13_dual_and_hexa_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_13_dual_and_hexa_camera_selection)
+13. Chọn 2 camera (DUAL) và 6 camera (HEXA) theo chuẩn FIREWATCH COMMAND CENTER. ... ERROR
+test_14_performance_presets_and_roi_and_add_camera (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_14_performance_presets_and_roi_and_add_camera)
+14. Kiểm tra Performance Presets, cập nhật ROI per-camera và thêm camera mới. ... 2026-11-13 17:18:48 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+test_15_preserve_state_of_unchanged_cameras_and_disconnected_info (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_15_preserve_state_of_unchanged_cameras_and_disconnected_info)
+15. Giữ nguyên trạng thái những camera không thay đổi khi chuyển cơ số camera & giữ thông tin nhận diện khi tạm dừng/lỗi. ... ok
+test_16_html_sanitization_and_no_raw_html_leak (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_16_html_sanitization_and_no_raw_html_leak)
+16. Kiểm tra hàm chuẩn hóa HTML không để dòng thụt lề >= 4 khoảng trắng hay dòng trống gây lỗi lộ thẻ HTML thô. ... ok
+test_17_disconnected_camera_timestamp_and_no_infinite_worker_spawn (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_17_disconnected_camera_timestamp_and_no_infinite_worker_spawn)
+17. Kiểm tra camera lỗi ghi nhận thời điểm mất kết nối và không tự tạo lại worker liên tục khi rerun. ... ok
+test_18_database_confirm_dismiss_and_preserve_history (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_18_database_confirm_dismiss_and_preserve_history)
+18. Kiểm tra Xác nhận và Bỏ qua cập nhật đúng SQLite mà không làm mất lịch sử sự kiện. ... ok
+test_19_manual_start_and_stop_monitoring_state_machine (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_19_manual_start_and_stop_monitoring_state_machine)
+19. Kiểm tra V2 Manual Start: khởi động ở STOPPED (0 worker), start_monitoring bật đúng camera được chọn, stop_monitoring trả toàn bộ về STOPPED. ... ok
+test_20_remove_camera_with_confirmation (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_20_remove_camera_with_confirmation)
+20. Kiểm tra thêm và xóa cấu hình camera an toàn trong Quản lý camera. ... 2026-11-13 17:18:50 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+ok
+test_21_confirm_event_stops_and_silences_alarm (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_21_confirm_event_stops_and_silences_alarm)
+21. Kiểm tra sau khi xác nhận (hoặc bỏ qua) sự kiện cảnh báo thì âm báo còi hú phải tắt ngay và không tự bật lại. ... ok
+test_22_no_auto_video_and_test_cam_by_file (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_22_no_auto_video_and_test_cam_by_file)
+Kiểm tra: ... Model summary (fused): 73 layers, 3,006,038 parameters, 0 gradients, 8.1 GFLOPs
+2026-11-13 17:18:50 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:50 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:50 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:51 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:51 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:51 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:51 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:51 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+2026-11-13 17:18:51 | INFO    | bytetrack_adapter | Khởi tạo ByteTrackAdapter (high_thresh=0.35, low_thresh=0.10, new_thresh=0.35, buffer=15, per_class=True)
+[ WARN:0@22.426] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@22.863] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(MSMF): backend is generally available but can't be used to capture by index
+[ WARN:0@22.866] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@22.866] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@22.867] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@23.061] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@23.340] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(MSMF): backend is generally available but can't be used to capture by index
+[ WARN:0@23.340] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@23.341] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+[ WARN:0@23.341] global cap.cpp:477 cv::VideoCapture::open VIDEOIO(DSHOW): backend is generally available but can't be used to capture by index
+ok
+test_23_disconnect_releases_capture (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_23_disconnect_releases_capture)
+An actual OpenCV capture is closed before disconnect returns. ... ok
+test_24_shutdown_timeout_retains_handles_and_refuses_duplicate (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_24_shutdown_timeout_retains_handles_and_refuses_duplicate)
+A backend that cannot stop must not lose its thread handle or restart. ... ok
+test_25_observable_manual_connection_transitions (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_25_observable_manual_connection_transitions)
+Synchronize actual capture opening to observe CONNECTING and RECONNECTING. ... ok
+test_aggregate_counts_do_not_replace_missing_frame_fields (test_fix4_evidence_gates.TestFix4EvidenceGates.test_aggregate_counts_do_not_replace_missing_frame_fields) ... ok
+test_bound_frame_evidence_matches_independent_reference (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_frame_evidence_matches_independent_reference) ... ok
+test_bound_timestamp_corruption_or_count_mismatch_is_failed_check (test_fix4_evidence_gates.TestFix4EvidenceGates.test_bound_timestamp_corruption_or_count_mismatch_is_failed_check) ... ok
+test_clean_checkout_preserves_crlf_in_both_git_modes (test_fix4_evidence_gates.TestFix4EvidenceGates.test_clean_checkout_preserves_crlf_in_both_git_modes)
+Perform real fresh checkouts; this same test executes on Linux CI. ... ok
+test_lf_conversion_is_detected_without_hash_fallback (test_fix4_evidence_gates.TestFix4EvidenceGates.test_lf_conversion_is_detected_without_hash_fallback) ... ok
+test_missing_source_blocks_only_the_affected_video (test_fix4_evidence_gates.TestFix4EvidenceGates.test_missing_source_blocks_only_the_affected_video) ... ok
+test_missing_timestamp_or_frame_index_never_proves_coverage (test_fix4_evidence_gates.TestFix4EvidenceGates.test_missing_timestamp_or_frame_index_never_proves_coverage) ... ok
+test_pending_positive_gt_blocks_official_even_if_other_gates_pass (test_fix4_evidence_gates.TestFix4EvidenceGates.test_pending_positive_gt_blocks_official_even_if_other_gates_pass) ... ok
+test_tracked_historical_output_is_rejected_without_writes (test_fix4_evidence_gates.TestFix4EvidenceGates.test_tracked_historical_output_is_rejected_without_writes) ... ok
+test_wrong_video_or_run_cannot_supply_target_timestamps (test_fix4_evidence_gates.TestFix4EvidenceGates.test_wrong_video_or_run_cannot_supply_target_timestamps) ... ok
+test_frozen_v11_records_preserved_from_creation_commit (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_frozen_v11_records_preserved_from_creation_commit)
+Restoration may change serialization only, never annotations or order. ... ok
+test_independent_fire_and_smoke_separation (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_independent_fire_and_smoke_separation)
+5. Kiểm tra phân tách rõ ràng FIRE và SMOKE trên cùng một video. ... ok
+test_legacy_migration_refuses_frozen_writes (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_legacy_migration_refuses_frozen_writes)
+Rerunning migration cannot regenerate GT or auto-promote pending events. ... ok
+test_no_event_exceeds_video_duration (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_no_event_exceeds_video_duration)
+4. Kiểm tra mọi sự kiện trong events.jsonl không vượt quá thời lượng video. ... ok
+test_pending_cannot_auto_become_verified_without_annotator2 (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_pending_cannot_auto_become_verified_without_annotator2)
+1. Kiểm tra bản ghi thiếu annotator_02 không thể được gắn trạng thái cross_verified/verified. ... ok
+test_snapshot_mutation_rejected (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_snapshot_mutation_rejected)
+Even a one-byte change must fail the frozen named checksum. ... ok
+test_snapshot_v1_1_checksum_integrity (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_snapshot_v1_1_checksum_integrity)
+3. Kiểm tra tính bất biến của Snapshot v1.1 thông qua mã băm SHA256. ... ok
+test_timestamp_discrepancy_greater_than_half_second_marked_disputed (test_ground_truth_cross_validation.TestGroundTruthCrossValidation.test_timestamp_discrepancy_greater_than_half_second_marked_disputed)
+2. Kiểm tra sai lệch timestamp giữa 2 annotator > 0.5s phải bị coi là disputed. ... ok
+test_adjudication_requires_both_submissions_reason_evidence_and_omissions (test_gt_studio_adjudication.TestStudioAdjudication.test_adjudication_requires_both_submissions_reason_evidence_and_omissions) ... ok
+test_onset_class_and_missing_event_are_disputed_without_averaging (test_gt_studio_adjudication.TestStudioAdjudication.test_onset_class_and_missing_event_are_disputed_without_averaging) ... ok
+test_require_review_retains_old_locked_records_and_new_drafts (test_gt_studio_adjudication.TestStudioAdjudication.test_require_review_retains_old_locked_records_and_new_drafts) ... ok
+test_duplicate_interval_with_different_ids_is_rejected (test_gt_studio_annotations.TestStudioAnnotations.test_duplicate_interval_with_different_ids_is_rejected) ... ok
+test_negative_fire_and_contradictory_negative (test_gt_studio_annotations.TestStudioAnnotations.test_negative_fire_and_contradictory_negative) ... ok
+test_new_fire_smoke_events_and_resume_after_restart (test_gt_studio_annotations.TestStudioAnnotations.test_new_fire_smoke_events_and_resume_after_restart) ... ok
+test_onset_offset_and_class_validation (test_gt_studio_annotations.TestStudioAnnotations.test_onset_offset_and_class_validation) ... ok
+test_submit_requires_explicit_view_and_evidence_and_locks (test_gt_studio_annotations.TestStudioAnnotations.test_submit_requires_explicit_view_and_evidence_and_locks) ... ok
+test_two_actual_processes_cannot_overwrite_each_other (test_gt_studio_annotations.TestStudioAnnotations.test_two_actual_processes_cannot_overwrite_each_other) ... ok
+test_two_process_style_writers_use_compare_and_swap (test_gt_studio_annotations.TestStudioAnnotations.test_two_process_style_writers_use_compare_and_swap) ... ok
+test_candidate_negative_with_events_or_uncertainty_never_far (test_gt_studio_evaluation.TestProvisionalEvaluation.test_candidate_negative_with_events_or_uncertainty_never_far) ... ok
+test_missing_metadata_does_not_prove_rerun_required (test_gt_studio_evaluation.TestProvisionalEvaluation.test_missing_metadata_does_not_prove_rerun_required) ... ok
+test_no_gt_or_inference_returns_null_not_zero (test_gt_studio_evaluation.TestProvisionalEvaluation.test_no_gt_or_inference_returns_null_not_zero) ... ok
+test_shared_scope_episode_counts_and_exact_ci (test_gt_studio_evaluation.TestProvisionalEvaluation.test_shared_scope_episode_counts_and_exact_ci) ... ok
+test_unverified_audit_missing_pts_and_one_pipeline_exclude_both (test_gt_studio_evaluation.TestProvisionalEvaluation.test_unverified_audit_missing_pts_and_one_pipeline_exclude_both) ... ok
+test_anonymous_or_forged_identity_is_denied (test_gt_studio_independence.TestStudioIndependence.test_anonymous_or_forged_identity_is_denied) ... ok
+test_one_person_cannot_register_two_names_or_switch_roles (test_gt_studio_independence.TestStudioIndependence.test_one_person_cannot_register_two_names_or_switch_roles) ... ok
+test_reviewer02_cannot_read_first_history_or_adjudication (test_gt_studio_independence.TestStudioIndependence.test_reviewer02_cannot_read_first_history_or_adjudication) ... ok
+test_existing_own_external_fire_review_restores_only_draft (test_gt_studio_integrity.TestStudioIntegrity.test_existing_own_external_fire_review_restores_only_draft) ... ok
+test_export_preserves_sources_and_never_promotes_pending (test_gt_studio_integrity.TestStudioIntegrity.test_export_preserves_sources_and_never_promotes_pending) ... ok
+test_external_csv_change_blocks_export_without_overwrite (test_gt_studio_integrity.TestStudioIntegrity.test_external_csv_change_blocks_export_without_overwrite) ... ok
+test_frozen_mutation_blocks_start_and_private_path_cannot_be_source (test_gt_studio_integrity.TestStudioIntegrity.test_frozen_mutation_blocks_start_and_private_path_cannot_be_source) ... ok
+test_human_adjudicated_candidate_is_schema_compatible_but_not_official (test_gt_studio_integrity.TestStudioIntegrity.test_human_adjudicated_candidate_is_schema_compatible_but_not_official) ... ok
+test_negative_exposure_requires_semantic_and_technical_evidence (test_gt_studio_integrity.TestStudioIntegrity.test_negative_exposure_requires_semantic_and_technical_evidence) ... ok
+test_63_negative_80_candidate_16_missing_without_id_mixing (test_gt_studio_recovery.TestStudioRecovery.test_63_negative_80_candidate_16_missing_without_id_mixing) ... ok
+test_discovery_hashes_duplicates_and_keeps_missing_manifest (test_gt_studio_recovery.TestStudioRecovery.test_discovery_hashes_duplicates_and_keeps_missing_manifest) ... CATALOG 1/183 POS_01 METADATA_ONLY
+CATALOG 2/183 POS_02 METADATA_ONLY
+CATALOG 3/183 POS_03 METADATA_ONLY
+CATALOG 4/183 POS_04 METADATA_ONLY
+CATALOG 5/183 POS_05 METADATA_ONLY
+CATALOG 6/183 POS_06 METADATA_ONLY
+CATALOG 7/183 POS_07 METADATA_ONLY
+CATALOG 8/183 POS_08 METADATA_ONLY
+CATALOG 9/183 POS_09 METADATA_ONLY
+CATALOG 10/183 POS_10 METADATA_ONLY
+CATALOG 11/183 POS_11 METADATA_ONLY
+CATALOG 12/183 POS_12 METADATA_ONLY
+CATALOG 13/183 POS_13 METADATA_ONLY
+CATALOG 14/183 POS_14 METADATA_ONLY
+CATALOG 15/183 POS_15 METADATA_ONLY
+CATALOG 16/183 POS_16 METADATA_ONLY
+CATALOG 17/183 POS_17 METADATA_ONLY
+CATALOG 18/183 POS_18 METADATA_ONLY
+CATALOG 19/183 POS_19 METADATA_ONLY
+CATALOG 20/183 POS_20 METADATA_ONLY
+CATALOG 21/183 POS_21 METADATA_ONLY
+CATALOG 22/183 POS_22 METADATA_ONLY
+CATALOG 23/183 POS_23 METADATA_ONLY
+CATALOG 24/183 POS_24 METADATA_ONLY
+CATALOG 25/183 VN_NEG_01 METADATA_ONLY
+CATALOG 26/183 VN_NEG_02 METADATA_ONLY
+CATALOG 27/183 VN_NEG_03 METADATA_ONLY
+CATALOG 28/183 VN_NEG_04 METADATA_ONLY
+CATALOG 29/183 VN_NEG_05 METADATA_ONLY
+CATALOG 30/183 VN_NEG_06 METADATA_ONLY
+CATALOG 31/183 VN_NEG_07 METADATA_ONLY
+CATALOG 32/183 VN_NEG_08 METADATA_ONLY
+CATALOG 33/183 VN_NEG_09 METADATA_ONLY
+CATALOG 34/183 VN_NEG_10 METADATA_ONLY
+CATALOG 35/183 VN_NEG_11 METADATA_ONLY
+CATALOG 36/183 VN_NEG_12 METADATA_ONLY
+CATALOG 37/183 VN_NEG_13 METADATA_ONLY
+CATALOG 38/183 VN_NEG_14 METADATA_ONLY
+CATALOG 39/183 VN_NEG_15 METADATA_ONLY
+CATALOG 40/183 VN_NEG_16 METADATA_ONLY
+CATALOG 41/183 VN_NEG_17 METADATA_ONLY
+CATALOG 42/183 VN_NEG_18 METADATA_ONLY
+CATALOG 43/183 VN_NEG_19 METADATA_ONLY
+CATALOG 44/183 VN_NEG_20 METADATA_ONLY
+CATALOG 45/183 VN_NEG_21 METADATA_ONLY
+CATALOG 46/183 VN_NEG_22 METADATA_ONLY
+CATALOG 47/183 VN_NEG_23 METADATA_ONLY
+CATALOG 48/183 VN_NEG_24 METADATA_ONLY
+CATALOG 49/183 VN_NEG_25 METADATA_ONLY
+CATALOG 50/183 VN_NEG_26 METADATA_ONLY
+CATALOG 51/183 VN_NEG_27 METADATA_ONLY
+CATALOG 52/183 VN_NEG_28 METADATA_ONLY
+CATALOG 53/183 VN_NEG_29 METADATA_ONLY
+CATALOG 54/183 VN_NEG_30 METADATA_ONLY
+CATALOG 55/183 VN_NEG_31 METADATA_ONLY
+CATALOG 56/183 VN_NEG_32 METADATA_ONLY
+CATALOG 57/183 VN_NEG_33 METADATA_ONLY
+CATALOG 58/183 VN_NEG_34 METADATA_ONLY
+CATALOG 59/183 VN_NEG_35 METADATA_ONLY
+CATALOG 60/183 VN_NEG_36 METADATA_ONLY
+CATALOG 61/183 VN_NEG_37 METADATA_ONLY
+CATALOG 62/183 VN_NEG_38 METADATA_ONLY
+CATALOG 63/183 VN_NEG_39 METADATA_ONLY
+CATALOG 64/183 VN_NEG_40 METADATA_ONLY
+CATALOG 65/183 VN_NEG_41 METADATA_ONLY
+CATALOG 66/183 VN_NEG_42 METADATA_ONLY
+CATALOG 67/183 VN_NEG_43 METADATA_ONLY
+CATALOG 68/183 VN_NEG_44 METADATA_ONLY
+CATALOG 69/183 VN_NEG_45 METADATA_ONLY
+CATALOG 70/183 VN_NEG_46 METADATA_ONLY
+CATALOG 71/183 VN_NEG_47 METADATA_ONLY
+CATALOG 72/183 VN_NEG_48 METADATA_ONLY
+CATALOG 73/183 VN_NEG_49 METADATA_ONLY
+CATALOG 74/183 VN_NEG_50 METADATA_ONLY
+CATALOG 75/183 VN_NEG_51 METADATA_ONLY
+CATALOG 76/183 VN_NEG_52 METADATA_ONLY
+CATALOG 77/183 VN_NEG_53 METADATA_ONLY
+CATALOG 78/183 VN_NEG_54 METADATA_ONLY
+CATALOG 79/183 VN_NEG_55 METADATA_ONLY
+CATALOG 80/183 VN_NEG_56 METADATA_ONLY
+CATALOG 81/183 VN_NEG_57 METADATA_ONLY
+CATALOG 82/183 VN_NEG_58 METADATA_ONLY
+CATALOG 83/183 VN_NEG_59 METADATA_ONLY
+CATALOG 84/183 VN_NEG_60 METADATA_ONLY
+CATALOG 85/183 VN_NEG_61 METADATA_ONLY
+CATALOG 86/183 VN_NEG_62 METADATA_ONLY
+CATALOG 87/183 VN_NEG_63 METADATA_ONLY
+CATALOG 88/183 negsVideo0 MISSING
+CATALOG 89/183 negsVideo1 MISSING
+CATALOG 90/183 negsVideo2 MISSING
+CATALOG 91/183 negsVideo3 MISSING
+CATALOG 92/183 negsVideo4 MISSING
+CATALOG 93/183 negsVideo5 MISSING
+CATALOG 94/183 negsVideo6 MISSING
+CATALOG 95/183 negsVideo7 MISSING
+CATALOG 96/183 negsVideo8 MISSING
+CATALOG 97/183 negsVideo9 MISSING
+CATALOG 98/183 negsVideo10 MISSING
+CATALOG 99/183 negsVideo11 MISSING
+CATALOG 100/183 negsVideo12 MISSING
+CATALOG 101/183 negsVideo13 MISSING
+CATALOG 102/183 negsVideo14 MISSING
+CATALOG 103/183 negsVideo15 MISSING
+CATALOG 104/183 VN_POS_01 METADATA_ONLY
+CATALOG 105/183 VN_POS_02 METADATA_ONLY
+CATALOG 106/183 VN_POS_03 METADATA_ONLY
+CATALOG 107/183 VN_POS_04 METADATA_ONLY
+CATALOG 108/183 VN_POS_05 METADATA_ONLY
+CATALOG 109/183 VN_POS_06 METADATA_ONLY
+CATALOG 110/183 VN_POS_07 METADATA_ONLY
+CATALOG 111/183 VN_POS_08 METADATA_ONLY
+CATALOG 112/183 VN_POS_09 METADATA_ONLY
+CATALOG 113/183 VN_POS_10 METADATA_ONLY
+CATALOG 114/183 VN_POS_11 METADATA_ONLY
+CATALOG 115/183 VN_POS_12 METADATA_ONLY
+CATALOG 116/183 VN_POS_13 METADATA_ONLY
+CATALOG 117/183 VN_POS_14 METADATA_ONLY
+CATALOG 118/183 VN_POS_15 METADATA_ONLY
+CATALOG 119/183 VN_POS_16 METADATA_ONLY
+CATALOG 120/183 VN_POS_17 METADATA_ONLY
+CATALOG 121/183 VN_POS_18 METADATA_ONLY
+CATALOG 122/183 VN_POS_19 METADATA_ONLY
+CATALOG 123/183 VN_POS_20 METADATA_ONLY
+CATALOG 124/183 VN_POS_21 METADATA_ONLY
+CATALOG 125/183 VN_POS_22 METADATA_ONLY
+CATALOG 126/183 VN_POS_23 METADATA_ONLY
+CATALOG 127/183 VN_POS_24 METADATA_ONLY
+CATALOG 128/183 VN_POS_25 METADATA_ONLY
+CATALOG 129/183 VN_POS_26 METADATA_ONLY
+CATALOG 130/183 VN_POS_27 METADATA_ONLY
+CATALOG 131/183 VN_POS_28 METADATA_ONLY
+CATALOG 132/183 VN_POS_29 METADATA_ONLY
+CATALOG 133/183 VN_POS_30 METADATA_ONLY
+CATALOG 134/183 VN_POS_31 METADATA_ONLY
+CATALOG 135/183 VN_POS_32 METADATA_ONLY
+CATALOG 136/183 VN_POS_33 METADATA_ONLY
+CATALOG 137/183 VN_POS_34 METADATA_ONLY
+CATALOG 138/183 VN_POS_35 METADATA_ONLY
+CATALOG 139/183 VN_POS_36 METADATA_ONLY
+CATALOG 140/183 VN_POS_37 METADATA_ONLY
+CATALOG 141/183 VN_POS_38 METADATA_ONLY
+CATALOG 142/183 VN_POS_39 METADATA_ONLY
+CATALOG 143/183 VN_POS_40 METADATA_ONLY
+CATALOG 144/183 VN_POS_41 METADATA_ONLY
+CATALOG 145/183 VN_POS_42 METADATA_ONLY
+CATALOG 146/183 VN_POS_43 METADATA_ONLY
+CATALOG 147/183 VN_POS_44 METADATA_ONLY
+CATALOG 148/183 VN_POS_45 METADATA_ONLY
+CATALOG 149/183 VN_POS_46 METADATA_ONLY
+CATALOG 150/183 VN_POS_47 METADATA_ONLY
+CATALOG 151/183 VN_POS_48 METADATA_ONLY
+CATALOG 152/183 VN_POS_49 METADATA_ONLY
+CATALOG 153/183 VN_POS_50 METADATA_ONLY
+CATALOG 154/183 VN_POS_51 METADATA_ONLY
+CATALOG 155/183 VN_POS_52 METADATA_ONLY
+CATALOG 156/183 VN_POS_53 METADATA_ONLY
+CATALOG 157/183 VN_POS_54 METADATA_ONLY
+CATALOG 158/183 VN_POS_55 METADATA_ONLY
+CATALOG 159/183 VN_POS_56 METADATA_ONLY
+CATALOG 160/183 VN_POS_57 METADATA_ONLY
+CATALOG 161/183 VN_POS_58 METADATA_ONLY
+CATALOG 162/183 VN_POS_59 METADATA_ONLY
+CATALOG 163/183 VN_POS_60 METADATA_ONLY
+CATALOG 164/183 VN_POS_61 METADATA_ONLY
+CATALOG 165/183 VN_POS_62 METADATA_ONLY
+CATALOG 166/183 VN_POS_63 METADATA_ONLY
+CATALOG 167/183 VN_POS_64 METADATA_ONLY
+CATALOG 168/183 VN_POS_65 METADATA_ONLY
+CATALOG 169/183 VN_POS_66 METADATA_ONLY
+CATALOG 170/183 VN_POS_67 METADATA_ONLY
+CATALOG 171/183 VN_POS_68 METADATA_ONLY
+CATALOG 172/183 VN_POS_69 METADATA_ONLY
+CATALOG 173/183 VN_POS_70 METADATA_ONLY
+CATALOG 174/183 VN_POS_71 METADATA_ONLY
+CATALOG 175/183 VN_POS_72 METADATA_ONLY
+CATALOG 176/183 VN_POS_73 METADATA_ONLY
+CATALOG 177/183 VN_POS_74 METADATA_ONLY
+CATALOG 178/183 VN_POS_75 METADATA_ONLY
+CATALOG 179/183 VN_POS_76 METADATA_ONLY
+CATALOG 180/183 VN_POS_77 METADATA_ONLY
+CATALOG 181/183 VN_POS_78 METADATA_ONLY
+CATALOG 182/183 VN_POS_79 METADATA_ONLY
+CATALOG 183/183 VN_POS_80 METADATA_ONLY
+ok
+test_migration_backup_preserves_user_draft_and_is_idempotent (test_gt_studio_recovery.TestStudioRecovery.test_migration_backup_preserves_user_draft_and_is_idempotent) ... ok
+test_one_account_submit_resume_export_and_blind_round (test_gt_studio_recovery.TestStudioRecovery.test_one_account_submit_resume_export_and_blind_round) ... ok
+test_regeneration_retains_existing_reviews_and_hash_pin_blocks_change (test_gt_studio_recovery.TestStudioRecovery.test_regeneration_retains_existing_reviews_and_hash_pin_blocks_change) ... ok
+test_ui_catalog_dropdowns_exclude_missing_and_separate_candidates (test_gt_studio_recovery.TestStudioRecovery.test_ui_catalog_dropdowns_exclude_missing_and_separate_candidates) ... 2026-11-13 17:20:51.272 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-13 17:20:51.272 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_login_frame_seek_mark_and_save_draft (test_gt_studio_ui.TestStudioUI.test_login_frame_seek_mark_and_save_draft) ... 2026-11-13 17:20:57.374 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_catalog_has_24_positive_79_negative_without_leaking_onsets (test_gt_studio_video.TestStudioVideo.test_catalog_has_24_positive_79_negative_without_leaking_onsets) ... ok
+test_exact_frame_forward_backward_and_estimated_timestamp (test_gt_studio_video.TestStudioVideo.test_exact_frame_forward_backward_and_estimated_timestamp) ... ok
+test_missing_and_corrupt_video_are_blocked (test_gt_studio_video.TestStudioVideo.test_missing_and_corrupt_video_are_blocked) ... ok
+test_real_vfr_fixture_uses_source_pts_and_exact_ordinal (test_gt_studio_video.TestStudioVideo.test_real_vfr_fixture_uses_source_pts_and_exact_ordinal) ... ok
+test_sha_mismatch (test_gt_studio_video.TestStudioVideo.test_sha_mismatch) ... ok
+test_streaming_range_and_path_traversal (test_gt_studio_video.TestStudioVideo.test_streaming_range_and_path_traversal) ... ok
+test_vfr_seek_uses_pts_not_index_over_fps (test_gt_studio_video.TestStudioVideo.test_vfr_seek_uses_pts_not_index_over_fps) ... ok
+test_exposure_narrowing (test_poisson_ci.TestExactPoissonCI.test_exposure_narrowing)
+6. Kiểm tra khi exposure tăng thì độ rộng khoảng tin cậy (width) phải thu hẹp. ... ok
+test_invalid_inputs (test_poisson_ci.TestExactPoissonCI.test_invalid_inputs)
+7. Kiểm tra xử lý ngoại lệ đầu vào không hợp lệ. ... ok
+test_large_false_alarms (test_poisson_ci.TestExactPoissonCI.test_large_false_alarms)
+3. Kiểm tra số false alarms lớn (k=67, 354, 421, 547, 625, 988): không bị lỗi underflow float. ... ok
+test_monotonicity_wrt_k (test_poisson_ci.TestExactPoissonCI.test_monotonicity_wrt_k)
+5. Kiểm tra tính đơn điệu tăng theo k khi cố định exposure. ... ok
+test_one_false_alarm (test_poisson_ci.TestExactPoissonCI.test_one_false_alarm)
+2. Kiểm tra 1 false alarm: lower > 0.0, point estimate nằm trong khoảng. ... ok
+test_various_exposure_hours (test_poisson_ci.TestExactPoissonCI.test_various_exposure_hours)
+4. Kiểm tra nhiều mức exposure khác nhau từ 0.5h đến 100h. ... ok
+test_zero_false_alarms (test_poisson_ci.TestExactPoissonCI.test_zero_false_alarms)
+1. Kiểm tra 0 false alarm: lower=0.0, upper > 0.0 và point estimate nằm trong khoảng. ... ok
+test_b1_b2_accounts_both_fire_and_smoke (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_b1_b2_accounts_both_fire_and_smoke)
+7. Cả 3 pipeline phải tính đầy đủ cả FIRE và SMOKE false alarms, không được bỏ qua SMOKE. ... ok
+test_benchmark_assertion_fails_when_settings_mismatched (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_benchmark_assertion_fails_when_settings_mismatched)
+17. TASK 1: Benchmark bắt buộc nạp Operating Point từ SystemSettings và raise AssertionError nếu sai lệch. ... 2026-11-13 17:21:38 | INFO    | far_unified | === BẮT ĐẦU ĐÁNH GIÁ FAR CHUẨN HÓA PHƯƠNG PHÁP LUẬN (TASK 1, 2, 3, 4) ===
+ok
+test_cooldown_causal_no_duplicate_counting (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_cooldown_causal_no_duplicate_counting)
+10. Cơ chế Cooldown nhân quả: không sinh báo động trùng lặp trong thời gian cooldown. ... ok
+test_cooldown_expiration_triggers_new_event (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_cooldown_expiration_triggers_new_event)
+16. TASK 2: Sau khi hết thời gian Cooldown (t >= 5.0s), sự kiện mới cùng nhãn phải được kích hoạt. ... ok
+test_far_requires_positive_test_duration (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_far_requires_positive_test_duration)
+2. Tính FAR phải dựa trên thời lượng thực nghiệm > 0, từ chối giả định FAR=0 khi không có dữ liệu. ... ok
+test_far_result_metadata_equals_runtime_parameters (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_far_result_metadata_equals_runtime_parameters)
+18. TASK 7: FAR result metadata phải phản ánh đúng runtime parameters (K=2, N=8, feat=0.02, cd=5.0s, conf=0.35). ... ok
+test_fire_and_smoke_both_counted_in_far_results (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_fire_and_smoke_both_counted_in_far_results)
+19. TASK 7: Báo cáo FAR phải phân tách và tính đầy đủ cả FIRE và SMOKE cho mọi pipeline. ... ok
+test_fire_followed_by_smoke_inside_cooldown (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_fire_followed_by_smoke_inside_cooldown)
+11. TASK 2: FIRE kích hoạt, sau đó SMOKE xuất hiện trong cooldown của FIRE -> SMOKE phải trigger độc lập. ... ok
+test_frame_fp_different_from_detection_fp (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_frame_fp_different_from_detection_fp)
+8. Phân tách rạch ròi giữa false_positive_detections (boxes) và false_positive_frames. ... ok
+test_full_video_mode_semantics (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_full_video_mode_semantics)
+20. TASK 4 & 7: Khi max_frames <= 0 hoặc None, evaluation_mode phải là full_video. ... ok
+test_negative_audit_duration_accounting_reconciliation (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_negative_audit_duration_accounting_reconciliation)
+5. Kiểm tra tính rạch ròi giữa thời lượng vật lý trên đĩa và thời lượng thực tế đưa vào đánh giá. ... ok
+test_operating_point_system_settings_consistency (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_operating_point_system_settings_consistency)
+9. Cấu hình SystemSettings trong src/config.py phải trùng khớp 100% với Operating Point đề xuất. ... ok
+test_poisson_rule_of_three_on_zero_false_alarms (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_poisson_rule_of_three_on_zero_false_alarms)
+6. Khi số sự kiện báo giả bằng 0, phải áp dụng quy tắc Rule of Three Poisson thay vì tuyên bố FAR=0 tuyệt đối. ... ok
+test_report_configuration_matches_deployed_configuration (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_report_configuration_matches_deployed_configuration)
+21. TASK 7: Cấu hình trong báo cáo đối soát và validation phải khớp 100% với SystemSettings. ... ok
+test_rtsp_benchmark_honesty_blocked_when_no_sources (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_rtsp_benchmark_honesty_blocked_when_no_sources)
+3. Benchmark RTSP phải báo NOT_TESTED và BLOCKED_NO_LIVE_RTSP_SOURCE khi không có URL thật. ... 2026-11-13 17:21:38 | INFO    | benchmark_multicamera_scientific | === BẮT ĐẦU CHẾ ĐỘ B: RTSP LIVE BENCHMARK ===
+2026-11-13 17:21:38 | INFO    | benchmark_multicamera_scientific | Không phát hiện cấu hình nguồn RTSP thực tế (0 luồng).
+ok
+test_rtsp_url_password_masking (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_rtsp_url_password_masking)
+4. RTSP URL chứa user:pass phải được che mật khẩu bằng dấu ******. ... ok
+test_same_class_repeated_detections_suppressed_by_cooldown (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_same_class_repeated_detections_suppressed_by_cooldown)
+14. TASK 2: Cùng một nhãn lặp lại trong thời gian cooldown thì bị nén, không phát cảnh báo lặp. ... ok
+test_separate_camera_cooldown_isolation (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_separate_camera_cooldown_isolation)
+15. TASK 2: Cách ly hoàn toàn Cooldown giữa các camera khác nhau. ... ok
+test_simultaneous_fire_and_smoke_both_triggered (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_simultaneous_fire_and_smoke_both_triggered)
+13. TASK 2: Đồng thời cả FIRE và SMOKE đạt ngưỡng xác nhận trong cùng frame -> cả hai đều trigger. ... ok
+test_smoke_followed_by_fire_inside_cooldown (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_smoke_followed_by_fire_inside_cooldown)
+12. TASK 2: SMOKE kích hoạt, sau đó FIRE xuất hiện trong cooldown của SMOKE -> FIRE phải trigger độc lập. ... ok
+test_strict_ground_truth_filter_only_accepts_cross_verified (test_scientific_validation_integrity.TestScientificValidationIntegrity.test_strict_ground_truth_filter_only_accepts_cross_verified)
+1. Khi strict=True và only_verified=True, chỉ có đúng 11 sự kiện cross_verified được nạp. ... ok
+test_area_growth_is_positive_for_expanding_box (test_temporal_features.TemporalFeatureTests.test_area_growth_is_positive_for_expanding_box) ... ok
+test_flicker_descriptor_uses_roi_intensity_history (test_temporal_features.TemporalFeatureTests.test_flicker_descriptor_uses_roi_intensity_history) ... ok
+test_invalid_box_is_rejected (test_temporal_features.TemporalFeatureTests.test_invalid_box_is_rejected) ... ok
+test_alert_cooldown_and_retrigger_after_cooldown_expires (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_alert_cooldown_and_retrigger_after_cooldown_expires)
+8. Cooldown chặn cảnh báo lặp trong cooldown_sec nhưng cho phép sự kiện mới sau khi hết cooldown. ... ok
+test_backward_compatibility_without_tracks_assigned (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_backward_compatibility_without_tracks_assigned)
+11. Kiểm tra gọi update không truyền tracks_assigned vẫn hoạt động tự gán track bằng IoU. ... ok
+test_exclusion_zone_filtering (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_exclusion_zone_filtering)
+7. Kiểm tra vùng loại trừ ROI loại bỏ đúng các detection nằm trong tọa độ cấm. ... ok
+test_feature_gate_rejects_missing_or_corrupt_features_when_gate_on (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_feature_gate_rejects_missing_or_corrupt_features_when_gate_on)
+12. Kiểm tra Feature Gate BẬT từ chối xác nhận FIRE khi feature extractor lỗi/thiếu điểm, nhưng Gate TẮT vẫn cho qua. ... ok
+test_fire_and_smoke_do_not_merge_hits (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_fire_and_smoke_do_not_merge_hits)
+5. Tách biệt class FIRE và SMOKE: 2 frame FIRE + 1 frame SMOKE không được gộp thành 3 hits để báo FIRE. ... ok
+test_fire_priority_over_smoke (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_fire_priority_over_smoke)
+10. Kiểm tra ưu tiên nhãn FIRE hơn SMOKE khi cả hai xuất hiện đồng thời. ... ok
+test_k_of_n_sliding_window (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_k_of_n_sliding_window)
+3. Kiểm tra cửa sổ trượt k/N xác nhận đúng các mức SAFE -> SUSPECT -> FIRE trên cùng track_id. ... ok
+test_preserves_bytetrack_id (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_preserves_bytetrack_id)
+1. Kiểm tra TemporalVerifier không ghi đè track_id của ByteTrack khi tracks_assigned=True. ... ok
+test_short_missing_frames_recovery_within_window_n (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_short_missing_frames_recovery_within_window_n)
+6. Mất dấu ngắn hạn 1-2 frame trong cửa sổ N=5 vẫn cho phép track đạt K=3 khi xuất hiện lại. ... ok
+test_single_frame_never_triggers_fire_when_k_gt_1 (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_single_frame_never_triggers_fire_when_k_gt_1)
+2. Một khung hình đơn lẻ không bao giờ kích hoạt FIRE khi K > 1. ... ok
+test_temporal_features_affect_confirmation_decision (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_temporal_features_affect_confirmation_decision)
+9. Temporal features thực sự ảnh hưởng tới điểm xác nhận và chặn cảnh báo tĩnh khi feature_threshold > 0. ... ok
+test_unrelated_track_ids_do_not_merge_hits (test_temporal_verifier_bytetrack.TestTemporalVerifierByteTrack.test_unrelated_track_ids_do_not_merge_hits)
+4. Các detection rời rạc mang track_id khác nhau ở các khung khác nhau không được cộng dồn hits thành FIRE. ... ok
+test_01_hash_small_file (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_01_hash_small_file)
+1. Hash file nhỏ ổn định và khớp với hashlib tiêu chuẩn. ... ok
+test_02_hash_large_file_chunked (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_02_hash_large_file_chunked)
+2. Hash file lớn (3MB) theo streaming chunks không bị tràn RAM. ... ok
+test_03_hash_empty_file (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_03_hash_empty_file)
+3. File rỗng (0 bytes) trả về mã SHA-256 hợp lệ của chuỗi rỗng. ... ok
+test_04_hash_unreadable_file (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_04_hash_unreadable_file)
+4. File không tồn tại hoặc thư mục ném ngoại lệ rõ ràng. ... ok
+test_05_hash_same_content_different_path (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_05_hash_same_content_different_path)
+5. Hai file cùng nội dung tại hai đường dẫn khác nhau có SHA-256 hoàn toàn trùng nhau. ... ok
+test_06_hash_same_size_different_content (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_06_hash_same_size_different_content)
+6. Hai file cùng kích thước nhưng khác nội dung (chỉ khác vài byte ở cuối) có SHA-256 khác nhau. ... ok
+test_07_cache_hit_unchanged_file (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_07_cache_hit_unchanged_file)
+7. Cache hit khi file và kích thước + SHA-256 không thay đổi. ... 2026-11-13 17:21:38 | INFO    | video_audit | CACHE_MISS: Chưa có cache cho stable.avi
+2026-11-13 17:21:39 | INFO    | video_audit | VideoDecodeCacheManager: Đã lưu 1 bản ghi vào .cache.json
+2026-11-13 17:21:39 | INFO    | video_audit | VideoDecodeCacheManager: Đã nạp 1 bản ghi từ .cache.json
+2026-11-13 17:21:39 | INFO    | video_audit | CACHE_HIT: Hợp lệ 100% cho stable.avi (SHA-256: 5064f1042d8f…, full_decoded_frames: 15, decode_status: NORMAL_EOF)
+ok
+test_08_cache_invalidation_on_change (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_08_cache_invalidation_on_change)
+8. Cache bị invalidation khi nội dung và kích thước file thay đổi. ... 2026-11-13 17:21:39 | INFO    | video_audit | CACHE_MISS: Chưa có cache cho change.avi
+2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (Size Mismatch): change.avi (Cached: 23194, Actual: 23207)
+ok
+test_09_cache_invalidation_same_size_different_sha (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_09_cache_invalidation_same_size_different_sha)
+9. Cache bị invalidation khi file bị sửa đổi nội dung nhưng giữ nguyên kích thước. ... 2026-11-13 17:21:39 | INFO    | video_audit | CACHE_MISS: Chưa có cache cho mod_same_size.avi
+2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (SHA-256 Mismatch / Same-Size Modified File): mod_same_size.avi (Cached: c4f762dfe520…, Actual: e60e81242758…)
+ok
+test_10_cache_old_schema_no_sha256 (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_10_cache_old_schema_no_sha256)
+10. Old schema or policy cache records are invalidated after the strict EOF change. ... 2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (Schema / Policy Version / Missing SHA-256): old_schema.avi (schema_version=1, policy=None, sha256_present=False) — record cũ, buộc re-audit
+2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (Schema / Policy Version / Missing SHA-256): old_schema.avi (schema_version=2, policy=None, sha256_present=True) — record cũ, buộc re-audit
+2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (Schema / Policy Version / Missing SHA-256): old_schema.avi (schema_version=3, policy=None, sha256_present=True) — record cũ, buộc re-audit
+2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (Schema / Policy Version / Missing SHA-256): old_schema.avi (schema_version=4, policy=old_policy, sha256_present=True) — record cũ, buộc re-audit
+ok
+test_11_cache_missing_sha256_field (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_11_cache_missing_sha256_field)
+11. Cache thiếu trường 'sha256' không bao giờ được trả về. ... 2026-11-13 17:21:39 | WARNING | video_audit | CACHE_INVALIDATED (Schema / Policy Version / Missing SHA-256): no_sha.avi (schema_version=4, policy=None, sha256_present=False) — record cũ, buộc re-audit
+ok
+test_12_cache_custom_root_dir (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_12_cache_custom_root_dir)
+12. Root directory tùy chỉnh tạo đúng relative_path cho cache key. ... ok
+test_13_cache_relative_path_normalization (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_13_cache_relative_path_normalization)
+13. Chuẩn hóa path Windows backslash và POSIX slash thành cùng một cache key thống nhất. ... ok
+test_14_cache_key_collision_different_dirs (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_14_cache_key_collision_different_dirs)
+14. Hai video cùng tên file ở hai thư mục khác nhau không bị va chạm cache key. ... ok
+test_15_decode_normal_eof (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_15_decode_normal_eof)
+15. Video hợp lệ decode tuần tự đến EOF: NORMAL_EOF, status=VALID, full_decode_verified=True. ... ok
+test_16_decode_truncated_video (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_16_decode_truncated_video)
+16. Video bị cắt ngắn (thiếu > 10 frames): TRUNCATED_STREAM, status=NEEDS_REVIEW, full_decode_verified=False. ... ok
+test_17_decode_midstream_error (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_17_decode_midstream_error)
+17. Video bị lỗi rác giữa luồng: dừng sớm, tuyệt đối không chấp nhận NORMAL_EOF, full_decode_verified=False. ... ok
+test_18_decode_cannot_open (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_18_decode_cannot_open)
+18. File không phải video hoặc rác hoàn toàn: CANNOT_OPEN, status=CORRUPTED. ... ok
+test_19_decode_probe_only (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_19_decode_probe_only)
+19. Chế độ full_decode=False: PROBE_ONLY, full_decode_verified=False. ... ok
+test_20_decode_metadata_frame_count_wrong (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_20_decode_metadata_frame_count_wrong)
+20. Metadata container frame count sai: dùng số frame thực tế decode để tính thời lượng. ... ok
+test_21_decode_full_decode_verified_requires_eof (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_21_decode_full_decode_verified_requires_eof)
+21. full_decode_verified=True chỉ khi luồng thực sự được quét tuần tự đến EOF. ... ok
+test_22_count_discrepancy_needs_review_without_eof_evidence (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_22_count_discrepancy_needs_review_without_eof_evidence)
+22. No fixed tolerance accepts mismatches without independent clean EOF evidence. ... ok
+test_23_decode_partial_video (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_23_decode_partial_video)
+23. Video chỉ decode được frame probe, frame sau hỏng: ghi nhận đúng số frame. ... ok
+test_24_manifest_duplicate_video_id (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_24_manifest_duplicate_video_id)
+24. Trùng lặp video_id giữa các thư mục được phát hiện và gắn nhãn DUPLICATE_ID. ... 2026-11-13 17:21:41 | WARNING | video_audit | DUPLICATE_ID: dir2/V_DUP.mp4 trùng video_id 'V_DUP' với dir1/V_DUP.mp4
+ok
+test_25_manifest_duplicate_sha256 (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_25_manifest_duplicate_sha256)
+25. Trùng lặp nội dung SHA-256 (khác tên file) được phát hiện và gắn nhãn DUPLICATE. ... 2026-11-13 17:21:41 | WARNING | video_audit | DUPLICATE_HASH: b/v2.mp4 trùng SHA-256 với a/v1.mp4 (cùng nội dung, khác path)
+ok
+test_26_manifest_missing_file (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_26_manifest_missing_file)
+26. File có trong manifest nhưng không tồn tại trên đĩa được verify_manifest_vs_inference hoặc audit phát hiện. ... ok
+test_27_manifest_no_auto_verified_negative (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_27_manifest_no_auto_verified_negative)
+27. Audit không bao giờ tự động gán nhãn VERIFIED_NEGATIVE (giữ PENDING_HUMAN_REVIEW). ... ok
+test_28_manifest_no_downgrade_verified (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_28_manifest_no_downgrade_verified)
+28. Ràng buộc bảo vệ: Script probe không thể ghi đè hạ cấp manifest đã full_stream_decode_verified. ... ok
+test_29_manifest_legacy_migration (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_29_manifest_legacy_migration)
+29. Schema cũ thiếu trường mới được migrate an toàn mà không làm hỏng ứng dụng. ... ok
+test_30_manifest_invalid_schema (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_30_manifest_invalid_schema)
+30. Bản ghi rác thiếu trường thiết yếu được xử lý an toàn. ... ok
+test_31_far_zero_alarms (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_31_far_zero_alarms)
+31. Trường hợp 0 báo giả: lower bound = 0.0, upper bound > 0.0. ... ok
+test_32_far_one_alarm (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_32_far_one_alarm)
+32. Trường hợp 1 báo giả: lower > 0.0, point estimate nằm trong khoảng tin cậy. ... ok
+test_33_far_multiple_alarms (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_33_far_multiple_alarms)
+33. Trường hợp số lượng báo giả lớn (k=421, T=7.2026h): FAR=58.45/h, CI95 bao quanh point estimate. ... ok
+test_34_far_zero_exposure (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_34_far_zero_exposure)
+34. Thời gian phơi nhiễm T=0 ném ValueError rõ ràng. ... ok
+test_35_far_negative_exposure (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_35_far_negative_exposure)
+35. Thời gian phơi nhiễm T < 0 ném ValueError rõ ràng. ... ok
+test_36_poisson_ci_matches_scipy (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_36_poisson_ci_matches_scipy)
+36. Xác minh khoảng tin cậy Poisson khớp với phân phối Gamma chuẩn trong lý thuyết thống kê. ... ok
+test_37_far_consistent_exposure_scope (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_37_far_consistent_exposure_scope)
+37. Mẫu số phơi nhiễm nhất quán giữa các phép tính FAR trên 2 phạm vi đối chiếu. ... ok
+test_38_integration_manifest_audit_inference (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_38_integration_manifest_audit_inference)
+38. verify_manifest_vs_inference phát hiện chính xác khi số frame hoặc duration bị lệch. ... ok
+test_39_integration_repeated_run_same_result (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_39_integration_repeated_run_same_result)
+39. Tính tái lập: Hai lần audit độc lập trên cùng file tạo ra mã SHA-256 và decode_status y hệt. ... ok
+test_40_integration_metrics_sync (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_40_integration_metrics_sync)
+40. Đồng bộ số liệu không được tự động chỉnh sửa kết quả hoặc tạo số liệu giả. ... ok
+test_41_integration_legacy_script_no_overwrite (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_41_integration_legacy_script_no_overwrite)
+41. Legacy update_negative_manifest kích hoạt Overwrite Protection Guard khi manifest đã verified. ... ok
+test_42_integration_provenance_mismatch_detected (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_42_integration_provenance_mismatch_detected)
+42. Kiểm tra phát hiện sai lệch commit giữa các artifact. ... ok
+test_43_decode_missing_frames_without_decoder_error (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_43_decode_missing_frames_without_decoder_error)
+43. Thiếu khung hình khi decoder dừng im lặng (ret=False mà không ném exception): phân loại chính xác TRUNCATED_STREAM / DECODE_ERROR. ... ok
+test_44_audit_pipeline_invalid_fps (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_44_audit_pipeline_invalid_fps)
+44. Pipeline thực tế: FPS=0 hoặc không hợp lệ -> status=NEEDS_REVIEW, full_decode_verified=False. ... ok
+test_45_audit_pipeline_zero_reported_frames (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_45_audit_pipeline_zero_reported_frames)
+45. Pipeline thực tế: metadata container reported_frame_count=0 -> NEEDS_REVIEW, full_decode_verified=False. ... ok
+test_46_audit_pipeline_ffprobe_not_installed (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_46_audit_pipeline_ffprobe_not_installed)
+46. Pipeline thực tế: FFmpeg thiếu thì không xác nhận EOF qua OpenCV đơn lẻ. ... ok
+test_47_audit_pipeline_external_tool_error_exit_code (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_47_audit_pipeline_external_tool_error_exit_code)
+47. Pipeline thực tế: khi công cụ ngoại biên phát hiện lỗi exit_code != 0 -> TRUNCATED_STREAM/DECODE_ERROR, full_decode_verified=False. ... ok
+test_48_audit_pipeline_silent_eof_missing_frames (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_48_audit_pipeline_silent_eof_missing_frames)
+48. Pipeline thực tế: decoder dừng im lặng thiếu frames mà không ném exception -> TRUNCATED_STREAM, full_decode_verified=False. ... ok
+test_corrupt_packet_nal_is_not_accepted_by_pipeline (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_corrupt_packet_nal_is_not_accepted_by_pipeline) ... ok
+test_ffmpeg_absent_or_nonzero_exit_is_not_valid (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_ffmpeg_absent_or_nonzero_exit_is_not_valid) ... ok
+test_ffprobe_error_does_not_replace_ffmpeg_full_decode (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_ffprobe_error_does_not_replace_ffmpeg_full_decode) ... ok
+test_ffprobe_not_installed_ffmpeg_can_still_verify_full_stream (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_ffprobe_not_installed_ffmpeg_can_still_verify_full_stream) ... ok
+test_ffprobe_records_real_packet_pts_dts_fps_codec_and_counts (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_ffprobe_records_real_packet_pts_dts_fps_codec_and_counts)
+FFprobe packet timestamps and stream metadata are captured as audit evidence. ... ok
+test_incorrect_container_frame_count_forces_review (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_incorrect_container_frame_count_forces_review) ... ok
+test_invalid_fps_and_zero_frame_metadata_are_review (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_invalid_fps_and_zero_frame_metadata_are_review) ... ok
+test_same_size_content_change_invalidates_cached_audit (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_same_size_content_change_invalidates_cached_audit) ... 2026-11-13 17:21:43 | INFO    | video_audit | CACHE_MISS: Chưa có cache cho cache_same_size.avi
+2026-11-13 17:21:44 | WARNING | video_audit | CACHE_INVALIDATED (SHA-256 Mismatch / Same-Size Modified File): cache_same_size.avi (Cached: c4f762dfe520…, Actual: 2dded3ff1128…)
+ok
+test_silent_opencv_stop_is_needs_review (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_silent_opencv_stop_is_needs_review) ... ok
+test_strict_audit_requires_real_ffmpeg_eof_evidence (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_strict_audit_requires_real_ffmpeg_eof_evidence)
+Actual audit pipeline accepts only clean FFmpeg EOF plus three-way count agreement. ... ok
+test_truncated_video_is_not_accepted_by_pipeline (test_video_audit_and_consistency.TestVideoAuditComprehensive42.test_truncated_video_is_not_accepted_by_pipeline) ... ok
+test_01_verified_only_ground_truth_loading (test_week4_comprehensive.Week4RigorousEvaluationTests.test_01_verified_only_ground_truth_loading)
+1. load_ground_truth_events mặc định chỉ nạp các bản ghi có verification_status='verified'. ... ok
+test_02_pending_records_excluded_from_official_metrics (test_week4_comprehensive.Week4RigorousEvaluationTests.test_02_pending_records_excluded_from_official_metrics)
+2. Các bản ghi pending không bao giờ được tham gia vào precision, recall, F1 hay delay chính thức. ... ok
+test_03_missing_independent_gt_fails_closed (test_week4_comprehensive.Week4RigorousEvaluationTests.test_03_missing_independent_gt_fails_closed)
+3. Thiếu tệp GT độc lập phải ném lỗi rõ ràng (fail closed), không tự động fallback sang catalog. ... ok
+test_04_invalid_verification_status_rejected (test_week4_comprehensive.Week4RigorousEvaluationTests.test_04_invalid_verification_status_rejected)
+4. Trạng thái verification_status ngoài 'verified' và 'pending_verification' phải bị từ chối. ... ok
+test_05_verified_annotation_requires_valid_annotator (test_week4_comprehensive.Week4RigorousEvaluationTests.test_05_verified_annotation_requires_valid_annotator)
+5. Bản ghi verified bắt buộc phải có annotator_id hợp lệ, không chấp nhận placeholder. ... ok
+test_06_event_onset_matching_boundaries (test_week4_comprehensive.Week4RigorousEvaluationTests.test_06_event_onset_matching_boundaries)
+6. Kiểm tra các điều kiện biên của Onset Matching với tolerance_sec. ... ok
+test_07_late_detection_not_timely (test_week4_comprehensive.Week4RigorousEvaluationTests.test_07_late_detection_not_timely)
+7. Dự đoán xảy ra muộn sau onset tolerance (ví dụ trễ 22s hoặc 32s) không được tính là timely detection. ... ok
+test_08_early_alert_handling (test_week4_comprehensive.Week4RigorousEvaluationTests.test_08_early_alert_handling)
+8. Xử lý cảnh báo sớm: kết thúc trước onset là early alert, chồng lấn onset trong early_tol là kịp thời. ... ok
+test_09_one_to_one_event_matching (test_week4_comprehensive.Week4RigorousEvaluationTests.test_09_one_to_one_event_matching)
+9. Ràng buộc ánh xạ 1-1: 1 pred không khớp nhiều GT, 1 GT không khớp nhiều pred, nhãn khác nhau không khớp. ... ok
+test_10_matching_cardinality_correctness (test_week4_comprehensive.Week4RigorousEvaluationTests.test_10_matching_cardinality_correctness)
+10. Thuật toán ghép cặp cực đại (Max Cardinality Bipartite Matching) giải đúng trường hợp Greedy thất bại. ... ok
+test_11_detection_delay_correctness (test_week4_comprehensive.Week4RigorousEvaluationTests.test_11_detection_delay_correctness)
+11. Độ trễ phát hiện được tính nhất quán từ GT onset tới Prediction onset. ... ok
+test_12_raw_tracked_frame_identity_consistency (test_week4_comprehensive.Week4RigorousEvaluationTests.test_12_raw_tracked_frame_identity_consistency)
+12. Kiểm tra tính khớp nối định danh khung hình 100% giữa raw và tracked JSONL. ... ok
+test_13_missing_or_mismatched_frame_detection (test_week4_comprehensive.Week4RigorousEvaluationTests.test_13_missing_or_mismatched_frame_detection)
+13. Phát hiện tệp JSONL bị lệch frame identity hoặc thiếu frame. ... ok
+test_14_duplicate_frame_detection (test_week4_comprehensive.Week4RigorousEvaluationTests.test_14_duplicate_frame_detection)
+14. Phát hiện khung hình trùng lặp timestamp trong cùng một luồng video. ... ok
+test_15_jsonl_schema_and_empty_frames (test_week4_comprehensive.Week4RigorousEvaluationTests.test_15_jsonl_schema_and_empty_frames)
+15. Bảo toàn khung hình rỗng `detections: []` và kiểm định tọa độ bounding box. ... ok
+test_16_grid_search_does_not_use_locked_test (test_week4_comprehensive.Week4RigorousEvaluationTests.test_16_grid_search_does_not_use_locked_test)
+16. Grid Search chỉ sử dụng dữ liệu Validation, không sử dụng dữ liệu Locked Test. ... ok
+test_17_no_train_val_test_leakage (test_week4_comprehensive.Week4RigorousEvaluationTests.test_17_no_train_val_test_leakage)
+17. Đảm bảo các tập Validation và Test tách biệt 100%, không giao nhau. ... ok
+test_18_operating_point_remains_blocked_when_negative_data_missing (test_week4_comprehensive.Week4RigorousEvaluationTests.test_18_operating_point_remains_blocked_when_negative_data_missing)
+18. Operating Point phải trả về NO_FEASIBLE_OPERATING_POINT và FAR=None khi thiếu video âm tính. ... ok
+test_artifact_created_from_historical_source_is_not_relabelled_current (test_week4_consistency_fix.Week4ConsistencyFixTests.test_artifact_created_from_historical_source_is_not_relabelled_current) ... ok
+test_audit_summary_cannot_claim_every_video_valid_when_review_exists (test_week4_consistency_fix.Week4ConsistencyFixTests.test_audit_summary_cannot_claim_every_video_valid_when_review_exists) ... ok
+test_events_are_counted_by_unique_event_key_and_duplicates_are_visible (test_week4_consistency_fix.Week4ConsistencyFixTests.test_events_are_counted_by_unique_event_key_and_duplicates_are_visible) ... ok
+test_ffmpeg_decode_error_is_not_success (test_week4_consistency_fix.Week4ConsistencyFixTests.test_ffmpeg_decode_error_is_not_success) ... ok
+test_ffmpeg_missing_is_not_success (test_week4_consistency_fix.Week4ConsistencyFixTests.test_ffmpeg_missing_is_not_success) ... ok
+test_historical_scope2_claim_is_row_paired_but_not_strictly_clean (test_week4_consistency_fix.Week4ConsistencyFixTests.test_historical_scope2_claim_is_row_paired_but_not_strictly_clean) ... D:\workspace\DACN_NCKH\scripts\run_week4_consistency_fix.py:485: ResourceWarning: unclosed file <_io.TextIOWrapper name='D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week4_revalidation\\far_per_video.csv' mode='r' encoding='utf-8-sig'>
+  rows = list(csv.DictReader(path.open(encoding="utf-8-sig")))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_historical_scope_b_far_reduction_disagreement_is_reported (test_week4_consistency_fix.Week4ConsistencyFixTests.test_historical_scope_b_far_reduction_disagreement_is_reported) ... ok
+test_inference_zero_samples_never_claim_100_percent_coverage (test_week4_consistency_fix.Week4ConsistencyFixTests.test_inference_zero_samples_never_claim_100_percent_coverage) ... ok
+test_long_video_timeout_is_explicit_failure (test_week4_consistency_fix.Week4ConsistencyFixTests.test_long_video_timeout_is_explicit_failure) ... ok
+test_manifest_hash_difference_is_historical_not_match (test_week4_consistency_fix.Week4ConsistencyFixTests.test_manifest_hash_difference_is_historical_not_match) ... ok
+test_operating_point_cannot_become_official_with_gt_pending (test_week4_consistency_fix.Week4ConsistencyFixTests.test_operating_point_cannot_become_official_with_gt_pending) ... ok
+test_provenance_without_run_id_is_unverified (test_week4_consistency_fix.Week4ConsistencyFixTests.test_provenance_without_run_id_is_unverified) ... ok
+test_wrong_container_count_cannot_enter_scope_b (test_week4_consistency_fix.Week4ConsistencyFixTests.test_wrong_container_count_cannot_enter_scope_b) ... ok
+test_complete_evidence_required_for_acceptance (test_week4_critical_acceptance.TestCriticalAcceptance.test_complete_evidence_required_for_acceptance) ... ok
+test_duplicate_video_mapping_rejected (test_week4_critical_acceptance.TestCriticalAcceptance.test_duplicate_video_mapping_rejected) ... ok
+test_duration_uses_unrounded_frame_evidence (test_week4_critical_acceptance.TestCriticalAcceptance.test_duration_uses_unrounded_frame_evidence) ... ok
+test_episodes_clipped_and_merged_under_common_protocol (test_week4_critical_acceptance.TestCriticalAcceptance.test_episodes_clipped_and_merged_under_common_protocol) ... ok
+test_malformed_review_rejected_without_modifying_bytes (test_week4_critical_acceptance.TestCriticalAcceptance.test_malformed_review_rejected_without_modifying_bytes) ... ok
+test_missing_gt_cannot_pass_despite_large_reduction (test_week4_critical_acceptance.TestCriticalAcceptance.test_missing_gt_cannot_pass_despite_large_reduction) ... ok
+test_reuse_decision_states (test_week4_critical_acceptance.TestCriticalAcceptance.test_reuse_decision_states) ... ok
+test_review_regeneration_preserves_partial_and_verified_records (test_week4_critical_acceptance.TestCriticalAcceptance.test_review_regeneration_preserves_partial_and_verified_records) ... ok
+test_scope_counts_identical_videos_and_intervals (test_week4_critical_acceptance.TestCriticalAcceptance.test_scope_counts_identical_videos_and_intervals) ... ok
+test_strict_scope_requires_every_evidence_field (test_week4_critical_acceptance.TestCriticalAcceptance.test_strict_scope_requires_every_evidence_field) ... ok
+test_csv_and_json_export (test_week4_event_eval.Week4EvaluationTests.test_csv_and_json_export)
+7. Kiểm tra xuất kết quả CSV và JSON hợp lệ. ... ok
+test_event_matching_recall_delay_precision_and_f1 (test_week4_event_eval.Week4EvaluationTests.test_event_matching_recall_delay_precision_and_f1)
+2. Kiểm tra Event Matching, Event Recall, Detection Delay, Precision và F1. ... ok
+test_feature_gate_on_off_behavior (test_week4_event_eval.Week4EvaluationTests.test_feature_gate_on_off_behavior)
+10. Kiểm thử tách biệt rõ ràng khi Feature Gate BẬT vs TẮT. ... ok
+test_frame_level_baseline_triggers_immediately_without_k_n (test_week4_event_eval.Week4EvaluationTests.test_frame_level_baseline_triggers_immediately_without_k_n)
+1. Frame-level baseline tạo cảnh báo ngay khi có detection đủ ngưỡng, không cần K/N. ... ok
+test_grid_search_and_operating_point_selection (test_week4_event_eval.Week4EvaluationTests.test_grid_search_and_operating_point_selection)
+6. Grid search trả về điểm vận hành hợp lệ khi đủ dữ liệu hoặc báo NO_FEASIBLE_OPERATING_POINT khi thiếu negative. ... ok
+test_grid_search_compares_baseline_at_same_confidence (test_week4_event_eval.Week4EvaluationTests.test_grid_search_compares_baseline_at_same_confidence)
+11. Kiểm thử Grid Search so sánh ứng viên với baseline tại cùng confidence threshold. ... ok
+test_invalid_k_n_rejected (test_week4_event_eval.Week4EvaluationTests.test_invalid_k_n_rejected) ... ok
+test_k_n_confirmation_and_temporal_feature_gating_in_event_conversion (test_week4_event_eval.Week4EvaluationTests.test_k_n_confirmation_and_temporal_feature_gating_in_event_conversion)
+5. Kiểm tra K/N làm giảm false alarm đơn lẻ và feature_threshold lọc đối tượng tĩnh. ... ok
+test_legacy_wrapper_compatibility (test_week4_event_eval.Week4EvaluationTests.test_legacy_wrapper_compatibility)
+8. Kiểm tra wrapper src/week4_event_eval.py tương thích 100% với src/event_eval.py. ... ok
+test_missing_negative_videos_handling (test_week4_event_eval.Week4EvaluationTests.test_missing_negative_videos_handling)
+4. Xử lý trung thực khi thiếu negative videos: raise ValueError mặc định hoặc báo BLOCKED_BY_NEGATIVE_DATA. ... ok
+test_negative_video_false_alarm_rate_strictly_from_negative_videos (test_week4_event_eval.Week4EvaluationTests.test_negative_video_false_alarm_rate_strictly_from_negative_videos)
+3. FAR/giờ chỉ tính trên tập video âm tính, không trộn cảnh báo sớm trên video dương tính vào negative FAR. ... ok
+test_negative_video_pipeline_and_far_calculation (test_week4_event_eval.Week4EvaluationTests.test_negative_video_pipeline_and_far_calculation)
+9. Kiểm thử luồng xử lý video âm tính và tính toán FAR/giờ chính xác. ... ok
+test_validation_and_test_split_disjoint (test_week4_event_eval.Week4EvaluationTests.test_validation_and_test_split_disjoint)
+12. Kiểm thử Validation Set và Test Set tách biệt 100% không bị trộn. ... ok
+
+======================================================================
+ERROR: test_13_dual_and_hexa_camera_selection (test_dynamic_camera_selection.TestDynamicCameraAndDashboard.test_13_dual_and_hexa_camera_selection)
+13. Chọn 2 camera (DUAL) và 6 camera (HEXA) theo chuẩn FIREWATCH COMMAND CENTER.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\workspace\DACN_NCKH\src\camera_manager.py", line 1083, in stop_all
+    w.stop()
+  File "D:\workspace\DACN_NCKH\src\camera_manager.py", line 462, in stop
+    self._stop()
+  File "D:\workspace\DACN_NCKH\src\camera_manager.py", line 477, in _stop
+    raise RuntimeError("Camera shutdown timed out; retained thread handles for safe retry")
+RuntimeError: Camera shutdown timed out; retained thread handles for safe retry
+
+----------------------------------------------------------------------
+Ran 249 tests in 189.326s
+
+FAILED (errors=1)
+[mjpeg @ 0000027bc619f5c0] overread 8
+[mjpeg @ 0000027bc619e700] No JPEG data found in image
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0000027bcdf59080] moov atom not found
+[mjpeg @ 0000027bc619e700] overread 8
+[mjpeg @ 0000027bcd0b17c0] overread 1
+[mjpeg @ 0000027bba1a8080] dht: len 118 is too large
+[mjpeg @ 0000027bba1a8080] huffman table decode error
+[mjpeg @ 0000027bba1a7900] error dc
+[mjpeg @ 0000027bba1a7900] error y=3 x=2
+[mjpeg @ 0000027bc5dc5740] error count: 268435455
+[mjpeg @ 0000027bc5dc5740] error y=1 x=1
+[mjpeg @ 0000027bc5dc4100] overread 8

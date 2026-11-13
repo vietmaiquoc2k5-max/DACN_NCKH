@@ -1,0 +1,85 @@
+[
+  {
+    "name": "studio_final",
+    "command": "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m unittest discover -s tests -p test_gt_studio_*.py -v",
+    "exit_code": 0,
+    "elapsed_seconds": 191.75,
+    "log": "runs\\benchmarks\\week4_dataset_recovery\\run_20261113_v2\\studio_final.log",
+    "unittest_count": 38,
+    "summary_tail": [
+      "test_sha_mismatch (test_gt_studio_video.TestStudioVideo.test_sha_mismatch) ... ok",
+      "test_streaming_range_and_path_traversal (test_gt_studio_video.TestStudioVideo.test_streaming_range_and_path_traversal) ... ok",
+      "test_vfr_seek_uses_pts_not_index_over_fps (test_gt_studio_video.TestStudioVideo.test_vfr_seek_uses_pts_not_index_over_fps) ... ok",
+      "",
+      "----------------------------------------------------------------------",
+      "Ran 38 tests in 186.988s",
+      "",
+      "OK"
+    ]
+  },
+  {
+    "name": "unittest_full",
+    "command": "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m unittest discover -s tests -p test_*.py -v",
+    "exit_code": 1,
+    "elapsed_seconds": 198.43799999999828,
+    "log": "runs\\benchmarks\\week4_dataset_recovery\\run_20261113_v2\\unittest_full.log",
+    "unittest_count": 249,
+    "summary_tail": [
+      "[mjpeg @ 0000027bcd0b17c0] overread 1",
+      "[mjpeg @ 0000027bba1a8080] dht: len 118 is too large",
+      "[mjpeg @ 0000027bba1a8080] huffman table decode error",
+      "[mjpeg @ 0000027bba1a7900] error dc",
+      "[mjpeg @ 0000027bba1a7900] error y=3 x=2",
+      "[mjpeg @ 0000027bc5dc5740] error count: 268435455",
+      "[mjpeg @ 0000027bc5dc5740] error y=1 x=1",
+      "[mjpeg @ 0000027bc5dc4100] overread 8"
+    ]
+  },
+  {
+    "name": "pytest_targeted",
+    "command": "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m pytest -q tests/test_gt_studio_recovery.py tests/test_gt_studio_evaluation.py tests/test_week4_critical_acceptance.py",
+    "exit_code": 0,
+    "elapsed_seconds": 32.46900000000096,
+    "log": "runs\\benchmarks\\week4_dataset_recovery\\run_20261113_v2\\pytest_targeted.log",
+    "unittest_count": null,
+    "summary_tail": [
+      ".....................                                    [100%]",
+      "21 passed, 16 subtests passed in 30.22s"
+    ]
+  },
+  {
+    "name": "unittest_full_retry",
+    "command": "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m unittest discover -s tests -p test_*.py -v",
+    "exit_code": 0,
+    "elapsed_seconds": 127.59400000000096,
+    "log": "runs\\benchmarks\\week4_dataset_recovery\\run_20261113_v2\\unittest_full_retry.log",
+    "unittest_count": 249,
+    "summary_tail": [
+      "[mjpeg @ 000001da7faa2900] overread 1",
+      "[mjpeg @ 000001da7faa21c0] dht: len 118 is too large",
+      "[mjpeg @ 000001da7faa21c0] huffman table decode error",
+      "[mjpeg @ 000001da7faa1a40] error dc",
+      "[mjpeg @ 000001da7faa1a40] error y=3 x=2",
+      "[mjpeg @ 000001da7faa2cc0] error count: 268435455",
+      "[mjpeg @ 000001da7faa2cc0] error y=1 x=1",
+      "[mjpeg @ 000001da04e63e00] overread 8"
+    ]
+  },
+  {
+    "name": "camera_retry",
+    "command": "python -m unittest discover -s tests -p test_dynamic_camera_selection.py -v",
+    "exit_code": 0,
+    "unittest_count": 25,
+    "passed": 25,
+    "log": "runs\\benchmarks\\week4_dataset_recovery\\run_20261113_v2\\camera_retry.log"
+  },
+  {
+    "name": "pytest_final_guards",
+    "command": "python -m pytest -q tests/test_gt_studio_video.py tests/test_gt_studio_evaluation.py",
+    "exit_code": 0,
+    "passed": 11,
+    "skipped": 1,
+    "skip_reason": "FFmpeg not on PATH in this supplementary invocation; VFR integration ran in full unittest with portable FFmpeg on PATH",
+    "log": "runs\\benchmarks\\week4_dataset_recovery\\run_20261113_v2\\pytest_final_guards.log"
+  }
+]

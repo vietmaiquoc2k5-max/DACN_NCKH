@@ -1,0 +1,34 @@
+{
+  "mode": "PROVISIONAL_SINGLE_REVIEWER",
+  "scientific_status": "PARTIAL",
+  "official": false,
+  "status": "PARTIAL_INSUFFICIENT_VERIFIED_EXPOSURE",
+  "operating_point": "PROVISIONAL",
+  "human_review_status": "HUMAN_REVIEW_PENDING",
+  "verified_negative_hours": 0.0,
+  "scope": [],
+  "excluded": [],
+  "scope_id": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "pipeline_metrics": {
+    "A": {
+      "event_recall": null,
+      "event_precision": null,
+      "event_f1": null,
+      "detection_delay_sec": null,
+      "far_per_hour": null,
+      "poisson_ci_95": null
+    },
+    "B": {
+      "event_recall": null,
+      "event_precision": null,
+      "event_f1": null,
+      "detection_delay_sec": null,
+      "far_per_hour": null,
+      "poisson_ci_95": null
+    }
+  },
+  "independent_cross_verification": false,
+  "inference_input_status": "UNVERIFIED_MISSING_EVIDENCE",
+  "review_export": null,
+  "actual_private_submitted_reviews": 0
+}

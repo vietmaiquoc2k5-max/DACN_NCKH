@@ -1,0 +1,4 @@
+[h264 @ 000001a8ca3a7900] Invalid NAL unit size (7937 > 7149).
+[h264 @ 000001a8ca3a7900] missing picture in access unit with size 7153
+[h264 @ 000001a8b088e900] Invalid NAL unit size (7937 > 7149).
+[h264 @ 000001a8b088e900] Error splitting the input into NAL units.

@@ -1,0 +1,7 @@
+{
+  "status": "HUMAN_REVIEW_PENDING",
+  "submitted_records_in_input": 0,
+  "candidate_generated": false,
+  "fabricated_labels": false,
+  "instruction": "Submit actual reviews then export in Studio; no candidate labels generated from drafts."
+}

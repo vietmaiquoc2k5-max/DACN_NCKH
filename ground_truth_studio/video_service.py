@@ -36,7 +36,10 @@ class VideoService:
         key = (str(path), stat.st_size, stat.st_mtime_ns)
         with self._lock:
             if key in self._metadata:
-                return self._metadata[key]
+                cached = self._metadata[key]
+                if video.get("expected_sha256") and cached["source_sha256"] != video["expected_sha256"]:
+                    raise ValueError("BLOCKED_INPUT: source SHA-256 mismatch")
+                return cached
         digest = sha256(path)
         if video.get("expected_sha256") and digest != video["expected_sha256"]:
             raise ValueError("BLOCKED_INPUT: source SHA-256 mismatch")

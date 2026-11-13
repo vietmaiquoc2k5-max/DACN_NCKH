@@ -1,0 +1,26 @@
+{
+  "schema_before": 0,
+  "schema_after": 2,
+  "counts_before": {
+    "users": 1,
+    "review_sessions": 6,
+    "review_heads": 6,
+    "adjudications": 0,
+    "audit_log": 10
+  },
+  "counts_after": {
+    "users": 1,
+    "review_sessions": 6,
+    "review_heads": 6,
+    "adjudications": 0,
+    "audit_log": 10
+  },
+  "protected_tables_byte_values_preserved": true,
+  "groups": {
+    "positive": 24,
+    "positive_candidate": 80,
+    "negative": 63
+  },
+  "retained_video_records": 183,
+  "backup_directory": "D:\\workspace\\week4_private_human_review\\backups"
+}

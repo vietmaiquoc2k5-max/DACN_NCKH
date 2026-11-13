@@ -53,4 +53,46 @@ def catalog(settings: Settings) -> list[dict[str, Any]]:
                      "expected_sha256": entry.get("sha256"), "available": path.is_file(), "technical": technical})
     if len({row["video_id"] for row in rows}) != len(rows):
         raise ValueError("Catalog video ID collision")
+    for row in rows:
+        row.update(source_group="POS_HISTORICAL" if row["kind"] == "positive" else "VN_NEG" if row["video_id"].startswith("VN_NEG_") else "LEGACY_NEGATIVE",
+                   semantic_status="PENDING_HUMAN_REVIEW", manifest_origin="historical",
+                   exclusion_reason=None if row["available"] else "EXCLUDED_MISSING_SOURCE")
+    known = {row["video_id"] for row in rows}
+    directory = settings.repo / "datasets/negative_videos"
+    if directory.is_dir():
+        import re
+        for path in sorted(directory.iterdir()):
+            if not path.is_file() or not re.fullmatch(r"VN_POS_\d+\.mp4", path.name, flags=re.IGNORECASE):
+                continue
+            video_id = path.stem.upper()
+            if video_id in known:
+                raise ValueError(f"Catalog video ID collision: {video_id}")
+            relative = path.relative_to(settings.repo).as_posix()
+            confined(settings.repo, relative)
+            rows.append({"video_id": video_id, "kind": "positive_candidate", "relative_path": relative,
+                         "expected_sha256": None, "available": True, "technical": {}, "source_group": "VN_POS",
+                         "semantic_status": "PENDING_HUMAN_REVIEW", "manifest_origin": "discovered", "exclusion_reason": None})
+            known.add(video_id)
+    # Persisted source hashes are identity pins, not an implicit technical/semantic approval.
+    local_path = settings.repo / "data/video_catalog_local_v2.json"
+    if local_path.exists():
+        local = json.loads(local_path.read_text(encoding="utf-8"))
+        pins = {row["video_id"]: row for row in local["videos"]}
+        if len(pins) != len(local["videos"]):
+            raise ValueError("Duplicate ID in local source catalog")
+        current_audits = {}
+        if local.get("technical_audit_path"):
+            audit_file = confined(settings.repo, local["technical_audit_path"])
+            if audit_file.exists():
+                current_audits = {item["video_id"]: item for item in json.loads(audit_file.read_text(encoding="utf-8"))["videos"]}
+        for row in rows:
+            pin = pins.get(row["video_id"])
+            if pin and pin["relative_path"] == row["relative_path"]:
+                row["local_source_sha256"] = pin.get("sha256")
+                row["expected_sha256"] = row["expected_sha256"] or pin.get("sha256")
+                audited = current_audits.get(row["video_id"])
+                if audited and audited.get("sha256") == pin.get("sha256") and audited.get("sha256_verified") is True:
+                    alignment = row["technical"].get("inference_alignment_verified") is True
+                    row["technical"] = dict(audited, inference_alignment_verified=alignment)
+                    row["technical_status"] = audited.get("decode_status", "NOT_VERIFIED")
     return rows

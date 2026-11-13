@@ -1,5 +1,30 @@
 # Export contract — candidate only
 
+## Single reviewer (schema bổ sung, không thay frozen GT)
+
+Một annotator đã đăng nhập được xuất các lượt SUBMITTED của chính mình, không cần
+reviewer thứ hai hay adjudicator. Source được rehash trước export. Mỗi bundle
+`exports/single_reviewer_<uuid>/` được tạo mới, gồm:
+
+- `single_review_records.json`: các lượt đã khóa, source SHA/path, reviewer/person,
+  review ID, submitted timestamp, duration và timestamp provenance, evidence,
+  events/uncertainty/decision. `is_primary_round_for_video` chọn lượt submit mới
+  nhất, không cộng exposure hai lần khi re-review.
+- `single_reviewer_gt_candidate.jsonl`: các FIRE/SMOKE người duyệt đã đánh dấu,
+  kể cả nguồn có tên VN_NEG nhưng thực tế chứa FIRE/SMOKE. Candidate giữ
+  `verification_status=pending_verification`, `cross_verified=false`,
+  `annotation_status=SINGLE_HUMAN_REVIEWED_PROVISIONAL`.
+- `single_negative_reviews.json`: quyết định cá nhân, events/uncertainty;
+  FAR eligibility chưa được cấp chỉ bằng tên file hoặc lời xác nhận.
+- `single_review_summary.json`, `ground_truth_provenance.json`: thống kê,
+  frozen snapshot SHA, identity reference, source/review mapping; official=false.
+- `intra_annotator_consistency.json`: chỉ so sánh hai lượt của cùng người sau submit;
+  `independent_cross_verification=false`.
+- `file_sha256.json`: SHA-256 mọi file còn lại trong bundle.
+
+Không có submit thì từ chối export. Draft, checkbox hay fixture không tạo GT thật.
+Provisional evaluator cần thêm technical audit và inference timeline A/B hợp lệ.
+
 Mọi file được tạo trong private `exports/<uuid>/`; không ghi vào `data/ground_truth/` và không ghi đè CSV nguồn. Chưa có export production khi chưa có người dùng thực sự thực hiện review; các bundle trong tests là fixture tổng hợp.
 
 ## CSV tương thích hiện có

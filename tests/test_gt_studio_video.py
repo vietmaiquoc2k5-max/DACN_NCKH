@@ -27,6 +27,8 @@ class TestStudioVideo(StudioCase):
             self.videos.inspect(dict(self.repository.video("NEG_01"), expected_sha256=None))
 
     def test_sha_mismatch(self):
+        # A previous inspection must not bypass a subsequently supplied hash pin.
+        self.videos.inspect(self.repository.video("NEG_01"))
         with self.assertRaisesRegex(ValueError, "SHA-256 mismatch"):
             self.videos.inspect(dict(self.repository.video("NEG_01"), expected_sha256="0" * 64))
 

@@ -1,0 +1,11 @@
+{
+  "identity": "SYNTHETIC_UI_TEST_ONLY",
+  "private_directory": ".tools/gt_studio_ui_smoke",
+  "production_review_submitted": false,
+  "overview_text": "Skip to main content\nREVIEW WORKSPACE\n\nsynthetic-ui-reviewer02\n\nannotator_02\n\nĐiều hướng\n\nOverview\n\nPositive Review\n\nVN_POS Candidate Review\n\nNegative Review\n\nSingle Reviewer Export\n\nReview Progress\n\nĐăng xuất\n\nDeploy\n\nDACN / WEEK 4 / HUMAN ANNOTATION\n\nGround Truth Review Studio\n\nNguồn gốc rõ ràng. Phiên review độc lập. Quyết định thuộc về con người.\n\nHồ sơ độc lập, bằng chứng có nguồn\n\nNguồn gốc → Human review → Candidate PROVISIONAL; single-reviewer không phải kiểm định chéo\n\nPositive historical\n\n24\n\nVN_POS candidates\n\n80\n\nNegative candidates có nguồn\n\n63\n\nMissing historical references\n\n16\n\n{\n\"Technical verified (audit hiện tại)\":3\n\"Human reviewed / submitted\":0\n\"Scientific eligible negative hours\":0\n}\n\nTiến độ thực tế trong Studio\n\n{\n\"Nguồn có trên đĩa\":167\n\"Video chưa review trong Studio\":182\n\"Review đã submit\":0\n\"Video có bất đồng\":0\n\"Video đã phân xử\":0\n\"Candidate event được human adjudication\":0\n}\n\nTrạng thái khoa học\n\nBLOCKED_HUMAN_REVIEW\n\n11 claim cross_verified lịch sử chưa được Studio xác thực lại. Candidate không thay thế Ground Truth frozen.\n\nTài khoản được cấp theo người thật và vai trò. Người quản lý chịu trách nhiệm xác nhận danh tính độc lập.",
+  "single_reviewer_text": "Skip to main content\nREVIEW WORKSPACE\n\nsynthetic-ui-reviewer02\n\nannotator_02\n\nĐiều hướng\n\nOverview\n\nPositive Review\n\nVN_POS Candidate Review\n\nNegative Review\n\nSingle Reviewer Export\n\nReview Progress\n\nĐăng xuất\n\nDeploy\n\nDACN / WEEK 4 / HUMAN ANNOTATION\n\nGround Truth Review Studio\n\nNguồn gốc rõ ràng. Phiên review độc lập. Quyết định thuộc về con người.\n\nSingle-Reviewer Research Mode\n\nDữ liệu một người đánh giá: PROVISIONAL. Không phải CROSS_VERIFIED, không phải FAR/Recall/Delay chính thức.\n\nVideo đã Submit\n\n0\n\nVideo còn Draft\n\n1\n\nDùng Positive/Negative Review như hiện tại. Save Draft để lưu; Submit để khóa review. Không cần tạo tài khoản giả thứ hai.\n\nXuất kết quả một người (PROVISIONAL)",
+  "screenshots": [
+    "studio_catalog_overview.png",
+    "studio_single_reviewer.png"
+  ]
+}

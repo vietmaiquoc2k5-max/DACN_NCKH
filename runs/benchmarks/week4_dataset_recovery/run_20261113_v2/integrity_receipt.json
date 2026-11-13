@@ -1,0 +1,26 @@
+{
+  "frozen_snapshot_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "physical_source_hashes_reverified": 167,
+  "source_hash_mismatches": [],
+  "private_csv_hashes_unchanged": {
+    "negative_adjudication.csv": true,
+    "negative_annotator_01.csv": true,
+    "negative_annotator_02.csv": true,
+    "positive_adjudication.csv": true,
+    "positive_annotator_02.csv": true
+  },
+  "schema_version": 2,
+  "protected_tables_unchanged_by_catalog_refresh": true,
+  "protected_tables_unchanged_since_initial_backup": true,
+  "private_database_counts": {
+    "users": 1,
+    "review_sessions": 6,
+    "review_heads": 6,
+    "adjudications": 0,
+    "audit_log": 10
+  },
+  "review_status_counts": {
+    "DRAFT": 6
+  },
+  "user_rtsp_report_bytes_preserved": true
+}

@@ -40,7 +40,7 @@ def summary(repository: ReviewRepository, *, captured: tuple[list[dict[str, Any]
         if adjudication["decision"] != "ACCEPT" or not all(pair):
             continue
         video = repository.video(video_id)
-        candidates += len(data["final_events"]) if video["kind"] == "positive" else 0
+        candidates += len(data["final_events"]) if video["kind"] != "negative" else 0
         if video["kind"] == "negative" and all(review["payload"].get("decision") == "VERIFIED_NEGATIVE"
                 and not review["payload"].get("events") and not review["payload"].get("uncertain_intervals") for review in pair) and not data["final_events"]:
             semantic_negatives += 1
@@ -51,6 +51,10 @@ def summary(repository: ReviewRepository, *, captured: tuple[list[dict[str, Any]
             if strict_technical_eligible(technical):
                 eligible_seconds += technical["duration_seconds"]
     return {"positive_videos": sum(row["kind"] == "positive" for row in videos),
+            "positive_candidate_videos": sum(row["kind"] == "positive_candidate" for row in videos),
+            "negative_candidates_available": len(repository.working_videos("negative")),
+            "missing_historical_references": sum(not row["available"] and row.get("manifest_origin") == "historical" for row in videos),
+            "technical_verified_available": sum(row["available"] and row.get("technical_status") == "NORMAL_EOF" for row in videos),
             "negative_videos": sum(row["kind"] == "negative" for row in videos),
             "available_sources": sum(row["available"] for row in videos),
             "historical_event_count": len(historical),
@@ -102,7 +106,7 @@ class ExportService:
             common = {"video_id": video["video_id"], "relative_path": video["relative_path"],
                       "source_sha256": review["source"]["source_sha256"], "reviewer_id": review["user_id"],
                       "reviewed_at_utc": review["submitted_at"], "evidence_ref": payload["evidence_ref"], "signoff": "YES"}
-            if video["kind"] == "positive":
+            if video["kind"] != "negative":
                 name = "positive_" + review["slot"] + ".csv"
                 common["annotation_events_json"] = json.dumps(payload["events"], ensure_ascii=False)
             else:

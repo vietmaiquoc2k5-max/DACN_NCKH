@@ -1,0 +1,148 @@
+{
+  "frozen_sha256": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+  "events": [
+    {
+      "historical_index": 3,
+      "video_id": "POS_02",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 4,
+      "video_id": "POS_02",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 5,
+      "video_id": "POS_03",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 6,
+      "video_id": "POS_04",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 7,
+      "video_id": "POS_04",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 8,
+      "video_id": "POS_05",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 15,
+      "video_id": "POS_10",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 18,
+      "video_id": "POS_12",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 19,
+      "video_id": "POS_12",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 34,
+      "video_id": "POS_23",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    },
+    {
+      "historical_index": 35,
+      "video_id": "POS_24",
+      "claim": "cross_verified",
+      "status": "UNVERIFIED",
+      "verified_evidence": [
+        "FROZEN_BYTES_AUTHENTICATED"
+      ],
+      "missing_evidence": [
+        "ORIGINAL_INDEPENDENT_REVIEW_RECORDS",
+        "HUMAN_IDENTITY_AND_SIGNOFF_PROVENANCE"
+      ]
+    }
+  ]
+}

@@ -59,14 +59,14 @@ class AnnotationService:
         actor = self.repository.actor(token)
         review = self.repository.review(token, review_id)
         video = self.repository.video(review["video_id"])
-        name = "positive_annotator_02.csv" if video["kind"] == "positive" else f"negative_{actor['role']}.csv"
+        name = "positive_annotator_02.csv" if video["kind"] != "negative" else f"negative_{actor['role']}.csv"
         row = next((row for row in self.repository.own_csv_rows(token, name) if row["video_id"] == video["video_id"]), None)
         if row is None:
             raise ValueError("No external CSV row belonging to this authenticated reviewer")
         metadata = self.videos.inspect(video)
         if row.get("source_sha256") != metadata["source_sha256"]:
             raise ValueError("External CSV source hash is missing or differs; manual reconciliation required")
-        raw_events = json.loads(row.get("annotation_events_json") or "[]") if video["kind"] == "positive" else []
+        raw_events = json.loads(row.get("annotation_events_json") or "[]") if video["kind"] != "negative" else []
         if not isinstance(raw_events, list) or any(not isinstance(event, dict) for event in raw_events):
             raise ValueError("External annotation_events_json must contain event objects")
         if video["kind"] == "negative":
