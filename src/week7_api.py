@@ -60,6 +60,20 @@ def _manager(request: Request) -> MultiCameraManager:
     return manager
 
 
+def _same_dashboard_instance(
+    request: Request,
+    instance_id: Optional[str] = Header(default=None, alias="X-FireWatch-Instance-ID"),
+) -> None:
+    """Reject dashboard management requests routed to another FireWatch process."""
+    if instance_id is None:
+        return
+    manager = getattr(request.app.state, "manager", None)
+    expected = getattr(manager, "_fw_api_instance_id", "") if manager is not None else ""
+    if not expected or not secrets.compare_digest(instance_id, expected):
+        raise HTTPException(409, detail={"code": "BACKEND_INSTANCE_MISMATCH",
+                                         "message": "Dashboard and management API belong to different FireWatch instances"})
+
+
 def _authorized(authorization: Optional[str] = Header(default=None)) -> None:
     expected = os.getenv("FIREWATCH_API_TOKEN", "")
     if not expected:
@@ -203,8 +217,13 @@ _telegram_last_test_at = 0.0
 def start_embedded_api(manager: MultiCameraManager, host: str = "0.0.0.0", port: int | None = None):
     """Serve the API beside Streamlit using the same manager and detector instance."""
     if getattr(app.state, "embedded_thread", None) is not None and app.state.embedded_thread.is_alive():
+        previous_manager = getattr(app.state, "manager", None)
+        if previous_manager is not None and previous_manager is not manager:
+            previous_manager.stop_monitoring()
+            previous_manager.telegram_alerts.close()
         app.state.injected_manager = manager
         app.state.manager = manager
+        app.state.instance_id = getattr(manager, "_fw_api_instance_id", "")
         return app.state.embedded_server
     try:
         import uvicorn
@@ -212,6 +231,7 @@ def start_embedded_api(manager: MultiCameraManager, host: str = "0.0.0.0", port:
         raise RuntimeError("uvicorn is required to expose the shared camera API; install requirements.txt") from exc
     listen_port = int(port or os.getenv("FIREWATCH_API_PORT", "8000"))
     app.state.injected_manager = manager
+    app.state.instance_id = getattr(manager, "_fw_api_instance_id", "")
     server = uvicorn.Server(uvicorn.Config(app, host=host, port=listen_port, log_level="warning", access_log=False))
     thread = threading.Thread(target=server.run, name="firewatch-api", daemon=True)
     app.state.embedded_server = server
@@ -228,6 +248,8 @@ def start_embedded_api(manager: MultiCameraManager, host: str = "0.0.0.0", port:
     def stop_server():
         server.should_exit = True
         thread.join(timeout=5.0)
+        active_manager = getattr(app.state, "manager", None) or manager
+        active_manager.close()
 
     atexit.register(stop_server)
     return server
@@ -453,6 +475,8 @@ def telegram_status(manager: MultiCameraManager = Depends(_manager), _: None = D
             MAX(telegram_acknowledged_at),
             MAX(CASE WHEN status IN ('FAILED','AMBIGUOUS') THEN attempt_started_at END)
             FROM alert_deliveries""").fetchone()
+        latest_test = conn.execute("""SELECT status,acknowledged_at,error_category,used_service_credentials
+            FROM telegram_test_deliveries ORDER BY test_id DESC LIMIT 1""").fetchone()
     configured = bool(dispatcher.token and dispatcher.chat_id)
     enabled = bool(dispatcher.enabled)
     latest_ack = row[2]
@@ -468,12 +492,17 @@ def telegram_status(manager: MultiCameraManager = Depends(_manager), _: None = D
         state = "DEGRADED"
     return {"state": state, "enabled": enabled, "credentials_configured": configured,
             "worker_running": bool(dispatcher.thread and dispatcher.thread.is_alive()),
+            "service_credentials_tested": bool(dispatcher.service_credentials_tested),
+            "last_test": ({"status": latest_test[0], "acknowledged_at": latest_test[1],
+                           "error_category": latest_test[2],
+                           "used_service_credentials": bool(latest_test[3])} if latest_test else None),
             "pending_count": int(row[0] or 0), "failed_count": int(row[1] or 0),
             "last_api_acknowledged_at": latest_ack}
 
 
 @app.post("/api/telegram/test")
-def telegram_test(payload: Any = Body(default=None), manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+def telegram_test(payload: Any = Body(default=None), manager: MultiCameraManager = Depends(_manager),
+                  _: None = Depends(_authorized), __: None = Depends(_same_dashboard_instance)):
     global _telegram_last_test_at
     if isinstance(payload, TelegramTestInput):
         payload = payload.model_dump() if hasattr(payload, "model_dump") else payload.dict()
@@ -524,12 +553,19 @@ def telegram_test(payload: Any = Body(default=None), manager: MultiCameraManager
                      (ack_at, test_id))
     if used_service_credentials:
         manager.telegram_alerts.service_credentials_tested = True
+        if manager.telegram_alerts.enabled:
+            try:
+                manager.telegram_alerts._start_worker()
+            except RuntimeError as exc:
+                raise HTTPException(503, detail={"code": "DISPATCHER_UNAVAILABLE",
+                                                 "message": str(exc)}) from None
     return {"test_id": test_id, "status": "DELIVERED", "acknowledged_at": ack_at,
             "message": "Telegram acknowledged the labeled test message; it is not a fire event."}
 
 
 @app.post("/api/telegram/enable")
-def telegram_enable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+def telegram_enable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized),
+                    __: None = Depends(_same_dashboard_instance)):
     try:
         manager.telegram_alerts.set_enabled(True)
     except ValueError as exc:
@@ -540,7 +576,8 @@ def telegram_enable(manager: MultiCameraManager = Depends(_manager), _: None = D
 
 
 @app.post("/api/telegram/disable")
-def telegram_disable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+def telegram_disable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized),
+                     __: None = Depends(_same_dashboard_instance)):
     manager.telegram_alerts.set_enabled(False)
     return {"enabled": False}
 

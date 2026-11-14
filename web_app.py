@@ -101,6 +101,7 @@ def get_firewatch_station() -> MultiCameraManager:
     mgr = MultiCameraManager(db_path=db_path, model_path=model_path, auto_assign_videos=False)
     mgr.stop_monitoring()
     mgr._fw_version = "3.0"
+    mgr._fw_api_instance_id = secrets.token_urlsafe(32)
     try:
         from src.week7_api import start_embedded_api
 
@@ -109,6 +110,9 @@ def get_firewatch_station() -> MultiCameraManager:
             host=os.getenv("FIREWATCH_API_HOST", "127.0.0.1"),
             port=int(os.getenv("FIREWATCH_API_PORT", "8000")),
         )
+        from src.week7_api import app as _api_app
+
+        mgr._fw_api_thread = _api_app.state.embedded_thread
         mgr._fw_api_ready = True
     except Exception as exc:
         mgr._fw_api_ready = False
@@ -129,7 +133,9 @@ def _telegram_api_request(path: str, payload: Optional[Dict[str, Any]] = None) -
         raise RuntimeError("FIREWATCH_API_TOKEN is not configured for dashboard administration")
     base = os.getenv("FIREWATCH_API_INTERNAL_URL", "http://127.0.0.1:8000").rstrip("/")
     response = requests.post(base + path, json=payload or {},
-                             headers={"Authorization": f"Bearer {api_token}"}, timeout=10)
+                             headers={"Authorization": f"Bearer {api_token}",
+                                      "X-FireWatch-Instance-ID": get_firewatch_station()._fw_api_instance_id},
+                             timeout=10)
     if not response.ok:
         detail = response.json().get("detail", {}) if response.headers.get("content-type", "").startswith("application/json") else {}
         if isinstance(detail, dict):
@@ -147,18 +153,39 @@ def _telegram_summary(manager: MultiCameraManager) -> Dict[str, Any]:
             MAX(telegram_acknowledged_at),
             MAX(CASE WHEN status IN ('FAILED','AMBIGUOUS') THEN attempt_started_at END)
             FROM alert_deliveries""").fetchone()
-    configured = bool(dispatcher.token and dispatcher.chat_id)
-    if not configured:
+    missing = []
+    if not dispatcher.token:
+        missing.append("TELEGRAM_BOT_TOKEN")
+    if not dispatcher.chat_id:
+        missing.append("TELEGRAM_CHAT_ID")
+    configured = not missing
+    api_thread = getattr(manager, "_fw_api_thread", None)
+    api_ready = bool(getattr(manager, "_fw_api_ready", True) and
+                     (api_thread is None or api_thread.is_alive()))
+    worker_running = bool(dispatcher.thread and dispatcher.thread.is_alive())
+    if not api_ready:
+        state = "BACKEND UNAVAILABLE"
+    elif missing:
         state = "NOT CONFIGURED"
     elif not dispatcher.enabled:
         state = "DISABLED"
     elif last_failure and (not last_ack or last_failure > last_ack):
         state = "ERROR"
-    elif last_ack:
-        state = "READY"
+    elif dispatcher.enabled and not dispatcher.service_credentials_tested:
+        state = "WAITING TEST"
+    elif dispatcher.enabled and not worker_running:
+        state = "ERROR"
     else:
-        state = "DEGRADED"
-    return {"state": state, "pending": int(pending or 0), "failed": int(failed or 0), "last_ack": last_ack}
+        state = "ENABLED"
+    with dispatcher._connect() as conn:
+        test = conn.execute(
+            "SELECT status,acknowledged_at,used_service_credentials,error_category "
+            "FROM telegram_test_deliveries ORDER BY test_id DESC LIMIT 1"
+        ).fetchone()
+    return {"state": state, "pending": int(pending or 0), "failed": int(failed or 0),
+            "last_ack": last_ack, "configured": configured, "missing": missing,
+            "api_ready": api_ready, "service_credentials_tested": bool(dispatcher.service_credentials_tested),
+            "worker_running": worker_running, "last_test": test}
 
 
 TELEGRAM_STATE_LABELS_VI = {
@@ -167,6 +194,9 @@ TELEGRAM_STATE_LABELS_VI = {
     "ERROR": "CÓ LỖI",
     "READY": "SẴN SÀNG",
     "DEGRADED": "CHƯA KIỂM TRA",
+    "ENABLED": "ĐANG BẬT",
+    "BACKEND UNAVAILABLE": "API KHÔNG KẾT NỐI",
+    "WAITING TEST": "CHỜ KIỂM TRA",
 }
 TELEGRAM_DELIVERY_LABELS_VI = {
     "QUEUED": "Đang chờ", "SENDING": "Đang gửi", "RETRY_PENDING": "Chờ gửi lại",
@@ -2700,12 +2730,28 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
 
 elif st.session_state.nav_page == "Telegram":
     render_html('<div class="fw-panel-title"><span>Gửi cảnh báo qua Telegram</span></div>')
-    st.warning(
-        "FireWatch không lưu mã bot. Hãy đặt TELEGRAM_BOT_TOKEN và TELEGRAM_CHAT_ID trong cấu hình "
-        "môi trường của dịch vụ rồi khởi động lại để nhận cảnh báo cháy/khói. Thông tin nhập ở "
-        "phần kiểm tra chỉ được giữ tạm thời trong bộ nhớ và chỉ gửi khi bạn bấm nút kiểm tra."
-    )
     tg = _telegram_summary(cam_system)
+    if not tg["api_ready"]:
+        st.error("Backend API không khởi động được. Kiểm tra cổng FIREWATCH_API_PORT và nhật ký vận hành trước khi quản lý Telegram.")
+    if not os.getenv("FIREWATCH_API_TOKEN", ""):
+        st.error("Thiếu FIREWATCH_API_TOKEN. Các thao tác quản trị Telegram cần mã quản trị được cấu hình trong môi trường dịch vụ.")
+    if tg["missing"]:
+        st.warning("Thiếu cấu hình dịch vụ: " + ", ".join(tg["missing"]) + ". Đặt biến môi trường và khởi động lại FireWatch.")
+    elif tg["api_ready"]:
+        st.success("Đã cấu hình Bot Token và Chat ID cho dịch vụ. Giá trị bí mật không được hiển thị trong dashboard.")
+        if tg["service_credentials_tested"]:
+            st.success("Thông tin đăng nhập dịch vụ đã được kiểm tra thành công trong phiên backend hiện tại.")
+        else:
+            st.info("Cần gửi tin nhắn kiểm tra bằng thông tin đăng nhập dịch vụ trong phiên backend này trước khi dispatcher gửi cảnh báo tự động.")
+    if tg["last_test"]:
+        test_status, test_ack, used_service, test_error = tg["last_test"]
+        if test_status == "SENDING":
+            st.info("Yêu cầu kiểm tra Telegram đang được xử lý.")
+        elif test_status == "DELIVERED":
+            credential_kind = "service credentials" if used_service else "temporary credentials"
+            st.caption(f"Tin kiểm tra gần nhất đã được Telegram chấp nhận lúc {test_ack} ({credential_kind}).")
+        else:
+            st.caption(f"Tin kiểm tra gần nhất: {test_status}" + (f" · {test_error}" if test_error else ""))
     t1, t2, t3, t4 = st.columns(4)
     t1.metric("Trạng thái", TELEGRAM_STATE_LABELS_VI.get(tg["state"], tg["state"]))
     t2.metric("Đang chờ gửi", tg["pending"])
@@ -2732,7 +2778,9 @@ elif st.session_state.nav_page == "Telegram":
         st.info("Nhập mã quản trị để kiểm tra gửi tin nhắn hoặc bật/tắt cảnh báo Telegram.")
     else:
         dispatcher = cam_system.telegram_alerts
-        if dispatcher.enabled:
+        if not tg["api_ready"]:
+            st.error("Không gửi được thao tác: backend API chưa sẵn sàng.")
+        elif dispatcher.enabled:
             if st.button("Tắt gửi cảnh báo sự kiện qua Telegram", key="telegram_disable"):
                 st.session_state.telegram_action_future = (
                     "disable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/disable")
@@ -2771,20 +2819,27 @@ elif st.session_state.nav_page == "Telegram":
             st.session_state.telegram_test_future = get_telegram_api_executor().submit(
                 _telegram_api_request, "/api/telegram/test", payload
             )
+            st.session_state.telegram_test_result = {"status": "PROCESSING", "error": None, "result": None}
         test_future: Optional[Future] = st.session_state.get("telegram_test_future")
         if test_future is not None:
             if test_future.done():
                 try:
                     result = test_future.result()
+                    st.session_state.telegram_test_result = {"status": "DELIVERED", "error": None, "result": result}
                     st.success(f"Telegram đã xác nhận tin nhắn kiểm tra lúc {result['acknowledged_at']}.")
                 except Exception as exc:
+                    st.session_state.telegram_test_result = {"status": "FAILED", "error": str(exc), "result": None}
                     st.error(f"Gửi tin nhắn kiểm tra thất bại: {exc}")
                 del st.session_state.telegram_test_future
-                st.rerun()
             else:
                 st.info("Đang gửi tin nhắn kiểm tra ở chế độ nền.")
                 if st.button("Cập nhật kết quả", key="telegram_test_refresh"):
                     st.rerun()
+        prior_test = st.session_state.get("telegram_test_result")
+        if prior_test and prior_test["status"] == "DELIVERED" and (test_future is None or not test_future.done()):
+            st.success(f"Kết quả đã lưu trong phiên: Telegram xác nhận lúc {prior_test['result']['acknowledged_at']}.")
+        elif prior_test and prior_test["status"] == "FAILED" and (test_future is None or not test_future.done()):
+            st.error(f"Kết quả đã lưu trong phiên: {prior_test['error']}")
 
     st.markdown("### Lịch sử gửi cảnh báo")
     status_filter = st.selectbox(

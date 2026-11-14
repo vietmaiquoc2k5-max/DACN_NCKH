@@ -25,6 +25,8 @@ ENV/
 
 # Runtime data
 alerts.db
+alerts.db-shm
+alerts.db-wal
 alerts/
 
 # Large datasets & raw archives (keep datasets/vn_dataset tracked on Git)

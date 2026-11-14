@@ -52,6 +52,12 @@ def _telegram_env(monkeypatch, **extra):
         monkeypatch.setenv(key, str(value))
 
 
+def _authorize_test_delivery(dispatcher):
+    """Model the successful service-credential check required before worker start."""
+    dispatcher.service_credentials_tested = True
+    dispatcher._start_worker()
+
+
 def _rows(db_path):
     with sqlite3.connect(db_path) as conn:
         return conn.execute("SELECT status,attempt_count,error_category,error_message,event_confirmed_at,queued_at,attempt_started_at,telegram_acknowledged_at FROM alert_deliveries ORDER BY event_id").fetchall()
@@ -90,6 +96,7 @@ def test_delivery_persists_telegram_ack_and_suppresses_duplicates(tmp_path, monk
     ack = threading.Event()
     monkeypatch.setattr("src.telegram_alerts.urlopen", lambda *_a, **_k: (ack.set() or _Response({"ok": True, "result": {"message_id": 8}})))
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     try:
         assert dispatcher.enqueue(event)
         assert not dispatcher.enqueue(event)
@@ -116,6 +123,7 @@ def test_timeout_is_ambiguous_and_not_retried_by_default(tmp_path, monkeypatch):
 
     monkeypatch.setattr("src.telegram_alerts.urlopen", timeout)
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     try:
         dispatcher.enqueue(event)
         assert _wait_for(lambda: bool(_rows(db_path)) and _rows(db_path)[0][0] == "AMBIGUOUS")
@@ -140,6 +148,7 @@ def test_explicit_http_5xx_retries_then_delivers(tmp_path, monkeypatch):
 
     monkeypatch.setattr("src.telegram_alerts.urlopen", flaky)
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     try:
         dispatcher.enqueue(event)
         assert _wait_for(lambda: bool(_rows(db_path)) and _rows(db_path)[0][0] == "DELIVERED", timeout=4)
@@ -160,6 +169,7 @@ def test_invalid_credentials_are_terminal_and_missing_snapshot_falls_back_to_tex
 
     monkeypatch.setattr("src.telegram_alerts.urlopen", rejected)
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     try:
         assert dispatcher.enqueue(event)
         assert _wait_for(lambda: bool(_rows(db_path)) and _rows(db_path)[0][0] == "FAILED")
@@ -179,6 +189,7 @@ def test_invalid_credentials_are_terminal_and_missing_snapshot_falls_back_to_tex
 
     monkeypatch.setattr("src.telegram_alerts.urlopen", accept_text_fallback)
     dispatcher2 = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher2)
     try:
         assert dispatcher2.enqueue(bad)
         assert _wait_for(lambda: _rows(db_path)[-1][0] == "DELIVERED")
@@ -199,6 +210,7 @@ def test_telegram_api_rejection_is_terminal(tmp_path, monkeypatch):
     monkeypatch.setattr("src.telegram_alerts.urlopen",
                         lambda *_a, **_k: _Response({"ok": False, "error_code": 400}))
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     try:
         assert dispatcher.enqueue(event)
         assert _wait_for(lambda: bool(_rows(db_path)) and _rows(db_path)[0][0] == "FAILED")
@@ -212,6 +224,7 @@ def test_queued_delivery_recovers_after_dispatcher_restart(tmp_path, monkeypatch
     _database(db_path)
     event = _event(db_path)
     first = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(first)
     assert not first.configured
     queued_at = "2026-11-13T10:00:01.000000+00:00"
     with sqlite3.connect(db_path) as conn:
@@ -223,6 +236,7 @@ def test_queued_delivery_recovers_after_dispatcher_restart(tmp_path, monkeypatch
     ack = threading.Event()
     monkeypatch.setattr("src.telegram_alerts.urlopen", lambda *_a, **_k: (ack.set() or _Response({"ok": True, "result": {"message_id": 12}})))
     restarted = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(restarted)
     try:
         assert ack.wait(2)
         assert _wait_for(lambda: any(row[0] == "DELIVERED" for row in _rows(db_path)))
@@ -235,6 +249,7 @@ def test_interrupted_sending_is_marked_ambiguous_at_startup(tmp_path, monkeypatc
     _database(db_path)
     event = _event(db_path)
     first = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(first)
     with sqlite3.connect(db_path) as conn:
         conn.execute("""INSERT INTO alert_deliveries(delivery_id,event_id,channel,status,queued_at,
             event_confirmed_at,payload_json,attempt_count) VALUES('interrupted',1,'telegram','SENDING',?,?,?,1)""",
@@ -242,6 +257,7 @@ def test_interrupted_sending_is_marked_ambiguous_at_startup(tmp_path, monkeypatc
     first.close()
     monkeypatch.setenv("ALERTS_ENABLED", "false")
     restarted = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(restarted)
     try:
         with sqlite3.connect(db_path) as conn:
             row = conn.execute("SELECT status,error_category FROM alert_deliveries WHERE delivery_id='interrupted'").fetchone()
@@ -266,6 +282,7 @@ def test_full_persistent_queue_records_failure_for_operator(tmp_path, monkeypatc
 
     monkeypatch.setattr("src.telegram_alerts.urlopen", delayed)
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     try:
         assert dispatcher.enqueue(first_event)
         assert request_started.wait(2)
@@ -293,6 +310,7 @@ def test_shutdown_during_active_delivery_returns_timeout_and_finishes_after_rele
 
     monkeypatch.setattr("src.telegram_alerts.urlopen", delayed)
     dispatcher = TelegramAlertDispatcher(str(db_path))
+    _authorize_test_delivery(dispatcher)
     assert dispatcher.enqueue(event)
     assert request_started.wait(2)
     assert dispatcher.close(timeout=0.01) is False

@@ -127,8 +127,8 @@ class TelegramAlertDispatcher:
         self.accepting = True
         self.thread: threading.Thread | None = None
         self._initialize()
-        if self.configured:
-            self._start_worker()
+        # A persisted/environment enabled flag is only intent. Require a
+        # successful service-credential test in this process before delivery.
 
     @property
     def configured(self) -> bool:

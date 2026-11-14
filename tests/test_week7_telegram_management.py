@@ -6,11 +6,25 @@ from urllib.parse import parse_qs
 
 import pytest
 from fastapi import HTTPException
+from starlette.requests import Request
 
 from src.telegram_alerts import TelegramAlertDispatcher, TelegramTestError, send_test_message
-from src.week7_api import TelegramTestInput, telegram_test, telegram_status
+from src.week7_api import TelegramTestInput, _same_dashboard_instance, telegram_test, telegram_status
 
 TOKEN = "123456:abcdefghijklmnopqrstuvwxyzABCDE"
+
+
+def test_dashboard_instance_header_rejects_stale_or_unrelated_backend():
+    manager = SimpleNamespace(_fw_api_instance_id="current-instance")
+    app = SimpleNamespace(state=SimpleNamespace(manager=manager))
+    request = Request({"type": "http", "app": app})
+
+    with pytest.raises(HTTPException) as mismatch:
+        _same_dashboard_instance(request, "stale-instance")
+    assert mismatch.value.status_code == 409
+    assert mismatch.value.detail["code"] == "BACKEND_INSTANCE_MISMATCH"
+    assert _same_dashboard_instance(request, "current-instance") is None
+    assert _same_dashboard_instance(request, None) is None
 
 
 def _db(path):
@@ -75,6 +89,11 @@ def test_test_message_is_separate_from_fire_events_and_response_hides_credential
             assert conn.execute("SELECT status FROM telegram_test_deliveries").fetchone() == ("DELIVERED",)
             database_dump = "\n".join(conn.iterdump())
             assert TOKEN not in database_dump and "-123456" not in database_dump
+        status = telegram_status(manager=manager, _=None)
+        assert status["last_test"] == {
+            "status": "DELIVERED", "acknowledged_at": result["acknowledged_at"],
+            "error_category": None, "used_service_credentials": False,
+        }
     finally:
         dispatcher.close()
 
@@ -168,8 +187,31 @@ def test_successful_service_credential_test_authorizes_enable_only_in_current_pr
         assert dispatcher.service_credentials_tested is True
         with sqlite3.connect(db) as conn:
             assert conn.execute("SELECT used_service_credentials FROM telegram_test_deliveries").fetchone() == (1,)
+        status = telegram_status(manager=manager, _=None)
+        assert status["service_credentials_tested"] is True
+        assert status["last_test"]["used_service_credentials"] is True
         dispatcher.set_enabled(True)
         dispatcher.set_enabled(False)
+    finally:
+        dispatcher.close()
+
+
+def test_persisted_enabled_setting_waits_for_service_test_after_restart(tmp_path, monkeypatch):
+    db = tmp_path / "enabled-after-restart.db"
+    _db(db)
+    monkeypatch.setenv("ALERTS_ENABLED", "true")
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", TOKEN)
+    monkeypatch.setenv("TELEGRAM_CHAT_ID", "-123456")
+    dispatcher = TelegramAlertDispatcher(str(db))
+    manager = SimpleNamespace(telegram_alerts=dispatcher)
+    assert dispatcher.enabled is True
+    assert dispatcher.thread is None
+    monkeypatch.setattr("src.week7_api.send_test_message", lambda *args, **kwargs: "2026-11-13T10:00:00+00:00")
+    monkeypatch.setattr("src.week7_api._telegram_last_test_at", 0.0)
+    try:
+        telegram_test(TelegramTestInput(), manager=manager, _=None)
+        assert dispatcher.service_credentials_tested is True
+        assert dispatcher.thread is not None and dispatcher.thread.is_alive()
     finally:
         dispatcher.close()
 
