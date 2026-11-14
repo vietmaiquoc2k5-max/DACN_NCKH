@@ -1,0 +1,36 @@
+{
+  "complete": true,
+  "checked_at_utc": "2026-11-14T11:33:36.794078+00:00",
+  "private_db_access": "READ_ONLY_SNAPSHOT",
+  "submitted_records_rechecked": 166,
+  "all_original_derived_gt_files_byte_identical": true,
+  "comparisons": {
+    "week4_gt_bundle_audit.json": {
+      "sha256": "8b1d8b5c8efd63afcecb4ff8b28b6c30496636cddc84920a05b6fc6817f7d844",
+      "current_code_reaudit_byte_identical": true
+    },
+    "vn_pos_gt_events.jsonl": {
+      "sha256": "1c605e59dfd618e72187fc271c8d95a3b25e41076724fd50b98f9b21ea8ab251",
+      "current_code_reaudit_byte_identical": true
+    },
+    "vn_pos_gt_scope.csv": {
+      "sha256": "f5a5aabeaa1a2b5075da489b02f5606b7ae175d95aaa2c45de3d8c0ee613f878",
+      "current_code_reaudit_byte_identical": true
+    },
+    "vn_pos_gt_exclusions.csv": {
+      "sha256": "5df8d82f4816e351ae673afab56641ca2b8e7b3de12c0d0d030ba26d3a5f5bad",
+      "current_code_reaudit_byte_identical": true
+    },
+    "vn_pos_gt_provenance.json": {
+      "sha256": "56a7d5182f9d8fa9baae5d8d6352ad890fc22fec9ffa048d65dc370a1771a847",
+      "current_code_reaudit_byte_identical": true
+    }
+  },
+  "gt_scope_or_original_human_labels_changed": false,
+  "current_implementation_sha256": {
+    "src/week45_ground_truth.py": "5c7c0c4dd24bbbc0413127facabdc463dc51dfc3a6f497977a1df1ec97f06965",
+    "scripts/audit_week45_human_gt.py": "e281c2871aa525e215b8fc460038727c49255091d03b8c0b3fefd68df569bd14"
+  },
+  "raw_reaudit_outputs": "gt_recheck_final/ (LOCAL_ONLY_NOT_WHITELISTED)",
+  "raw_reaudit_log": ".tools/week45_closure_73034262/gt_recheck_final.log"
+}

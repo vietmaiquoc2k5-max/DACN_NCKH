@@ -1,0 +1,253 @@
+{
+  "configs": [
+    {
+      "path": "data.yaml",
+      "sha256": "c08c8a1e4bff3f696f4c732a94a950e5a894d1c7a447b6c3f4e913d63ddb217c",
+      "dataset_path": "FireSmokeLabeler/dataset",
+      "training_data": null,
+      "class_mapping": {
+        "0": "smoke",
+        "1": "fire"
+      }
+    },
+    {
+      "path": "data_dfire.yaml",
+      "sha256": "86cf24bac87b11f8250d33214fe19407d17ecd51e9663170ac269721ddcc6bb7",
+      "dataset_path": "datasets/dfire",
+      "training_data": null,
+      "class_mapping": {
+        "0": "smoke",
+        "1": "fire"
+      }
+    },
+    {
+      "path": "data_legacy.yaml",
+      "sha256": "40e6bd65c5fbfb276daf0bf7454b1d6998adc1118ffa0b30f6f485e3b2407df4",
+      "dataset_path": "./dataset",
+      "training_data": null,
+      "class_mapping": {
+        "0": "fire",
+        "1": "smoke"
+      }
+    },
+    {
+      "path": "data_vn.yaml",
+      "sha256": "9c268fc886bb2c80b6b00eaa6c1bd5a592ee59c6a10fd83093744c3f6166b7e4",
+      "dataset_path": "datasets/vn_dataset",
+      "training_data": null,
+      "class_mapping": [
+        "smoke",
+        "fire"
+      ]
+    },
+    {
+      "path": "runs/detect/runs/benchmarks/yolo11n_seed123/args.yaml",
+      "sha256": "f3f3b18ec0a6f807f087979668d5389ec7efa732dd9a91c9a094fd6817ea84d2",
+      "dataset_path": null,
+      "training_data": "data_dfire.yaml",
+      "class_mapping": null
+    },
+    {
+      "path": "runs/detect/runs/benchmarks/yolo11n_seed456/args.yaml",
+      "sha256": "c7b080409d3c316eb69a7b62358049fe530466d7fbee5e4c4790fcb5aa2c6b62",
+      "dataset_path": null,
+      "training_data": "data_dfire.yaml",
+      "class_mapping": null
+    },
+    {
+      "path": "runs/detect/runs/benchmarks/yolov8n_seed123/args.yaml",
+      "sha256": "91bcb8d44304c64c6e3eaf2d35e95fe148bac34af8d0a6ee98ab7b1ad24e6f91",
+      "dataset_path": null,
+      "training_data": "data_dfire.yaml",
+      "class_mapping": null
+    },
+    {
+      "path": "runs/detect/runs/benchmarks/yolov8n_seed42/args.yaml",
+      "sha256": "b6ba46a20d06325a13e63ea958f7ea2bd1f40c0f71f8addf85a01bed2b1fbbc9",
+      "dataset_path": null,
+      "training_data": "data_dfire.yaml",
+      "class_mapping": null
+    },
+    {
+      "path": "runs/detect/runs/benchmarks/yolov8n_seed456/args.yaml",
+      "sha256": "bef795391ccc19f5a42b3ac4b7dba95bec2d6efc817a255732a640a4a34e5b51",
+      "dataset_path": null,
+      "training_data": "data_dfire.yaml",
+      "class_mapping": null
+    }
+  ],
+  "dfire_locations": [
+    {
+      "path": "D:\\comfyui\\ComfyUI_windows_portable\\datasets\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\comfyui\\ComfyUI_windows_portable\\datasets\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\datasets\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\datasets\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    }
+  ],
+  "matching_dfire_names": [
+    "D:\\workspace\\DACN_NCKH\\data_dfire.yaml",
+    "D:\\workspace\\DACN_NCKH\\docs\\benchmark_detectors_dfire.md",
+    "D:\\workspace\\DACN_NCKH\\docs\\dfire_analysis.md",
+    "D:\\workspace\\DACN_NCKH\\docs\\dfire_verification_report.md",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262\\dfire_availability.json",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\dfire_availability.json",
+    "D:\\workspace\\DACN_NCKH\\scripts\\prepare_dfire.py",
+    "D:\\workspace\\DACN_NCKH\\scripts\\split_dfire_val_test.py",
+    "D:\\workspace\\DACN_NCKH\\scripts\\verify_dfire_integrity.py"
+  ],
+  "bbox_named_candidates": [
+    "D:\\workspace\\DACN_NCKH\\data\\vn_pos_preannotation_inventory.csv",
+    "D:\\workspace\\DACN_NCKH\\data\\vn_pos_preannotation_inventory.json",
+    "D:\\workspace\\DACN_NCKH\\data\\vn_pos_preannotation_split_manifest.csv",
+    "D:\\workspace\\DACN_NCKH\\data\\vn_pos_preannotation_split_manifest.json",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\vn_pos_preannotation\\run_20261114_6942fa56\\analysis_v1\\vn_pos_preannotation_inventory.csv",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\vn_pos_preannotation\\run_20261114_6942fa56\\analysis_v1\\vn_pos_preannotation_inventory.json",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\vn_pos_preannotation\\run_20261114_6942fa56\\analysis_v1\\vn_pos_preannotation_split_manifest.csv",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\vn_pos_preannotation\\run_20261114_6942fa56\\analysis_v1\\vn_pos_preannotation_split_manifest.json",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262\\bbox_annotation_queue.csv",
+    "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\bbox_annotation_queue.csv"
+  ],
+  "workspace_directories_visited": 422,
+  "errors": [],
+  "scope": "workspace plus configured dataset roots; cache/venv/browser profiles pruned",
+  "dfire_status": "BLOCKED_DATASET_MISSING",
+  "original_datasets_modified": false
+}

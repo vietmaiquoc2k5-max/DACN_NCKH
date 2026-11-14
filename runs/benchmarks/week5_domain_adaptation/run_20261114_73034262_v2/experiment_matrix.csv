@@ -1,0 +1,11 @@
+strategy,seed,status,vn_map50,vn_map50_95,vn_fire_map50,vn_fire_map50_95,vn_smoke_map50,vn_smoke_map50_95,dfire_map50,dfire_map50_95,dfire_fire_map50,dfire_fire_map50_95,dfire_smoke_map50,dfire_smoke_map50_95,delta_vn_map50,delta_vn_map50_95,delta_dfire_map50,delta_dfire_map50_95,catastrophic_forgetting,event_recall,event_f1,far_per_hour,delay_sec,checkpoint_sha256,epochs_completed,training_run_id
+baseline,42,BLOCKED_EVALUATION_DATA,,,,,,,,,,,,,,,,,,,,,,f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6,,
+full_finetune,42,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+full_finetune,123,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+full_finetune,456,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+freeze_backbone,42,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+freeze_backbone,123,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+freeze_backbone,456,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+replay_20_percent,42,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+replay_20_percent,123,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,
+replay_20_percent,456,NOT_TRAINED_DATA_BLOCKED,,,,,,,,,,,,,,,,,,,,,,,0,

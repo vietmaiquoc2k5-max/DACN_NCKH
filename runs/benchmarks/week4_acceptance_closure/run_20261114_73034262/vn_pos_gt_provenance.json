@@ -1,0 +1,18 @@
+{
+  "GT_PROTOCOL": "JOINT_HUMAN_CONSENSUS",
+  "export_id": "single_reviewer_9a3ee4c140464fdab2821aa77c468f4d",
+  "bundle_file_hashes": {
+    "ground_truth_provenance.json": "ec795fd34ecd36221eae7d4c97024ac983bdbd96c7f4091bc178ee47ec1f597b",
+    "intra_annotator_consistency.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "single_negative_reviews.json": "704e7a5cc8bf03c8ebf8522b996df4e23ea4ec3136b01e85f90459b4c33f9e1f",
+    "single_review_records.json": "971539dae17f6a69643a2fc6ee2f4d34260c7d418665566d33ee7dc9ff2e552c",
+    "single_review_summary.json": "ae660919c56d828a3a590fd49dfd2d07767a2439280269aba026994ee56b9ab6",
+    "single_reviewer_gt_candidate.jsonl": "79ea62d7c3eaea888d9d151c954c518a2bb47d5b34c4ed2b5757be47daecded4"
+  },
+  "bundle_checksum_manifest_sha256": "6a1137feec288b356b1a9b68eb1882a9dda091bd3ca527187601d6137ad401f5",
+  "private_db_access": "READ_ONLY_SNAPSHOT",
+  "identities_or_private_review_ids_published": false,
+  "cross_verified": false,
+  "official_frozen_gt_modified": false,
+  "derived_gt_events_sha256": "1c605e59dfd618e72187fc271c8d95a3b25e41076724fd50b98f9b21ea8ab251"
+}

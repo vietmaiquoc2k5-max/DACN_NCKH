@@ -1,0 +1,187 @@
+{
+  "GT_PROTOCOL": "JOINT_HUMAN_CONSENSUS",
+  "protocol_basis": "OPERATOR_DECLARED_THIS_CONVERSATION",
+  "cross_verified": false,
+  "export_id": "single_reviewer_9a3ee4c140464fdab2821aa77c468f4d",
+  "bundle_checksum_payloads": 6,
+  "all_bundle_checksums_match": true,
+  "bundle_records": 166,
+  "bundle_submitted_bound_to_db": 166,
+  "bundle_drafts": 0,
+  "private_db_status_counts": {
+    "DRAFT": 6,
+    "SUBMITTED": 166
+  },
+  "vn_pos_db_status_counts": {
+    "DRAFT": 3,
+    "SUBMITTED": 79
+  },
+  "vn_pos_primary_submitted": 79,
+  "vn_pos_unique_sha256": 78,
+  "videos_with_fire": 67,
+  "videos_with_smoke": 72,
+  "videos_with_both": 64,
+  "videos_without_events": 4,
+  "videos_with_uncertainty": 0,
+  "raw_gt_event_count": 286,
+  "raw_event_counts": {
+    "SMOKE": 148,
+    "FIRE": 138
+  },
+  "source_duration_sum_seconds": 17436.71598055555,
+  "source_duration_once_per_sha256_seconds": 17347.752105555548,
+  "technically_valid_submitted": 79,
+  "accepted_event_positive_videos": 70,
+  "accepted_event_counts": {
+    "FIRE": 118,
+    "SMOKE": 124
+  },
+  "accepted_event_positive_unique_sources": 70,
+  "missing_submissions": [
+    "VN_POS_28"
+  ],
+  "exclusions": [
+    {
+      "video_id": "VN_POS_06",
+      "reasons": [
+        "SAME_CLASS_OVERLAP_REQUIRES_REVIEW"
+      ]
+    },
+    {
+      "video_id": "VN_POS_23",
+      "reasons": [
+        "SAME_CLASS_OVERLAP_REQUIRES_REVIEW"
+      ]
+    },
+    {
+      "video_id": "VN_POS_24",
+      "reasons": [
+        "NO_POSITIVE_EVENTS;NOT_AUTOMATIC_NEGATIVE"
+      ]
+    },
+    {
+      "video_id": "VN_POS_50",
+      "reasons": [
+        "CONFLICTING_HUMAN_INTERVALS_SAME_SOURCE"
+      ]
+    },
+    {
+      "video_id": "VN_POS_51",
+      "reasons": [
+        "CONFLICTING_HUMAN_INTERVALS_SAME_SOURCE"
+      ]
+    },
+    {
+      "video_id": "VN_POS_60",
+      "reasons": [
+        "NO_POSITIVE_EVENTS;NOT_AUTOMATIC_NEGATIVE"
+      ]
+    },
+    {
+      "video_id": "VN_POS_61",
+      "reasons": [
+        "NO_POSITIVE_EVENTS;NOT_AUTOMATIC_NEGATIVE"
+      ]
+    },
+    {
+      "video_id": "VN_POS_71",
+      "reasons": [
+        "NO_POSITIVE_EVENTS;NOT_AUTOMATIC_NEGATIVE"
+      ]
+    },
+    {
+      "video_id": "VN_POS_78",
+      "reasons": [
+        "SAME_CLASS_OVERLAP_REQUIRES_REVIEW"
+      ]
+    },
+    {
+      "video_id": "VN_POS_28",
+      "reasons": [
+        "NO_SUBMITTED_VN_POS_RECORD",
+        "TECHNICAL_TRUNCATION_ALREADY_EXCLUDED"
+      ]
+    }
+  ],
+  "duplicate_ledger": [
+    {
+      "source_sha256": "fe0ff123e94b10e72f60c83b0e8313e0376cd468022c226afa583a4ee42cce6c",
+      "video_ids": [
+        "VN_POS_50",
+        "VN_POS_51"
+      ],
+      "status": "CONFLICTING_HUMAN_INTERVALS_SAME_SOURCE",
+      "canonical_video_id": null,
+      "intervals_by_alias": {
+        "VN_POS_50": [
+          {
+            "label": "FIRE",
+            "frame_start": 0,
+            "frame_end": 1970,
+            "start_sec": 0.0,
+            "end_sec": 82.16541666666667
+          },
+          {
+            "label": "SMOKE",
+            "frame_start": 0,
+            "frame_end": 1970,
+            "start_sec": 0.0,
+            "end_sec": 82.16541666666667
+          }
+        ],
+        "VN_POS_51": [
+          {
+            "label": "FIRE",
+            "frame_start": 14,
+            "frame_end": 1966,
+            "start_sec": 0.5839166666666666,
+            "end_sec": 81.99858333333333
+          },
+          {
+            "label": "SMOKE",
+            "frame_start": 14,
+            "frame_end": 1966,
+            "start_sec": 0.5839166666666666,
+            "end_sec": 81.99858333333333
+          }
+        ]
+      },
+      "human_records_modified": false
+    }
+  ],
+  "localized_review_issues": [
+    {
+      "video_id": "VN_POS_06",
+      "reasons": [
+        "SAME_CLASS_OVERLAP_REQUIRES_REVIEW"
+      ]
+    },
+    {
+      "video_id": "VN_POS_23",
+      "reasons": [
+        "SAME_CLASS_OVERLAP_REQUIRES_REVIEW"
+      ]
+    },
+    {
+      "video_id": "VN_POS_78",
+      "reasons": [
+        "SAME_CLASS_OVERLAP_REQUIRES_REVIEW"
+      ]
+    }
+  ],
+  "split_counts_preserved": {
+    "TRAIN_CANDIDATE": 27,
+    "BLOCKED_UNASSIGNED": 29,
+    "VALIDATION_CANDIDATE": 11,
+    "INDEPENDENT_TEST_CANDIDATE": 13
+  },
+  "accepted_positive_by_split": {
+    "TRAIN_CANDIDATE": 26,
+    "BLOCKED_UNASSIGNED": 24,
+    "VALIDATION_CANDIDATE": 9,
+    "INDEPENDENT_TEST_CANDIDATE": 11
+  },
+  "negative_far_exposure_promoted": false,
+  "originals_modified": false,
+  "independent_test_valid": false
+}

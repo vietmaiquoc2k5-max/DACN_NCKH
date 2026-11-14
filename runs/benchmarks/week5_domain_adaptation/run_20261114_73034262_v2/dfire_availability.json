@@ -1,0 +1,157 @@
+{
+  "status": "BLOCKED_DATASET_MISSING",
+  "locations_checked": [
+    {
+      "path": "D:\\comfyui\\ComfyUI_windows_portable\\datasets\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\comfyui\\ComfyUI_windows_portable\\datasets\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\datasets\\D-Fire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\datasets\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\DACN_NCKH\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    },
+    {
+      "path": "D:\\workspace\\dfire",
+      "exists": false,
+      "counts": {
+        "train": {
+          "images": 0,
+          "labels": 0
+        },
+        "val": {
+          "images": 0,
+          "labels": 0
+        },
+        "test": {
+          "images": 0,
+          "labels": 0
+        }
+      }
+    }
+  ],
+  "workspace_directories_visited": 411,
+  "errors": [],
+  "discovery_receipt_sha256": "95b59e1ebc1b242e8f9a17fe7cd997dd0619d9a1847c2823e7106d90998bf747",
+  "discovery_scope": "workspace plus configured dataset roots; cache/venv/browser profiles pruned",
+  "content_manifest_sha256": null,
+  "train_images_verified": 0,
+  "evaluation_images_verified": 0,
+  "required": "Original D-Fire images, YOLO labels and train/val/test split provenance"
+}

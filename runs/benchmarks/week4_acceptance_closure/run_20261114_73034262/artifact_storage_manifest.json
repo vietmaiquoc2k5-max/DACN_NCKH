@@ -1,0 +1,19 @@
+{
+  "metadata_files": 14,
+  "metadata_bytes": 159925,
+  "raw_export_db_or_reviewer_identities_included": false,
+  "metadata_policy": "Sanitized current-version JSON/CSV and derived event GT only",
+  "contact_sheets_and_raw_logs": "LOCAL_ONLY_NOT_WHITELISTED",
+  "original_artifacts_deleted": false,
+  "raw_gt_reaudit_outputs": "LOCAL_ONLY_NOT_WHITELISTED; current-code comparison receipt retained",
+  "source_code_sha256": {
+    "src/domain_adaptation.py": "b8c0870c73c4d446a88341f99f2e1adca18810aef288e8470aea65f14cdf9585",
+    "src/week45_ground_truth.py": "5c7c0c4dd24bbbc0413127facabdc463dc51dfc3a6f497977a1df1ec97f06965",
+    "scripts/audit_week45_human_gt.py": "e281c2871aa525e215b8fc460038727c49255091d03b8c0b3fefd68df569bd14",
+    "scripts/audit_week5_data_availability.py": "c311ffae13c84f89b20d9b51f657b56976fad93fc0bb992a24b05aabff7246df",
+    "scripts/prepare_week5_domain_adaptation.py": "2e50d577a700f59b906c87009acd8d81740faf1560cf84a471dfab108f81c9f1",
+    "scripts/run_week5_domain_adaptation.py": "1c8f34d118a41af803eb9b6e4a689bcc4e6b4ce9578e3e6dbdbbdd8a371dd999",
+    "scripts/verify_week4_closure_evidence.py": "f29ad4f6f5b39190a45fedad30c5b02a1ae99aeaf894978a0f216f5ab0d3bc28",
+    "configs/research/week5_execution_protocol_v1.json": "7ed0017ababc51abfc8522836dcea7a242434e492dfee493fa82ee7874a7db68"
+  }
+}

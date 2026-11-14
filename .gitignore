@@ -117,6 +117,17 @@ graphify-out/
 /runs/benchmarks/**/*.log
 /runs/benchmarks/**/*.jsonl
 
+# Week 4/5 closure: sanitized metadata only; source exports, images and logs stay local.
+!/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.json
+!/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.csv
+/runs/benchmarks/week5_domain_adaptation/run_20261114_73034262/**
+!/runs/benchmarks/week4_acceptance_closure/run_20261114_73034262/*.json
+!/runs/benchmarks/week4_acceptance_closure/run_20261114_73034262/*.csv
+!/runs/benchmarks/week4_acceptance_closure/run_20261114_73034262/vn_pos_gt_events.jsonl
+!/runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/*.json
+!/runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/*.csv
+!/runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/readiness_gates/**/training_receipt.json
+
 # Curated training reports/configuration; previews and intermediate weights local.
 !/runs/detect/
 /runs/detect/**

@@ -1,0 +1,10 @@
+{
+  "head": "730342623b5946f0eb9d25241eb4b8fc20488e79",
+  "created_at_utc": "2026-11-14T10:59:01.410064+00:00",
+  "prior_preannotation_manifest_sha256": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+  "prior_split_canonical_sha256": "24e3064daefd0d108da179caeeb35223966daec586321a6edd401f97c6513d08",
+  "new_research_gt_version": "run_20261114_73034262",
+  "duplicate_policy": "Quarantine all conflicting aliases; lowest video ID only for identical boundaries",
+  "no_event_policy": "Not an accepted positive event source and never auto-promoted to negative FAR exposure",
+  "source_and_human_records_preserved": true
+}

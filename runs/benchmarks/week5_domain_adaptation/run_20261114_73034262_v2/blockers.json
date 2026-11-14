@@ -1,0 +1,46 @@
+{
+  "status": "BLOCKED_DATA_READINESS",
+  "training_executed": false,
+  "baseline_map": null,
+  "delta_map": null,
+  "catastrophic_forgetting": null,
+  "selected_model": null,
+  "blockers": [
+    {
+      "code": "BLOCKED_DATASET_MISSING_DFIRE",
+      "cause": "No D-Fire images found in bounded workspace/configured-root discovery",
+      "impact": "D-Fire baseline/retention mAP and replay unavailable",
+      "fix": "Provide original D-Fire corpus/archive and original split provenance; keep class 0 smoke/1 fire",
+      "recheck": "Audit source/label hashes, official annotation origin, counts, split/near-duplicate leakage; rerun preflight"
+    },
+    {
+      "code": "BBOX_GROUND_TRUTH_REQUIRED",
+      "cause": "Legacy boolean review flags and new event intervals lack hash-bound per-frame bbox signoff",
+      "impact": "No approved VN train/val/test bbox dataset; all three training strategies and baseline mAP blocked",
+      "fix": "Use bbox_annotation_queue.csv and empty_label_review_129.csv; review images individually; export human bbox approval with hashes",
+      "recheck": "Validate annotation provenance, class mapping, bounds, per-frame negative/uncertain decisions; validate_dataset_rows"
+    },
+    {
+      "code": "FRAME_SOURCE_LINEAGE_NOT_VERIFIED",
+      "cause": "Original extraction manifest has frame/FPS declarations without runtime source hash or exact PTS",
+      "impact": "Current source match and event labels cannot prove each legacy image ordinal/time",
+      "fix": "Verify pixels and authoritative source frame/PTS or re-extract a versioned set from authenticated sources",
+      "recheck": "Bind image/label SHA to actual source SHA, native frame and integer source PTS"
+    },
+    {
+      "code": "SCENE_RELATIONS_REQUIRE_REVIEW",
+      "cause": "No camera/source metadata; 75 cross-split pixel candidate pairs plus provisional scene groups",
+      "impact": "Source-hash split checks alone do not establish clean scene separation or independent test",
+      "fix": "Review candidate images/groups; preserve test reservations; any split update needs a new version and prior SHA",
+      "recheck": "Hash-validate new grouped split, audit exact/near duplicates, keep unresolved groups quarantined"
+    },
+    {
+      "code": "TIMED_PILOT_REQUIRED",
+      "cause": "CPU-only environment; no eligible training set for a measured pilot",
+      "impact": "No defensible runtime/VRAM estimate or safe full training budget",
+      "fix": "After valid data, run a timed pilot on intended CPU/GPU and supply a hash-bound log/resource receipt",
+      "recheck": "validate_budget with dataset/baseline/device binding and 25 percent runtime headroom"
+    }
+  ],
+  "original_data_or_human_submissions_modified": false
+}

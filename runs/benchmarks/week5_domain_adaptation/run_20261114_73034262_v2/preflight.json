@@ -1,0 +1,72 @@
+{
+  "checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "checkpoint_bytes_unchanged": true,
+  "loaded": true,
+  "torch": "2.15.0+cpu",
+  "ultralytics": "8.4.198",
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "backbone_modules": 10,
+  "parameter_policies_checked_on_actual_baseline": {
+    "full_finetune": {
+      "strategy": "full_finetune",
+      "backbone_prefixes": [],
+      "trainable_parameters": 3011222,
+      "total_parameters": 3011238,
+      "fixed_projection_policy": "Ultralytics DFL is fixed for all strategies",
+      "optimizer_trainable_parameters": 3011222,
+      "frozen_state_digest": null,
+      "real_training_executed": false,
+      "post_training_unchanged_verified": null
+    },
+    "freeze_backbone": {
+      "strategy": "freeze_backbone",
+      "backbone_prefixes": [
+        "model.0.",
+        "model.1.",
+        "model.2.",
+        "model.3.",
+        "model.4.",
+        "model.5.",
+        "model.6.",
+        "model.7.",
+        "model.8.",
+        "model.9."
+      ],
+      "trainable_parameters": 1738566,
+      "total_parameters": 3011238,
+      "fixed_projection_policy": "Ultralytics DFL is fixed for all strategies",
+      "optimizer_trainable_parameters": 1738566,
+      "frozen_state_digest": "cdc2c0fb7ea1d5ded905e37ac4a6a81ef184c20f79aba6343d6162015f3a1f05",
+      "real_training_executed": false,
+      "post_training_unchanged_verified": null
+    },
+    "replay_20_percent": {
+      "strategy": "replay_20_percent",
+      "backbone_prefixes": [],
+      "trainable_parameters": 3011222,
+      "total_parameters": 3011238,
+      "fixed_projection_policy": "Ultralytics DFL is fixed for all strategies",
+      "optimizer_trainable_parameters": 3011222,
+      "frozen_state_digest": null,
+      "real_training_executed": false,
+      "post_training_unchanged_verified": null
+    }
+  },
+  "cuda_available": false,
+  "device_used_for_preflight": "cpu",
+  "vram_bytes": null,
+  "memory": {
+    "ram_total_bytes": 16948453376,
+    "ram_available_bytes": 5941796864
+  },
+  "training_budget_estimate": null,
+  "training_budget_status": "REQUIRES_VALID_DATA_AND_TIMED_PILOT",
+  "cpu_fallback_supported": true,
+  "baseline_vn_map": null,
+  "baseline_dfire_map": null,
+  "map_status": "BLOCKED_DATA_READINESS"
+}

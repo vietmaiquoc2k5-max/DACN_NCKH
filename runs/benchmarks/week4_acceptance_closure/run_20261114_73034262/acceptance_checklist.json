@@ -1,0 +1,118 @@
+{
+  "WEEK4_DELIVERABLES_STATUS": "ACCEPTED",
+  "WEEK4_EXPERIMENTAL_STATUS": "VERIFIED_EXPLORATORY",
+  "WEEK4_INDEPENDENT_GENERALIZATION_STATUS": "PARTIAL",
+  "WEEK4_SCIENTIFIC_STATUS": "PARTIAL",
+  "OPERATING_POINT": "PROVISIONAL",
+  "INDEPENDENT_TEST_VALID": false,
+  "WEEK5_STATUS": "BLOCKED_DATA_READINESS",
+  "head": "730342623b5946f0eb9d25241eb4b8fc20488e79",
+  "branch": "fix-4",
+  "requirements": [
+    {
+      "product": "ByteTrack",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Pipeline association",
+      "evidence": "src/camera_manager.py:624; tests/test_bytetrack_adapter.py; real tracked frame JSONL"
+    },
+    {
+      "product": "Temporal k/N",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Per-track/class window",
+      "evidence": "tests/test_temporal_verifier_bytetrack.py:68; 36 replayed validation candidates"
+    },
+    {
+      "product": "Variation",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Dynamic feature verification",
+      "evidence": "src/temporal_features.py; tests/test_temporal_features.py; threshold 0.02 in measured B"
+    },
+    {
+      "product": "Exclusion zones",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Normalized rectangles only; integration accepted, no measured ROI efficacy",
+      "evidence": "src/camera_manager.py:1493; tests/test_temporal_verifier_bytetrack.py:156"
+    },
+    {
+      "product": "temporal_verifier.py",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Temporal alerts, not frame-only detections",
+      "evidence": "Actual B alerts replayed against recorded results; targeted tests"
+    },
+    {
+      "product": "event_eval.py",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "One-to-one class/video/camera/onset event matching",
+      "evidence": "36 validation comparisons and exploratory holdout replay; tests/test_week4_event_eval.py"
+    },
+    {
+      "product": "Parameter sweep",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "34 feasible under original video-recall constraint; 0 under stricter instance screen",
+      "evidence": "36/36 actual configurations reauthenticated"
+    },
+    {
+      "product": "A/B comparison",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Exploratory scope, not independent test",
+      "evidence": "Historical measured A/B and current exact replay"
+    },
+    {
+      "product": "FAR/hour + CI95%",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Exact Poisson CI conditional on count/exposure assumptions",
+      "evidence": "Verified negative exposure/counts and tests/test_poisson_ci.py"
+    },
+    {
+      "product": "Event Recall/F1/Delay",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Loss of event recall explicitly reported",
+      "evidence": "Verified GT matches and paired-delay caveat"
+    },
+    {
+      "product": "Operating Point",
+      "implemented": true,
+      "tested": true,
+      "verified": true,
+      "accepted": true,
+      "acceptance_scope": "Selection artifact delivered as PROVISIONAL; scientific/deployment lock not accepted",
+      "evidence": "Historical provisional selection/config hash and current validation replay"
+    }
+  ],
+  "final_test_counts": {
+    "pytest": 119,
+    "pytest_subtests": "58",
+    "unittest": 350
+  },
+  "original_benchmarks_modified": false
+}

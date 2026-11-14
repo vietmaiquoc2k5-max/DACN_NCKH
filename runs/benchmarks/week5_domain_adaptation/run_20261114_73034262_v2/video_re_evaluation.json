@@ -1,0 +1,15 @@
+{
+  "status": "NOT_RUN_NO_ADAPTED_CHECKPOINTS",
+  "scope": "VALIDATION_ONLY_BEFORE_SELECTION",
+  "baseline_checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "sampling_protocol": "FULL_DURATION_SAMPLED_5FPS_SOURCE_PTS",
+  "event_evaluator": "src/event_eval.py",
+  "event_evaluator_sha256": "fe89a94afc0cc05d87a236b814adf99624ca65f3f757fff2906d7a491ffab579",
+  "temporal_config_policy": "Fixed historical provisional config for checkpoint comparison; validation-only retune requires a separate lock",
+  "new_gt_events_sha256": "1c605e59dfd618e72187fc271c8d95a3b25e41076724fd50b98f9b21ea8ab251",
+  "paired_baseline_and_adapted_scope_required": true,
+  "new_video_metrics": null,
+  "independent_test_valid": false,
+  "test_candidate_evaluation_executed": false,
+  "historical_metrics_not_substituted_for_new_video_runs": true
+}

@@ -1,0 +1,16 @@
+{
+  "local_audit": "DONE",
+  "dfire_corpus_identity": "NOT VERIFIED",
+  "week5_training": "BLOCKED",
+  "user_confirmed_author_repository": "https://github.com/gaia-solutions-on-demand/DFireDataset",
+  "user_confirmed_vn_bbox_export_available": false,
+  "prior_artifacts_hash_verified": 33,
+  "network_metadata_probe": "BLOCKED_AUTOMATIC_APPROVAL_REVIEW_UNAVAILABLE_USAGE_LIMIT",
+  "archive_downloaded": false,
+  "labels_remapped": false,
+  "source_data_changed": false,
+  "training_executed": false,
+  "map": null,
+  "selections": null,
+  "audit_script_sha256": "859fc2193693cbfdd30ba0462e26836449e284872ad26611c8e2acf8000eb016"
+}

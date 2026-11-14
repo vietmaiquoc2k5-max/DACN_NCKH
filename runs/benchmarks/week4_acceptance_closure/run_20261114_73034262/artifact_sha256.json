@@ -1,0 +1,16 @@
+{
+  "acceptance_checklist.json": "0eee7a8aa8045cf7a8ab48fa7128ed09f2e5be06cb66b88d5ee9be5238ca5388",
+  "existing_week4_evidence_verification.json": "8116fc53a90ec55eb14c49d747130e7dccd32849cd40c084e8fe10745c8bf24b",
+  "gt_current_code_recheck.json": "c041a3c72505c1c6efe6f9afe17eec4ef24af29dda8b5c8cf38fbb6a105d6acb",
+  "localized_gt_review_issues.json": "2c097481af5d5ac95cae3bb639eec3cce85ed90cc8ba5ce2a0628fd83f23a158",
+  "scientific_integrity_receipt.json": "fdfe2b138f2974fb318712255e6449e1327e3e44ef446f76bd9b68197abcdb4f",
+  "test_results.json": "fffe4b66855fe8c56c68f9bfadef87ac3dd36c5d4e7672a18bfc31322c9e9e44",
+  "test_results_initial.json": "10b097e146be514431949dd61ff7a4e33f4e7148d6f115e4c7caee8b0dfb8936",
+  "vn_pos_gt_events.jsonl": "1c605e59dfd618e72187fc271c8d95a3b25e41076724fd50b98f9b21ea8ab251",
+  "vn_pos_gt_exclusions.csv": "5df8d82f4816e351ae673afab56641ca2b8e7b3de12c0d0d030ba26d3a5f5bad",
+  "vn_pos_gt_provenance.json": "56a7d5182f9d8fa9baae5d8d6352ad890fc22fec9ffa048d65dc370a1771a847",
+  "vn_pos_gt_scope.csv": "f5a5aabeaa1a2b5075da489b02f5606b7ae175d95aaa2c45de3d8c0ee613f878",
+  "vn_pos_postannotation_reservations.json": "d8e9b0a0da88d8e2e799dd2d4dbb1cb311f1c4fdc21c1cf943cecfdf6b59be45",
+  "week4_gt_bundle_audit.json": "8b1d8b5c8efd63afcecb4ff8b28b6c30496636cddc84920a05b6fc6817f7d844",
+  "week4_gt_lineage.json": "cce87b3db18dadaf33076320294d7d5842ce05abf6922558523dd789724c187a"
+}

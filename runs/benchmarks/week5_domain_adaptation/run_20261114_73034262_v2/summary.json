@@ -1,0 +1,11 @@
+{
+  "head": "730342623b5946f0eb9d25241eb4b8fc20488e79",
+  "created_at_utc": "2026-11-14T11:13:34.245702+00:00",
+  "training_executed": false,
+  "status": "BLOCKED_DATA_READINESS",
+  "vn_dataset": "BLOCKED_BBOX_AND_LINEAGE_REQUIRED",
+  "dfire": "BLOCKED_DATASET_MISSING",
+  "baseline_checkpoint_verified": true,
+  "original_inputs_unchanged": true,
+  "selected_model": null
+}

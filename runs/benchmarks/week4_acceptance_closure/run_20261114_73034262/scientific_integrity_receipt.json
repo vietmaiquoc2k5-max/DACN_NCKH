@@ -1,0 +1,32 @@
+{
+  "complete": true,
+  "head": "730342623b5946f0eb9d25241eb4b8fc20488e79",
+  "branch": "fix-4",
+  "checked_at_utc": "2026-11-14T11:34:51.165780+00:00",
+  "duration_seconds": 22.541988400000264,
+  "historical_artifacts_verified": 292,
+  "preannotation_artifacts_verified": 978,
+  "private_export_payloads_preserved": 6,
+  "human_export_source_records_rehashed": 166,
+  "vn_image_label_pairs_preserved": 3121,
+  "original_checkpoints_preserved": 6,
+  "frozen_gt_sha256": {
+    "events.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "events_v1.1_snapshot.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3"
+  },
+  "private_db_access_during_gt_audit": "URI mode=ro + PRAGMA query_only; no writes requested",
+  "new_gt_events_sha256": "1c605e59dfd618e72187fc271c8d95a3b25e41076724fd50b98f9b21ea8ab251",
+  "split_manifest_unchanged": true,
+  "old_benchmark_unchanged": true,
+  "test_logs_hash_verified": true,
+  "training_executed": false,
+  "training_epochs_completed": 0,
+  "new_adapted_checkpoints": 0,
+  "no_selected_model_fabricated": true,
+  "commit_or_push_performed": false,
+  "original_sources_deleted": false,
+  "tracked_changes": [
+    ".gitattributes",
+    ".gitignore"
+  ]
+}

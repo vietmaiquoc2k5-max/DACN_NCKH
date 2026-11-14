@@ -1,0 +1,16 @@
+{
+  "strategy": "freeze_backbone",
+  "seed": 42,
+  "dataset_sha256": "c3cc3f830be6beeb39658e6b656a20b3214fe1c43289b977ecbbe133d1cf5265",
+  "baseline_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "config_sha256": "7ed0017ababc51abfc8522836dcea7a242434e492dfee493fa82ee7874a7db68",
+  "training_run_id": "freeze_backbone",
+  "status": "BLOCKED",
+  "epochs_actually_completed": 0,
+  "last_checkpoint_sha256": null,
+  "training_executed": false,
+  "validation_history": [],
+  "selected_model": null,
+  "error_type": "ValueError",
+  "error": "DATASET_NOT_READY: ['BBOX_GROUND_TRUTH_REQUIRED', 'FRAME_SOURCE_LINEAGE_NOT_VERIFIED', 'SCENE_RELATIONS_REQUIRE_REVIEW', 'BLOCKED_DATASET_MISSING_DFIRE']"
+}

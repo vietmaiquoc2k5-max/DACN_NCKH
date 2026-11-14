@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "dataset_version": "run_20261114_73034262_v2",
+  "status": "BLOCKED_NOT_A_TRAINABLE_DATASET",
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "rows": [],
+  "candidate_manifest": "vn_image_candidates.csv",
+  "candidate_manifest_sha256": "2932404be1ba87728c24fdb5a99c34f063c11626b4b233f149102089ed4de31e",
+  "prior_split_manifest_sha256": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+  "event_gt_scope_sha256": "f5a5aabeaa1a2b5075da489b02f5606b7ae175d95aaa2c45de3d8c0ee613f878",
+  "event_gt_events_sha256": "1c605e59dfd618e72187fc271c8d95a3b25e41076724fd50b98f9b21ea8ab251",
+  "split_assignment_changed": false,
+  "blockers": [
+    "BBOX_GROUND_TRUTH_REQUIRED",
+    "FRAME_SOURCE_LINEAGE_NOT_VERIFIED",
+    "SCENE_RELATIONS_REQUIRE_REVIEW",
+    "BLOCKED_DATASET_MISSING_DFIRE"
+  ]
+}

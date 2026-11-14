@@ -1,0 +1,42 @@
+{
+  "status": "BLOCKED_BBOX_AND_LINEAGE_REQUIRED",
+  "version": "run_20261114_73034262_v2",
+  "images": 3121,
+  "counts_by_legacy_split": {
+    "train": 1868,
+    "val": 623,
+    "test": 630
+  },
+  "label_errors": [],
+  "exact_cross_split_leakage": [],
+  "cross_split_pixel_candidate_pairs": 75,
+  "near_duplicate_independence_proven": false,
+  "human_hash_bound_bbox_approvals_found": 0,
+  "approved_train_images": 0,
+  "approved_val_images": 0,
+  "approved_test_images": 0,
+  "bbox_review_queue_images": 1904,
+  "empty_label_risk_images": 129,
+  "empty_label_risk_videos": 15,
+  "all_risk_frames_assumed_wrong": false,
+  "human_review_still_required": true,
+  "contact_sheets": [
+    "runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/contact_sheets/empty_labels_01.jpg",
+    "runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/contact_sheets/empty_labels_02.jpg",
+    "runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/contact_sheets/empty_labels_03.jpg",
+    "runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/contact_sheets/empty_labels_04.jpg",
+    "runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/contact_sheets/empty_labels_05.jpg",
+    "runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2/contact_sheets/empty_labels_06.jpg"
+  ],
+  "event_gt_does_not_approve_bboxes": true,
+  "legacy_source_runtime_hash_available": false,
+  "source_pts_lineage_verified": false,
+  "test_candidates_used_for_training": false,
+  "original_images_or_labels_changed": false,
+  "input_sha256": {
+    "datasets/vn_dataset/split_manifest.csv": "2e7567b16d0aa378bb700a52fbc18e025440bb8131083422baa908a86f7c5fd4",
+    "datasets/vn_dataset/review_status.csv": "4787ec05847131c7454cb08ffb260323cbf05a7a43b7cad1d305f8bd48881f18",
+    "data/vn_pos_preannotation_split_manifest.json": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+    "data/vn_pos_scene_review_required.csv": "227cfcb2a0c332bd0ae524801259acc1324e9277ec369fcc14b9a805199486ea"
+  }
+}

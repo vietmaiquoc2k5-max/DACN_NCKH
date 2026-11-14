@@ -1,0 +1,548 @@
+{
+  "audit_status": "DONE",
+  "corpus_identity_status": "NOT VERIFIED",
+  "training_status": "BLOCKED",
+  "candidate": "D:\\workspace\\DACN_NCKH\\dataset",
+  "head": "730342623b5946f0eb9d25241eb4b8fc20488e79",
+  "checked_at_utc": "2026-11-14T16:11:41.570769+00:00",
+  "duration_seconds": 125.26883949999865,
+  "source_files": 15162,
+  "images": 7754,
+  "labels": 7407,
+  "image_counts_by_directory": {
+    "images": 347,
+    "images/train/images": 7407
+  },
+  "images_with_adjacent_label": 7407,
+  "images_without_label": 347,
+  "missing_labels_treated_as_negative": false,
+  "empty_label_files": 0,
+  "valid_label_files": 7407,
+  "invalid_label_files": [],
+  "orphan_label_files": [],
+  "numeric_class_box_counts": {
+    "0": 10957,
+    "1": 2442
+  },
+  "unreadable_images": [],
+  "rf_named_images": 7754,
+  "exact_image_duplicate_groups": [
+    {
+      "sha256": "d9c87ea165090d7c6c95383a8e3e53dbd6a9e6bb6bc38330358adfc54a0d8028",
+      "paths": [
+        "images/0102_jpg.rf.cf962b9ec94876a278184c47e4b11f92.jpg",
+        "images/train/images/0102_jpg.rf.52388ecf7d14a7537a1ba76fb4f542c8.jpg"
+      ]
+    },
+    {
+      "sha256": "dea217c0c3a680ef32f2bb1139da70144eeb8b5aba459938e9af6a150777e5fd",
+      "paths": [
+        "images/0103_jpg.rf.2d4b3fc5d0bee4d1430546f33e716ed7.jpg",
+        "images/train/images/0103_jpg.rf.25653e813a602ae2c9fef47c9795c114.jpg"
+      ]
+    },
+    {
+      "sha256": "50d699dc1e31afae68249892167a0f7bc3039db2570db35623bb35b84bdcdf28",
+      "paths": [
+        "images/0121_jpg.rf.4106d03a950cd77a8b4a4781a14802ee.jpg",
+        "images/train/images/0121_jpg.rf.6a73a62e010833c768c9db42929977e3.jpg"
+      ]
+    },
+    {
+      "sha256": "aae568a2be596d3f65ca4cda22d84406764499f4219c7d044a5b35db40060c08",
+      "paths": [
+        "images/1055_jpg.rf.806399d2009568eb5653ba36fc1ef145.jpg",
+        "images/train/images/1055_jpg.rf.4076d3d025a46fcc39250e1d7b69ae84.jpg"
+      ]
+    },
+    {
+      "sha256": "c1c3cde1aee28c8fbd0f1dec067eef9ac4ce9e9a23ed8373572df64de8e99f42",
+      "paths": [
+        "images/Img_1042_jpg.rf.b3910998aed85d0f87f9d0851cd9a48c.jpg",
+        "images/train/images/Img_1042_jpg.rf.d88d048ec1c37e8ec8d378dea14d5fad.jpg"
+      ]
+    },
+    {
+      "sha256": "394df28354f258653fb0c7c28773fd95f702e1cbe0636c45f2579ddccb357c4e",
+      "paths": [
+        "images/Img_1063_jpg.rf.83dc154ac1ea5bf1462a08e79ff9a808.jpg",
+        "images/train/images/Img_1063_jpg.rf.c27c73ae6b659d19b273acc92b69bf47.jpg"
+      ]
+    },
+    {
+      "sha256": "51f4b8db7f1057bd50992b42804339b8c8d97cdecc058199cbb08c30721e15ca",
+      "paths": [
+        "images/Img_1150_jpg.rf.3c68ad1b40313c38ad40dfcb6ef9d006.jpg",
+        "images/train/images/Img_1150_jpg.rf.9e9e0a36b2f4b408df11fed9c929a6fb.jpg"
+      ]
+    },
+    {
+      "sha256": "defbaac72799acfe8061ddc6a718062bbc98478e197ab5f199b6c1cf2660f722",
+      "paths": [
+        "images/Img_117_jpg.rf.78de0ea2eb50e9baf329e328f6d999d6.jpg",
+        "images/train/images/Img_117_jpg.rf.c27114ba7882b67f9d8a998a6f4f6357.jpg"
+      ]
+    },
+    {
+      "sha256": "82db274ca6b8e5dee465e16aedc0561d591975112ed7f41f1e5b0bebdd3af413",
+      "paths": [
+        "images/Img_1311_jpg.rf.d4b70e2041797f6f426742904b892ee9.jpg",
+        "images/train/images/Img_1311_jpg.rf.5f7f12862dac68c1fc9991c8c135e91b.jpg"
+      ]
+    },
+    {
+      "sha256": "a141c3fc62b50a3f2596b0f3148b4b2b8cd6d0e45dd9a1035d0546d79aaee557",
+      "paths": [
+        "images/Img_1312_jpg.rf.21658ed73a4073b81a1cfd850715ee1b.jpg",
+        "images/train/images/Img_1312_jpg.rf.43f7a35f2b4b6b16f86eab10cde78cb8.jpg"
+      ]
+    },
+    {
+      "sha256": "802a3094ee76e3fa69aa56df565b2f6f7da88f055679629d30902198db58e8b7",
+      "paths": [
+        "images/Img_1317_jpg.rf.3f6762cda76e59af1a681164017bf50a.jpg",
+        "images/train/images/Img_1317_jpg.rf.38546f9521b50bd44c923d82bd10858f.jpg"
+      ]
+    },
+    {
+      "sha256": "1deddb0564f286c7324af4e09a9fa662ed001803c0986e26792015289d789fed",
+      "paths": [
+        "images/Img_1660_jpg.rf.6923e851bec07f16829b2689da731ba0.jpg",
+        "images/train/images/Img_1660_jpg.rf.1f8a6711d1057f7007743c1f03fdd086.jpg"
+      ]
+    },
+    {
+      "sha256": "add9cbf820804637f0df0517239633aeb49d35fe5ae70a90808a4f79e7395cc8",
+      "paths": [
+        "images/Img_1704_jpg.rf.53d1fc66066a674fa6a4c4b1c00b1512.jpg",
+        "images/train/images/Img_1704_jpg.rf.11eb30e123d3c09b4016d6f8dc0663c7.jpg"
+      ]
+    },
+    {
+      "sha256": "a72fbaf870f704c0e731d91f0ae9f0fa9c119740e5ffacb47eed04642abc990c",
+      "paths": [
+        "images/Img_1886_jpg.rf.027591295edbb83af1f83b353941a07e.jpg",
+        "images/train/images/Img_1886_jpg.rf.dd96bb113966e8739cd840da417f12aa.jpg"
+      ]
+    },
+    {
+      "sha256": "324f59095f5379efb41b91ac950daea0301fdecb74da9683fb876d6b85e7591e",
+      "paths": [
+        "images/Img_519_jpg.rf.06aa9657d2c23b760282b51a43392e0d.jpg",
+        "images/train/images/Img_519_jpg.rf.985fce33652a0b9bf4bf48f730ad0827.jpg"
+      ]
+    },
+    {
+      "sha256": "62bb92d4912227b25fc9cd966b25795c15360518b60cd6b75723231987151376",
+      "paths": [
+        "images/Img_54_jpg.rf.b0e160f0a04a9b4010594d4cacd48504.jpg",
+        "images/train/images/Img_54_jpg.rf.e9c36c59fc03b179bced1a6989219e8c.jpg"
+      ]
+    },
+    {
+      "sha256": "79eb1743b2e752471c0291634d1f1b8ac8881404318a9adfb5ec60db9249a2f6",
+      "paths": [
+        "images/Img_550_jpg.rf.435874612d8c9ea4db069cc349410c47.jpg",
+        "images/train/images/Img_550_jpg.rf.1215889204d736bc7d82c09afa814fc9.jpg"
+      ]
+    },
+    {
+      "sha256": "776b3f6eb153e122485b7c69a6d1107b69a3bc72fc2a3516e98b3a1257b2e932",
+      "paths": [
+        "images/Img_95_jpg.rf.09ba6b203e4674b2c61eb20d3689d753.jpg",
+        "images/train/images/Img_95_jpg.rf.babcf53fd6d9bfa43398b8f53e0d05e9.jpg"
+      ]
+    },
+    {
+      "sha256": "e787259dba29aaa2ca61d97cfc1ce35a2e6d344101853571da1e5236fc2acb48",
+      "paths": [
+        "images/MirrorWEBFire1143_jpg.rf.2b82f680a812ca922390826c42ed22d0.jpg",
+        "images/train/images/MirrorWEBFire1143_jpg.rf.07cf45b375ea79d59b27f75def1dab20.jpg"
+      ]
+    },
+    {
+      "sha256": "59640de56134528aec6131b02e2584cf6948b799e53ec3f1c874866f57c04d46",
+      "paths": [
+        "images/train/images/0069_jpg.rf.2cd48d38a4ec0602116b88fa0cef409b.jpg",
+        "images/train/images/0069_jpg.rf.76b81f1d75dba70b21ce26fe061f5e14.jpg"
+      ]
+    },
+    {
+      "sha256": "4edf7d71ba79e899faaaa9b225e85fcc24d3064b204dd53630215a4a4d7719cc",
+      "paths": [
+        "images/train/images/0098_jpg.rf.734e6dbb9f472cf33c310d1bc8f0b34e.jpg",
+        "images/train/images/0098_jpg.rf.866749cb493bd7881f73f391dd04584a.jpg"
+      ]
+    },
+    {
+      "sha256": "a5d9fc2def9d8600aca20e66917aa104497fad1aacfbc7521dc9b47825266d62",
+      "paths": [
+        "images/train/images/0136_jpg.rf.12ef5193a286b895d848cb136a4e6350.jpg",
+        "images/train/images/0136_jpg.rf.e9aeb33b14eca265650e6844ef3f68b3.jpg"
+      ]
+    },
+    {
+      "sha256": "67fef853370cefbb99fed5df100edbd393cb7791f023f1680c9ba34e6f87e4d3",
+      "paths": [
+        "images/train/images/0185_jpg.rf.c60a1a978bf6c3757e4e0b6e4d9ef84f.jpg",
+        "images/train/images/0185_jpg.rf.f2b9c71d560203ff04a708f834c03a73.jpg"
+      ]
+    },
+    {
+      "sha256": "dff450ee89327c975742512e1ba9a44684030e0d51e0fed7bdd59593ca9277a4",
+      "paths": [
+        "images/train/images/1006_jpg.rf.5fd9ad489dc3533fda9f5b6f897385bf.jpg",
+        "images/train/images/1006_jpg.rf.c095d2b5615810eec1854c38628cfaa3.jpg"
+      ]
+    },
+    {
+      "sha256": "298f9be0c2ab0d353cfdf78a936cd91f9508c8c669d8ec2fbd85d327252a2ab5",
+      "paths": [
+        "images/train/images/1115_jpg.rf.610785853c2b6fd32a9042658870e99e.jpg",
+        "images/train/images/1115_jpg.rf.ca1e0a59325ad3932b9817b35594b801.jpg"
+      ]
+    },
+    {
+      "sha256": "188614cb587cd5e1f92bbae7f86d7fadaee638df7649fcbac9ad74df67ac4f00",
+      "paths": [
+        "images/train/images/1155_jpg.rf.76122619fbd97dfb76b90fa980e5b668.jpg",
+        "images/train/images/1155_jpg.rf.abf4fd38cd8e75d68b215f2b51bb5f2d.jpg"
+      ]
+    },
+    {
+      "sha256": "91a6ab3017be07ab18c4cc4f9d0ec4b7065001a24301ec6bff5326341d707d87",
+      "paths": [
+        "images/train/images/11_jpg.rf.6281b1796424299f33e79451ad73ea32.jpg",
+        "images/train/images/11_jpg.rf.f9f979f70d06d5489bbf3cf38e805a77.jpg"
+      ]
+    },
+    {
+      "sha256": "8c50229f10a57aa22583299adcf3dad01770c3ea6b4d107af4dd83b7d028a470",
+      "paths": [
+        "images/train/images/13_jpg.rf.9e2dbcbe93a479e237649da5047616b3.jpg",
+        "images/train/images/13_jpg.rf.da200f627424eb0a6efdfa3d4bf8f422.jpg"
+      ]
+    },
+    {
+      "sha256": "e4b5ffdbd77f4d6d7b215fa2a35dcd07ed8600029d54e7f9808bb2ed787a4571",
+      "paths": [
+        "images/train/images/18_jpg.rf.6dceca4fe69fc11c7955d5e1906ab83d.jpg",
+        "images/train/images/18_jpg.rf.9e500231f22cc2ed81b8a247c4a5f50c.jpg"
+      ]
+    },
+    {
+      "sha256": "9ad79d9c9e01ec1114b992b9296800caaae04765fed1c0dcff03c03d0f152375",
+      "paths": [
+        "images/train/images/26_jpg.rf.cea8aebdbcb534abc59d4b87f3c378cb.jpg",
+        "images/train/images/26_jpg.rf.fa8dbbb09109e3ebd10580f8f8cb727d.jpg"
+      ]
+    },
+    {
+      "sha256": "db2019d6016b27588c89ea61e077f41adbb36522744513d7c7de14befdb1af21",
+      "paths": [
+        "images/train/images/27024b5d7e71a173_jpg.rf.40fe2fdc39bba50ce52f412e6dd38848.jpg",
+        "images/train/images/27024b5d7e71a173_jpg.rf.6af888b15df39290d4882787059855d9.jpg"
+      ]
+    },
+    {
+      "sha256": "5c2bee8914d39befa1f33a6df20e0097e98a4da8d8ba661fb48bbdba05f8a5fc",
+      "paths": [
+        "images/train/images/31d4045ca4d5e0e9_jpg.rf.174c4b59ec27730d787f76bba6fe7ff9.jpg",
+        "images/train/images/31d4045ca4d5e0e9_jpg.rf.f79edae6f87fe205de478eeb84117d1a.jpg"
+      ]
+    },
+    {
+      "sha256": "75983bda116a6704bd79c4fff2ee9f6c5b5fbf8c76c849569e58d4c0b5362a58",
+      "paths": [
+        "images/train/images/3587d59b214a2adb_jpg.rf.757753179206b33729caa75981f59f91.jpg",
+        "images/train/images/3587d59b214a2adb_jpg.rf.b4a1a25274bc630a5a1f017c32140b0a.jpg"
+      ]
+    },
+    {
+      "sha256": "2c4f78963639a6bb2ca617d0d60576fbf8c997931855a5e5c394d705892af187",
+      "paths": [
+        "images/train/images/45_jpg.rf.311f24c31422b51daedfe7b4f1ce5f35.jpg",
+        "images/train/images/45_jpg.rf.915224d5db05c1e9182da0770769abc6.jpg"
+      ]
+    },
+    {
+      "sha256": "0ef85e26d72c8d4fc6fef7e766c56b1623ca507141bcc1777605ac8308326dc1",
+      "paths": [
+        "images/train/images/497_jpg.rf.d98ee4eb370ab8eb56f9e30c1d8d9236.jpg",
+        "images/train/images/497_jpg.rf.e106d9e85981ca563beda16641f38893.jpg"
+      ]
+    },
+    {
+      "sha256": "fc8bd47d0b7db7df9449e273a04a49e7fd86f4e7e0091de1d483b549be41b5b2",
+      "paths": [
+        "images/train/images/Img_1030_jpg.rf.5d6479035b504ee51b2e0c7c3c35772e.jpg",
+        "images/train/images/Img_1030_jpg.rf.6a94fb32c4e6752cc9bd538fd45f4e72.jpg"
+      ]
+    },
+    {
+      "sha256": "fd705c74754e0460ecab7695ec052e8267072964442e5a336741b17c49c7d7fc",
+      "paths": [
+        "images/train/images/Img_1043_jpg.rf.1f0822bee2dec4b6fc932bd11a82e070.jpg",
+        "images/train/images/Img_1043_jpg.rf.2432447c020d5a23cd87243893601903.jpg"
+      ]
+    },
+    {
+      "sha256": "9a2010ab15092b17640e74a6b927b31a72dfdf4cb343e50a4ebcfb5c4e1bba7d",
+      "paths": [
+        "images/train/images/Img_1049_jpg.rf.704870b5dbec9a9dd9627d8f7d22c00d.jpg",
+        "images/train/images/Img_1049_jpg.rf.ab3df4ab482c5862494886152ca538e3.jpg"
+      ]
+    },
+    {
+      "sha256": "ffcd46dfde1e0d1ec38ece2e7fba4af97d9186e3cf80f63eb18a9db6e524f825",
+      "paths": [
+        "images/train/images/Img_1053_jpg.rf.0be4a003d0e7cc4d4261c9f6e1868dbc.jpg",
+        "images/train/images/Img_1053_jpg.rf.ac5e16193c189f47f42484bef4998f89.jpg"
+      ]
+    },
+    {
+      "sha256": "361ba9e1f6d2499ba3c1ae93b6d803992bb09927779744d34d6aa12c968d18c1",
+      "paths": [
+        "images/train/images/Img_1073_jpg.rf.2a464f735321472ccaab2a72508f39f5.jpg",
+        "images/train/images/Img_1073_jpg.rf.efee06a2b3875ff8bf9ae9799710650e.jpg"
+      ]
+    },
+    {
+      "sha256": "ac79c7cca3c495e4a607d1de5efd019b08af0a3bba2e969bf3b94bf8544afc89",
+      "paths": [
+        "images/train/images/Img_1082_jpg.rf.3c22d6787496fda00240f2642455755c.jpg",
+        "images/train/images/Img_1082_jpg.rf.6b8fd63cf7b91d044cf8ac923be6169e.jpg"
+      ]
+    },
+    {
+      "sha256": "8f0c080dc5ea9253a2716ce8c6ea7ae84d930355e2ca51dfe146a4e91d00f358",
+      "paths": [
+        "images/train/images/Img_1116_jpg.rf.7e9fad02e1bc129d4bf0f4315e70d324.jpg",
+        "images/train/images/Img_1116_jpg.rf.94d66fad28b4551660878aae06ee4427.jpg"
+      ]
+    },
+    {
+      "sha256": "9156b1fe6327d0ff70463e65696cd6248a24f4787b5f862748d5d18bc4dc59f7",
+      "paths": [
+        "images/train/images/Img_1159_jpg.rf.44a8920374edb86d1b040158ea6641e6.jpg",
+        "images/train/images/Img_1159_jpg.rf.7b4508b20557220b8d84ea312b10ada4.jpg"
+      ]
+    },
+    {
+      "sha256": "747a896b1001e68c2088457344d0e37f05dad93486458d4bb91d1db41c19839e",
+      "paths": [
+        "images/train/images/Img_1171_jpg.rf.2224cdee3cfc569acccaecf382804394.jpg",
+        "images/train/images/Img_1171_jpg.rf.3f7ba2b052399b855a46fe378c2b0a4c.jpg"
+      ]
+    },
+    {
+      "sha256": "b790423123004fa970418b021dc9c198421d10eda2abcf805add9d320c9a5f96",
+      "paths": [
+        "images/train/images/Img_1174_jpg.rf.701566ec2b82f5d718184c8895f64228.jpg",
+        "images/train/images/Img_1174_jpg.rf.d1800f5f72d27dfb7d8c0e06ac98977b.jpg"
+      ]
+    },
+    {
+      "sha256": "ccef7dc7953e08d93a846d6caddc20b169ea25d4b4c61ac3993429f35bdd1769",
+      "paths": [
+        "images/train/images/Img_1183_jpg.rf.49d2b292c47e75730513572adef1c4eb.jpg",
+        "images/train/images/Img_1183_jpg.rf.c3bd1363ce781a0f076e2ef2ac4d1b1b.jpg"
+      ]
+    },
+    {
+      "sha256": "508bd66e4be09cfc75013b54834147ce5758b33c2a1065ed9a8c4b31640da713",
+      "paths": [
+        "images/train/images/Img_1191_jpg.rf.9b0e2df904e6657bdd7811f8251fcf17.jpg",
+        "images/train/images/Img_1191_jpg.rf.ead3300d98a1a416d13eba5bdbcfb3e7.jpg"
+      ]
+    },
+    {
+      "sha256": "e785987cf996ce46f7323061549ba7be643233add132e0f478d1385bb2aa454e",
+      "paths": [
+        "images/train/images/Img_1208_jpg.rf.ba7b8bd0d1c1edf2c9144dc97251255d.jpg",
+        "images/train/images/Img_1208_jpg.rf.f5b554bc2d9d7e786c57dcfbb74c8065.jpg"
+      ]
+    },
+    {
+      "sha256": "9c856e2b74e26b8264b532ab4d2fe0e11f23dc0a3ca2e655611cd15f5bdc831c",
+      "paths": [
+        "images/train/images/Img_1214_jpg.rf.339dec7569222604cb047a92c238da99.jpg",
+        "images/train/images/Img_1214_jpg.rf.df7c5bcec48ca34ee7619652284f740e.jpg"
+      ]
+    },
+    {
+      "sha256": "01062a3de1a8507efe8d3199925abbad3768477455da7945136d5a0355a1e14d",
+      "paths": [
+        "images/train/images/Img_1296_jpg.rf.0b5efb7cc1a321d3f79ec06ae2bd4b75.jpg",
+        "images/train/images/Img_1296_jpg.rf.54d2fe0526b753abdf5c73dc76c1767f.jpg"
+      ]
+    },
+    {
+      "sha256": "08f291cbe2c0bff536cbbc3e9c63457a68aaa521bc64e73990470f43c8017e92",
+      "paths": [
+        "images/train/images/Img_1696_jpg.rf.1794714a6cecbfb9b88f10a8dd12f90c.jpg",
+        "images/train/images/Img_1696_jpg.rf.b3e5e860b1180b279d1f496a43e7c82e.jpg"
+      ]
+    },
+    {
+      "sha256": "f12c7e8e7df30850fc64745a5bedd45435d1578a325b9699e11ffbdbf1b602b8",
+      "paths": [
+        "images/train/images/Img_1696_jpg.rf.2656f493ab33fbb256960cbe497da7a3.jpg",
+        "images/train/images/Img_1696_jpg.rf.96284fd18a9618add5f488bb51f01a73.jpg"
+      ]
+    },
+    {
+      "sha256": "58902ccda1ba54f20d8bf22074b29ac7641a2b7b03e272d47acd147ec15d221d",
+      "paths": [
+        "images/train/images/Img_1750_jpg.rf.0631a5846393f56d080fcd6169465f5d.jpg",
+        "images/train/images/Img_1750_jpg.rf.d7d484631348a60589f5345efb2e5e3f.jpg"
+      ]
+    },
+    {
+      "sha256": "0b33f733cfcdc49cc542e7a5aa469fe24690ae58a9c8a2c989088198c8d9078c",
+      "paths": [
+        "images/train/images/Img_2011_jpg.rf.9ea552d049c224dc8ac1d6770db79dae.jpg",
+        "images/train/images/Img_2011_jpg.rf.fd281b6c20845ea34fe8dc9478cbc73a.jpg"
+      ]
+    },
+    {
+      "sha256": "a6ce536096fde8398bd7978810d25db4fd89791df38a65f261d789034169a735",
+      "paths": [
+        "images/train/images/Img_2031_jpg.rf.dbdf40044ea242357e04f5d99bee5d3a.jpg",
+        "images/train/images/Img_2031_jpg.rf.ea82e7717e4884ad50ed314645cd0d61.jpg"
+      ]
+    },
+    {
+      "sha256": "b6c54407e264b446ff034023043c9c8bb8ec6124935d37b051b1a75450077c35",
+      "paths": [
+        "images/train/images/Img_2069_jpg.rf.25f304e61990f3e17b13701c2770761b.jpg",
+        "images/train/images/Img_2069_jpg.rf.94da20b6308ec7ee64556eebad477fc0.jpg"
+      ]
+    },
+    {
+      "sha256": "33355d56d4ba7de7746f1b97459bc3c70892fe61655aad233f9a386e2015d04a",
+      "paths": [
+        "images/train/images/Img_2088_jpg.rf.026cba8847aba404dff6a8b1908b2885.jpg",
+        "images/train/images/Img_2088_jpg.rf.bb262d0317de7b8c41d9d2c5c28c7af0.jpg"
+      ]
+    },
+    {
+      "sha256": "16a42cbeeb6ff2943e2d1433808b052c589ad4146811d2f10552238babc4d54a",
+      "paths": [
+        "images/train/images/Img_2109_jpg.rf.76c6de5e96521fa51c27d0dd50a15ac0.jpg",
+        "images/train/images/Img_2109_jpg.rf.ae406e0abaa7af30aa17eda3d6f78719.jpg"
+      ]
+    },
+    {
+      "sha256": "bbd771f314ffffe89c42e61fa725d6e7193a745c580ca2a8f30c515b3a266c6a",
+      "paths": [
+        "images/train/images/Img_498_jpg.rf.69ebee21add3486c4c41068838b98da2.jpg",
+        "images/train/images/Img_498_jpg.rf.d41b55cfbef1184d70ab37a3ad800910.jpg"
+      ]
+    },
+    {
+      "sha256": "5e78c5af63e1a68cfb15fff678de93f995ff648a87c7cf28c3c4ad478d4e5b25",
+      "paths": [
+        "images/train/images/Img_517_jpg.rf.55d2c0a9f61feb4e544fdb0166062a65.jpg",
+        "images/train/images/Img_517_jpg.rf.fb84f38663657426de335985b68ddd5f.jpg"
+      ]
+    },
+    {
+      "sha256": "fd9abe600137b84050ebe1c61b904c6378a1e60e1911670fca8cb85ae9987f71",
+      "paths": [
+        "images/train/images/Img_58_jpg.rf.23d15e3904e1f54526a9d59b4858f590.jpg",
+        "images/train/images/Img_58_jpg.rf.3a8fc8488e7980637e46db05cd5579c0.jpg"
+      ]
+    },
+    {
+      "sha256": "2349cd439a508aa54da4c5e97b82a40889804b6b00b27673d3cd79a960cd7756",
+      "paths": [
+        "images/train/images/Img_86_jpg.rf.4a8890310feafb5bc3a644b67a8c42ce.jpg",
+        "images/train/images/Img_86_jpg.rf.e8613536bae2ee380ffc7e7f772c8e9b.jpg"
+      ]
+    },
+    {
+      "sha256": "8bfa1a10508bcc9f00304cfb2f7661f2289d556c5a66ae0b9c20b272f3b4026e",
+      "paths": [
+        "images/train/images/Img_90_jpg.rf.56bf16d2332bcbc347df5ded23cb07cb.jpg",
+        "images/train/images/Img_90_jpg.rf.d6edad2b2ffdeffb15e8545dc20f094d.jpg"
+      ]
+    },
+    {
+      "sha256": "88302a60809281cd48a5a6c83b3520cf7a0d54846b95842fdaea9d63737566e2",
+      "paths": [
+        "images/train/images/Img_93_jpg.rf.1f5fe450009e84aef409a0c29f94ffaf.jpg",
+        "images/train/images/Img_93_jpg.rf.44304e127c23596aed11b02976d08a1d.jpg"
+      ]
+    },
+    {
+      "sha256": "3666c9cd7ebf5712f48ca9f501b7f91132ded79d6913f24137eeea77b6b01def",
+      "paths": [
+        "images/train/images/new_fire_fire-484_png_jpg.rf.5bda644ba6fec9994dc70dcd66e95f67.jpg",
+        "images/train/images/new_fire_fire-484_png_jpg.rf.5e676cd660f98a9900780f600af4b862.jpg"
+      ]
+    },
+    {
+      "sha256": "bf0c8db33b824523567c4060d270dff4afdd1d1e845701952671457cc0b8708d",
+      "paths": [
+        "images/train/images/new_fire_fire-607_png_jpg.rf.515341af3f0df3943bb9a1cb36dd6246.jpg",
+        "images/train/images/new_fire_fire-607_png_jpg.rf.8fbe7178277cdcae03f6d9f0fe3b4c1e.jpg"
+      ]
+    },
+    {
+      "sha256": "9833f0537257e020b2cf43f104d5457ce9d571988589fe9300793ff1ba7cf161",
+      "paths": [
+        "images/train/images/WEBFire1051_jpg.rf.4dcc234ba800853ca77d515a3da78e7a.jpg",
+        "images/train/images/WEBFire1051_jpg.rf.94deb035227dcdfe3ab9aff933f6e21a.jpg"
+      ]
+    },
+    {
+      "sha256": "4e94c7ccfb6593b4c9503f7e1155c1582be12e33e9a3ca05782c1d149f03d556",
+      "paths": [
+        "images/train/images/WhatsApp-Video-2024-01-12-at-18_01_23_mp4-211_jpg.rf.dda6bc156e4cf8f44c1f07adb49da992.jpg",
+        "images/WhatsApp-Video-2024-01-12-at-18_01_23_mp4-211_jpg.rf.79a0fce3feb5556fc3961994f5c2e45d.jpg"
+      ]
+    }
+  ],
+  "unlabelled_image_hashes_also_in_paired_images": 20,
+  "repeated_filename_base_groups": 1892,
+  "filename_groups_are_source_or_scene_proof": false,
+  "configs": {
+    "data_legacy.yaml": {
+      "sha256": "40e6bd65c5fbfb276daf0bf7454b1d6998adc1118ffa0b30f6f485e3b2407df4",
+      "dataset_path": "./dataset",
+      "train": "images/train/images",
+      "val": "images/train/images",
+      "class_mapping": {
+        "0": "fire",
+        "1": "smoke"
+      }
+    },
+    "data_dfire.yaml": {
+      "sha256": "86cf24bac87b11f8250d33214fe19407d17ecd51e9663170ac269721ddcc6bb7",
+      "dataset_path": "datasets/dfire",
+      "train": "train/images",
+      "val": "val/images",
+      "class_mapping": {
+        "0": "smoke",
+        "1": "fire"
+      }
+    }
+  },
+  "legacy_train_equals_validation": true,
+  "class_mapping_matches_baseline": false,
+  "user_confirmed_source_url": "https://github.com/gaia-solutions-on-demand/DFireDataset",
+  "local_files_authenticated_against_author_manifest": false,
+  "source_readme_or_download_manifest_found": false,
+  "vn_bbox_export_available": false,
+  "original_files_unchanged": true,
+  "labels_remapped_or_created": false,
+  "detector_or_training_executed": false,
+  "map": null,
+  "blockers": [
+    "LOCAL_DFIRE_PROVENANCE_NOT_AUTHENTICATED",
+    "TRAIN_VAL_PATH_ALIAS",
+    "CLASS_MAPPING_REVERSED_RELATIVE_TO_BASELINE",
+    "VN_BBOX_EXPORT_MISSING"
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "review_issues": [
+    {
+      "video_id": "VN_POS_78",
+      "source_sha256": "e1fde8774d8e76d27fdb4ce2515de7d00f4a3b2b28275976d04634dee96790ec",
+      "status": "SAME_CLASS_OVERLAP_REQUIRES_REVIEW",
+      "overlap_pairs": [
+        {
+          "first": {
+            "label": "SMOKE",
+            "frame_start": 27672,
+            "frame_end": 27751,
+            "start_sec": 1106.88,
+            "end_sec": 1110.04
+          },
+          "second": {
+            "label": "SMOKE",
+            "frame_start": 27699,
+            "frame_end": 28195,
+            "start_sec": 1107.96,
+            "end_sec": 1127.8
+          }
+        }
+      ],
+      "requested_action": "Confirm event ontology/boundaries only; do not redo the full pool",
+      "original_submission_modified": false
+    },
+    {
+      "video_id": "VN_POS_06",
+      "source_sha256": "d3b8a189cfcf313ca70245c528fc00334c2a5422a375143cc126cae38fd782dc",
+      "status": "SAME_CLASS_OVERLAP_REQUIRES_REVIEW",
+      "overlap_pairs": [
+        {
+          "first": {
+            "label": "SMOKE",
+            "frame_start": 0,
+            "frame_end": 434,
+            "start_sec": 0.0,
+            "end_sec": 7.240566666666667
+          },
+          "second": {
+            "label": "SMOKE",
+            "frame_start": 432,
+            "frame_end": 672,
+            "start_sec": 7.2072,
+            "end_sec": 11.2112
+          }
+        }
+      ],
+      "requested_action": "Confirm event ontology/boundaries only; do not redo the full pool",
+      "original_submission_modified": false
+    },
+    {
+      "video_id": "VN_POS_23",
+      "source_sha256": "d1da6f04e812a47bed9dfc78369cc45c7558480f4481769716b1e1186c115432",
+      "status": "SAME_CLASS_OVERLAP_REQUIRES_REVIEW",
+      "overlap_pairs": [
+        {
+          "first": {
+            "label": "SMOKE",
+            "frame_start": 1342,
+            "frame_end": 1390,
+            "start_sec": 53.68,
+            "end_sec": 55.6
+          },
+          "second": {
+            "label": "SMOKE",
+            "frame_start": 1383,
+            "frame_end": 1462,
+            "start_sec": 55.32,
+            "end_sec": 58.480000000000004
+          }
+        }
+      ],
+      "requested_action": "Confirm event ontology/boundaries only; do not redo the full pool",
+      "original_submission_modified": false
+    },
+    {
+      "source_sha256": "fe0ff123e94b10e72f60c83b0e8313e0376cd468022c226afa583a4ee42cce6c",
+      "video_ids": [
+        "VN_POS_50",
+        "VN_POS_51"
+      ],
+      "status": "CONFLICTING_HUMAN_INTERVALS_SAME_SOURCE",
+      "canonical_video_id": null,
+      "intervals_by_alias": {
+        "VN_POS_50": [
+          {
+            "label": "FIRE",
+            "frame_start": 0,
+            "frame_end": 1970,
+            "start_sec": 0.0,
+            "end_sec": 82.16541666666667
+          },
+          {
+            "label": "SMOKE",
+            "frame_start": 0,
+            "frame_end": 1970,
+            "start_sec": 0.0,
+            "end_sec": 82.16541666666667
+          }
+        ],
+        "VN_POS_51": [
+          {
+            "label": "FIRE",
+            "frame_start": 14,
+            "frame_end": 1966,
+            "start_sec": 0.5839166666666666,
+            "end_sec": 81.99858333333333
+          },
+          {
+            "label": "SMOKE",
+            "frame_start": 14,
+            "frame_end": 1966,
+            "start_sec": 0.5839166666666666,
+            "end_sec": 81.99858333333333
+          }
+        ]
+      },
+      "human_records_modified": false
+    }
+  ],
+  "originals_unchanged": true
+}

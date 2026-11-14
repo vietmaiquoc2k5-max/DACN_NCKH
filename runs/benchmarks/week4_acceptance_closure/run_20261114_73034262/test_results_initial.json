@@ -1,0 +1,68 @@
+{
+  "results": [
+    {
+      "label": "targeted",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_week45_acceptance.py",
+        "tests/test_domain_adaptation.py",
+        "tests/test_preannotation.py",
+        "tests/test_preannotation_studio.py",
+        "tests/test_scientific_inference.py",
+        "tests/test_bytetrack_adapter.py",
+        "tests/test_temporal_verifier_bytetrack.py",
+        "tests/test_temporal_features.py",
+        "tests/test_week4_event_eval.py",
+        "tests/test_poisson_ci.py",
+        "tests/test_fix4_evidence_gates.py"
+      ],
+      "started_utc": "2026-11-14T11:16:28.183554+00:00",
+      "finished_utc": "2026-11-14T11:16:51.438301+00:00",
+      "duration_seconds": 23.24979650000023,
+      "exit_code": 0,
+      "log": ".tools/week45_closure_73034262/targeted.log",
+      "summary_lines": [
+        ".................................................................................................. [ 83%]",
+        "...................                                            [100%]",
+        "117 passed, 56 subtests passed in 21.49s"
+      ],
+      "passed": 117,
+      "subtests_passed": "56"
+    },
+    {
+      "label": "full_unittest",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_utc": "2026-11-14T11:16:51.439301+00:00",
+      "finished_utc": "2026-11-14T11:19:22.799301+00:00",
+      "duration_seconds": 151.35200180000174,
+      "exit_code": 0,
+      "log": ".tools/week45_closure_73034262/full_unittest.log",
+      "summary_lines": [
+        "[mjpeg @ 000002abbd029080] dht: len 118 is too large",
+        "[mjpeg @ 000002abbd029080] huffman table decode error",
+        "[mjpeg @ 000002abbd029800] error dc",
+        "[mjpeg @ 000002abbd029800] error y=3 x=2",
+        "[mjpeg @ 000002abc438e480] error count: 268435455",
+        "[mjpeg @ 000002abc438e480] error y=1 x=1",
+        "[mjpeg @ 000002abc494f9c0] overread 8",
+        "[mov,mp4,m4a,3gp,3g2,mj2 @ 000002abbcd48300] moov atom not found"
+      ],
+      "tests_run": 348,
+      "framework_seconds": 147.092
+    }
+  ],
+  "legacy_rtsp_report_bytes_preserved": true
+}

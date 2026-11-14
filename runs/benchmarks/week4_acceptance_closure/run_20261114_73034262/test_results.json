@@ -1,0 +1,79 @@
+{
+  "results": [
+    {
+      "label": "targeted",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_week45_acceptance.py",
+        "tests/test_domain_adaptation.py",
+        "tests/test_preannotation.py",
+        "tests/test_preannotation_studio.py",
+        "tests/test_scientific_inference.py",
+        "tests/test_bytetrack_adapter.py",
+        "tests/test_temporal_verifier_bytetrack.py",
+        "tests/test_temporal_features.py",
+        "tests/test_week4_event_eval.py",
+        "tests/test_poisson_ci.py",
+        "tests/test_fix4_evidence_gates.py"
+      ],
+      "started_utc": "2026-11-14T11:30:20.542499+00:00",
+      "finished_utc": "2026-11-14T11:30:42.990282+00:00",
+      "duration_seconds": 22.441261799998756,
+      "exit_code": 0,
+      "log": ".tools/week45_closure_73034262/targeted_final.log",
+      "summary_lines": [
+        "................................................................................................ [ 80%]",
+        ".......................                                        [100%]",
+        "119 passed, 58 subtests passed in 20.93s"
+      ],
+      "passed": 119,
+      "subtests_passed": "58",
+      "framework_summary": [
+        "119 passed, 58 subtests passed in 20.93s"
+      ],
+      "skipped": 0,
+      "log_sha256": "a3d3c26d867488d71f7d8bac8e91ca7851cfe683adf16f211c752893d8572b94"
+    },
+    {
+      "label": "full_unittest",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_utc": "2026-11-14T11:30:42.998282+00:00",
+      "finished_utc": "2026-11-14T11:33:15.654614+00:00",
+      "duration_seconds": 152.64850149999984,
+      "exit_code": 0,
+      "log": ".tools/week45_closure_73034262/full_unittest_final.log",
+      "summary_lines": [
+        "[mjpeg @ 00000220910f4080] dht: len 118 is too large",
+        "[mjpeg @ 00000220910f4080] huffman table decode error",
+        "[mjpeg @ 0000022091b17ac0] error dc",
+        "[mjpeg @ 0000022091b17ac0] error y=3 x=2",
+        "[mjpeg @ 0000022091b28c40] error count: 268435455",
+        "[mjpeg @ 0000022091b28c40] error y=1 x=1",
+        "[mjpeg @ 0000022091b28140] overread 8",
+        "[mov,mp4,m4a,3gp,3g2,mj2 @ 000002209158d380] moov atom not found"
+      ],
+      "tests_run": 350,
+      "framework_seconds": 148.664,
+      "framework_summary": [
+        "Ran 350 tests in 148.664s",
+        "OK"
+      ],
+      "skipped": 0,
+      "log_sha256": "39dacc6ad1def55e796d2f88a1e95a259ff340ae773c1ace5b80bbbc768be742"
+    }
+  ],
+  "legacy_rtsp_report_bytes_preserved": true
+}

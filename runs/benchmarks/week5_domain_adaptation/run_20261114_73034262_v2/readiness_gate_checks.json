@@ -1,0 +1,68 @@
+{
+  "checks": [
+    {
+      "strategy": "full_finetune",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "scripts/run_week5_domain_adaptation.py",
+        "--dataset-manifest",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\dataset_manifest.json",
+        "--strategy",
+        "full_finetune",
+        "--seed",
+        "42",
+        "--output-dir",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\readiness_gates\\full_finetune"
+      ],
+      "actual_exit_code": 2,
+      "expected_exit_code": 2,
+      "gate_verified": true,
+      "training_executed": false,
+      "duration_seconds": 2.8516605000004347,
+      "log": ".tools/week45_closure_73034262/full_finetune_gate.log"
+    },
+    {
+      "strategy": "freeze_backbone",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "scripts/run_week5_domain_adaptation.py",
+        "--dataset-manifest",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\dataset_manifest.json",
+        "--strategy",
+        "freeze_backbone",
+        "--seed",
+        "42",
+        "--output-dir",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\readiness_gates\\freeze_backbone"
+      ],
+      "actual_exit_code": 2,
+      "expected_exit_code": 2,
+      "gate_verified": true,
+      "training_executed": false,
+      "duration_seconds": 2.6695414000023447,
+      "log": ".tools/week45_closure_73034262/freeze_backbone_gate.log"
+    },
+    {
+      "strategy": "replay_20_percent",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "scripts/run_week5_domain_adaptation.py",
+        "--dataset-manifest",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\dataset_manifest.json",
+        "--strategy",
+        "replay_20_percent",
+        "--seed",
+        "42",
+        "--output-dir",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\run_20261114_73034262_v2\\readiness_gates\\replay_20_percent"
+      ],
+      "actual_exit_code": 2,
+      "expected_exit_code": 2,
+      "gate_verified": true,
+      "training_executed": false,
+      "duration_seconds": 2.6428727000020444,
+      "log": ".tools/week45_closure_73034262/replay_20_percent_gate.log"
+    }
+  ],
+  "gates_are_not_training_runs": true
+}
