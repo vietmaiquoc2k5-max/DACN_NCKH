@@ -1,0 +1,4 @@
+dfire,legacy,status
+data/train/images/PublicDataset01003.jpg,dataset/images/train/images/new_fire_18_jpg.rf.00ec63b3954081d54c8bb661ea89c893.jpg,PERCEPTUAL_HASH_CANDIDATE_NOT_CONTENT_PROOF
+data/train/images/PublicDataset01008.jpg,dataset/images/fire1-1063-_jpg.rf.7753cde74fe0e95c8cbd77137b653690.jpg,PERCEPTUAL_HASH_CANDIDATE_NOT_CONTENT_PROOF
+data/val/images/PublicDataset01007.jpg,dataset/images/train/images/fire1-1046-_jpg.rf.8aa54bde5dabeb1a10135e5707b5f9da.jpg,PERCEPTUAL_HASH_CANDIDATE_NOT_CONTENT_PROOF

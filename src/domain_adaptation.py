@@ -63,6 +63,8 @@ def validate_dataset_rows(rows: list[dict[str,Any]], *, require_human: bool=True
             if not (evidence.get('status')=='SUBMITTED_BBOX_REVIEW' and evidence.get('attest_frame_review') is True and evidence.get('reviewer_id') and evidence.get('reviewed_at_utc') and evidence.get('evidence_ref') and evidence.get('image_sha256')==row['image_sha256'] and evidence.get('label_sha256')==row.get('label_sha256') and evidence.get('source_video_sha256')==row['source_video_sha256']):
                 raise ValueError('BBOX_GROUND_TRUTH_REQUIRED')
             if row.get('uncertain') is True:raise ValueError('UNCERTAIN_FRAME_NOT_TRAINING_GT')
+            if row.get('bbox_count')==0 and evidence.get('negative_frame_approved') is not True:
+                raise ValueError('EMPTY_LABEL_REQUIRES_NEGATIVE_APPROVAL')
     if any(len(splits)>1 for splits in groups.values()):raise ValueError('IMAGE_SOURCE_OR_SCENE_SPLIT_LEAKAGE')
 
 

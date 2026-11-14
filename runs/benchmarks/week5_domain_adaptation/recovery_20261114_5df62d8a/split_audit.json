@@ -1,0 +1,17 @@
+{
+  "status": "BLOCKED",
+  "candidate_images": 3121,
+  "pixel_candidate_pairs": 75,
+  "candidate_images_with_unresolved_pixel_relations": 39,
+  "training_rows": 0,
+  "validation_rows": 0,
+  "test_rows": 0,
+  "all_unresolved_overlap_excluded_from_evaluation": true,
+  "disjoint_empty_sets_claimed_as_ready": false,
+  "train_val_path_alias_allowed": false,
+  "test_moved_to_train": false,
+  "candidate_manifests_are_not_approved_datasets": true,
+  "prior_split_manifest_sha256": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+  "semantic_remap_performed": false,
+  "before_after_remap_visualization": "NOT_PERFORMED_MAPPING_NOT_VERIFIED"
+}

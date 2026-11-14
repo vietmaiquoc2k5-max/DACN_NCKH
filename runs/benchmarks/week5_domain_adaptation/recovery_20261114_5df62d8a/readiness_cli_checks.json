@@ -1,0 +1,62 @@
+{
+  "checks": [
+    {
+      "strategy": "full_finetune",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "scripts/run_week5_domain_adaptation.py",
+        "--dataset-manifest",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\recovery_20261114_5df62d8a\\dataset_manifest.json",
+        "--strategy",
+        "full_finetune",
+        "--output-dir",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\recovery_20261114_5df62d8a\\gate_checks\\full_finetune"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "epochs": 0,
+      "training_executed": false,
+      "duration_seconds": 2.893103800000972,
+      "log": ".tools/week5_recovery_5df62d8a/full_finetune_gate.log"
+    },
+    {
+      "strategy": "freeze_backbone",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "scripts/run_week5_domain_adaptation.py",
+        "--dataset-manifest",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\recovery_20261114_5df62d8a\\dataset_manifest.json",
+        "--strategy",
+        "freeze_backbone",
+        "--output-dir",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\recovery_20261114_5df62d8a\\gate_checks\\freeze_backbone"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "epochs": 0,
+      "training_executed": false,
+      "duration_seconds": 2.514360100001795,
+      "log": ".tools/week5_recovery_5df62d8a/freeze_backbone_gate.log"
+    },
+    {
+      "strategy": "replay_20_percent",
+      "command": [
+        "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "scripts/run_week5_domain_adaptation.py",
+        "--dataset-manifest",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\recovery_20261114_5df62d8a\\dataset_manifest.json",
+        "--strategy",
+        "replay_20_percent",
+        "--output-dir",
+        "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\recovery_20261114_5df62d8a\\gate_checks\\replay_20_percent"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "epochs": 0,
+      "training_executed": false,
+      "duration_seconds": 2.4945557999999437,
+      "log": ".tools/week5_recovery_5df62d8a/replay_20_percent_gate.log"
+    }
+  ],
+  "gates_are_not_training_runs": true
+}

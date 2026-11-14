@@ -1,0 +1,12 @@
+{
+  "archive_url": "https://www.kaggle.com/api/v1/datasets/download/sayedgamal99/smoke-fire-detection-yolo?datasetVersionNumber=1",
+  "archive_sha256": "65d81b602991261b47ddc71281e99108362a30336a448e1f8d21352c825c6d83",
+  "archive_bytes": 3049605157,
+  "mirror_version": 1,
+  "author_repository_commit": "3890a756b224855f4f7ef8d237a70bc1834a4714",
+  "local_download_write_completed_at_utc": "2026-11-14T17:14:40.688996+00:00",
+  "timestamp_basis": "Local archive staging file modification time after streamed GET; rename does not change content mtime",
+  "direct_onedrive_archive_digest_verified": false,
+  "mirror_content_files_hashed": 43055,
+  "content_manifest_sha256": "d897d17aada790c1b4ec61841cb5f4c66d1da5fc4d6ac2817a69c59b26a209a9"
+}

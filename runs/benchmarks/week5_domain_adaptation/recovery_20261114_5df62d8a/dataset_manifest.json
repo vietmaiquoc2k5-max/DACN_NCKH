@@ -1,0 +1,19 @@
+{
+  "status": "BLOCKED_NOT_A_TRAINABLE_DATASET",
+  "rows": [],
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "split_locked": false,
+  "leakage_review_complete": false,
+  "prior_manifest_sha256": "8acd4311db47fe7e100a54e4503be12746fc82b7742f8e7ab9775baddc544e37",
+  "blockers": [
+    "DFIRE_IMAGES_LABELS_MISSING",
+    "SEMANTIC_MAPPING_NOT_VERIFIED",
+    "GROUP_RELATIONS_UNRESOLVED",
+    "NO_HUMAN_BBOX_APPROVALS",
+    "LINEAGE_NOT_VERIFIED",
+    "NO_MEASURED_RESOURCE_PILOT"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "complete": true,
+  "original_gt_and_checkpoint_preserved": true,
+  "author_split_files_preserved": 14,
+  "prior_artifacts_preserved": 33,
+  "real_human_approvals_created_by_agent": 0,
+  "reviewer_identities_in_public_artifacts": false,
+  "real_private_bbox_store_exists": false,
+  "training_executed": false,
+  "archive_downloaded": true,
+  "commit_push_delete_performed": false
+}

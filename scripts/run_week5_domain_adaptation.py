@@ -79,7 +79,9 @@ def validate_inputs(manifest: dict[str,Any],strategy: str) -> tuple[list[dict],l
         for field,path_field in [('image_sha256','image_path'),('label_sha256','label_path')]:
             verify_file_hash(confined(ROOT,row[path_field]),row[field])
         if cv2.imread(str(confined(ROOT,row['image_path']))) is None:raise ValueError('UNREADABLE_IMAGE')
-        read_yolo_boxes(confined(ROOT,row['label_path']))
+        boxes=read_yolo_boxes(confined(ROOT,row['label_path']))
+        if row['corpus']=='VN' and not boxes and (row.get('bbox_review') or {}).get('negative_frame_approved') is not True:
+            raise ValueError('EMPTY_LABEL_REQUIRES_NEGATIVE_APPROVAL')
     return vn,dfire
 
 
@@ -146,6 +148,11 @@ def execute(args: argparse.Namespace) -> int:
         write_json(receipt_path,receipt)
     try:
         vn,dfire=validate_inputs(dataset,args.strategy)
+        if not dfire:
+            raise ValueError('WEEK5_REQUIRES_DFIRE_READY_FOR_ALL_STRATEGIES')
+        if not all((dataset.get('readiness_gates') or {}).get(key) is True
+                   for key in ['DFIRE_READY','SPLIT_READY','VN_BBOX_READY']):
+            raise ValueError('WEEK5_INDEPENDENT_READINESS_GATES_REQUIRED')
         if args.budget_receipt is None:raise ValueError('TIMED_PILOT_AND_RESOURCE_BUDGET_REQUIRED')
         budget=json.loads(args.budget_receipt.read_text(encoding='utf-8'))
         validate_budget(budget,expected['dataset_sha256'],expected['baseline_sha256'],protocol['epochs'])

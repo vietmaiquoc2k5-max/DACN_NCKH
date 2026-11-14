@@ -343,9 +343,9 @@ def main() -> None:
         st.caption(actor["role"])
         pages = ["Overview"]
         if actor["role"].startswith("annotator_"):
-            pages += ["Positive Review", "VN_POS Candidate Review", "Negative Review", "Single Reviewer Export", "Review Progress"]
+            pages += ["Positive Review", "VN_POS Candidate Review", "Negative Review", "BBox QA", "Single Reviewer Export", "Review Progress"]
         if actor["role"] == "adjudicator":
-            pages += ["Adjudication"]
+            pages += ["Adjudication", "BBox QA"]
         if actor["role"] in {"adjudicator", "admin"}:
             pages += ["Export Report"]
         page = st.radio("Điều hướng", pages)
@@ -356,6 +356,9 @@ def main() -> None:
             st.rerun()
     if page == "Overview":
         overview(repository)
+    elif page == "BBox QA":
+        from ground_truth_studio.bbox_page import bbox_page
+        bbox_page(repository, token)
     elif page.endswith("Review"):
         review_page(repository, videos, token, "positive_candidate" if page.startswith("VN_POS") else "positive" if page.startswith("Positive") else "negative")
     elif page == "Review Progress":

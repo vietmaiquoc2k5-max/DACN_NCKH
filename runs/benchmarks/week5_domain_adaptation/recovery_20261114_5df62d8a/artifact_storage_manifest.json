@@ -1,0 +1,13 @@
+{
+  "metadata": "Current-version JSON/CSV only",
+  "local_preview_sha256": {
+    "legacy_dfire_comparison.jpg": "6c324ea517decca7366db6829d45fa43dd7a07d35e6979e3c366aa413a3dbf60",
+    "source_bbox_visual_check.jpg": "de71da5f555995ece5c1e7387f7ec3ad04eb4471b9ba2d019574fb51d51e9dd6",
+    "source_preview.jpg": "5052e9f4b9d319e176e55838346384c58b1845c8a8226c1014fe559e3f374091",
+    "split_preview.jpg": "22fce93a63ae1c05e81e05b0434927af8daf25b9226bb0c7a8f03d06cb99f33b"
+  },
+  "raw_archive": "downloads\\dfire_author_linked_kaggle_v1.zip",
+  "archive_sha256": "65d81b602991261b47ddc71281e99108362a30336a448e1f8d21352c825c6d83",
+  "raw_images_labels_archive_previews": "LOCAL_ONLY_NOT_WHITELISTED",
+  "no_raw_data_staged": true
+}

@@ -118,6 +118,8 @@ graphify-out/
 /runs/benchmarks/**/*.jsonl
 
 # Week 4/5 closure: sanitized metadata only; source exports, images and logs stay local.
+!/runs/benchmarks/week5_domain_adaptation/recovery_20261114_5df62d8a/*.json
+!/runs/benchmarks/week5_domain_adaptation/recovery_20261114_5df62d8a/*.csv
 !/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.json
 !/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.csv
 /runs/benchmarks/week5_domain_adaptation/run_20261114_73034262/**

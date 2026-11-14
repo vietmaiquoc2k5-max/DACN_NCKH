@@ -1,0 +1,16 @@
+<!doctype html><html lang="vi"><meta charset="utf-8"><style>body{margin:0;color:#e3edea;background:#10231f;font:14px sans-serif}canvas{max-width:100%;cursor:crosshair}button,select{margin:6px;padding:6px}</style>
+<div>Kéo để vẽ bbox. Click để chọn. Class <select id="cls"><option value="0">SMOKE</option><option value="1">FIRE</option></select><button id="remove">Xóa box chọn</button><button id="clear">Xóa mọi box</button></div><canvas id="c"></canvas>
+<script>
+let identity=null,boxes=[],selected=-1,start=null,img=new Image();const c=document.getElementById('c'),ctx=c.getContext('2d'),cls=document.getElementById('cls');
+const send=(type,rest={})=>parent.postMessage({isStreamlitMessage:true,type,...rest},'*');
+function emit(){send('streamlit:setComponentValue',{value:{identity,boxes},dataType:'json'});draw()}
+function draw(){ctx.clearRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);boxes.forEach((b,i)=>{ctx.strokeStyle=i===selected?'#ffce45':b.class_id===0?'#65ccff':'#ff665e';ctx.lineWidth=2;let x=(b.x-b.w/2)*c.width,y=(b.y-b.h/2)*c.height;ctx.strokeRect(x,y,b.w*c.width,b.h*c.height);ctx.fillStyle=ctx.strokeStyle;ctx.fillText((b.class_id===0?'SMOKE':'FIRE')+' '+i,x+2,y+12)})}
+function point(e){let r=c.getBoundingClientRect();return {x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))}}
+c.onpointerdown=e=>{start=point(e);c.setPointerCapture(e.pointerId)};
+c.onpointerup=e=>{if(!start)return;let p=point(e),w=Math.abs(p.x-start.x),h=Math.abs(p.y-start.y);if(w>.005&&h>.005){boxes.push({class_id:Number(cls.value),x:(p.x+start.x)/2,y:(p.y+start.y)/2,w,h});selected=boxes.length-1;emit()}else{selected=boxes.findIndex(b=>Math.abs(p.x-b.x)<=b.w/2&&Math.abs(p.y-b.y)<=b.h/2);if(selected>=0)cls.value=boxes[selected].class_id;draw()}start=null};
+cls.onchange=()=>{if(selected>=0){boxes[selected].class_id=Number(cls.value);emit()}};
+document.getElementById('remove').onclick=()=>{if(selected>=0)boxes.splice(selected,1);selected=-1;emit()};
+document.getElementById('clear').onclick=()=>{boxes=[];selected=-1;emit()};
+window.addEventListener('message',e=>{if(e.data.type!=='streamlit:render')return;let a=e.data.args;if(identity!==a.identity){identity=a.identity;boxes=JSON.parse(JSON.stringify(a.boxes));selected=-1;img.onload=()=>{c.width=Math.min(1000,img.width);c.height=Math.round(c.width*img.height/img.width);draw();send('streamlit:setFrameHeight',{height:c.height+60})};img.src=a.image}});
+send('streamlit:componentReady',{apiVersion:1});send('streamlit:setFrameHeight',{height:650});
+</script></html>

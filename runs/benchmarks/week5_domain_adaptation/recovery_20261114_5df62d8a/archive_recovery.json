@@ -1,0 +1,20 @@
+{
+  "author_repository": "https://github.com/gaia-solutions-on-demand/DFireDataset",
+  "source_url": "https://www.kaggle.com/api/v1/datasets/download/sayedgamal99/smoke-fire-detection-yolo?datasetVersionNumber=1",
+  "mirror_version": 1,
+  "author_repository_commit": "3890a756b224855f4f7ef8d237a70bc1834a4714",
+  "downloaded": true,
+  "extracted": true,
+  "archive_sha256": "65d81b602991261b47ddc71281e99108362a30336a448e1f8d21352c825c6d83",
+  "existing_files_overwritten": false,
+  "http_status": 200,
+  "response_host": "storage.googleapis.com",
+  "content_type": "application/zip",
+  "download_bytes": 3049605157,
+  "archive": "downloads\\dfire_author_linked_kaggle_v1.zip",
+  "corpus_root": "datasets\\dfire_author_linked_kaggle_v1",
+  "uncompressed_bytes": 3118334483,
+  "archive_entries": 43055,
+  "status": "RECOVERED_REQUIRES_CONTENT_SPLIT_SEMANTIC_AUDIT",
+  "duration_seconds": 231.75
+}

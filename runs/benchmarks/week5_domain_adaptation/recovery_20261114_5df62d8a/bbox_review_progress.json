@@ -1,0 +1,8 @@
+{
+  "human_approved_images": 0,
+  "pending_unique_images": 1922,
+  "priority_unique_images": 129,
+  "approved_for_training": 0,
+  "label_versions_created_by_agent_on_real_images": 0,
+  "human_export_exists": false
+}

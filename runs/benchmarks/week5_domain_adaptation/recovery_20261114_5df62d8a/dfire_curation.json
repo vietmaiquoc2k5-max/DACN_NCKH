@@ -1,0 +1,44 @@
+{
+  "status": "PARTIAL",
+  "author_test_not_moved_to_training": true,
+  "unresolved_cross_split_relations_removed_from_candidate_evaluation": true,
+  "candidate_counts": {
+    "train": 12409,
+    "val": 2547,
+    "test": 3568
+  },
+  "quarantined_samples": 3003,
+  "actual_training_or_eval_rows": 0,
+  "split_ready": false,
+  "dfire_vn_exact_image_sha_overlap": 0,
+  "dfire_vn_full_near_duplicate_screen_complete": false,
+  "legacy_visual_comparison": "Three paired images visually share the same photograph content with resizing/reencoding; not proof of provenance for the whole legacy corpus",
+  "remaining_blockers": [
+    "UNKNOWN_CAMERA_SCENE_GROUPS",
+    "OBSERVED_CAMERA0001_VAL_TEST_OVERLAP",
+    "BASELINE_TRAIN_MEMBERSHIP_NOT_AUTHENTICATED",
+    "VN_BBOX_APPROVALS_AND_LINEAGE_MISSING"
+  ],
+  "semantic_mapping_inspection": {
+    "source_yaml_names": [
+      "smoke",
+      "fire"
+    ],
+    "target": {
+      "0": "smoke",
+      "1": "fire"
+    },
+    "visual_examples": [
+      "AoF06978.jpg",
+      "AoF07718.jpg",
+      "AoF07738.jpg"
+    ],
+    "finding": "Consistent smoke=0/fire=1 on metadata and three visual samples; technical AI inspection, no human bbox approval",
+    "labels_remapped": false
+  },
+  "sample_camera_finding": {
+    "val": "AoF00008.jpg",
+    "test": "AoF06723.jpg",
+    "finding": "Camera0001 overlay and same hill/parking view visible in both images; not a whole-corpus camera catalog"
+  }
+}
