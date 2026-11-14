@@ -86,7 +86,7 @@ def test_test_message_helper_verifies_bot_and_sends_labeled_message(monkeypatch)
         if isinstance(request, str):
             return _response({"ok": True, "result": {"id": 123, "is_bot": True}})
         body = parse_qs(request.data.decode())['text'][0].lower()
-        assert "test message" in body and "not a real fire alarm" in body
+        assert "kiểm tra kết nối" in body and "không phải cảnh báo cháy thật" in body
         return _response({"ok": True, "result": {"message_id": 7}})
     monkeypatch.setattr("src.telegram_alerts.urlopen", fake_urlopen)
     assert send_test_message(TOKEN, "@firewatch_test", timeout=2.0)

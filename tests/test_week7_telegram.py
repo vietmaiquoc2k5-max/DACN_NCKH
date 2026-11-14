@@ -185,7 +185,8 @@ def test_invalid_credentials_are_terminal_and_missing_snapshot_falls_back_to_tex
         assert len(requests) == 1
         assert requests[0].full_url.endswith("/sendMessage")
         message = parse_qs(requests[0].data.decode("utf-8"))["text"][0]
-        assert "event #2" in message and "CAM-02" in message and "FIRE" in message
+        assert "CẢNH BÁO ĐÃ XÁC NHẬN #2" in message
+        assert "CAM-02" in message and "CHÁY (FIRE)" in message
     finally:
         dispatcher2.close()
 

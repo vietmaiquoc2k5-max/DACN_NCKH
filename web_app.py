@@ -161,6 +161,30 @@ def _telegram_summary(manager: MultiCameraManager) -> Dict[str, Any]:
     return {"state": state, "pending": int(pending or 0), "failed": int(failed or 0), "last_ack": last_ack}
 
 
+TELEGRAM_STATE_LABELS_VI = {
+    "NOT CONFIGURED": "CHƯA CẤU HÌNH",
+    "DISABLED": "ĐANG TẮT",
+    "ERROR": "CÓ LỖI",
+    "READY": "SẴN SÀNG",
+    "DEGRADED": "CHƯA KIỂM TRA",
+}
+TELEGRAM_DELIVERY_LABELS_VI = {
+    "QUEUED": "Đang chờ", "SENDING": "Đang gửi", "RETRY_PENDING": "Chờ gửi lại",
+    "DELIVERED": "Đã gửi", "FAILED": "Thất bại", "AMBIGUOUS": "Chưa rõ kết quả",
+}
+
+
+def _telegram_delivery_label_vi(value: Any) -> str:
+    """Translate a delivery state while preserving its technical error code."""
+    text = str(value or "")
+    for status, label in TELEGRAM_DELIVERY_LABELS_VI.items():
+        if text == status:
+            return label
+        if text.startswith(status + " ") or text.startswith(status + " ("):
+            return f"{label}{text[len(status):]}"
+    return text
+
+
 cam_system = get_firewatch_station()
 
 # Tự động nâng cấp Singleton nếu Streamlit Server đang giữ instance cũ trong bộ nhớ cache
@@ -1219,7 +1243,7 @@ with st.sidebar:
         "Lịch sử sự kiện": "📑  Lịch sử sự kiện",
         "Quản lý camera và ROI": "📷  Quản lý camera",
         "Cấu hình hệ thống": "⚙️  Cấu hình hệ thống",
-        "Telegram": "✉️  Telegram alerts",
+        "Telegram": "✉️  Cảnh báo Telegram",
     }
 
     picked_nav = st.radio(
@@ -2262,9 +2286,9 @@ def render_live_command_workspace() -> None:
 
     telegram_state = _telegram_summary(cam_system)
     st.caption(
-        f"Telegram: **{telegram_state['state']}** · {telegram_state['pending']} pending · "
-        f"{telegram_state['failed']} failed/ambiguous · Last API acknowledgment: "
-        f"{telegram_state['last_ack'] or 'none'}"
+        f"Telegram: **{TELEGRAM_STATE_LABELS_VI.get(telegram_state['state'], telegram_state['state'])}** · "
+        f"{telegram_state['pending']} đang chờ · {telegram_state['failed']} thất bại/chưa rõ · "
+        f"Telegram xác nhận gần nhất: {telegram_state['last_ack'] or 'chưa có'}"
     )
 
     ws_left, ws_right = st.columns([2.42, 1.05])
@@ -2492,7 +2516,7 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                     final_src = st.text_input("Đường dẫn tệp Video:", value=cfg.source, key=f"ed_vid_{cid}")
 
                 ed_en = st.checkbox("Cho phép kích hoạt camera", value=cfg.enabled, key=f"ed_en_{cid}")
-                ed_telegram = st.checkbox("Send Telegram alerts for this camera", value=cfg.telegram_enabled,
+                ed_telegram = st.checkbox("Gửi cảnh báo Telegram cho camera này", value=cfg.telegram_enabled,
                                           key=f"ed_telegram_{cid}")
                 ed_fps = st.number_input(
                     "Inference FPS target", min_value=1, max_value=60,
@@ -2675,46 +2699,46 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
         st.text_area("Nhật ký vận hành trạm (Đã ẩn mật khẩu RTSP):", value="\n".join(logs), height=220, disabled=True)
 
 elif st.session_state.nav_page == "Telegram":
-    render_html('<div class="fw-panel-title"><span>Telegram alert delivery</span></div>')
+    render_html('<div class="fw-panel-title"><span>Gửi cảnh báo qua Telegram</span></div>')
     st.warning(
-        "Bot tokens are never saved by FireWatch. Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID "
-        "in the service environment for fire/smoke alerts, then restart the service. The test "
-        "form uses temporary credentials in memory and sends a labeled test message."
+        "FireWatch không lưu mã bot. Hãy đặt TELEGRAM_BOT_TOKEN và TELEGRAM_CHAT_ID trong cấu hình "
+        "môi trường của dịch vụ rồi khởi động lại để nhận cảnh báo cháy/khói. Thông tin nhập ở "
+        "phần kiểm tra chỉ được giữ tạm thời trong bộ nhớ và chỉ gửi khi bạn bấm nút kiểm tra."
     )
     tg = _telegram_summary(cam_system)
     t1, t2, t3, t4 = st.columns(4)
-    t1.metric("Status", tg["state"])
-    t2.metric("Pending", tg["pending"])
-    t3.metric("Failed / ambiguous", tg["failed"])
-    t4.metric("Last API acknowledgment", tg["last_ack"] or "None")
+    t1.metric("Trạng thái", TELEGRAM_STATE_LABELS_VI.get(tg["state"], tg["state"]))
+    t2.metric("Đang chờ gửi", tg["pending"])
+    t3.metric("Thất bại / chưa rõ", tg["failed"])
+    t4.metric("Telegram xác nhận gần nhất", tg["last_ack"] or "Chưa có")
 
-    st.markdown("### Administrator access")
+    st.markdown("### Quyền quản trị")
     st.session_state.setdefault("telegram_admin_authorized", False)
     with st.form("telegram_admin_auth_form"):
-        admin_token = st.text_input("Administrator API token", type="password", key="telegram_admin_token")
-        auth_submit = st.form_submit_button("Unlock Telegram controls")
+        admin_token = st.text_input("Mã truy cập quản trị API", type="password", key="telegram_admin_token")
+        auth_submit = st.form_submit_button("Mở khóa cài đặt Telegram")
     if auth_submit:
         expected_admin = os.getenv("FIREWATCH_API_TOKEN", "")
         st.session_state.telegram_admin_authorized = bool(
             expected_admin and secrets.compare_digest(admin_token, expected_admin)
         )
         if st.session_state.telegram_admin_authorized:
-            st.success("Administrator access verified for this browser session.")
+            st.success("Đã xác thực quyền quản trị cho phiên trình duyệt này.")
         else:
             st.session_state.telegram_admin_authorized = False
-            st.error("Administrator token was not accepted.")
+            st.error("Mã quản trị không hợp lệ.")
 
     if not st.session_state.telegram_admin_authorized:
-        st.info("Verify the administrator token to test delivery or change the enabled setting.")
+        st.info("Nhập mã quản trị để kiểm tra gửi tin nhắn hoặc bật/tắt cảnh báo Telegram.")
     else:
         dispatcher = cam_system.telegram_alerts
         if dispatcher.enabled:
-            if st.button("Disable Telegram event alerts", key="telegram_disable"):
+            if st.button("Tắt gửi cảnh báo sự kiện qua Telegram", key="telegram_disable"):
                 st.session_state.telegram_action_future = (
                     "disable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/disable")
                 )
         else:
-            if st.button("Enable Telegram event alerts", key="telegram_enable"):
+            if st.button("Bật gửi cảnh báo sự kiện qua Telegram", key="telegram_enable"):
                 st.session_state.telegram_action_future = (
                     "enable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/enable")
                 )
@@ -2724,21 +2748,22 @@ elif st.session_state.nav_page == "Telegram":
             if action_future.done():
                 try:
                     action_future.result()
-                    st.success(f"Telegram event alerts {action_name}d. Detection and SQLite event logging continue independently.")
+                    action_label = "đã bật" if action_name == "enable" else "đã tắt"
+                    st.success(f"Đã cập nhật cài đặt: cảnh báo Telegram {action_label}. Hệ thống vẫn tiếp tục nhận diện và lưu sự kiện.")
                 except Exception as exc:
-                    st.error(f"Telegram setting was not changed: {exc}")
+                    st.error(f"Không thể thay đổi cài đặt Telegram: {exc}")
                 del st.session_state.telegram_action_future
                 st.rerun()
             else:
-                st.info("Updating Telegram setting in the background.")
-                if st.button("Refresh setting status", key="telegram_action_refresh"):
+                st.info("Đang cập nhật cài đặt Telegram ở chế độ nền.")
+                if st.button("Cập nhật trạng thái", key="telegram_action_refresh"):
                     st.rerun()
 
-        st.markdown("### Test connection")
+        st.markdown("### Gửi tin nhắn kiểm tra")
         with st.form("telegram_test_form"):
-            test_token = st.text_input("Bot Token (blank uses service environment)", type="password")
-            test_chat_id = st.text_input("Chat ID (blank uses service environment)")
-            test_submit = st.form_submit_button("Test Connection")
+            test_token = st.text_input("Mã bot (để trống sẽ dùng cấu hình máy chủ)", type="password")
+            test_chat_id = st.text_input("Chat ID (để trống sẽ dùng cấu hình máy chủ)")
+            test_submit = st.form_submit_button("Gửi tin nhắn kiểm tra")
         if test_submit:
             payload = {key: value for key, value in {
                 "token": test_token.strip(), "chat_id": test_chat_id.strip()
@@ -2751,21 +2776,22 @@ elif st.session_state.nav_page == "Telegram":
             if test_future.done():
                 try:
                     result = test_future.result()
-                    st.success(f"{result['message']} Acknowledged at {result['acknowledged_at']}.")
+                    st.success(f"Telegram đã xác nhận tin nhắn kiểm tra lúc {result['acknowledged_at']}.")
                 except Exception as exc:
-                    st.error(f"Test message failed: {exc}")
+                    st.error(f"Gửi tin nhắn kiểm tra thất bại: {exc}")
                 del st.session_state.telegram_test_future
                 st.rerun()
             else:
-                st.info("Test message is running in the background.")
-                if st.button("Refresh test result", key="telegram_test_refresh"):
+                st.info("Đang gửi tin nhắn kiểm tra ở chế độ nền.")
+                if st.button("Cập nhật kết quả", key="telegram_test_refresh"):
                     st.rerun()
 
-    st.markdown("### Event delivery history")
+    st.markdown("### Lịch sử gửi cảnh báo")
     status_filter = st.selectbox(
-        "Filter by delivery status",
+        "Lọc theo trạng thái gửi",
         ["All", "QUEUED", "SENDING", "RETRY_PENDING", "DELIVERED", "FAILED", "AMBIGUOUS"],
         key="telegram_delivery_filter",
+        format_func=lambda value: "Tất cả" if value == "All" else TELEGRAM_DELIVERY_LABELS_VI[value],
     )
     delivery_sql = """SELECT d.event_id,e.camera_name,e.label,d.event_confirmed_at,d.queued_at,
         d.attempt_started_at,d.telegram_acknowledged_at,d.status,d.attempt_count,d.error_category,d.error_message
@@ -2783,22 +2809,26 @@ elif st.session_state.nav_page == "Telegram":
             latency = (datetime.fromisoformat(row[6]) - datetime.fromisoformat(row[3])).total_seconds() * 1000 if row[6] and row[3] else None
         except (TypeError, ValueError):
             latency = None
-        history.append(dict(zip(("Event ID", "Camera", "Event Type", "Confirmed At", "Queued At",
-                                 "Attempt Started At", "Acknowledged At", "Delivery Status",
-                                 "Attempt Count", "Error Category", "Error Message"), row))
-                       | {"Latency ms": round(latency, 3) if latency is not None else None})
+        record = dict(zip(("Mã sự kiện", "Camera", "Loại sự kiện", "Thời điểm xác nhận", "Thời điểm xếp hàng",
+                           "Bắt đầu gửi", "Telegram xác nhận", "Trạng thái gửi",
+                           "Số lần thử", "Mã lỗi", "Chi tiết lỗi"), row))
+        record["Loại sự kiện"] = {"FIRE": "CHÁY", "SMOKE": "KHÓI"}.get(record["Loại sự kiện"], record["Loại sự kiện"])
+        record["Trạng thái gửi"] = _telegram_delivery_label_vi(record["Trạng thái gửi"])
+        history.append(record | {"Độ trễ (ms)": round(latency, 3) if latency is not None else None})
     if history:
         st.dataframe(pd.DataFrame(history), use_container_width=True, hide_index=True)
     else:
-        st.info("No Telegram event deliveries have been recorded yet.")
-    if any(item["Delivery Status"] == "AMBIGUOUS" for item in history):
-        st.warning("AMBIGUOUS means Telegram may have accepted a message but its response was lost. Retrying may create a duplicate.")
+        st.info("Chưa có lịch sử gửi cảnh báo Telegram.")
+    if any(item["Trạng thái gửi"] == TELEGRAM_DELIVERY_LABELS_VI["AMBIGUOUS"] for item in history):
+        st.warning("Trạng thái ‘Chưa rõ kết quả’ nghĩa là Telegram có thể đã nhận tin nhưng phản hồi bị thất lạc. Gửi lại có thể tạo tin nhắn trùng.")
 
     with cam_system.telegram_alerts._connect() as conn:
         test_rows = conn.execute(
             "SELECT requested_at,status,acknowledged_at,error_category FROM telegram_test_deliveries ORDER BY test_id DESC LIMIT 10"
         ).fetchall()
     if test_rows:
-        st.markdown("### Test message history (excluded from fire events)")
-        st.dataframe(pd.DataFrame(test_rows, columns=["Requested At", "Status", "Acknowledged At", "Error Category"]),
+        st.markdown("### Lịch sử tin nhắn kiểm tra (không tính là sự kiện cháy)")
+        test_history = pd.DataFrame(test_rows, columns=["Thời điểm yêu cầu", "Trạng thái", "Telegram xác nhận", "Mã lỗi"])
+        test_history["Trạng thái"] = test_history["Trạng thái"].map(TELEGRAM_DELIVERY_LABELS_VI).fillna(test_history["Trạng thái"])
+        st.dataframe(test_history,
                      use_container_width=True, hide_index=True)

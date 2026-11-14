@@ -62,12 +62,12 @@ def send_test_message(token: str, chat_id: str, timeout: float = 8.0) -> str:
 
     timestamp = datetime.now(timezone.utc)
     message = (
-        "FIREWATCH — CONNECTION TEST\n\n"
-        "This Telegram bot acknowledged a FireWatch test message.\n\n"
-        "Type: TEST MESSAGE\n"
-        "Source: FireWatch Dashboard\n"
-        f"Time: {timestamp.isoformat(timespec='seconds')}\n\n"
-        "This is not a real fire alarm."
+        "FIREWATCH — KIỂM TRA KẾT NỐI\n\n"
+        "Bot Telegram đã gửi thành công tin nhắn kiểm tra của FireWatch.\n\n"
+        "Loại: TIN NHẮN KIỂM TRA\n"
+        "Nguồn: Bảng điều khiển FireWatch\n"
+        f"Thời gian: {timestamp.isoformat(timespec='seconds')}\n\n"
+        "Đây không phải cảnh báo cháy thật."
     )
     body = urlencode({"chat_id": safe_chat_id, "text": message}).encode("utf-8")
     request = Request(f"https://api.telegram.org/bot{safe_token}/sendMessage", data=body,
@@ -377,11 +377,14 @@ class TelegramAlertDispatcher:
         """Send an event snapshot, falling back to text when it is unavailable."""
         image = Path(str(event.get("image_path") or ""))
         snapshot = self._read_snapshot(image)
-        caption = (f"Firewatch confirmed event #{event['id']}\n"
+        raw_label = str(event.get("label", "unknown")).upper()
+        event_label = {"FIRE": "CHÁY (FIRE)", "SMOKE": "KHÓI (SMOKE)"}.get(raw_label, raw_label)
+        caption = (f"🔥 FIREWATCH — CẢNH BÁO ĐÃ XÁC NHẬN #{event['id']}\n"
                    f"Camera: {event.get('camera_name', 'unknown')} / {event.get('camera_display_name', 'unknown')}\n"
-                   f"Class: {event.get('label', 'unknown')} ({float(event.get('confidence', 0)):.1%})\n"
-                   f"Confirmed: {event.get('event_confirmed_at') or event.get('timestamp', 'unknown')}\n"
-                   f"Event state: {event.get('alert_level', 'CONFIRMED')}")
+                   f"Loại sự kiện: {event_label}\n"
+                   f"Độ tin cậy: {float(event.get('confidence', 0)):.1%}\n"
+                   f"Thời điểm xác nhận: {event.get('event_confirmed_at') or event.get('timestamp', 'unknown')}\n"
+                   "Trạng thái: ĐÃ XÁC NHẬN")
         if snapshot is not None:
             boundary = "----firewatch" + uuid.uuid4().hex
             body = bytearray()
