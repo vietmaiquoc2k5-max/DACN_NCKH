@@ -1164,6 +1164,10 @@ def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact:
             f"AI calls {accounting.get('inference_attempts', 0)} · "
             f"completed {accounting.get('inference_completed', 0)} · "
             f"busy {accounting.get('inference_skipped_busy', 0)} · "
+            f"busy ratio {snap.get('inference_busy_ratio', 0.0):.0%} | "
+            f"last success age {snap.get('last_successful_inference_age_seconds') if snap.get('last_successful_inference_age_seconds') is not None else 'unknown'} s | "
+            f"max gap {snap.get('max_inference_gap_seconds', 0.0):.2f} s | "
+            f"frame age {snap.get('frame_age_at_inference_ms', 0.0):.1f} ms | "
             f"errors {accounting.get('inference_errors', 0)}"
         )
     with action_col:

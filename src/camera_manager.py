@@ -19,6 +19,7 @@ import re
 import json
 import sqlite3
 import logging
+import math
 from contextlib import closing
 import threading
 from pathlib import Path
@@ -370,6 +371,8 @@ class CameraStreamWorker:
             "capture_frames_skipped_sampling": 0,
             "inference_requests": 0,
             "inference_skipped_rate_limit": 0,
+            "inference_skipped_out_of_order_timestamp": 0,
+            "temporal_timestamp_fallbacks": 0,
             "inference_attempts": 0,
             "inference_completed": 0,
             "inference_skipped_busy": 0,
@@ -411,7 +414,13 @@ class CameraStreamWorker:
         self.reconnect_attempts: int = 0
         self.resolution_str: str = "N/A"
         self.latest_raw_bgr: Optional[np.ndarray] = None
+        # Same-frame acquisition clock; monotonic seconds are used only for
+        # durations inside this process (never persisted as calendar time).
         self.latest_capture_monotonic: float = 0.0
+        self.last_successful_inference_monotonic: Optional[float] = None
+        self.max_inference_gap_seconds: float = 0.0
+        self.frame_age_at_inference_ms: float = 0.0
+        self._last_temporal_timestamp: Optional[float] = None
 
         # Trạng thái phát hiện hiện tại
         self.alert_level: str = "SAFE"  # "SAFE" | "SUSPECT" | "FIRE" | "CONN_ERROR"
@@ -490,6 +499,10 @@ class CameraStreamWorker:
             self.infer_ms = 0.0
             self.end_to_end_latency_ms = 0.0
             self._inference_ticks.clear()
+            self.last_successful_inference_monotonic = None
+            self.max_inference_gap_seconds = 0.0
+            self.frame_age_at_inference_ms = 0.0
+            self._last_temporal_timestamp = None
             self.latest_raw_bgr = None
             self.status = "RECONNECTING" if reconnecting else "CONNECTING"
             self.lifecycle_state = self.status
@@ -689,6 +702,16 @@ class CameraStreamWorker:
                 continue
             last_inference_at = now_perf
             infer_input = raw_frame.copy()
+            inference_started_at = time.monotonic()
+            if not math.isfinite(captured_at) or captured_at <= 0:
+                captured_at = inference_started_at
+                with self.lock:
+                    self.pipeline_counters["temporal_timestamp_fallbacks"] += 1
+            if self._last_temporal_timestamp is not None and captured_at <= self._last_temporal_timestamp:
+                with self.lock:
+                    self.pipeline_counters["inference_skipped_out_of_order_timestamp"] += 1
+                continue
+            frame_age_ms = max(0.0, inference_started_at - captured_at) * 1000.0
 
             self.verifier.update_params(
                 window_size_n=self.settings.window_size_n,
@@ -742,9 +765,10 @@ class CameraStreamWorker:
                 continue
             if result.status != InferenceStatus.COMPLETED or not self.running:
                 continue
+            self._last_temporal_timestamp = captured_at
             raw_boxes = result.detections
             new_infer_ms = result.inference_ms
-            processed_at = time.perf_counter()
+            processed_at = time.monotonic()
             with self.lock:
                 self.inference_frames += 1
                 self.pipeline_counters["inference_frames_processed"] += 1
@@ -754,6 +778,13 @@ class CameraStreamWorker:
                     if len(self._inference_ticks) > 1 else 0.0
                 )
                 self.end_to_end_latency_ms = round(max(0.0, processed_at - captured_at) * 1000.0, 2)
+                if self.last_successful_inference_monotonic is not None:
+                    self.max_inference_gap_seconds = max(
+                        self.max_inference_gap_seconds,
+                        max(0.0, inference_started_at - self.last_successful_inference_monotonic),
+                    )
+                self.last_successful_inference_monotonic = inference_started_at
+                self.frame_age_at_inference_ms = round(frame_age_ms, 2)
                 self.dropped_frames = max(0, self.frame_count - self.inference_frames)
                 self.queue_depth = min(1, max(0, self.frame_count - fid))
 
@@ -765,7 +796,12 @@ class CameraStreamWorker:
                 self.pipeline_counters["tracker_output_tracks"] += sum(1 for b in tracked_boxes if b.track_id > 0)
 
             # 2. Cập nhật Temporal Visual Features cho từng track
-            now_ts = time.time()
+            # Temporal calculations use the acquisition timestamp attached to
+            # this exact frame. Detector wait/inference time must not extend
+            # the observed event duration. For prerecorded sources this is
+            # playback acquisition time, not media PTS (backend PTS is not
+            # assumed reliable); event/database timestamps remain UTC wall time.
+            now_ts = captured_at
             feature_map = {}
             for b in tracked_boxes:
                 if b.track_id > 0:
@@ -963,7 +999,7 @@ class CameraStreamWorker:
                             break
 
                 next_frame_count = self.frame_count + 1
-                captured_at = time.perf_counter()
+                captured_at = time.monotonic()
                 fh, fw = frame.shape[:2]
                 if next_frame_count == 1 or next_frame_count % 30 == 0:
                     self.resolution_str = f"{fw}x{fh}"
@@ -1088,10 +1124,21 @@ class CameraStreamWorker:
                 "display_fps": self.display_fps,
                 "infer_ms": self.infer_ms,
                 "end_to_end_latency_ms": self.end_to_end_latency_ms,
+                "temporal_clock_semantics": "capture_monotonic; prerecorded inputs use playback acquisition time, not media PTS",
                 "captured_frames": self.frame_count,
                 "processed_frames": self.inference_frames,
                 # Lifetime totals since this worker instance was created.
                 "inference_accounting": dict(self.pipeline_counters),
+                "inference_busy_ratio": round(
+                    self.pipeline_counters["inference_skipped_busy"] /
+                    max(1, self.pipeline_counters["inference_attempts"]), 4
+                ),
+                "last_successful_inference_age_seconds": (
+                    round(max(0.0, time.monotonic() - self.last_successful_inference_monotonic), 3)
+                    if self.last_successful_inference_monotonic is not None else None
+                ),
+                "max_inference_gap_seconds": round(self.max_inference_gap_seconds, 3),
+                "frame_age_at_inference_ms": self.frame_age_at_inference_ms,
                 "dropped_frames": self.dropped_frames,
                 "queue_depth": self.queue_depth,
                 "displayed_frames": self.displayed_frames,

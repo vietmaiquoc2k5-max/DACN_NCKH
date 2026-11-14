@@ -5,6 +5,7 @@ import numpy as np
 
 from src.camera_manager import MultiCameraManager
 from src.detector import DetectionResult, InferenceStatus
+from src.temporal_verifier import DetectionBox
 
 
 def _detector(monkeypatch):
@@ -18,6 +19,37 @@ def _detector(monkeypatch):
         "error": "",
     }
     return detector
+
+
+def _prime_successful_temporal_pass(worker, timestamp, monkeypatch):
+    """Arrange one deterministic inference pass and capture temporal inputs."""
+    from unittest.mock import MagicMock
+
+    worker.running = True
+    worker.status = "CONNECTED"
+    worker.frame_count = 7
+    worker.latest_raw_bgr = np.full((48, 64, 3), 17, dtype=np.uint8)
+    worker.latest_capture_monotonic = timestamp
+    worker.infer_event.set()
+    worker.features_extractor = MagicMock()
+    worker.tracker.update.return_value = [DetectionBox(
+        cls_id=1, label="FIRE", confidence=0.8, xyxy=(2, 2, 20, 20),
+        norm_xywh=(0.2, 0.2, 0.3, 0.3), track_id=5,
+    )]
+    result = {
+        "valid_boxes": [], "alert_level": "SAFE", "primary_label": "",
+        "max_confidence": 0.0, "active_hits": 0, "window_size": 8,
+        "temporal_score": 0.0, "should_trigger_db_alert": False,
+        "confirmed_track_ids": [],
+    }
+    worker.verifier = MagicMock()
+    worker.verifier.update.return_value = result
+    worker.verifier.update.side_effect = lambda *args, **kwargs: (
+        setattr(worker, "running", False) or result
+    )
+    worker.detector.detect_frame_result.return_value = DetectionResult(
+        InferenceStatus.COMPLETED, [], 5000.0
+    )
 
 
 def test_camera_settings_restore_with_stable_id_without_opening_camera(tmp_path, monkeypatch):
@@ -145,6 +177,74 @@ def test_camera_counts_completed_empty_inference_separately_from_busy(tmp_path, 
         assert accounting["inference_skipped_busy"] == 0
         assert accounting["detector_output_detections"] == 0
         assert accounting["inference_frames_processed"] == 0
+    finally:
+        manager.close()
+
+
+def test_capture_timestamp_and_frame_are_propagated_to_temporal_verifier(tmp_path, monkeypatch):
+    manager = MultiCameraManager(db_path=str(tmp_path / "capture-time.db"),
+                                 auto_assign_videos=False, detector=_detector(monkeypatch))
+    worker = manager.workers["CAM-01"]
+    _prime_successful_temporal_pass(worker, 123.5, monkeypatch)
+    try:
+        worker._infer_loop()
+        args, kwargs = worker.verifier.update.call_args
+        assert kwargs["timestamp_sec"] == 123.5
+        assert worker.detector.detect_frame_result.call_args.args[0][0, 0, 0] == 17
+        assert worker.features_extractor.update.call_args.kwargs["timestamp_sec"] == 123.5
+        assert worker.get_snapshot()["temporal_clock_semantics"].startswith("capture_monotonic")
+    finally:
+        manager.close()
+
+
+def test_out_of_order_capture_timestamp_is_rejected_before_inference(tmp_path, monkeypatch):
+    import threading
+
+    manager = MultiCameraManager(db_path=str(tmp_path / "out-of-order.db"),
+                                 auto_assign_videos=False, detector=_detector(monkeypatch))
+    worker = manager.workers["CAM-01"]
+    worker.running = True
+    worker.status = "CONNECTED"
+    worker.frame_count = 2
+    worker.latest_raw_bgr = np.zeros((8, 8, 3), dtype=np.uint8)
+    worker.latest_capture_monotonic = 9.0
+    worker._last_temporal_timestamp = 10.0
+    worker.infer_event.set()
+    rejected = threading.Event()
+
+    class StopAfterRejection:
+        def __init__(self):
+            self.lock = threading.Lock()
+
+        def __enter__(self):
+            self.lock.acquire()
+
+        def __exit__(self, *_args):
+            self.lock.release()
+            if worker.pipeline_counters["inference_skipped_out_of_order_timestamp"]:
+                worker.running = False
+                rejected.set()
+
+    worker.lock = StopAfterRejection()
+    try:
+        worker._infer_loop()
+        assert rejected.is_set()
+        assert worker.detector.detect_frame_result.call_count == 0
+        assert worker.get_snapshot()["inference_accounting"]["inference_skipped_out_of_order_timestamp"] == 1
+    finally:
+        worker.running = False
+        manager.close()
+
+
+def test_missing_capture_timestamp_uses_monotonic_fallback(tmp_path, monkeypatch):
+    manager = MultiCameraManager(db_path=str(tmp_path / "missing-time.db"),
+                                 auto_assign_videos=False, detector=_detector(monkeypatch))
+    worker = manager.workers["CAM-01"]
+    _prime_successful_temporal_pass(worker, 0.0, monkeypatch)
+    try:
+        worker._infer_loop()
+        assert worker.verifier.update.call_args.kwargs["timestamp_sec"] > 0.0
+        assert worker.get_snapshot()["inference_accounting"]["temporal_timestamp_fallbacks"] == 1
     finally:
         manager.close()
 

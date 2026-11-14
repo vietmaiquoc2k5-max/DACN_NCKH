@@ -148,6 +148,8 @@ def run(duration_seconds: int, sources: list[str], output_dir: Path) -> int:
                             "cam_id", "status", "capture_fps", "inference_fps", "display_fps",
                             "infer_ms", "end_to_end_latency_ms", "dropped_frames", "queue_depth",
                             "reconnect_attempts", "captured_frames", "processed_frames",
+                            "inference_busy_ratio", "last_successful_inference_age_seconds",
+                            "max_inference_gap_seconds", "frame_age_at_inference_ms",
                         )
                     }, **_resource_usage(bool(environment["cuda_available"]))}) + "\n")
                 metrics.flush()
@@ -205,6 +207,10 @@ def run(duration_seconds: int, sources: list[str], output_dir: Path) -> int:
                 "inference_latency_p95_ms": percentile(sorted(float(r["infer_ms"]) for r in camera_samples if r.get("infer_ms") is not None), .95),
                 "end_to_end_latency_p50_ms": percentile(sorted(float(r["end_to_end_latency_ms"]) for r in camera_samples if r.get("end_to_end_latency_ms") is not None), .50),
                 "end_to_end_latency_p95_ms": percentile(sorted(float(r["end_to_end_latency_ms"]) for r in camera_samples if r.get("end_to_end_latency_ms") is not None), .95),
+                "inference_busy_ratio_last_sample": camera_samples[-1].get("inference_busy_ratio") if camera_samples else None,
+                "last_successful_inference_age_seconds": camera_samples[-1].get("last_successful_inference_age_seconds") if camera_samples else None,
+                "max_inference_gap_seconds": camera_samples[-1].get("max_inference_gap_seconds") if camera_samples else None,
+                "frame_age_at_inference_ms_last_sample": camera_samples[-1].get("frame_age_at_inference_ms") if camera_samples else None,
                 "dropped_frames_last_sample": camera_samples[-1].get("dropped_frames", 0) if camera_samples else None,
                 "camera_failures": sum(1 for row in camera_samples if row.get("status") == "ERROR"),
             }
