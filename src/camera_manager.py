@@ -37,7 +37,7 @@ from src.config import (
     mask_rtsp_credentials,
     infer_source_type,
 )
-from src.detector import SharedFireSmokeDetector
+from src.detector import InferenceStatus, SharedFireSmokeDetector
 from src.temporal_verifier import TemporalVerifier, DetectionBox
 from src.bytetrack_adapter import ByteTrackAdapter
 from src.temporal_features import TemporalFeatureExtractor
@@ -364,7 +364,31 @@ class CameraStreamWorker:
         self.stop_event = threading.Event()
         self.lifecycle_lock = threading.RLock()
         self.lock = threading.Lock()
-        self.pipeline_counters = {"detector_inference_calls": 0, "detector_output_detections": 0, "tracker_calls": 0, "tracker_input_detections": 0, "tracker_output_tracks": 0, "temporal_verifier_calls": 0, "temporal_input_tracks_detections": 0, "temporal_confirmation_outputs": 0, "event_evaluation_calls": 0, "confirmed_events": 0}
+        self.pipeline_counters = {
+            # Legacy totals are retained; detector_inference_calls now counts
+            # actual API attempts, including bounded lock-busy outcomes.
+            "capture_frames_skipped_sampling": 0,
+            "inference_requests": 0,
+            "inference_skipped_rate_limit": 0,
+            "inference_attempts": 0,
+            "inference_completed": 0,
+            "inference_skipped_busy": 0,
+            "inference_unavailable": 0,
+            "inference_invalid_input": 0,
+            "inference_errors": 0,
+            "inference_frames_processed": 0,
+            "detector_inference_calls": 0,
+            "detector_output_detections": 0,
+            "tracker_calls": 0,
+            "tracker_input_detections": 0,
+            "tracker_output_tracks": 0,
+            "temporal_verifier_calls": 0,
+            "temporal_input_tracks_detections": 0,
+            "temporal_confirmation_outputs": 0,
+            "event_evaluation_calls": 0,
+            "confirmed_events": 0,
+        }
+        self._last_inference_error_log_at = 0.0
 
         # Chỉ số FPS đọc khung hình và FPS suy luận model riêng biệt
         self.capture_fps: float = 0.0
@@ -655,9 +679,13 @@ class CameraStreamWorker:
                 continue
 
             self.last_inferred_frame_id = fid
+            with self.lock:
+                self.pipeline_counters["inference_requests"] += 1
             min_interval = 1.0 / max(1, min(60, int(self.config.inference_fps)))
             now_perf = time.perf_counter()
             if now_perf - last_inference_at < min_interval:
+                with self.lock:
+                    self.pipeline_counters["inference_skipped_rate_limit"] += 1
                 continue
             last_inference_at = now_perf
             infer_input = raw_frame.copy()
@@ -670,20 +698,56 @@ class CameraStreamWorker:
                 feature_threshold=getattr(self.settings, "feature_threshold", 0.0),
             )
 
-            raw_boxes, new_infer_ms = self.detector.detect_frame(
-                infer_input,
-                conf_threshold=self.settings.conf_threshold,
-                imgsz=self.settings.imgsz,
-                non_blocking=True,
-            )
             with self.lock:
+                self.pipeline_counters["inference_attempts"] += 1
                 self.pipeline_counters["detector_inference_calls"] += 1
-                self.pipeline_counters["detector_output_detections"] += len(raw_boxes or [])
-            if raw_boxes is None or not self.running:
+            try:
+                result = self.detector.detect_frame_result(
+                    infer_input,
+                    conf_threshold=self.settings.conf_threshold,
+                    imgsz=self.settings.imgsz,
+                    non_blocking=True,
+                )
+            except Exception as exc:
+                now_log = time.monotonic()
+                with self.lock:
+                    self.pipeline_counters["inference_errors"] += 1
+                if not self._last_inference_error_log_at or now_log - self._last_inference_error_log_at >= 30.0:
+                    LOGGER.error(
+                        "Camera %s detector inference failed (%s)",
+                        self.config.cam_id,
+                        type(exc).__name__,
+                    )
+                    self._last_inference_error_log_at = now_log
                 continue
+
+            with self.lock:
+                if result.status == InferenceStatus.BUSY:
+                    self.pipeline_counters["inference_skipped_busy"] += 1
+                elif result.status == InferenceStatus.UNAVAILABLE:
+                    self.pipeline_counters["inference_unavailable"] += 1
+                elif result.status == InferenceStatus.INVALID_INPUT:
+                    self.pipeline_counters["inference_invalid_input"] += 1
+                elif result.status == InferenceStatus.COMPLETED and result.detections is not None:
+                    self.pipeline_counters["inference_completed"] += 1
+                    self.pipeline_counters["detector_output_detections"] += len(result.detections)
+                else:
+                    self.pipeline_counters["inference_errors"] += 1
+                    result = None
+            if result is None:
+                now_log = time.monotonic()
+                if not self._last_inference_error_log_at or now_log - self._last_inference_error_log_at >= 30.0:
+                    LOGGER.error("Camera %s detector returned an invalid result", self.config.cam_id)
+                    self._last_inference_error_log_at = now_log
+                continue
+            if result.status != InferenceStatus.COMPLETED or not self.running:
+                continue
+            raw_boxes = result.detections
+            new_infer_ms = result.inference_ms
             processed_at = time.perf_counter()
             with self.lock:
                 self.inference_frames += 1
+                self.pipeline_counters["inference_frames_processed"] += 1
                 self._inference_ticks.append(processed_at)
                 self.inference_fps = (
                     round((len(self._inference_ticks) - 1) / max(1e-6, self._inference_ticks[-1] - self._inference_ticks[0]), 2)
@@ -917,15 +981,18 @@ class CameraStreamWorker:
 
                 # Gửi khung hình mới cho luồng _infer_loop theo chu kỳ frame_skip mà không chặn luồng hiển thị
                 skip_n = max(1, int(self.settings.frame_skip))
+                should_infer = (next_frame_count % skip_n == 0) or (next_frame_count == 1)
                 with self.lock:
                     self.frame_count = next_frame_count
                     self.latest_raw_bgr = proc_frame
                     self.latest_capture_monotonic = captured_at
                     self.queue_depth = min(1, max(0, self.frame_count - self.last_inferred_frame_id))
+                    if not should_infer:
+                        self.pipeline_counters["capture_frames_skipped_sampling"] += 1
                     valid_boxes = list(self.last_boxes)
                     curr_alert_level = self.alert_level if self.alert_level != "CONN_ERROR" else "SAFE"
 
-                if (next_frame_count % skip_n == 0) or (next_frame_count == 1):
+                if should_infer:
                     self.infer_event.set()
 
                 # Tính FPS đọc khung hình (capture_fps)
@@ -1023,6 +1090,8 @@ class CameraStreamWorker:
                 "end_to_end_latency_ms": self.end_to_end_latency_ms,
                 "captured_frames": self.frame_count,
                 "processed_frames": self.inference_frames,
+                # Lifetime totals since this worker instance was created.
+                "inference_accounting": dict(self.pipeline_counters),
                 "dropped_frames": self.dropped_frames,
                 "queue_depth": self.queue_depth,
                 "displayed_frames": self.displayed_frames,

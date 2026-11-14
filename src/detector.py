@@ -11,6 +11,8 @@
 import os
 import time
 import threading
+from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional, Any
 
@@ -21,6 +23,24 @@ from ultralytics import YOLO
 
 from src.config import CANDIDATE_MODEL_PATHS, CLASS_COLORS_BGR, PROJECT_ROOT
 from src.temporal_verifier import DetectionBox
+
+
+class InferenceStatus(str, Enum):
+    """Outcome of one shared-detector request."""
+
+    COMPLETED = "COMPLETED"
+    BUSY = "BUSY"
+    UNAVAILABLE = "UNAVAILABLE"
+    INVALID_INPUT = "INVALID_INPUT"
+
+
+@dataclass(frozen=True)
+class DetectionResult:
+    """Explicit model-call outcome; an empty detection list is still completed."""
+
+    status: InferenceStatus
+    detections: Optional[List[DetectionBox]]
+    inference_ms: float
 
 
 class SharedFireSmokeDetector:
@@ -172,17 +192,43 @@ class SharedFireSmokeDetector:
         imgsz: Optional[int] = None,
         non_blocking: bool = False,
     ) -> Tuple[Optional[List[DetectionBox]], float]:
-        """Chạy suy luận YOLO trên một khung hình.
+        """Run YOLO while preserving the legacy tuple API.
 
-        Nếu `non_blocking=True` và model đang bận xử lý luồng camera khác, trả về `(None, 0.0)`
-        ngay lập tức để luồng đọc camera hiện tại không bị khựng hình.
+        `None` detections continues to mean the bounded non-blocking lock was
+        busy. Use :meth:`detect_frame_result` when callers need to distinguish
+        that outcome from unavailable models and completed empty detections.
         """
-        if not self.model_loaded or self.model is None or frame is None:
-            return [], 0.0
+        result = self.detect_frame_result(
+            frame, conf_threshold=conf_threshold, imgsz=imgsz, non_blocking=non_blocking
+        )
+        if result.status == InferenceStatus.BUSY:
+            return None, result.inference_ms
+        return result.detections or [], result.inference_ms
 
-        h, w = frame.shape[:2]
+    def detect_frame_result(
+        self,
+        frame: np.ndarray,
+        conf_threshold: Optional[float] = None,
+        imgsz: Optional[int] = None,
+        non_blocking: bool = False,
+    ) -> DetectionResult:
+        """Run one inference and report completion, contention or availability.
+
+        Non-blocking mode waits at most 4 ms for the shared model lock. A
+        completed request may contain zero detections; busy and unavailable
+        requests are represented by distinct statuses.
+        """
+        if not self.model_loaded or self.model is None:
+            return DetectionResult(InferenceStatus.UNAVAILABLE, None, 0.0)
+        if frame is None:
+            return DetectionResult(InferenceStatus.INVALID_INPUT, None, 0.0)
+
+        try:
+            h, w = frame.shape[:2]
+        except (AttributeError, TypeError, ValueError):
+            return DetectionResult(InferenceStatus.INVALID_INPUT, None, 0.0)
         if h <= 0 or w <= 0:
-            return [], 0.0
+            return DetectionResult(InferenceStatus.INVALID_INPUT, None, 0.0)
 
         conf_val = float(conf_threshold) if conf_threshold is not None else self.conf_threshold
         run_imgsz = int(imgsz) if imgsz is not None else self.imgsz
@@ -190,11 +236,15 @@ class SharedFireSmokeDetector:
         if non_blocking:
             acquired = self.infer_lock.acquire(blocking=True, timeout=0.004)
             if not acquired:
-                return None, 0.0
+                return DetectionResult(InferenceStatus.BUSY, None, 0.0)
         else:
             self.infer_lock.acquire()
 
         try:
+            # Model replacement uses this same lock, so validate after acquiring
+            # it as well as before attempting the bounded wait.
+            if not self.model_loaded or self.model is None:
+                return DetectionResult(InferenceStatus.UNAVAILABLE, None, 0.0)
             t0 = time.perf_counter()
             predict_kwargs: Dict[str, Any] = {
                 "conf": conf_val,
@@ -214,11 +264,11 @@ class SharedFireSmokeDetector:
 
         detections: List[DetectionBox] = []
         if not results:
-            return detections, infer_ms
+            return DetectionResult(InferenceStatus.COMPLETED, detections, infer_ms)
 
         boxes = results[0].boxes
         if boxes is None or len(boxes) == 0:
-            return detections, infer_ms
+            return DetectionResult(InferenceStatus.COMPLETED, detections, infer_ms)
 
         # Chuyển toàn bộ tensor sang CPU/numpy trong 1 lần gọi duy nhất thay vì lặp từng box.cpu()
         xyxy_arr = boxes.xyxy.detach().cpu().numpy()
@@ -258,7 +308,7 @@ class SharedFireSmokeDetector:
                 )
             )
 
-        return detections, infer_ms
+        return DetectionResult(InferenceStatus.COMPLETED, detections, infer_ms)
 
     @staticmethod
     def draw_annotations(

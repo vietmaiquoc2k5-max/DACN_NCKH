@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 import numpy as np
 
 from src.camera_manager import MultiCameraManager
+from src.detector import DetectionResult, InferenceStatus
 
 
 def _detector(monkeypatch):
@@ -104,12 +105,71 @@ def test_camera_inference_skips_busy_shared_detector_instead_of_queuing(tmp_path
 
     def finish_inference(*_args, **_kwargs):
         worker.running = False
-        return [], 0.0
+        return DetectionResult(InferenceStatus.BUSY, None, 0.0)
 
-    worker.detector.detect_frame.side_effect = finish_inference
+    worker.detector.detect_frame_result.side_effect = finish_inference
     try:
         worker._infer_loop()
-        kwargs = worker.detector.detect_frame.call_args.kwargs
+        kwargs = worker.detector.detect_frame_result.call_args.kwargs
         assert kwargs["non_blocking"] is True
+        accounting = worker.get_snapshot()["inference_accounting"]
+        assert accounting["inference_attempts"] == 1
+        assert accounting["detector_inference_calls"] == 1
+        assert accounting["inference_skipped_busy"] == 1
+        assert accounting["inference_completed"] == 0
+        assert accounting["detector_output_detections"] == 0
+    finally:
+        manager.close()
+
+
+def test_camera_counts_completed_empty_inference_separately_from_busy(tmp_path, monkeypatch):
+    manager = MultiCameraManager(db_path=str(tmp_path / "completed-empty-inference.db"),
+                                 auto_assign_videos=False, detector=_detector(monkeypatch))
+    worker = manager.workers["CAM-01"]
+    worker.running = True
+    worker.status = "CONNECTED"
+    worker.frame_count = 1
+    worker.latest_raw_bgr = np.zeros((48, 64, 3), dtype=np.uint8)
+    worker.infer_event.set()
+
+    def finish_inference(*_args, **_kwargs):
+        worker.running = False
+        return DetectionResult(InferenceStatus.COMPLETED, [], 1.25)
+
+    worker.detector.detect_frame_result.side_effect = finish_inference
+    try:
+        worker._infer_loop()
+        accounting = worker.get_snapshot()["inference_accounting"]
+        assert accounting["inference_attempts"] == 1
+        assert accounting["inference_completed"] == 1
+        assert accounting["inference_skipped_busy"] == 0
+        assert accounting["detector_output_detections"] == 0
+        assert accounting["inference_frames_processed"] == 0
+    finally:
+        manager.close()
+
+
+def test_camera_accounts_for_detector_exceptions_and_keeps_thread_loop_safe(tmp_path, monkeypatch):
+    manager = MultiCameraManager(db_path=str(tmp_path / "detector-error-inference.db"),
+                                 auto_assign_videos=False, detector=_detector(monkeypatch))
+    worker = manager.workers["CAM-01"]
+    worker.running = True
+    worker.status = "CONNECTED"
+    worker.frame_count = 1
+    worker.latest_raw_bgr = np.zeros((48, 64, 3), dtype=np.uint8)
+    worker.infer_event.set()
+
+    def fail_inference(*_args, **_kwargs):
+        worker.running = False
+        raise RuntimeError("synthetic model error")
+
+    worker.detector.detect_frame_result.side_effect = fail_inference
+    try:
+        worker._infer_loop()
+        accounting = worker.get_snapshot()["inference_accounting"]
+        assert accounting["inference_attempts"] == 1
+        assert accounting["detector_inference_calls"] == 1
+        assert accounting["inference_errors"] == 1
+        assert accounting["inference_completed"] == 0
     finally:
         manager.close()

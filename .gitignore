@@ -91,3 +91,7 @@ auto.crt
 .tools/mediamtx/*.key
 .tools/mediamtx/*.crt
 
+# Local Telegram diagnostic outputs (tracked already; remove from index separately)
+/telegram_test_error.txt
+/telegram_test_result.txt
+

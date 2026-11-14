@@ -1156,10 +1156,15 @@ def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact:
 
     stat_col, action_col = st.columns([1.55, 1])
     with stat_col:
+        accounting = snap.get("inference_accounting", {})
         st.caption(
             f"Capture {snap['capture_fps']:.1f} FPS · Inference {snap['inference_fps']:.1f} FPS · "
             f"Display ACK {snap.get('display_fps', 0.0):.1f} FPS · "
-            f"{snap.get('dropped_frames', 0)} dropped"
+            f"{snap.get('dropped_frames', 0)} dropped\n"
+            f"AI calls {accounting.get('inference_attempts', 0)} · "
+            f"completed {accounting.get('inference_completed', 0)} · "
+            f"busy {accounting.get('inference_skipped_busy', 0)} · "
+            f"errors {accounting.get('inference_errors', 0)}"
         )
     with action_col:
         if lc_state == "RUNNING":
