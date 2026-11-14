@@ -277,9 +277,6 @@ class TelegramAlertDispatcher:
             return False
         event_id = int(event["id"])
         image_path = Path(str(event.get("image_path") or ""))
-        if not self._valid_snapshot(image_path):
-            self._insert_failure(event, "SNAPSHOT_INVALID", "Snapshot missing or not a decodable image")
-            return False
         payload = {
             "id": event_id,
             "timestamp": str(event.get("timestamp", "")),
@@ -327,12 +324,14 @@ class TelegramAlertDispatcher:
                  json.dumps(payload), category, message))
 
     @staticmethod
-    def _valid_snapshot(path: Path) -> bool:
-        """Require a readable, decodable image before persisting a send attempt."""
+    def _read_snapshot(path: Path) -> bytes | None:
+        """Read a decodable snapshot once, or return None for text fallback."""
         try:
-            return path.is_file() and cv2.imread(str(path), cv2.IMREAD_COLOR) is not None
+            content = path.read_bytes()
+            image = cv2.imdecode(np.frombuffer(content, dtype=np.uint8), cv2.IMREAD_COLOR)
+            return content if image is not None else None
         except (OSError, cv2.error):
-            return False
+            return None
 
     def _claim_next(self) -> tuple[str, dict, int] | None:
         """Atomically claim one eligible delivery from the persistent queue."""
@@ -375,26 +374,30 @@ class TelegramAlertDispatcher:
                              error_message="Unhandled delivery worker error")
 
     def _deliver(self, delivery_id: str, event: dict, attempt: int) -> None:
-        """Send one snapshot, classify its result, and persist its state transition."""
+        """Send an event snapshot, falling back to text when it is unavailable."""
         image = Path(str(event.get("image_path") or ""))
-        if not self._valid_snapshot(image):
-            self._update(delivery_id, "FAILED", error_category="SNAPSHOT_INVALID",
-                         error_message="Snapshot missing or not a decodable image")
-            return
+        snapshot = self._read_snapshot(image)
         caption = (f"Firewatch confirmed event #{event['id']}\n"
                    f"Camera: {event.get('camera_name', 'unknown')} / {event.get('camera_display_name', 'unknown')}\n"
                    f"Class: {event.get('label', 'unknown')} ({float(event.get('confidence', 0)):.1%})\n"
                    f"Confirmed: {event.get('event_confirmed_at') or event.get('timestamp', 'unknown')}\n"
                    f"Event state: {event.get('alert_level', 'CONFIRMED')}")
-        boundary = "----firewatch" + uuid.uuid4().hex
-        body = bytearray()
-        for key, value in (("chat_id", self.chat_id), ("caption", caption)):
-            body.extend(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{key}\"\r\n\r\n{value}\r\n".encode())
-        body.extend(f"--{boundary}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"snapshot.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n".encode())
-        body.extend(image.read_bytes())
-        body.extend(f"\r\n--{boundary}--\r\n".encode())
-        request = Request(f"https://api.telegram.org/bot{self.token}/sendPhoto", data=bytes(body),
-                          headers={"Content-Type": f"multipart/form-data; boundary={boundary}"}, method="POST")
+        if snapshot is not None:
+            boundary = "----firewatch" + uuid.uuid4().hex
+            body = bytearray()
+            for key, value in (("chat_id", self.chat_id), ("caption", caption)):
+                body.extend(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{key}\"\r\n\r\n{value}\r\n".encode())
+            body.extend(f"--{boundary}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"snapshot.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n".encode())
+            body.extend(snapshot)
+            body.extend(f"\r\n--{boundary}--\r\n".encode())
+            request = Request(f"https://api.telegram.org/bot{self.token}/sendPhoto", data=bytes(body),
+                              headers={"Content-Type": f"multipart/form-data; boundary={boundary}"}, method="POST")
+        else:
+            # The confirmed event remains useful when its snapshot was not saved,
+            # was removed, or could not be decoded. Never lose the alert for that reason.
+            body = urlencode({"chat_id": self.chat_id, "text": caption}).encode("utf-8")
+            request = Request(f"https://api.telegram.org/bot{self.token}/sendMessage", data=body,
+                              headers={"Content-Type": "application/x-www-form-urlencoded"}, method="POST")
         try:
             with urlopen(request, timeout=self.timeout) as response:
                 status_code = int(response.status)

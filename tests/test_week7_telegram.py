@@ -4,6 +4,7 @@ import sqlite3
 import threading
 import time
 from urllib.error import HTTPError
+from urllib.parse import parse_qs
 
 import cv2
 import numpy as np
@@ -148,7 +149,7 @@ def test_explicit_http_5xx_retries_then_delivers(tmp_path, monkeypatch):
         dispatcher.close()
 
 
-def test_invalid_credentials_are_terminal_and_snapshot_failure_is_visible(tmp_path, monkeypatch):
+def test_invalid_credentials_are_terminal_and_missing_snapshot_falls_back_to_text(tmp_path, monkeypatch):
     _telegram_env(monkeypatch)
     db_path = tmp_path / "events.db"
     _database(db_path)
@@ -166,15 +167,25 @@ def test_invalid_credentials_are_terminal_and_snapshot_failure_is_visible(tmp_pa
     finally:
         dispatcher.close()
 
-    bad = dict(event, id=2, image_path=str(tmp_path / "missing.jpg"))
+    bad = dict(event, id=2, camera_name="CAM-02", confidence=0.8,
+               image_path=str(tmp_path / "missing.jpg"))
     with sqlite3.connect(db_path) as conn:
         conn.execute("INSERT INTO alert_logs VALUES(?,?,?,?,?,?,?,?)", (2, "now", "CAM-02", "FIRE", .8, "CONFIRMED", bad["image_path"], "UNREAD"))
+
+    requests = []
+    def accept_text_fallback(request, **kwargs):
+        requests.append(request)
+        return _Response({"ok": True, "result": {"message_id": 10}})
+
+    monkeypatch.setattr("src.telegram_alerts.urlopen", accept_text_fallback)
     dispatcher2 = TelegramAlertDispatcher(str(db_path))
     try:
-        assert not dispatcher2.enqueue(bad)
-        rows = _rows(db_path)
-        assert rows[-1][0] == "FAILED"
-        assert rows[-1][2] == "SNAPSHOT_INVALID"
+        assert dispatcher2.enqueue(bad)
+        assert _wait_for(lambda: _rows(db_path)[-1][0] == "DELIVERED")
+        assert len(requests) == 1
+        assert requests[0].full_url.endswith("/sendMessage")
+        message = parse_qs(requests[0].data.decode("utf-8"))["text"][0]
+        assert "event #2" in message and "CAM-02" in message and "FIRE" in message
     finally:
         dispatcher2.close()
 
