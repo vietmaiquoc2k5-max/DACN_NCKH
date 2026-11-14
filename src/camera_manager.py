@@ -18,6 +18,7 @@ import base64
 import re
 import json
 import sqlite3
+import logging
 from contextlib import closing
 import threading
 from pathlib import Path
@@ -43,6 +44,8 @@ from src.temporal_features import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
 from src.telegram_alerts import TelegramAlertDispatcher, utc_now
+
+LOGGER = logging.getLogger(__name__)
 
 
 def encode_bgr_to_jpeg_b64(bgr_img: np.ndarray, quality: int = 72) -> str:
@@ -472,8 +475,12 @@ class CameraStreamWorker:
             self.tracker.reset()
             self.features_extractor.reset()
             self.infer_event.clear()
-            self.thread = threading.Thread(target=self._run_loop, daemon=True)
-            self.infer_thread = threading.Thread(target=self._infer_loop, daemon=True)
+            self.thread = threading.Thread(
+                target=self._run_loop, name=f"firewatch-capture-{self.config.cam_id}", daemon=True
+            )
+            self.infer_thread = threading.Thread(
+                target=self._infer_loop, name=f"firewatch-inference-{self.config.cam_id}", daemon=True
+            )
             self.thread.start()
             self.infer_thread.start()
         self._log(f"Đang kết nối nguồn [{self.config.source_type}]: {self.config.masked_source}")
@@ -498,6 +505,7 @@ class CameraStreamWorker:
 
     def _stop(self):
         """Ngắt kết nối hoàn toàn luồng camera và giải phóng VideoCapture, đưa về trạng thái STOPPED."""
+        shutdown_started = time.monotonic()
         self.running = False
         self.stop_event.set()
         self.paused = False
@@ -508,7 +516,17 @@ class CameraStreamWorker:
         it = self.infer_thread
         if it and it.is_alive() and it is not threading.current_thread():
             it.join(timeout=1.0)
-        if any(t and t.is_alive() for t in (t, it)):
+        alive_threads = [thread for thread in (t, it) if thread and thread.is_alive()]
+        if alive_threads:
+            LOGGER.error(
+                "camera_shutdown_timeout camera_id=%s source_type=%s status=%s elapsed_seconds=%.3f "
+                "alive_threads=%s",
+                self.config.cam_id,
+                self.config.source_type,
+                self.status,
+                time.monotonic() - shutdown_started,
+                [f"{thread.name}(ident={thread.ident})" for thread in alive_threads],
+            )
             raise RuntimeError("Camera shutdown timed out; retained thread handles for safe retry")
         self.thread = None
         self.infer_thread = None
@@ -656,7 +674,7 @@ class CameraStreamWorker:
                 infer_input,
                 conf_threshold=self.settings.conf_threshold,
                 imgsz=self.settings.imgsz,
-                non_blocking=False,
+                non_blocking=True,
             )
             with self.lock:
                 self.pipeline_counters["detector_inference_calls"] += 1

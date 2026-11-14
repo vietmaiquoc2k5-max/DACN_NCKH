@@ -189,8 +189,11 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         stuck.is_alive.return_value = True
         worker.thread = stuck
         try:
-            with self.assertRaisesRegex(RuntimeError, "shutdown timed out"):
-                worker.stop()
+            with self.assertLogs("src.camera_manager", level="ERROR") as captured_logs:
+                with self.assertRaisesRegex(RuntimeError, "shutdown timed out"):
+                    worker.stop()
+            self.assertIn("camera_shutdown_timeout", captured_logs.output[0])
+            self.assertIn("CAM-01", captured_logs.output[0])
             self.assertIs(worker.thread, stuck)
             with self.assertRaisesRegex(RuntimeError, "refusing duplicate"):
                 worker.start()

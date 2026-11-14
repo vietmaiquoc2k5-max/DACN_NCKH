@@ -1,6 +1,8 @@
 """Unit tests for camera persistence and disconnected restoration."""
 from unittest.mock import MagicMock
 
+import numpy as np
+
 from src.camera_manager import MultiCameraManager
 
 
@@ -88,3 +90,26 @@ def test_camera_telegram_preference_persists_without_starting_worker(tmp_path, m
         assert restored.workers[camera_id].running is False
     finally:
         restored.close()
+
+
+def test_camera_inference_skips_busy_shared_detector_instead_of_queuing(tmp_path, monkeypatch):
+    manager = MultiCameraManager(db_path=str(tmp_path / "nonblocking-inference.db"),
+                                 auto_assign_videos=False, detector=_detector(monkeypatch))
+    worker = manager.workers["CAM-01"]
+    worker.running = True
+    worker.status = "CONNECTED"
+    worker.frame_count = 1
+    worker.latest_raw_bgr = np.zeros((48, 64, 3), dtype=np.uint8)
+    worker.infer_event.set()
+
+    def finish_inference(*_args, **_kwargs):
+        worker.running = False
+        return [], 0.0
+
+    worker.detector.detect_frame.side_effect = finish_inference
+    try:
+        worker._infer_loop()
+        kwargs = worker.detector.detect_frame.call_args.kwargs
+        assert kwargs["non_blocking"] is True
+    finally:
+        manager.close()
