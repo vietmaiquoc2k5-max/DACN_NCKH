@@ -1,0 +1,7 @@
+{
+  "status": "BLOCKED_NO_QUALIFIED_CLEAN_SUBSET",
+  "rows": [],
+  "reason": "No source/scene-independent training+validation scope authenticated; do not lower protocol",
+  "test_reservations_preserved": true,
+  "parent_manifest_sha256": "b28ce8d1557be9d6427266718f317d115164a4eb78f2d243a44845ca682dadf4"
+}

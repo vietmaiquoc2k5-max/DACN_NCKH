@@ -1,0 +1,14 @@
+{
+  "approved": 389,
+  "pending": 1533,
+  "negative": 166,
+  "positive_bbox": 223,
+  "eligible_train": 0,
+  "eligible_val": 0,
+  "excluded_statuses": {
+    "APPROVED_PENDING_LINEAGE": 171,
+    "APPROVED_LINEAGE_VERIFIED_PENDING_SPLIT": 218,
+    "LINEAGE_VERIFIED_PENDING_HUMAN_APPROVAL": 579
+  },
+  "export_checksums_sha256": "5eeb40511a88bb02fe8152884f848affc5990288dab5c506d58c86a6abc7e19a"
+}

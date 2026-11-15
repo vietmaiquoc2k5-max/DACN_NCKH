@@ -1,0 +1,16 @@
+{
+  "head": "9f8bacb333346f5805945ef682baa662617b6161",
+  "artifacts_verified": 1935,
+  "approved_export_checksums_verified": true,
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "original_tool_exit_code": 1,
+  "decoder_pid_no_longer_running": true,
+  "summary_input_scope_sha256": "7d32eb955c3e508bcf10f8e4defdf0be1c2fe75fa2902596c7e19689bc4c0470",
+  "report_sha256": "cc13df7fc11a0f40f58afbd7ad76a8bdf3cc9f540acd5463a9cf127741b2fcbe",
+  "source_code_sha256": {
+    "src/lineage_run_audit.py": "6275c49eae80cd589cca180dd1f1fa505d5b04ebeb5cc6dc222c0a4d6940f1e0",
+    "scripts/audit_lineage_run.py": "c6268fefb5a8cf1f85e1663ee757b5dee89942eb8071ff7a47c4afb49fa16198",
+    "tests/test_lineage_run_audit.py": "56fdfb857af7fa00abc86ef40c155d45d3e5d15494362c675a64a6dc8324a4dd"
+  },
+  "git_diff_check_exit_code": 0
+}

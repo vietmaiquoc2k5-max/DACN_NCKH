@@ -1,0 +1,24 @@
+{
+  "image_sha256": "fd7f40c21ae14cfea8a48f2aa36774564a28dfc22e629ce4d16cabce204254f7",
+  "image_path": "datasets/vn_dataset/images/train/VN_NEG_14_f000712.jpg",
+  "source_video_path": "datasets/negative_videos/VN_NEG_14.mp4",
+  "source_frame_index": 712,
+  "source_pts_ticks": 365056,
+  "time_base": "1/12800",
+  "status": "VERIFIED_DERIVED_IMAGE",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "837cca6113345151a14c02e69aadd795ba5f2bb9bcc9c2933f25725a272ba545",
+  "ffprobe_output_sha256": "d5d94f67d93b7dba88b3b62b74a02ac028ec840f21a22329aa4bcce3b50749e1",
+  "transformation": {
+    "resize": null,
+    "jpeg_quality": 95,
+    "encoder": "OpenCV 5.0.0",
+    "anonymization": "No transform needed to reproduce exact stored bytes"
+  },
+  "match_evidence": "EXACT_ENCODED_IMAGE_SHA256",
+  "confidence": "DETERMINISTIC_EXACT_REPRODUCTION",
+  "decoded_pixel_sha256": "38e0a405edb22575294b60d10c65b9f03e413428b58de27726abbba1d89b38d5"
+}

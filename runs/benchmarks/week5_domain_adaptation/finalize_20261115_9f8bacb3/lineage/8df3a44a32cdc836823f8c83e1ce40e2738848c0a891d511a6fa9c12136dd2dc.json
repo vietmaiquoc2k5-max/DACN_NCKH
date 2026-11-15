@@ -1,0 +1,16 @@
+{
+  "image_sha256": "8df3a44a32cdc836823f8c83e1ce40e2738848c0a891d511a6fa9c12136dd2dc",
+  "image_path": "datasets/vn_dataset/images/val/VN_POS_63_f000294.jpg",
+  "source_video_path": "datasets/negative_videos/VN_POS_63.mp4",
+  "source_frame_index": 294,
+  "source_pts_ticks": 151040,
+  "time_base": "1/15360",
+  "status": "UNVERIFIED_LEGACY",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "a7f2b4dab016b39e4559f997a9dfef11d5c7da5f64d283a1ebb7d6c993349894",
+  "ffprobe_output_sha256": "85a08841243483d7905646028d7809fbf0d5e454e175041eca46cfe74a184f68",
+  "reason": "IMAGE_NOT_EXACTLY_REPRODUCIBLE"
+}

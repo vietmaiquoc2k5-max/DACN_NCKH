@@ -1,0 +1,22 @@
+[
+  {
+    "name": "targeted",
+    "exit_code": 0,
+    "log": "D:\\workspace\\DACN_NCKH\\.tools\\week5_finalize_9f8bacb3\\targeted.log",
+    "sha256": "e5033dcc83a9ba394fc7f5210a6a1218e0c0bde69be179f10c04ee3d4138265e",
+    "tail": [
+      "\u0000",
+      "\u0000"
+    ]
+  },
+  {
+    "name": "full",
+    "exit_code": 0,
+    "log": "D:\\workspace\\DACN_NCKH\\.tools\\week5_finalize_9f8bacb3\\full.log",
+    "sha256": "7f9c5840bc46f0b6066f36992c8902a3c7082e94769b06c942401dc70feb167e",
+    "tail": [
+      "\u0000",
+      "\u0000"
+    ]
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "image_sha256": "6ac1ed8e3af70d65827389306338919fcf1c28fd75cb0fd8e5bc9e9be78d3ac9",
+  "image_path": "datasets/vn_dataset/images/val/VN_POS_62_f000375.jpg",
+  "source_video_path": "datasets/negative_videos/VN_POS_62.mp4",
+  "source_frame_index": 375,
+  "source_pts_ticks": 1353600,
+  "time_base": "1/90000",
+  "status": "VERIFIED_DERIVED_IMAGE",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "b6d2ad884e5a922e38735482d519442093b30f054d5325438ce51b4801303b73",
+  "ffprobe_output_sha256": "316446d91080c1b49272555f6625f07c6669167346371e851d5b48c88b4888a3",
+  "transformation": {
+    "resize": null,
+    "jpeg_quality": 95,
+    "encoder": "OpenCV 5.0.0",
+    "anonymization": "No transform needed to reproduce exact stored bytes"
+  },
+  "match_evidence": "EXACT_ENCODED_IMAGE_SHA256",
+  "confidence": "DETERMINISTIC_EXACT_REPRODUCTION",
+  "decoded_pixel_sha256": "8e18fb0df23df588e2c01c4442b607da8c294d1edee77e67fe4399baf73158ab"
+}
