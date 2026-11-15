@@ -1,0 +1,11 @@
+{
+  "python_exit_code": 0,
+  "command": [
+    "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "scripts/diagnose_lineage_source.py",
+    "--source",
+    "datasets/negative_videos/VN_NEG_10.mp4",
+    "--output",
+    ".tools\\week5_recovery_e733a6c3\\VN_NEG_10"
+  ]
+}

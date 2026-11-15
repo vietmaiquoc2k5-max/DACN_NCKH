@@ -1,0 +1,21 @@
+{
+  "versions": 933,
+  "unique_reviewed": 922,
+  "approved": 922,
+  "rejected": 0,
+  "pending": 1000,
+  "delta_from_389": 533,
+  "negative": 569,
+  "positive_bbox": 353,
+  "excluded_statuses": {
+    "APPROVED_PENDING_LINEAGE": 508,
+    "APPROVED_LINEAGE_VERIFIED_PENDING_SPLIT": 414,
+    "LINEAGE_VERIFIED_PENDING_HUMAN_APPROVAL": 383
+  },
+  "prior_versions_preserved": true,
+  "sqlite_integrity": "ok",
+  "eligible_train": 0,
+  "eligible_val": 0,
+  "snapshot_receipt_sha256": "b8785268b1483b5cc2066cf95f9b5a4b3161b43f8eac6b6596225bf0c080cedf",
+  "export_checksum_sha256": "8719749287bf98a1ba9d4cdc739a72d59bf16ac7d3cffe759e62a682ef1aa975"
+}

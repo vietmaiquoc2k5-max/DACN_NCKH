@@ -1,0 +1,43 @@
+[
+  {
+    "name": "targeted",
+    "command": [
+      "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_decoder_diagnostic.py",
+      "tests/test_lineage_run_audit.py",
+      "tests/test_week5_readiness.py",
+      "tests/test_bbox_qa.py",
+      "tests/test_domain_adaptation.py",
+      "tests/test_week5_unblock.py"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 14.308661999999458,
+    "log": ".tools/week5_recovery_e733a6c3/targeted.log",
+    "tail": [
+      "...................................................                                                   [100%]",
+      "51 passed, 43 subtests passed in 12.60s"
+    ],
+    "log_sha256": "15cf3ee1bfc3175110efb4ab77bba09cfa7c4dfaefa3ae8f9d0b6636a98454a3"
+  },
+  {
+    "name": "full",
+    "command": [
+      "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "tests"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 173.2184273999992,
+    "log": ".tools/week5_recovery_e733a6c3/full.log",
+    "tail": [
+      "..................................................................................                                    [100%]",
+      "389 passed, 80 subtests passed in 171.70s (0:02:51)"
+    ],
+    "log_sha256": "ca9058e4f2504de86ab122a8c962ebcb082320c19e5fe38b56775937635fdb8c"
+  }
+]

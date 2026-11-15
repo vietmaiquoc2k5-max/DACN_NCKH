@@ -1,0 +1,26 @@
+{
+  "source": "D:\\workspace\\DACN_NCKH\\datasets\\negative_videos\\VN_NEG_10.mp4",
+  "source_sha256": "3ed5b015393ce74d1da992dece66ce4a4b7abcd4b77ce5d3d23264794c4eacbe",
+  "source_unchanged": true,
+  "command": [
+    "D:\\workspace\\DACN_NCKH\\.tools\\ffmpeg\\ffmpeg.exe",
+    "-v",
+    "error",
+    "-threads",
+    "1",
+    "-i",
+    "D:\\workspace\\DACN_NCKH\\datasets\\negative_videos\\VN_NEG_10.mp4",
+    "-map",
+    "0:v:0",
+    "-f",
+    "null",
+    "-"
+  ],
+  "native_decoder_exit_code": 0,
+  "timed_out": false,
+  "stderr_sha256": "670f9000056dc7f7cb8cf407d00f619442e895493aff7d06ff7cecd435d920a2",
+  "decode_integrity": "ERROR",
+  "error_excerpt": "[h264 @ 000001c455eeebc0] Invalid NAL unit size (7937 > 7149).\n[h264 @ 000001c455eeebc0] missing picture in access unit with size 7153\n[h264 @ 000001c45444ae80] Invalid NAL unit size (7937 > 7149).\n[h264 @ 000001c45444ae80] Error splitting the input into NAL units.\n[vist#0:0/h264 @ 000001c4564de040] [dec:h264 @ 000001c45444acc0] Error submitting packet to decoder: Invalid data found when processing input\n",
+  "python_exit_code": 0,
+  "note": "Python diagnostic succeeds when it records evidence; decoder integrity is a separate gate"
+}

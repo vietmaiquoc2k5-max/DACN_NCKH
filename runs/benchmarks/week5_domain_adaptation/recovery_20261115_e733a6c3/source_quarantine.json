@@ -1,0 +1,19 @@
+{
+  "source": "datasets/negative_videos/VN_NEG_10.mp4",
+  "source_sha256": "3ed5b015393ce74d1da992dece66ce4a4b7abcd4b77ce5d3d23264794c4eacbe",
+  "reason": "DECODE_INTEGRITY_ERROR_REPRODUCED; do not promote source eligibility",
+  "affected_image_ids": [
+    "2fd422ea72a6689a29e4893e3bae640c962c29e9e5d15a3ba51d05cb5f97c63a",
+    "1296a35527b9f3a6316982a52e47967ce5f242dbacef51c855560d9de88c6b34",
+    "f3bde3fcd7855c7b24e3b7147102f4595e07c00a757df51742c2c1426e996497",
+    "d1165dd7a95897429f5cceb9e598a99f225c26552ce9bf2f343b8656450e0157",
+    "2f6fddd4e7bb80dbfb5933a59edd721d7641f773cd9db32abc7f7b4836b1e0a2",
+    "48052a760d0961f11f6d5b53f7435ad98ec7c904691cca1cd8aaf5c65b5e4b56",
+    "2285bb45ca5625b6a88c6036a14206df91aebde61512318abe94fb382ff97938",
+    "01d6f2cb7790f433e499ef143aa3279a08bfc3bc29fe8e160918be1112c50ded",
+    "87ed9c52120a36c265922b7312bf4cc223a67c341cace6203434a9e8904a65e7",
+    "93509f954dc968a151cdbee96d8f50d7c55bc11cf8709b4505ee9827dfcf3837"
+  ],
+  "training_eligible": false,
+  "original_images_labels_reviews_unchanged": true
+}

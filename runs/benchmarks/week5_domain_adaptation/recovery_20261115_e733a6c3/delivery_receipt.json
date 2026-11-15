@@ -1,0 +1,10 @@
+{
+  "head": "e733a6c3238aa4962e7752b5753d7c8e8da4fa16",
+  "artifact_count": 15,
+  "export_checksums_verified": true,
+  "diff_check_exit_code": 0,
+  "diagnostic_python_exit": 0,
+  "source_code_sha256": "b69d15ed10c0f5f41f75623248c9d5e31ddf9bcad4a89152ff0215781056ff3b",
+  "test_sha256": "d40f241eb7cb1119669a89c215b9380dd425e706d1b816381053f33a85689405",
+  "report_sha256": "19f8b7f02db5cd1ccf7138bc9ba5b71da05d1d8f2fd047bad0f75dca7e8622d5"
+}
