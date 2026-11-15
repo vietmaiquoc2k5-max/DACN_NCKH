@@ -483,7 +483,7 @@ class TestDynamicCameraAndDashboard(unittest.TestCase):
         5. detach_camera_source() gỡ nguồn khỏi camera.
         """
         no_vid_mgr = MultiCameraManager(
-            db_path="test_dynamic_no_auto_vid.db",
+            db_path=os.path.join(self.tmp_dir.name, "test_dynamic_no_auto_vid.db"),
             model_path="best.pt",
             auto_assign_videos=False,
         )

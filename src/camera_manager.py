@@ -549,10 +549,10 @@ class CameraStreamWorker:
         self.infer_event.set()
         t = self.thread
         if t and t.is_alive() and t is not threading.current_thread():
-            t.join(timeout=1.5)
+            t.join(timeout=3.0)
         it = self.infer_thread
         if it and it.is_alive() and it is not threading.current_thread():
-            it.join(timeout=1.0)
+            it.join(timeout=3.0)
         alive_threads = [thread for thread in (t, it) if thread and thread.is_alive()]
         if alive_threads:
             LOGGER.error(

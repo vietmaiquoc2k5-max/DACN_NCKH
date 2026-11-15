@@ -1,0 +1,17 @@
+{
+  "dataset_name": "vn_replay_20",
+  "seed": 42,
+  "dfire_ratio": 0.2,
+  "num_vn_train": 1868,
+  "num_dfire_sampled": 3444,
+  "total_train_images": 5312,
+  "train_list_txt": "data/vn_replay_20_train.txt",
+  "train_list_sha256": "077293e4928a96fd8fe89e1b665fd804e203e6ff8539e891655c4e89956fc111",
+  "yaml_config": "vn_replay_20.yaml",
+  "val_set": "datasets/vn_dataset/images/val",
+  "test_set": "datasets/vn_dataset/images/test",
+  "classes": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

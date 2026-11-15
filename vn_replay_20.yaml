@@ -1,0 +1,8 @@
+path: .
+train: data/vn_replay_20_train.txt
+val: datasets/vn_dataset/images/val
+test: datasets/vn_dataset/images/test
+nc: 2
+names:
+  0: smoke
+  1: fire
