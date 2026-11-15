@@ -123,6 +123,9 @@ graphify-out/
 !/runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/*.json
 !/runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/lineage/
 !/runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/lineage/*.json
+!/runs/benchmarks/week5_domain_adaptation/unblock_20261115_2e4b73a5/*.json
+!/runs/benchmarks/week5_domain_adaptation/unblock_20261115_2e4b73a5/lineage/
+!/runs/benchmarks/week5_domain_adaptation/unblock_20261115_2e4b73a5/lineage/*.json
 !/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.json
 !/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.csv
 /runs/benchmarks/week5_domain_adaptation/run_20261114_73034262/**

@@ -1,0 +1,26 @@
+{
+  "status": "BLOCKED_NOT_A_TRAINABLE_DATASET",
+  "rows": [],
+  "class_mapping": [
+    "smoke",
+    "fire"
+  ],
+  "parent_manifest_sha256": "43a97a4b5478e85067d59c7c2f547633ef32b554977a64347f560e41be2bea89",
+  "readiness_gates": {
+    "DFIRE_READY": false,
+    "VN_BBOX_READY": false,
+    "SPLIT_READY": false,
+    "BASELINE_CHECKPOINT_READY": true,
+    "RESOURCE_PILOT_READY": false,
+    "WEEK5_TRAINING_READY": false
+  },
+  "blockers": [
+    "SCENE_INDEPENDENCE_UNRESOLVED",
+    "BASELINE_MEMBERSHIP_UNAUTHENTICATED",
+    "LINEAGE_INCOMPLETE"
+  ],
+  "training_runs": 0,
+  "epochs": 0,
+  "metrics": null,
+  "test_reservations_preserved": true
+}

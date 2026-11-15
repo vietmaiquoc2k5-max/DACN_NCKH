@@ -1,0 +1,24 @@
+{
+  "snapshot_id": "unblock_20261115_2e4b73a5",
+  "snapshot_receipt_sha256": "214df2fe91e2795cc036d1af004568d41a6cd72fb6c9d09459d397554d2d6f41",
+  "versions": 318,
+  "unique_reviewed": 317,
+  "approved": 317,
+  "pending": 1605,
+  "rejected": 0,
+  "negative": 143,
+  "positive_bbox": 174,
+  "approved_delta": 210,
+  "lineage_statuses": {
+    "VERIFIED_DERIVED_IMAGE": 356,
+    "UNVERIFIED_LEGACY": 288
+  },
+  "approval_exclusion_statuses": {
+    "APPROVED_PENDING_LINEAGE": 158,
+    "APPROVED_LINEAGE_VERIFIED_PENDING_SPLIT": 159,
+    "LINEAGE_VERIFIED_PENDING_HUMAN_APPROVAL": 197
+  },
+  "eligible_train": 0,
+  "eligible_val": 0,
+  "private_export": "D:\\workspace\\DACN_NCKH\\.tools\\week5_unblock_2e4b73a5\\export"
+}

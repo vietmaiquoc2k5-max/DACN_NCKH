@@ -1,0 +1,32 @@
+[
+  {
+    "name": "targeted",
+    "exit_code": 0,
+    "log": "D:\\workspace\\DACN_NCKH\\.tools\\week5_unblock_2e4b73a5\\targeted.log",
+    "sha256": "ed2a51fddc51b800c6a3a87fa9e41ddb88d166745627cd937e877579e4970ef7",
+    "tail": [
+      "\u0000",
+      "\u0000"
+    ]
+  },
+  {
+    "name": "membership_test",
+    "exit_code": 0,
+    "log": "D:\\workspace\\DACN_NCKH\\.tools\\week5_unblock_2e4b73a5\\membership_test.log",
+    "sha256": "dea6cee3f94f278f1d8b9f4df11ef03a0c6a52be41e94ea5a68448c9988c28d9",
+    "tail": [
+      "\u0000",
+      "\u0000"
+    ]
+  },
+  {
+    "name": "full",
+    "exit_code": 0,
+    "log": "D:\\workspace\\DACN_NCKH\\.tools\\week5_unblock_2e4b73a5\\full.log",
+    "sha256": "fc67b06d233dfe1e316f079749514711954caf7b9201ddc2e3c7c5fb7042ebc0",
+    "tail": [
+      "\u0000",
+      "\u0000"
+    ]
+  }
+]

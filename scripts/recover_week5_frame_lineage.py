@@ -23,13 +23,15 @@ def main() -> None:
     parser=argparse.ArgumentParser()
     parser.add_argument('--input',type=Path,default=ROOT/QUEUE/'empty_label_review_129.csv')
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--workers', type=int, choices=[1,2], default=1,
+                        help='Use one decoder by default while Studio is active.')
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=False)
     settings=Settings.load()
     if not settings.ffprobe:raise ValueError('FFPROBE_REQUIRED')
     rows=read_csv(args.input);groups=defaultdict(list)
     for row in rows:groups[row['source_path_candidate']].append(row)
     cv2.setNumThreads(1);results=[]
-    with ThreadPoolExecutor(max_workers=2) as pool:
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures={pool.submit(verify_video_frames,ROOT,ROOT/path,group,settings.ffprobe):path for path,group in groups.items()}
         for future in as_completed(futures):
             batch=future.result();results.extend(batch)

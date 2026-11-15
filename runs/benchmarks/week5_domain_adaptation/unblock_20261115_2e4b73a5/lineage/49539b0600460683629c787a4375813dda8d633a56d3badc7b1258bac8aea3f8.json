@@ -1,0 +1,16 @@
+{
+  "image_sha256": "49539b0600460683629c787a4375813dda8d633a56d3badc7b1258bac8aea3f8",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_16_f001388.jpg",
+  "source_video_path": "datasets/negative_videos/VN_POS_16.mp4",
+  "source_frame_index": 1388,
+  "source_pts_ticks": 710656,
+  "time_base": "1/12800",
+  "status": "UNVERIFIED_LEGACY",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+  "ffprobe_output_sha256": "6b05406c87aa68bcbafa4c1b6b14fc081e5996d2a13318d64cab2e221ab62155",
+  "reason": "IMAGE_NOT_EXACTLY_REPRODUCIBLE"
+}
