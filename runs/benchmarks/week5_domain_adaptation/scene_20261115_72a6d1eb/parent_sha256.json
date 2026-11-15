@@ -1,0 +1,19 @@
+{
+  "approval_snapshot.json": "c0db4ba0db26f444adb89f4f5fa4bfb5f4cd01ad0c0f63fa41a0070b6203e33c",
+  "artifact_sha256.json": "ac46daad455b34e5ec19c40e16214a11009d15b599a6262a168f8728eed07407",
+  "baseline_membership.json": "70d77e27db0418f04ce78f8e53d53cf38176d5688e0d21ac7fc1a2ecc554f76e",
+  "clean_dfire_manifest.json": "9ace30438a7ffb4898b61d84ed667ea2a24c0ba3f4679fd0e01653cd27bd8fb7",
+  "clean_vn_manifest.json": "9ace30438a7ffb4898b61d84ed667ea2a24c0ba3f4679fd0e01653cd27bd8fb7",
+  "combined_lineage_summary.json": "3da002a278c64e892aaeff48e2706733b2d8484694e49732392255a2661403fc",
+  "dataset_manifest.json": "9b1f3a0ff9995351faae3ae2482a6be7d04816052006c151a14f020451b7d50c",
+  "decoder_integrity.json": "658c6e0e94be7520528fcc19f63658c4648283818cdf3ff247af9aace6027c76",
+  "delivery_receipt.json": "dba4e52dfd4980199a11590fa50c35a86e6d8876a35c3e84bca0a7b542a03976",
+  "diagnostic_launcher_exit.json": "15e613dd200be167edad93b2ae1d9e4564e179eb17a3f4279d588c43a9f890ee",
+  "evidence_parents.json": "ea66ad68a25a78e6dc3d08d402a805aa106dadcfa7bd0f57ca29a5eb1e3bba8b",
+  "human_scene_decision_queue.json": "3ff3acafd3c66c9a5f3a68104593fdd6b54c375d12f6823564130975670b5c01",
+  "new_baseline_protocol.json": "360e89cf47a8a896a28dd18138a1faba8369a46d730005248aad2f227933725b",
+  "resource_pilot_receipt.json": "6dd81048bb08d1a370a76be483e79b44c10918ee8155b37b33fd68bc494abec4",
+  "scene_resolution.json": "08e936201de5041c50120eab03bde6ee2c2d80c89843ce9f4d3ad76ed14613df",
+  "source_quarantine.json": "a0ba97869054550941cd76f6d75aedba2f869b55f0bf1b0689f5054ead537fce",
+  "tests.json": "be81102f2ce7eac63e5f4d9913153f568d5483c3ad2a11cd18c7f1ab4c4971ac"
+}

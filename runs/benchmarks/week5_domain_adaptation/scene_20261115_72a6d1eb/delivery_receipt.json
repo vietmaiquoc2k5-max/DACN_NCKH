@@ -1,0 +1,12 @@
+{
+  "head": "72a6d1ebc297da649894472eb10f5d4f1aa971f3",
+  "metadata_artifacts_verified": 13,
+  "private_export_checksums_verified": true,
+  "priority_contact_sheets_verified": 12,
+  "diff_check_exit_code": 0,
+  "source_sha256": "6e74b4d695968c89747100c1d33f6f4e6f45041c9c576e271c728217ad6864a3",
+  "test_sha256": "1922f4d33cc4ac3c1ddd530754e4ae00806c6f6c9ad1ec869a4d273144d3e582",
+  "report_sha256": "b7a4c21d8f0fd4009762a660927e12d42551363603a6392faeffcebabf410ff7",
+  "training_runs": 0,
+  "epochs": 0
+}

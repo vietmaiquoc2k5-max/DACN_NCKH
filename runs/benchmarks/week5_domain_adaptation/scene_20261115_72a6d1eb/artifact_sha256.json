@@ -1,0 +1,15 @@
+{
+  "analysis_implementation.json": "87491797062411ff9fdfb8bf7f65a09d1c109db5dc34f56af2ce345b8f1923d7",
+  "approval_snapshot.json": "d87928d4187bbab12b6e01ddf563a508effd5a761ef9980553fbebddddf16bda",
+  "baseline_membership.json": "70d77e27db0418f04ce78f8e53d53cf38176d5688e0d21ac7fc1a2ecc554f76e",
+  "clean_dfire_manifest.json": "9ace30438a7ffb4898b61d84ed667ea2a24c0ba3f4679fd0e01653cd27bd8fb7",
+  "clean_vn_manifest.json": "a08287e5a0d3d515c134cb9e0947ca528a9c3d6da4765ead678426e6cc929e9d",
+  "dataset_manifest.json": "9b1f3a0ff9995351faae3ae2482a6be7d04816052006c151a14f020451b7d50c",
+  "human_source_shortlist.json": "119c3649d139ad6a01055a4651ef7f6a754bcca745ca59d5aad3ce087cb888fd",
+  "new_baseline_protocol.json": "360e89cf47a8a896a28dd18138a1faba8369a46d730005248aad2f227933725b",
+  "parent_sha256.json": "ed01f60dc8637b783a402ce0b5ebac982bc9de2d80bf710f7f02c05cb03ea121",
+  "resource_pilot_receipt.json": "6dd81048bb08d1a370a76be483e79b44c10918ee8155b37b33fd68bc494abec4",
+  "scene_group_manifest.json": "06aa6f78b428117f4a7a70aac3ea5f659857f64428cd5b4de975e85a6c924f4e",
+  "scene_summary.json": "d72f4dc7339ea3f44ce4275bfd183074850fd11d58a550215111ff396bc86eeb",
+  "tests.json": "032e121d658746cd5c5af59b20c40fd5b4eecb668b903431ae36b1ce95cbf291"
+}

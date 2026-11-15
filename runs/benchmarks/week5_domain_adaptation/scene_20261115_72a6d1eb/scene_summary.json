@@ -1,0 +1,12 @@
+{
+  "VN_candidate_pairs": 75,
+  "VN_resolved": 0,
+  "VN_unresolved": 75,
+  "DFIRE_candidate_groups": 751,
+  "DFIRE_confirmed_overlap": 1,
+  "DFIRE_confirmed_independent": 0,
+  "DFIRE_unresolved": 750,
+  "cross_source_independence_shortlist": 120,
+  "no_test_to_train": true,
+  "parent_scene_sha256": "3ff3acafd3c66c9a5f3a68104593fdd6b54c375d12f6823564130975670b5c01"
+}

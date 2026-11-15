@@ -1,0 +1,18 @@
+{
+  "versions": 1057,
+  "approved": 1046,
+  "pending": 876,
+  "rejected": 0,
+  "delta_from_922": 124,
+  "negative": 693,
+  "positive_bbox": 353,
+  "exclusion_statuses": {
+    "APPROVED_PENDING_LINEAGE": 623,
+    "APPROVED_LINEAGE_VERIFIED_PENDING_SPLIT": 423,
+    "LINEAGE_VERIFIED_PENDING_HUMAN_APPROVAL": 374
+  },
+  "prior_versions_unchanged": true,
+  "sqlite_integrity": "ok",
+  "eligible_train": 0,
+  "eligible_val": 0
+}
