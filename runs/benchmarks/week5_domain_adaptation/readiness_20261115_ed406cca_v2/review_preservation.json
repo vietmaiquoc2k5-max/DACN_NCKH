@@ -1,0 +1,20 @@
+{
+  "initial_committed_versions": 38,
+  "initial_unique_images": 38,
+  "initial_version_files_unchanged": 114,
+  "final_snapshot_versions": 108,
+  "final_snapshot_unique_images": 107,
+  "final_snapshot_time_utc": "2026-11-15T07:42:01.531334+00:00",
+  "live_versions_at_final_check": 118,
+  "all_snapshot_versions_still_present": true,
+  "sqlite_backups_integrity": "ok",
+  "snapshot_receipt_sha256": "962bd470663f92d950e1ad2187de4ff6459d6f83fba8a328d2b5e900c5830df0",
+  "frozen_files": {
+    "data/ground_truth/events.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "data/ground_truth/events_v1.1_snapshot.jsonl": "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3",
+    "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6"
+  },
+  "raw_sqlite_and_review_metadata": "PRIVATE_LOCAL_ONLY; .tools/week5_readiness_ed406cca",
+  "reviewer_tokens_logged": false,
+  "studio_db_restored": false
+}

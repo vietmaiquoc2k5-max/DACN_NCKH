@@ -1,0 +1,4367 @@
+[
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07743.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07743.txt",
+    "label_sha256": "4b953a5ee41d60e436c4ff52146fd42c2bc9116b3a4c7e9e5d826771ea8c7bde",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.6171875 0.4986111111111111 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07774.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07774.txt",
+    "label_sha256": "052457e329a64bf2193ac5cf2f4631b02ff6c26e3d2b0da4e5c4d29abdf1b826",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.443359375 0.3666666666666667 0.00078125 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07867.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07867.txt",
+    "label_sha256": "d343cb104529266e160ee076f58036be547f8c5e38afec5d05558aa7b42aa7ab",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9678111587982833 0.30517879161528977 0.06723891273247497 0.10727496917385944",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07890.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07890.txt",
+    "label_sha256": "5bb1d7d0366544815c23110c76e731e8acf8d2c4049e24cd60959327be900353",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.025 0.3402777777777778 0.051562500000000004 0.1",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07891.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07891.txt",
+    "label_sha256": "d4dc2f47fbb27c83388d84a056b34546c4fb41e9158f98dcc56b522b480debcd",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.025390625 0.3402777777777778 0.05234375 0.10555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07894.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07894.txt",
+    "label_sha256": "1b65993e3d57263fc9302e3dbf65a628ebcb168ff62922b6b5942993b3e44e6e",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.023828125000000002 0.33958333333333335 0.049218750000000006 0.09583333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07910.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07910.txt",
+    "label_sha256": "ee7466cb2692aed1497c504991bae309e3026d4b7d373b0438ee7cf08df6384b",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.023828125000000002 0.34097222222222223 0.049218750000000006 0.09861111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07920.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07920.txt",
+    "label_sha256": "0a029d3167edc521c7e84be79f646a69c2903c6e440f0d3bdd4b7be8dde81685",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.8246093750000001 0.27569444444444446 0.36953125000000003 0.4763888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07922.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07922.txt",
+    "label_sha256": "9de83ae8e48b11b9204640cde5e5e7462ea5e4fb95e7cfef966f51112de13f8f",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.970703125 0.37986111111111115 0.06015625 0.15972222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07941.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07941.txt",
+    "label_sha256": "ae405191391772c6ee489f4d819e69ac557a6d0c7f741c5e9a7f3d890bf2566b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.989453125 0.4861111111111111 0.022656250000000003 0.04722222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07942.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07942.txt",
+    "label_sha256": "a04b35b050d6cea617ac9230af54cee3ec5b6ebb207b60b0b5d05b98e12c94e5",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9886718750000001 0.48888888888888893 0.02421875 0.044444444444444446",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07943.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07943.txt",
+    "label_sha256": "fd6156cbf577b1e30f84c671d267781330d2728dc22956c2aff6b90f0c756dc3",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.98828125 0.48888888888888893 0.025 0.05",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07946.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07946.txt",
+    "label_sha256": "a6f0f56a325a75019535eb6de986005834f705a80e154891ab98f916d53c0837",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9871093750000001 0.5131944444444445 0.02734375 0.0625",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF07949.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF07949.txt",
+    "label_sha256": "8231b59d80643bd5a40d05a7ff44eb53bf08a794e913b9f88c1eeace39f6c483",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9851562500000001 0.5131944444444445 0.03125 0.0625",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF08348.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/AoF08348.txt",
+    "label_sha256": "5a49b85a4804dd0846869d252a8513cd8165c0462c196e1087709ed09fb9f4cb",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.9875 0.24166666666666667 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/PublicDataset01162.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/PublicDataset01162.txt",
+    "label_sha256": "3909c0e44a40fbc969bb888125819e2dfb29284064bf9ca23e3a60d3da00a3cb",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.9041666666666667 0.46111111111111114 0.19583333333333333 0.15555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/PublicDataset01321.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/PublicDataset01321.txt",
+    "label_sha256": "0cf3fe59853261c7ce5852029197db9b61032659714dcf4e3434b8de9bba29da",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.6911554921540657 0.17841880341880342 0.6205420827389444 0.34829059829059833",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/PublicDataset01323.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/PublicDataset01323.txt",
+    "label_sha256": "cc36b7798b588910f3f92f563e184a6b0084344360f5dc9c028aed1a7e80a42b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.24531250000000002 0.9589201877934272 0.45625000000000004 0.08685446009389672",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10509.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10509.txt",
+    "label_sha256": "2b11546c7f2fd9769c870bf25b922c2bcdad50e9a3240a9c8b8ed01f12d0ddb7",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.9771276595744681 0.4194312796208531 0.052127659574468084 0.03317535545023697",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10513.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10513.txt",
+    "label_sha256": "8de6e5cc04fd53289217e549c366e4412ffcc190ad1f04973e3f545d45b12e8d",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.8323317307692308 0.5084337349397591 0.33052884615384615 0.9879518072289157",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10590.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10590.txt",
+    "label_sha256": "1991179fdb6c1874a3d4f3dfd7894541f0bd89ae8073f845b02d50aecc99728b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9277286135693216 0.31969026548672563 0.14749262536873156 0.1570796460176991",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10669.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10669.txt",
+    "label_sha256": "c2121d18e6af44e4898f2115e6cd8c8899b1c5fbd7342f548942be00df54d2a0",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.6000000000000001 0.26666666666666666 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10739.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10739.txt",
+    "label_sha256": "e778170f7a7705bf884c20c1e601b0065aac145582445378c7619e594cd03980",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.0484375 0.6277777777777778 0.1 0.5333333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10743.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10743.txt",
+    "label_sha256": "ecb7c8413522ebbf5300df5be2160a8e3cd49f6f66f59cfc217ecc34cecac3ac",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.08828125 0.29305555555555557 0.18906250000000002 0.18611111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10755.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10755.txt",
+    "label_sha256": "29163ec821bcd2b4208166c144a811710f5e4014a87ee2358015d8ae3f9bd179",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.08359375000000001 0.4486111111111111 0.1796875 0.44722222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10765.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10765.txt",
+    "label_sha256": "9a1ec0340c2f8f19b1e7ba7ab82f1b85289912404c54b7e2151005d70bec946c",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.59140625 0.3652777777777778 0.8203125 0.625",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10766.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10766.txt",
+    "label_sha256": "519b1b2d592e3ee81ebda96cbc75384d48e8e4bdb410653b9b9b377423bbee2e",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.96875 0.7972222222222223 0.06875 0.06666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10767.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10767.txt",
+    "label_sha256": "057d7e1144c1cbbed3e4d4d635cf31bd19b656c5f7a99bd378ae8925ccb4535d",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.09921875000000001 0.6777777777777778 0.20468750000000002 0.3",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10769.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10769.txt",
+    "label_sha256": "b231f43ddc47adf04bce8ac45de5c25a9bb7fdb434d8a36838f0a689a77b4f6b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.50546875 0.3625 1.0296875 0.7083333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10770.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10770.txt",
+    "label_sha256": "2d46faa9cc028944efcdb481ec6c8b5fd43aa1565246cd4847514cf3188d7dfd",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.50703125 0.3625 1.0078125 0.7138888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10772.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10772.txt",
+    "label_sha256": "843ba493d1cd1352c76b59c5c11c2c57c582a8a8f68ee4031c2af51ba49a3a52",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.91015625 0.41944444444444445 0.1921875 0.16666666666666669",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10773.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10773.txt",
+    "label_sha256": "47af5ace495f6a83b0d6f0f2f252b77dbfa8d9097292178edbe5ddc06d4f77b8",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.58515625 0.11111111111111112 0.7984375 0.22777777777777777",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10775.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10775.txt",
+    "label_sha256": "b3ca442f9efaab3dd7d2b3edcd40a5f525841ef60bc5e77b1ac81f75364a1245",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.496875 0.27083333333333337 1.015625 0.5750000000000001",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10777.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10777.txt",
+    "label_sha256": "240546091f8c26601051346761939a02166ff804d66b3cfc6416bfd28458ed5d",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.7445312500000001 0.18472222222222223 0.2328125 0.4027777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10778.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10778.txt",
+    "label_sha256": "60a4c6a0905873cd24f3dada20d15a7b6d96c187251a0feac2f6bf55c37000ea",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.33515625000000004 0.3680555555555556 0.5453125 0.7861111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10779.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10779.txt",
+    "label_sha256": "6304ad6c9b759206bcf0986fd88a724f5cba441db3b459a4399cf84504678902",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.06796875000000001 0.5638888888888889 0.15781250000000002 0.48888888888888893",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "1 0.9578125000000001 0.5666666666666667 0.08750000000000001 0.2555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10781.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10781.txt",
+    "label_sha256": "6a721803b5fea766788c9efc25207d57b5d2613c37dd1edec72bca5b8d93cd89",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.09062500000000001 0.5722222222222223 0.184375 0.46111111111111114",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.19375 0.28194444444444444 0.384375 0.5694444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10782.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10782.txt",
+    "label_sha256": "f579a6d97d4c20a82840b86354b4ab0d66a73ab10a452e9be3ecc912eaa05fae",
+    "errors": [
+      {
+        "line": 8,
+        "text": "0 0.40859375000000003 0.325 0.7640625000000001 0.6611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10793.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10793.txt",
+    "label_sha256": "01f508e5857da67f8d2e91c0ad687ea8f49465d92715fa2e905221d141edfd24",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.03359375 0.4388888888888889 0.0734375 0.09444444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10798.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10798.txt",
+    "label_sha256": "c614f194c5e643aa8e88be2d27ac5ab39e7803129314270131d667b9fd6b389c",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.24921875000000002 0.18194444444444446 0.4390625 0.375",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10801.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10801.txt",
+    "label_sha256": "3c3b571e87f1e97d6ef25024b9b1c3a652b87bc48590aa19733b8784cede73ee",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.13125 0.19444444444444445 0.26875 0.37222222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10803.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10803.txt",
+    "label_sha256": "f8724e271491b681033ca2b7d1cf4dca353cb93f78a7040473bdd0bb987d7477",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.1953125 0.18888888888888888 0.37812500000000004 0.38333333333333336",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10807.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10807.txt",
+    "label_sha256": "ac8937005af2969a41a49475cb39ca3d47a134463d046d88a59efee3229c0531",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.89765625 0.4444444444444445 0.21406250000000002 0.2833333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "1 0.09609375 0.35000000000000003 0.2078125 0.37777777777777777",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 7,
+        "text": "0 0.36640625000000004 0.27222222222222225 0.6953125 0.55",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10809.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10809.txt",
+    "label_sha256": "9d1fb89cb3fe29699bd2e09d15242de0e081dd93530845cfc0e68c843e0f4a62",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.25078125 0.4152777777777778 0.4859375 0.8583333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10819.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10819.txt",
+    "label_sha256": "3fed5d16d1483335460fd5ceb4e9cd75b2fa86f2e6578489442711066eaf0554",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.5742574257425742 0.1 0.36633663366336633 0.20555555555555557",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10820.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10820.txt",
+    "label_sha256": "cfd620c8bb0dbbb38907f32869be088a69e737ae63f2f2c1567e0ec7824b4ab2",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.7995049504950495 0.4236111111111111 0.4108910891089109 0.775",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10821.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10821.txt",
+    "label_sha256": "39d404afb5e061c0f5a14796df2c43818cd5fa4310e38ff6f1ce1568a7436a5f",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.49843750000000003 0.3388888888888889 1.0093750000000001 0.6166666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB10910.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB10910.txt",
+    "label_sha256": "6c96ef2189c30d6251a4c15cd4caa48542a752c04fccc133583e1974040a2f9e",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.31796875 0.5894886363636364 0.6203125 0.8323863636363636",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11002.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11002.txt",
+    "label_sha256": "dd9ec5413881314bb351b7c13abcd69fa0a1bab4ca7ecdab98c61a334d0c3c43",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.5028669724770642 0.45266781411359724 0.996559633027523 0.8950086058519794",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11090.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11090.txt",
+    "label_sha256": "9b80b9f48fea1dd3895fd9d1315897d539ca86dd3f7dc498239b69554ca1d75c",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5437500000000001 0.5013888888888889 0.5375 1.0027777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11126.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11126.txt",
+    "label_sha256": "b89738605c9325283e5912bc2bba43e0d34ecfe1ccd513c41a123f67e87ef150",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.431640625 0.55 0.49453125000000003 0.9055555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11598.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11598.txt",
+    "label_sha256": "163bc41b3d71f6b7f41e9fa9efda52e63d92bfae67cb368b67cfe70ae098e17d",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.49921875000000004 0.4013888888888889 1.0359375 0.8138888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11600.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11600.txt",
+    "label_sha256": "f562d925b99d520ab92bc3583b856156d2521b5a380204fed9693c858c535492",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.496875 0.4222222222222222 1.0562500000000001 0.8388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11602.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11602.txt",
+    "label_sha256": "ae2fffe8532f5e984ef65f2135e6fb3bf24129c6b261b46abf63780ea3fb72e1",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.8015625000000001 0.4902777777777778 0.43125 0.9305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11603.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11603.txt",
+    "label_sha256": "0ca93eeb11bae6f9849c296ba5d65c80cf49afd76cf9e138a782c01b0fdfc571",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.8078125 0.11666666666666667 0.38125000000000003 0.2388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11606.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11606.txt",
+    "label_sha256": "6833f70c264849d5af2c04eafbffeb216f3f2ad6c5b7a076f789c91af472cc07",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.2578125 0.4986111111111111 0.50625 1.0027777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11607.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11607.txt",
+    "label_sha256": "aa71a14d6b171d4e011992ff2231a240cf3e6957a184000e35f567370dd18a08",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.503125 0.42083333333333334 0.8625 0.8472222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11614.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11614.txt",
+    "label_sha256": "3d3f1b0bc4705aaad7c97199fee72e50a8e0f60bd328fce4ef8327e7597a1691",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5085937500000001 0.41944444444444445 0.9546875 0.8444444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11620.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11620.txt",
+    "label_sha256": "0d2f345eeca313c0cc8149fa8d88c5ea537efd963e735ed93cac6dad7c1da42e",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5078616352201258 0.2763888888888889 0.9968553459119497 0.5527777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11621.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11621.txt",
+    "label_sha256": "fcc8685ce8344df02cd4c2645ef1ced3ef24a93e64b3f15f64d16481b89cb37c",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5 0.33333333333333337 0.278125 0.6833333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11624.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11624.txt",
+    "label_sha256": "f84dc43d55168beeeced72ef5e48ec59740d48342e1735de7cd1d8c1108690a9",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5125 0.33472222222222225 1.0 0.6805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/test/images/WEB11804.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/test/labels/WEB11804.txt",
+    "label_sha256": "4d9fa76cdec56b82889453d412ca344aa91bb8a722b9d9eefec7fb4e553df0a7",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.505 0.3977777777777778 0.9966666666666667 0.7511111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04522.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04522.txt",
+    "label_sha256": "87fcd4ee5d9b8dfd210cd37b2c5fb9835c7316c9f4a5aef05cf745093b7fd2ef",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9788199697428139 0.31626016260162604 0.04387291981845688 0.1772357723577236",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04568.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04568.txt",
+    "label_sha256": "df2ebd088d095e88b5969bddbf262f3a076457e1c0b1c954e9935033eadb8b7f",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9779411764705883 0.24426934097421202 0.0456656346749226 0.04154727793696275",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04627.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04627.txt",
+    "label_sha256": "c6065b726bf6840f1e65273e4e649e30ac88cfa5a1cc7e5d90725da2fdbc8511",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.025781250000000002 0.3416666666666667 0.0546875 0.10555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04663.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04663.txt",
+    "label_sha256": "af826bbffe1d353ea0caa6efc07f480a40305ae8ab5bc22d3d161621c10563ff",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.0328125 0.3423611111111111 0.0671875 0.13194444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04664.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04664.txt",
+    "label_sha256": "06e7bcf98db3c07524faeaeab01e3c4dde10400bf2b88e503ae55005f8b8ae33",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.033203125 0.3416666666666667 0.06953125 0.11666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04687.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04687.txt",
+    "label_sha256": "4b084a340c5bce8934749083cf094124b60329efcd07fddb3abfa0cc5fa4ac7e",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.016796875 0.3194444444444445 0.03515625 0.08611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04689.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04689.txt",
+    "label_sha256": "4eb43030989b842b14b21def7cb5ecdbee71d6ebcdc8fbc93277bb7a12655efb",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.0203125 0.3284722222222222 0.0421875 0.10972222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04690.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04690.txt",
+    "label_sha256": "4e994a6adc5413aa8cdb5425dc3dddcb596a29f1fd113cb14935982c067cd83c",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.025781250000000002 0.3416666666666667 0.053125000000000006 0.10555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04695.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04695.txt",
+    "label_sha256": "d7bcc0bbc55f97691f7fb2ee30b8e7a75d5795aa4ecc606dca1097ce8f4437b3",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.0234375 0.3402777777777778 0.0484375 0.1",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04696.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04696.txt",
+    "label_sha256": "d7bcc0bbc55f97691f7fb2ee30b8e7a75d5795aa4ecc606dca1097ce8f4437b3",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.0234375 0.3402777777777778 0.0484375 0.1",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04723.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04723.txt",
+    "label_sha256": "18d9323e62ca56c7a661ebb3f28e9cb363936cc27a97d0046aa30e76f5b74cff",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.026953125 0.34097222222222223 0.057031250000000006 0.1125",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04750.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04750.txt",
+    "label_sha256": "8b72da4d8c551bc0f3ee1c9913dc0b29474a82c4f8de48fe96f9763c260666d1",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.0234375 0.3402777777777778 0.0484375 0.09722222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04761.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04761.txt",
+    "label_sha256": "47d5c1de87049b42dc9e2fab233d56a2bf162914461c5588b75df8cd23e7d439",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.023828125000000002 0.3402777777777778 0.049218750000000006 0.09722222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04763.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04763.txt",
+    "label_sha256": "bf27f687c9f7b15ad94da283c78516a0da07f13734d7e44fd9f490e71c1f9c90",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.02421875 0.33958333333333335 0.05 0.10138888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04798.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04798.txt",
+    "label_sha256": "a1c5aaacf9ca1a3de9d061bef056b17eead727f731e63b1b2f8a3319b6850f52",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.035937500000000004 0.34097222222222223 0.07500000000000001 0.12361111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04854.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04854.txt",
+    "label_sha256": "3e0d2867f366bfa6fc0033b76528d4b3e9e9916f8e345c7cdffde5daed835a87",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9875 0.42708333333333337 0.026562500000000003 0.05416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04856.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04856.txt",
+    "label_sha256": "50e5d1d1fed21662edff0f78a3026eb2f0a769766c411b92949d8e0757a3d081",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.8031250000000001 0.47361111111111115 0.41718750000000004 0.22222222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04857.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04857.txt",
+    "label_sha256": "d3efabb3cecf0ac9f82380175ccdae11b23864ef511dc660b7f5457897ade4f9",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.81796875 0.2777777777777778 0.3953125 0.4638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04858.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04858.txt",
+    "label_sha256": "b1c1bbab3b60f6640067a635bb4937875a76588a2ffa70bef6222d5e775ed691",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.98828125 0.4131944444444445 0.025 0.08750000000000001",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.81015625 0.33263888888888893 0.4078125 0.4041666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04861.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04861.txt",
+    "label_sha256": "101b28c127f25c12c6665c519034bb8638e58ec7a2e25f5c84a22f4fc08f34ad",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.8128906250000001 0.43472222222222223 0.39921875 0.2611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04869.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04869.txt",
+    "label_sha256": "2cb5c9611bb7727f923bef4e234438335cc401c433b5507ceed88f02d238acc2",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.96875 0.3805555555555556 0.06406250000000001 0.15555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.83125 0.2791666666666667 0.359375 0.4222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04871.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04871.txt",
+    "label_sha256": "5f72c9b1b2f9d684b59fe09b050ffd637c71c861e28791487fb2535dd4aa85f7",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9710937500000001 0.3909722222222222 0.059375000000000004 0.1513888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.814453125 0.3368055555555556 0.37421875000000004 0.34305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04873.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04873.txt",
+    "label_sha256": "19fab384bb1da3ba9f32ed8fc7016062898b3f25f96afe96bd2170ec533b1417",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.97265625 0.39375 0.0578125 0.15416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04875.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04875.txt",
+    "label_sha256": "78ee07adc4c7370f8d8931b201c5b9d1a96391d4b2bbc74758082d2964a918dc",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.97265625 0.375 0.0578125 0.14722222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04963.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04963.txt",
+    "label_sha256": "bea74b909dffb2c406a0d0c25ec60845538d891d5cb72f65f3921a25d01b29c9",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.98984375 0.48541666666666666 0.021875000000000002 0.04583333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04964.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04964.txt",
+    "label_sha256": "7dc952c129a0802303ddff6455b90fdfe80d807899f944c0ba0dfb1e037f2a1b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.990234375 0.48541666666666666 0.02109375 0.04861111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04966.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04966.txt",
+    "label_sha256": "2c9cae6b9d896cd2042b16303c3cf58bd578b53df22dc7d738b7bee5baa5fa75",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.989453125 0.4847222222222222 0.022656250000000003 0.04722222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04967.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04967.txt",
+    "label_sha256": "4776820192f150c0008811996e428f0b948c33f06bc6fb1f9d2615161444a5e5",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.990234375 0.4861111111111111 0.02109375 0.05",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04968.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04968.txt",
+    "label_sha256": "546b580b36c68e738d5c7c74e32e013b08109df2ceda9d47faa1557a35032be6",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9886718750000001 0.48958333333333337 0.02421875 0.04583333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04970.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04970.txt",
+    "label_sha256": "bbd3536d351a618685c6aad2a45e33a2932646bb7c80e46fb13592fa26ef020e",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9886718750000001 0.48958333333333337 0.02421875 0.043055555555555555",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04971.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04971.txt",
+    "label_sha256": "4ff267f058276c4fdeb2bfbdcc05ad35285665c2d8dd6cfe2a9cea2b61ba0a2a",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.987890625 0.5104166666666667 0.025781250000000002 0.07916666666666666",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04979.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04979.txt",
+    "label_sha256": "dcb3c784a8dd03703cc7beecd9aa51ee7ee412e95aa194ccf6262473ed5ccf7b",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9867187500000001 0.5118055555555556 0.028125 0.06527777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04989.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04989.txt",
+    "label_sha256": "a8f66be2bd2b6d2eabdf7b1776581e27d84ca720ea95d506224b22a157d3728c",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.987890625 0.5118055555555556 0.025781250000000002 0.06527777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04991.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04991.txt",
+    "label_sha256": "d6eecd172938d252d02a476ad084af4fbe0b545f88671af57cf02ab17a851070",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.987890625 0.513888888888889 0.025781250000000002 0.06944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04992.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04992.txt",
+    "label_sha256": "75645ea4f56dbd1c7d1ba40b9298159b3bcda40ddd2ca12c6ecf06d04189e854",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9875 0.513888888888889 0.026562500000000003 0.0638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF04997.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF04997.txt",
+    "label_sha256": "c1d9bab5d8201bd9eee1f487ed614e360a37e9163b560ba2078960981d939b16",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9859375 0.513888888888889 0.029687500000000002 0.058333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05005.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05005.txt",
+    "label_sha256": "3bc6de9a7f8746469d78c11583b082eb086c2e80dd30caff1398096a33f81b0d",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.985546875 0.5125000000000001 0.030468750000000003 0.0638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05311.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05311.txt",
+    "label_sha256": "94d5f33cddcb98317995307daa9b75de40e7e3f52ace0072ebc0c83001c80922",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.186328125 0.05555555555555556 0.06796875000000001 0.11388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05352.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05352.txt",
+    "label_sha256": "19f1bad5c7c8afcbe4d1a150049161c3b3e84b336403b7a7641de3337be74664",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.1796875 0.05486111111111111 0.0625 0.1125",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05411.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05411.txt",
+    "label_sha256": "324ce18d64ba5ac772a4510e9f1b9f90281eeeaf0ae23b7276aada08aab891af",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.180078125 0.05486111111111111 0.10078125 0.1125",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05412.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05412.txt",
+    "label_sha256": "2ff3f239a9c3ab911870c07bdf922b03600e5c54876a2d207c3ddb7b9a35f7cc",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.178515625 0.05555555555555556 0.09921875000000001 0.11388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05413.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05413.txt",
+    "label_sha256": "52dedee199228bbecfa4d283a5563f0f74da9039aea0b4d197c2a0bc6a82db25",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.17109375000000002 0.05416666666666667 0.08125 0.11111111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05470.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05470.txt",
+    "label_sha256": "a13bc90f623b0b0df03472c708407679b237225f13a2b8334024bc56b4abe4b7",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.55859375 0.4666666666666667 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF05874.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF05874.txt",
+    "label_sha256": "41bdec7c1d0223f9c44a2a49e91557be071144fe1fd83cbe0f22692350ea1c47",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.8411458333333333 0.22916666666666666 0.3203125 0.4074074074074074",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF06155.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF06155.txt",
+    "label_sha256": "6e4995c4e28f7a82d0531292db8b7feab94a4082d49f6c9ff63efbf33430c9f1",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.8125 0.3375 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF06348.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF06348.txt",
+    "label_sha256": "a526ed42e4c55a27a227002fab5a3671defae5c58aa255adbfb4347a3fabbe16",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.753125 0.25833333333333336 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF06439.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF06439.txt",
+    "label_sha256": "2d62839edc8a28900d8f75cc8e683edf25aa53eff7bcb40c6209b4ca356a5c36",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.7125 0.275 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF06456.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/AoF06456.txt",
+    "label_sha256": "29e601ffe5eddbf272fcaafd58ecb4eb8bf6fb6030ca1bd5ffd74804b631ed0d",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.14765625000000002 0.4375 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/PublicDataset00056.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/PublicDataset00056.txt",
+    "label_sha256": "f5adecce513a684adffd2b8e004005a383f02779f16defbde6a2fb2d36eb1a5c",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.3296875 0.8152777777777778 0.0 0.002777777777777778",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB03821.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB03821.txt",
+    "label_sha256": "846951307ec2a59981f64780e7c4f61b718e36b16f7c0f7db0f11285eab66f19",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.8542968750000001 0.6402777777777778 0.29453125 0.6722222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04008.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04008.txt",
+    "label_sha256": "e067bd1388222c71c19a0f16f0a92ab32227b3af3aea918665fe56be651c7661",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.2308988764044944 0.982 0.14269662921348317 0.04",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "1 0.5123595505617978 0.981 0.1460674157303371 0.042",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04012.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04012.txt",
+    "label_sha256": "707ec1329130cf2bdef029d7cbea7d99f70551ce4f323331ee9cf1c4a0b25aeb",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.24233490566037735 0.7322916666666667 0.4587264150943396 0.54375",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04112.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04112.txt",
+    "label_sha256": "3613e69d03edb652015bd36362f2d49e62075bfe61aaef0fb80e4dbb1a589488",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.143359375 0.7590277777777779 0.28046875 0.4847222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04185.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04185.txt",
+    "label_sha256": "93e83380f4d166d3737fa2e67c9049c8a484cca0b464a92e8fd7da8ec51e64d1",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.11041009463722397 0.8440476190476192 0.20504731861198738 0.3166666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04188.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04188.txt",
+    "label_sha256": "5d897eb1e900f4e40244a478fd017074dd6171133672625d32e77954da355048",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.3236074270557029 0.9111617312072893 0.6339522546419097 0.18223234624145784",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04193.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04193.txt",
+    "label_sha256": "349f1ca9bbd4ca59da1996729653d9ff39f92198ea270b1ede4a593bca7c9645",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9532258064516129 0.8203342618384402 0.09032258064516129 0.3649025069637883",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04195.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04195.txt",
+    "label_sha256": "5dcc7d9e80b7e4c60bb2db2e1e2006e87c4226001e97896362d54b3627225fa7",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.08106060606060606 0.8722222222222222 0.12878787878787878 0.2611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04243.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04243.txt",
+    "label_sha256": "7e1d471c9659fbd92e3bdcc44acba8fc56ad48d47011b53696ac9546e4796862",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.2685546875 0.41666666666666663 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04331.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04331.txt",
+    "label_sha256": "7eb375fedb86eb0e6fa905f9d613289d45d0cce932678bc7182d50e4509726e6",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.9439592430858806 0.5807962529274004 0.11499272197962154 0.36533957845433257",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04410.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04410.txt",
+    "label_sha256": "3992e3ab7868e6029b22c33ecfd63e8c1276fe0a9fe3d4d66b538df5e1b43523",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.93994140625 0.3462962962962963 0.1220703125 0.12222222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04420.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04420.txt",
+    "label_sha256": "14e20138f13fd5a3f3849ce1dedca6a667eca0a0e8d0e75a6d5babcf301f38a3",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9700854700854701 0.0614406779661017 0.06324786324786325 0.0847457627118644",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04435.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04435.txt",
+    "label_sha256": "9962a5e34b81971ca5950d96b95aa96a75eb518933e14e10c7a041c8caddcf9c",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.823125 0.628686327077748 0.36125 0.13136729222520108",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04450.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04450.txt",
+    "label_sha256": "539718af0ea08549a40174fc08fcdb53d364ed8d4293e999e8a372b460afebfd",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.39921875 0.8948863636363636 0.4390625 0.2159090909090909",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04527.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04527.txt",
+    "label_sha256": "7941b3dce33d5f7bca802a52f6d94372d52d3d6ec1f5b2171636ee8b3e03f00b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.553 0.7330960854092526 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04742.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04742.txt",
+    "label_sha256": "e40f1bd01c09d069a4f62fc8a966053523d91302b078344c1ac893c18ded8d05",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.3875 0.4916666666666667 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04849.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04849.txt",
+    "label_sha256": "09e39f927b8fa0f0203022babfb9e5fb6ec0e97ffb7cdef676c1f1240272f7cc",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.1484375 0.4222222222222222 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB04983.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB04983.txt",
+    "label_sha256": "35182bf8845a6e5f8e32866d381f85cedcdd24276a656744fdd6b527cff3f151",
+    "errors": [
+      {
+        "line": 8,
+        "text": "0 0.06328125 0.20972222222222223 0.1328125 0.41944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05038.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05038.txt",
+    "label_sha256": "7fe3feaab6975d243579f9e62365400147afff66b6396d602d4a23a2e1e3a349",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.20546875 0.5113636363636364 0.4140625 0.30113636363636365",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "0 0.49453125000000003 0.37357954545454547 0.9953125 0.7471590909090909",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05050.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05050.txt",
+    "label_sha256": "5de0139a252af0cd9e4b1965e261a9cc2b10477bd3a08ff4d2d3e41dc744a74e",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.4890625 0.33194444444444443 1.0 0.6583333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05084.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05084.txt",
+    "label_sha256": "21a099647b1e931d534726c56823db4162fbea3a607cd3097211e95189a7ceb9",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.59140625 0.3652777777777778 0.8203125 0.625",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05086.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05086.txt",
+    "label_sha256": "39b720953b2b71385eb8781db656ed9c0522f8efa132f18fbc00011547746826",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.87265625 0.7763888888888889 0.2734375 0.06944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05088.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05088.txt",
+    "label_sha256": "926563a23ba07b997383878556393a6cc90a9f0637f69102dba23059c5335320",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.794140625 0.9791666666666667 0.05078125 0.044444444444444446",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05092.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05092.txt",
+    "label_sha256": "799c71fe1f34139c7c74d8e23ff8ed0ac56165f1449af793934ef007795aa6ae",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.52578125 0.41250000000000003 0.9203125000000001 0.8416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05093.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05093.txt",
+    "label_sha256": "3058b80f44ea892a22f7a6c614b04329c4f77e814ab2685d83c9e9d74d5fd550",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.51015625 0.35694444444444445 1.0 0.7583333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05096.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05096.txt",
+    "label_sha256": "db388a5269a70b4fff990de4c5d3942c708514151a191f496122889a1df5777c",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9031250000000001 0.7791666666666667 0.209375 0.075",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.50234375 0.36944444444444446 0.9578125000000001 0.7666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05100.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05100.txt",
+    "label_sha256": "b474e1b38d9a8f7d830523ba5f1e4c65b11340c778379c25a81ec471e848233f",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.96875 0.7430555555555556 0.065625 0.1638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.51796875 0.3388888888888889 0.9140625 0.6944444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05103.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05103.txt",
+    "label_sha256": "98b2a6061c376c90bdaea6cfe334600cf25029fc85b7f4ebce20a6844beb3296",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.96796875 0.7458333333333333 0.0703125 0.25833333333333336",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.503125 0.3236111111111111 1.0 0.6805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05107.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05107.txt",
+    "label_sha256": "cede99e2dda2c5afb96691fa37afdd35353f2f54b21dec1cccc86093e27391f6",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9539062500000001 0.41250000000000003 0.09843750000000001 0.20833333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05108.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05108.txt",
+    "label_sha256": "dc0d4d16c8bce4f05e920b2313de99384dc8c852c81e829daf85ceb304898a97",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.51015625 0.3680555555555556 0.9328125 0.7416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05110.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05110.txt",
+    "label_sha256": "89114abcfe66cf44a1bf6d48ebaf16db0ea3c1a9704b3730c35298915149dd9a",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.96796875 0.788888888888889 0.0671875 0.22222222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05111.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05111.txt",
+    "label_sha256": "6e9e8df11243f9933852043e37f57004da0f9eff8b854fc7956faaee2ed8ce12",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.503125 0.33472222222222225 1.0 0.7083333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05112.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05112.txt",
+    "label_sha256": "c961ba2542afda5b4194690efcc7d29f5a10e1a4b34ee9d6e424830e2430d943",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.50390625 0.3472222222222222 0.8984375 0.7833333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05114.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05114.txt",
+    "label_sha256": "dcca6b55f49658a7907b736fdcb9fd24d6ceffdb65353e02f14e1a5825f55fbf",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.97421875 0.7763888888888889 0.0546875 0.075",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.5015625 0.3652777777777778 0.9500000000000001 0.7805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05115.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05115.txt",
+    "label_sha256": "d7fa705f4192fa12a25d7de445283c050ced2e0676c86a0e7c23370780c91eb6",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.515625 0.3652777777777778 0.9437500000000001 0.7361111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05117.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05117.txt",
+    "label_sha256": "22c3591e5324888252793f365d94e60c113f8cbd092ac3b622b21524bac674c5",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.51796875 0.33472222222222225 0.9296875 0.675",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05118.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05118.txt",
+    "label_sha256": "aca0e1293326f14ab5c3da5e2d7d01f18541b3e4d75e7a29cf0fddacffa89dc7",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.5046875000000001 0.36944444444444446 0.984375 0.7777777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05124.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05124.txt",
+    "label_sha256": "e4aa16253efdd02817359a1997e82a93f992be2a817fa20ae79456e717b5ccdc",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.13593750000000002 0.20694444444444446 0.27187500000000003 0.4305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05126.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05126.txt",
+    "label_sha256": "e96df2552131389829e26d931aa70b2403bca5fd76405c2dc6c47758d061d646",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.48984375 0.28611111111111115 0.9828125000000001 0.55",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05129.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05129.txt",
+    "label_sha256": "2b5e5b3188a988c6977a4c8a852687e24b5bc62d325b44c40ce38c0a788f1d90",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.92890625 0.3944444444444445 0.1453125 0.12222222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05130.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05130.txt",
+    "label_sha256": "5d6bfad0ca9aac231105ada65223651ff4ba1cc2d453c77c3e54306408cf17ef",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.8046875 0.5680555555555555 0.40937500000000004 0.11944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05131.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05131.txt",
+    "label_sha256": "42c251baf35a6b9ebc8d005b7b3067357f9ac9aae7ff5102e7a279ce3793ffa3",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.7898437500000001 0.5111111111111112 0.4421875 0.15",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05145.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05145.txt",
+    "label_sha256": "3686ced3e7a80c711e24eb8da6c3d3175d6b38be4463d97fe2b2da25c87ed380",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.5007812500000001 0.20555555555555557 0.29531250000000003 0.4277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05152.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05152.txt",
+    "label_sha256": "9891e855300dad1e475387dcba179875cfd1296ff15f22f929c411b6c3d55955",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.5691823899371069 0.3625 0.39937106918238996 0.7361111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05154.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05154.txt",
+    "label_sha256": "11939ff2fe491ec216d74de4b226fb67f9f9b25ade32e4d3fb15c3349f21b865",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.5007812500000001 0.34305555555555556 1.0 0.6527777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05155.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05155.txt",
+    "label_sha256": "52ff0c0310a1db8c6e885e1610d34d6d091ea7d7b27c517df0a39db2b63f256c",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.6429687500000001 0.18194444444444446 0.3671875 0.3861111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05157.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05157.txt",
+    "label_sha256": "0506eba41bc6f214ed4bc345406523a23228540e94e217fecbe62f290197108e",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.74140625 0.19861111111111113 0.2546875 0.4305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.42500000000000004 0.18888888888888888 0.6218750000000001 0.4",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05158.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05158.txt",
+    "label_sha256": "ec820782b539997513877e91fe0bf1ea446b7269e7342ed2119ffc9e7a9ce020",
+    "errors": [
+      {
+        "line": 7,
+        "text": "0 0.66171875 0.1875 0.4234375 0.39166666666666666",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 8,
+        "text": "0 0.9539062500000001 0.19444444444444445 0.09531250000000001 0.3611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05160.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05160.txt",
+    "label_sha256": "9a991af26e9c946d1fe4546909dac24664233c0e607786c09e48078a9adca82b",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.5125000000000001 0.3611111111111111 1.0 0.6666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05162.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05162.txt",
+    "label_sha256": "8327ad4e17a9a48af41d385a947cce235e1f11f0a85e3ca7c0b8ea0d5c105fad",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.496875 0.4152777777777778 1.0 1.0",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05164.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05164.txt",
+    "label_sha256": "74604d2e66b455a3dfa189418bf013b65bb2d01c4bea1194a991b5941f3cfeef",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.3375 0.3388888888888889 0.7250000000000001 0.6888888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05165.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05165.txt",
+    "label_sha256": "333f1c6dc978e50faaa1fe7a0beae88644ca7fb77653b2423f521a02ee88c028",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.08515625 0.4013888888888889 0.1765625 0.11388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "1 0.9515625000000001 0.6277777777777778 0.1 0.5333333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05167.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05167.txt",
+    "label_sha256": "23fb5cadc8775fdc50037b1d27c950ef5fd5b758bb5ab85260fb8335170d74bb",
+    "errors": [
+      {
+        "line": 8,
+        "text": "0 0.93671875 0.20833333333333334 0.1328125 0.4222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 9,
+        "text": "0 0.6429687500000001 0.19305555555555556 0.4265625 0.39722222222222225",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05174.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05174.txt",
+    "label_sha256": "de8d6f924fd5164e6bf27f5c5a8b2f436aa1dfe3d926bb907d45512fd135cb19",
+    "errors": [
+      {
+        "line": 7,
+        "text": "0 0.3484375 0.20833333333333334 0.6468750000000001 0.4277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05176.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05176.txt",
+    "label_sha256": "a1f38baf94b9c246118085ec94b9c2c0e2f7636266cc6384c05f0bde6bbb67ca",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.08359375000000001 0.37222222222222223 0.1765625 0.1277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05188.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05188.txt",
+    "label_sha256": "ac7cf16411d51f2c5ecc3a517746246b797f0fbfee4babb85973e7318c05133a",
+    "errors": [
+      {
+        "line": 8,
+        "text": "1 0.047656250000000004 0.4361111111111111 0.09843750000000001 0.11111111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05192.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05192.txt",
+    "label_sha256": "f714aafb8fe0e6873505c110f1fcf60dd661d400770f4c9fea94f613e092c60d",
+    "errors": [
+      {
+        "line": 6,
+        "text": "1 0.05625 0.35694444444444445 0.115625 0.10833333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 7,
+        "text": "0 0.5046875000000001 0.2763888888888889 1.0 0.49722222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05195.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05195.txt",
+    "label_sha256": "85aa14bbdb7afd0130841672b0f04ecbd06801401d80ecccc99bc994ddd34ed8",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.671875 0.9013888888888889 0.275 0.20277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "0 0.44609375 0.49444444444444446 0.8953125000000001 0.9388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05196.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05196.txt",
+    "label_sha256": "4ce27e407dcad73e7afb55b034ac0f0fb1ac292bbff1cfdb2af9c48af344ae6c",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.49765625 0.9 0.2328125 0.20555555555555557",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.44296875 0.49444444444444446 0.9453125 0.9222222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05201.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05201.txt",
+    "label_sha256": "481579f9828640ef9f4946abd340f2b0520ba27d56853b48d7d52f2073f74f6f",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.41328125000000004 0.2763888888888889 0.7296875 0.5583333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05206.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05206.txt",
+    "label_sha256": "3cbf4428b317534ef973c31560979ea30edabbe52bd91aebdd88ab37e04e267e",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.03359375 0.4083333333333333 0.0703125 0.11111111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.32734375000000004 0.325 0.4765625 0.6555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05212.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05212.txt",
+    "label_sha256": "6c4f263fc923094c965f9621b8ffe4882d0c1fcb8d0fe97ce143706a3dcd7f4b",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.8656250000000001 0.4375 0.275 0.3861111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05215.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05215.txt",
+    "label_sha256": "047ea444040f3e98acaeaaa15c7c61dedea658f6d485d4bf703b89b8b400efa7",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.42265625 0.19444444444444445 0.4453125 0.4222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05217.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05217.txt",
+    "label_sha256": "ef63b24a464845af52b0fff7445a24b8afad2853d1750e0f33532858a6cdf6cc",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.6984375 0.18194444444444446 0.24375000000000002 0.3805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.3640625 0.1875 0.275 0.3805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05219.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05219.txt",
+    "label_sha256": "c29dd554832ab1c58173cbec95beb09f241f57aea3e08bc3b3d2721edbc106d6",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.60546875 0.19444444444444445 0.2078125 0.3944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.34296875000000004 0.1875 0.22031250000000002 0.4138888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05220.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05220.txt",
+    "label_sha256": "4c8105163bdd3e345077f0dd9d3c1e65088b3d93339145f2cc8978364fae6320",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.27187500000000003 0.17777777777777778 0.35000000000000003 0.3944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05223.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05223.txt",
+    "label_sha256": "cd59a9f1dbb2b2205bd147ae6119d38c72302b9d81aa5cbc03040b39ec5360e3",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.33828125000000003 0.20277777777777778 0.2234375 0.4166666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05224.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05224.txt",
+    "label_sha256": "203d321e14b59fbb7299671b67ccab6be4f79221189bc47fbe35b7faaedcbbdc",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.265625 0.17500000000000002 0.359375 0.3611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05227.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05227.txt",
+    "label_sha256": "4fb3d67db58502f3c24658aead0e5e5854b4443f9c80a6f3903ecbdb453caec1",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.5078125 0.20972222222222223 0.7156250000000001 0.4361111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05228.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05228.txt",
+    "label_sha256": "8689144f54ad5ccc0422064cf88c4705f433b230b8cb947094b365dcb471760b",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.43125 0.1875 0.19062500000000002 0.39722222222222225",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05229.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05229.txt",
+    "label_sha256": "5ba46e4f1382c2abbd0b463e8bb9ef6ef59e44b5ee393c023b3ed1737a531359",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.26484375 0.1875 0.4859375 0.39166666666666666",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05231.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05231.txt",
+    "label_sha256": "40737158f69d4cb79111a74e00c1e7c87e21eeb0c8e860d4bed8ea265f1d94e6",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.33046875000000003 0.18472222222222223 0.42031250000000003 0.3805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05232.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05232.txt",
+    "label_sha256": "2ff3bb988da00e96334fca0759efe1f35d5a654315ca9b69b8f576258c1947c7",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.33437500000000003 0.17500000000000002 0.39375000000000004 0.3611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05233.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05233.txt",
+    "label_sha256": "8cc4f4c1375d65e29627663a3838faef16ecb0dc8c9460987a4040a740e42265",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.27421875 0.18472222222222223 0.4765625 0.375",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05236.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05236.txt",
+    "label_sha256": "5d3ba9d575dbde8117b0835bac1120df69e72a5d6205150ab1c7f55c5ead6c00",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.28515625 0.2513888888888889 0.5453125 0.525",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05237.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05237.txt",
+    "label_sha256": "8e1daa4caf619230a35e7eb1426eba6cb05cab5793248e975661e8c5ba66b115",
+    "errors": [
+      {
+        "line": 7,
+        "text": "0 0.659375 0.19583333333333333 0.44062500000000004 0.4083333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05238.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05238.txt",
+    "label_sha256": "e67f29df19943224c5c80d952d765a03cfc34a06e45381144f99ba9e7bcafa19",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.18281250000000002 0.44027777777777777 0.390625 0.17500000000000002",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.1796875 0.18055555555555555 0.34687500000000004 0.37777777777777777",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05243.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05243.txt",
+    "label_sha256": "795ee8011bccf53a98bb90dea6a3d6e045dd23738358d475d9dfd6d4dcb44d2c",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.5789062500000001 0.19444444444444445 0.4546875 0.40555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05244.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05244.txt",
+    "label_sha256": "9c9f1ab10502932b22e44a10ea731bb7d585e25645545f78600296c8f3134edb",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.434375 0.18194444444444446 0.675 0.36944444444444446",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05246.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05246.txt",
+    "label_sha256": "105855114eaa4ecf4370b3bd61dff1667b5d7151c9eb08fb0118c76c016334bd",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.58125 0.1875 0.47187500000000004 0.3805555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.13984375000000002 0.13472222222222222 0.2859375 0.26944444444444443",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05254.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05254.txt",
+    "label_sha256": "c7b6153e8f62bbb3e2a39fe35401cb4312bc4bb2ac344ed86f806bcf362ae8bf",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.6570312500000001 0.3597222222222222 0.6703125000000001 0.7361111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05255.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05255.txt",
+    "label_sha256": "1e37ccee4813e0abf17a6d5399bf651caaf8d6d5ada39e24d271a16a59cbe1fc",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.053125000000000006 0.2986111111111111 0.1125 0.11944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.59765625 0.16944444444444445 0.22968750000000002 0.34444444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.28125 0.1277777777777778 0.36875 0.27222222222222225",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05256.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05256.txt",
+    "label_sha256": "6e642ce624fd4e649ab4a7ff63112f946f75806832dd9140663f21cdb34b6e05",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.032031250000000004 0.36388888888888893 0.0703125 0.08333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.16484375 0.18333333333333335 0.32343750000000004 0.37222222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05257.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05257.txt",
+    "label_sha256": "e3fa58a1a91732fe1a81d9d98ee2e9cc7349ed2f277169e32d3f7d5591abf0bc",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.18046875 0.18611111111111112 0.3640625 0.3944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.6734375 0.25972222222222224 0.509375 0.5305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05259.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05259.txt",
+    "label_sha256": "f1c3dbc1ab0a2767db4819cbc5a75fad62101c2e94309e9f67385632373639e0",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.15000000000000002 0.18194444444444446 0.290625 0.36944444444444446",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.5109375 0.18194444444444446 0.29375 0.39722222222222225",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05262.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05262.txt",
+    "label_sha256": "e74bae7f19db8a34ad69647be814e8a868de0a85e0ffb6ae3cf85cb76cdec6d9",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.209375 0.19166666666666668 0.40625 0.40555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05263.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05263.txt",
+    "label_sha256": "70bb4f5b152d8239bd3e79db8a6f84b74e1e78d13e662a5527c3d2da37a8f605",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.20859375000000002 0.1763888888888889 0.3984375 0.36944444444444446",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 7,
+        "text": "0 0.6585937500000001 0.1902777777777778 0.3984375 0.39166666666666666",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05265.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05265.txt",
+    "label_sha256": "ef1fce86dc4aef41fd120311621ed9a0b525d1bb608e9aea26e8034d048caad4",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.828125 0.5013888888888889 0.34687500000000004 0.2138888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.26328125 0.18888888888888888 0.4734375 0.4",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05266.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05266.txt",
+    "label_sha256": "947fa4d7f1f648a564a1d5e157a82f116a2dbba6962ec758b57822427b616450",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.04296875 0.29444444444444445 0.0890625 0.11111111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.5859375 0.13333333333333333 0.246875 0.29444444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.2546875 0.12222222222222223 0.34375 0.2555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05267.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05267.txt",
+    "label_sha256": "b3cf1a402dc659fe055fae27eb1ff27d140bb14722b537bccf789a6796e5d634",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.86328125 0.6625 0.2921875 0.46944444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.5109375 0.3472222222222222 0.9968750000000001 0.6666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05271.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05271.txt",
+    "label_sha256": "12ec7ed35b7ec6b66cfd3415c142e896dde63353a67a5e1375b3578a748a2fdb",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.296875 0.35555555555555557 0.55 0.7277777777777779",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05276.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05276.txt",
+    "label_sha256": "ac30a740b224a5c74c448929880476fda1837fefa06883a70fe176789ea5a2c2",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.51484375 0.3527777777777778 0.9640625 0.8555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05279.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05279.txt",
+    "label_sha256": "d669f6a4487933699a2469b9e57eedf8711f318307c7ef6d40d5d6df4dac8559",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.040625 0.35000000000000003 0.08750000000000001 0.32222222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.41953125 0.41805555555555557 0.7734375 0.925",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05281.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05281.txt",
+    "label_sha256": "33e6f2da267b6f98053f0d1e0dc760f8ca34d22709740970a97f4ecb620d421a",
+    "errors": [
+      {
+        "line": 6,
+        "text": "1 0.015625 0.3194444444444445 0.034375 0.07777777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05285.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05285.txt",
+    "label_sha256": "b197aba86b8430701568e0167dc25ee388a2266e1914d2857c758b29cfc50e62",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.06171875 0.5041666666666667 0.1265625 0.20277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05287.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05287.txt",
+    "label_sha256": "6f52d11716b812f621f22a8e82ea175af6d1efca265dc37b8e4b5ee0940f1689",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.62421875 0.19722222222222224 0.2890625 0.4222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.27968750000000003 0.13055555555555556 0.284375 0.2833333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05289.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05289.txt",
+    "label_sha256": "1743d91d1263b8f05c93545a0318bb8a95caf6a60b2e8faaaea4102374251bdc",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.1296875 0.35694444444444445 0.28125 0.3194444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05293.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05293.txt",
+    "label_sha256": "ed3beb27e06319c557e0ab454d4ff350b6cf68c135bd1ee994a8cd8c831fbc38",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9070312500000001 0.4791666666666667 0.1953125 0.35833333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05295.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05295.txt",
+    "label_sha256": "1742fc44e41091bcef51d8d53b189ababe0ff1870443f9e473e47f9f3b20c2ba",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.11953125 0.4305555555555556 0.24531250000000002 0.5722222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.41328125000000004 0.2833333333333333 0.6515625 0.5722222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05297.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05297.txt",
+    "label_sha256": "4e78bee582b994c5f8996fd9cb5d28f19b5ee170214f0c6c780e470382382d12",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9164062500000001 0.4486111111111111 0.1796875 0.44722222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05299.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05299.txt",
+    "label_sha256": "9b769bb1709d85fc2d0a85ddeb4920fcf69af62b2d9925752acc8a19dd277109",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.13046875 0.7472222222222222 0.2828125 0.17222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "1 0.8562500000000001 0.49722222222222223 0.30000000000000004 0.3888888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.503125 0.42083333333333334 1.0 0.9472222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05300.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05300.txt",
+    "label_sha256": "dfa1256a1fba544afd08a340a4a3af7a84602e88b202138c5990c464f87d95ae",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.8562500000000001 0.4986111111111111 0.30000000000000004 0.39166666666666666",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "1 0.13203125000000002 0.7472222222222222 0.2828125 0.17222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.5015625 0.41805555555555557 1.0 0.913888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05304.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05304.txt",
+    "label_sha256": "4b1294768ec842264660baea980910168cf2552a5378ab109d0bd9d247eec30a",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.5171875 0.3622159090909091 0.8125 0.7755681818181819",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05305.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05305.txt",
+    "label_sha256": "94cb02fa7cedd175574405e58aa93870b13184c39c40866eb99c1a8d90217198",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.79453125 0.5113636363636364 0.4140625 0.30113636363636365",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "0 0.50546875 0.3536931818181818 0.9953125 0.7869318181818182",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05307.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05307.txt",
+    "label_sha256": "921ab20a125675e0a23fc1b4fccd76f89f44734c1032fb9e54e8f14a13e65a3f",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.6642156862745098 0.28055555555555556 0.7598039215686274 0.33333333333333337",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05308.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05308.txt",
+    "label_sha256": "bad010f6d362d033895d6bba6acf10d740ee13590cb1059df3dd97fff4c721c9",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.5073529411764706 0.26944444444444443 1.0 0.38333333333333336",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "0 0.5049019607843137 0.11388888888888889 1.0 0.23333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05315.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05315.txt",
+    "label_sha256": "5184cd000e251b250db809f2e66e6f766134e6e70e53a490f9d9c1032d9af8ac",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.49453125000000003 0.3263888888888889 1.0 0.6361111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05316.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05316.txt",
+    "label_sha256": "f40bc0c7bbe049659d84a5c68393fb9be28cfc42b4ea8304b434361266439bc0",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.0484375 0.6694444444444445 0.1 0.23333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.49843750000000003 0.3402777777777778 0.99375 0.6916666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05317.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05317.txt",
+    "label_sha256": "29cab3d214300e2cff1914084713ae7666c01f84da3257e45a9f63775816e394",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.48671875000000003 0.33055555555555555 1.0 0.65",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05318.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05318.txt",
+    "label_sha256": "ef659d7fd42d06b18ee6de7f352b83795c6dba30c54b542c6fdc1f515b15243e",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.5109375 0.33194444444444443 1.0 0.6583333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05328.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05328.txt",
+    "label_sha256": "6018d0497e589aa0bcb72cc67a61721f170ceee8368d9b0287895bdfea95575c",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.496875 0.21875 0.30000000000000004 0.46590909090909094",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05331.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05331.txt",
+    "label_sha256": "39e32d969e1c3de1dd039f178897b14e818aaf1a0067244db4cc9eb62d8f0a8e",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.49609375 0.21875 0.3046875 0.44886363636363635",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05333.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05333.txt",
+    "label_sha256": "3c7ac6eed6d7036397eed95785715f327ec8957436826bca19311a37e8fa3ecc",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.49531250000000004 0.21732954545454547 0.309375 0.45170454545454547",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05343.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05343.txt",
+    "label_sha256": "3c550275321951de9f93719e15a8bd6c7d9733e12c19952a22a9dc15e5a2a13d",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.49296875 0.21022727272727273 0.3171875 0.4375",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05348.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05348.txt",
+    "label_sha256": "e62e9fe2e7b120ea1741e28f66bf1dc7355721a88ff971aff918ea355679670f",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.055468750000000004 0.44583333333333336 0.1203125 0.08611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.49609375 0.2555555555555556 0.9796875 0.5166666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05355.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05355.txt",
+    "label_sha256": "9dc89ed17865793f65838df6692fc1f489c43989c377797cad096c749ce48eea",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.33663366336633666 0.4236111111111111 0.5544554455445545 0.9083333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05356.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05356.txt",
+    "label_sha256": "c52f22e8b849f6aafbbb5b59246ee1f33b1738be1bacda1c946b2595c8bf9052",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.3316831683168317 0.43194444444444446 0.5544554455445545 0.925",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05358.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05358.txt",
+    "label_sha256": "961dca2de137e4c06e7e6e83525d74e2e03850ffffc4559b9a1040a8f45cbe14",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.4158415841584158 0.42638888888888893 0.5643564356435644 0.913888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05360.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05360.txt",
+    "label_sha256": "774d16bfa1ff923fd6f4d039fb2a16d47c74611857af1e494f24c793cdec49f9",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.49375 0.4152777777777778 1.0 0.5305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05362.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05362.txt",
+    "label_sha256": "3e3c328f6a4f2e8f22376dc9263c64673a48d13320ea4a9c315af9d29ec7c56e",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.41796875 0.3458333333333333 0.9421875000000001 0.6416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05363.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05363.txt",
+    "label_sha256": "5d7457d9868b497facd3944c1003c52b306bf99aafffe2949becf7481a2013c2",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.4890625 0.3416666666666667 1.0 0.5666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05537.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05537.txt",
+    "label_sha256": "16886ef47e939df9a7b60aab105e8395a22c3d7e607f382e3982c93de2a4256b",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.9207031250000001 0.6208333333333333 0.16015625 0.06666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05757.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05757.txt",
+    "label_sha256": "4227d0be0045975ffdbd9eeea48e8c6a354d8dd64a2d4a7a85348c0bc03f4f6e",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.29140625000000003 0.8778409090909091 0.1046875 0.25",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05882.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05882.txt",
+    "label_sha256": "dade771f9bae7efcf612cc37ecc9c09bfdb2d951240d5bc90b678faa37cc67fb",
+    "errors": [
+      {
+        "line": 7,
+        "text": "1 0.65625 0.7055555555555556 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB05886.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB05886.txt",
+    "label_sha256": "d070e2a8bb903e7e2647b10f4a1bd697882eef3e9988ce93e161b6e43d9c3f67",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.373046875 0.9909722222222223 0.03515625 0.020833333333333336",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06028.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06028.txt",
+    "label_sha256": "a4f954b66bef86181885515715611be3d344049bbab093f7ea0e0ae50adb9664",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.724763406940063 0.27157894736842103 0.556782334384858 0.5431578947368421",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06101.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06101.txt",
+    "label_sha256": "85b960e65c1bc4dca97599ab328ed4d3bf5471a0caa37c08e78a28243566dfc0",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.9642276422764228 0.14333333333333334 0.07804878048780488 0.10666666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06251.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06251.txt",
+    "label_sha256": "92af34410f9bf720dcd7bdd765e06967e443e2db918bd422822dc3e02c844347",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.6685483870967742 0.44067796610169496 0.6661290322580645 0.8474576271186441",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06363.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06363.txt",
+    "label_sha256": "1403c00a31d3222a8824a9141ebc5101dda49aaae1cbf1b3e7c9c2321182c743",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.8251953125 0.7975260416666666 0.3359375 0.4075520833333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06611.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06611.txt",
+    "label_sha256": "4d9d82c5ed785b940ae527d15b0de5d244aa62e55ff98d8f8d9b6198b5785a9b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.8178066037735848 0.0875 0.3667452830188679 0.15833333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06733.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06733.txt",
+    "label_sha256": "c9fbb4251fcc859450c3bc2cf0d378e097cb58d4cbd59ea353c2a1fca22ebf1d",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.37226562500000004 0.5611111111111111 0.73203125 0.8805555555555555",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06750.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06750.txt",
+    "label_sha256": "a241405f074986bbd7e1f90a569bff7ef2d83009d510a391418945ae8a2d951e",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.9574218750000001 0.3277777777777778 0.08671875000000001 0.075",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 4,
+        "text": "0 0.929296875 0.26319444444444445 0.14609375 0.1902777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06754.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06754.txt",
+    "label_sha256": "218a5697db80c1eec96cba2f106a20c78fade32abe7c0bd96157cedad6cb435f",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.90625 0.23680555555555557 0.19062500000000002 0.14305555555555557",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB06900.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB06900.txt",
+    "label_sha256": "48ae11184836234c5aabe992522510ee7b1094bc6a065252d94d6143a248d8a8",
+    "errors": [
+      {
+        "line": 8,
+        "text": "1 0.8539062500000001 0.23333333333333334 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB07167.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB07167.txt",
+    "label_sha256": "082eceae46e7a45ac9d92c79572e512bcb2870421446225cbf81d04b3f6aea38",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.5955696202531646 0.6069819819819819 0.7911392405063291 0.7905405405405406",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB07460.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB07460.txt",
+    "label_sha256": "95899a0d5050c9e1cbca631a8838efb8b30838eeb92b666a872c82a577937216",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.5029761904761906 0.37471264367816093 0.9988095238095239 0.7310344827586207",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB07714.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB07714.txt",
+    "label_sha256": "671e7b182adba44ecd09f06aba6a2a1f9c10df7764c8a626ee7f00b333d4817b",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.13926940639269406 0.9016227180527383 0.2146118721461187 0.20081135902636915",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB07720.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB07720.txt",
+    "label_sha256": "41ad56092533f5b042dbea765819dbb51289b987d4b91f11f44a2670e97fdb84",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5773195876288659 0.44751908396946566 0.8505154639175257 0.8721374045801527",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB07998.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB07998.txt",
+    "label_sha256": "76906f903141f0b321a37e847121e40fcc9717f11526dc7183d186758eba18d4",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.6468750000000001 0.4715909090909091 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08558.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08558.txt",
+    "label_sha256": "95dbf25f99714f37fd421f3b2e9ffdaec9dbe6727ee816a5df16ea566a8e839b",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.4485294117647059 0.2902777777777778 0.9754901960784313 0.5638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08559.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08559.txt",
+    "label_sha256": "965fef5c135d544bf85b8cece5f58d8e9073a5fc2161bc07d644ba7cba789eec",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.33578431372549017 0.19861111111111113 0.6911764705882353 0.39722222222222225",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08632.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08632.txt",
+    "label_sha256": "dc73a860824fc5338ce2e2d616378e588d9855c37f18beeafc3e1f2755f26b12",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5007812500000001 0.4138888888888889 1.0 0.8444444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08636.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08636.txt",
+    "label_sha256": "0fb0790cf8aa741fbdcc0a7f18212000bc589189807e9fc5bfb427e63014443c",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.66015625 0.36388888888888893 0.6671875 0.7444444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08643.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08643.txt",
+    "label_sha256": "e21e62f10a66750e6ca53d6e86b8c472533092d5c868d5f2b2e3ac1181315bdc",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.16562500000000002 0.2625 0.34375 0.4138888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08646.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08646.txt",
+    "label_sha256": "517d333f74e1799f06a7bc876ca88d05ab66da386dea3060db385b8c5c9dc815",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.2 0.1277777777777778 0.36562500000000003 0.2611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.815625 0.11666666666666667 0.37812500000000004 0.2388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08654.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08654.txt",
+    "label_sha256": "83d13b11258695b59ae626d800250f07424c1dc2d7187032104c3e2cfbb2f5bf",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.2578125 0.5013888888888889 0.48750000000000004 1.0",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08656.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08656.txt",
+    "label_sha256": "744242cbdc9530f3044ee4bd256ff559ede96908de94e5c53307f299b996b7d4",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5514705882352942 0.2902777777777778 0.9754901960784313 0.5638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08658.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08658.txt",
+    "label_sha256": "826cb04a69b4bcc212e04e9eeb07ae4256348aa634c7a025610701fed873d129",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.6642156862745098 0.19583333333333333 0.6911764705882353 0.4027777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08659.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08659.txt",
+    "label_sha256": "a9fe7ba033a86cf3ec5f1f215bb7d1f6ec4b8b67f1f213f44ab407ff67ab22aa",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.6397058823529411 0.18611111111111112 0.7696078431372549 0.37777777777777777",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08661.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08661.txt",
+    "label_sha256": "9a802346b940323dbbf36f42c4596771285d38020c46f9bf806a8b96f74d2132",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.2647058823529412 0.28750000000000003 0.5490196078431373 0.5583333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08669.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08669.txt",
+    "label_sha256": "eaded7dd3736011f139c3951e8922f9a5d4bfa5117c72c763285b29d8664ae85",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5024509803921569 0.2652777777777778 1.0 0.525",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08673.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08673.txt",
+    "label_sha256": "23e2e99d1f38680d9e6ba6d7c355a425ee0f9169b3f9f3bc41bc82ec14417717",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.29609375 0.4027777777777778 0.5703125 0.8277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08675.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08675.txt",
+    "label_sha256": "99f577a0f14ca4ba3816456a88b84d688fcafacce44961a28012208edb6ad8c8",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.4921875 0.25277777777777777 1.0 0.5111111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08676.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08676.txt",
+    "label_sha256": "8675f33fe52053c9a521ea246fe17030b9bfc7caa15de8eed5be02e49736d283",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.503125 0.34861111111111115 1.0 0.7083333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08677.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08677.txt",
+    "label_sha256": "ab27e148af4045f1a6a52f2520730edeca70f8c6769c4690361ffabc2417d178",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5 0.2791666666666667 0.9750000000000001 0.5638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08681.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08681.txt",
+    "label_sha256": "16aba9366724345a72c1207efb64c33095839037e55bc6224dc6459925a41685",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.33125000000000004 0.25277777777777777 0.6781250000000001 0.48888888888888893",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08683.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08683.txt",
+    "label_sha256": "53e66b3afb3d6b130a2e932ee1683e7f1fc56fda387f95f53704db87ab01de84",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.49765625 0.2 1.0 0.3611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08686.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08686.txt",
+    "label_sha256": "0b48bacbb8106a9d0749b6c99cbc1b48df6794950a4e5e72c6c114d0e9598857",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.21328125 0.2138888888888889 0.4609375 0.4222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08687.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08687.txt",
+    "label_sha256": "d76ed27c6c953d5f0074b66f830679c4851d644460f333e4e07005a94b805133",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.6328125 0.275 0.7250000000000001 0.5555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08696.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08696.txt",
+    "label_sha256": "739db05f36aff1bdd062035b9bc07876c43a96b76c9e81d5e482f1048e47db75",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.275 0.21732954545454547 0.546875 0.4460227272727273",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08698.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08698.txt",
+    "label_sha256": "425415b59c98b97d0552e13675b82da1c0dace7948364aedc458b825f44c8708",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.246875 0.25426136363636365 0.521875 0.5028409090909091",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08708.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08708.txt",
+    "label_sha256": "b87c867a045672e1515cf251a3a7f289d53d8b4fa7773d52f3c07bff21b37971",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.4827044025157233 0.24861111111111112 0.9905660377358491 0.5083333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08711.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08711.txt",
+    "label_sha256": "66f36385856c6023d9b6dd43be2da87d7735d81e90a7c3daba0133a871faf6a7",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5047169811320755 0.33194444444444443 1.0 0.6583333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08712.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08712.txt",
+    "label_sha256": "72485d20f7e9ba14add8e2456489febcac87dddad27a73aac54ea89fcff62d38",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5078616352201258 0.34861111111111115 1.0 0.6972222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08714.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08714.txt",
+    "label_sha256": "81c2fb9adb2f55e8bfdd5dff15d2e660709e54654a2a8c8c035c18a5935c8f3e",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5589622641509434 0.3180555555555556 0.9355345911949686 0.6416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08718.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08718.txt",
+    "label_sha256": "d0f1136abdb840af0ed0babe9d84229a0c8c950f7fc1cda5d3201d52f9efd159",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.49843750000000003 0.2111111111111111 0.31875000000000003 0.43333333333333335",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08725.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08725.txt",
+    "label_sha256": "fbd02de7cabf44b6b7ca1874e6af2a04f9e62a57adba53b0efbd280c1217333c",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.515 0.2888888888888889 1.0 0.6444444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB08727.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB08727.txt",
+    "label_sha256": "f2f886fe330f6d44a99d783d649cb9cd8d924e8e16118fd20a852e0b2e09e0d8",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5075000000000001 0.28194444444444444 1.0 0.5750000000000001",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09163.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09163.txt",
+    "label_sha256": "00acb7d0c5476102a032704d6d3a753d7e89b31d60b37450465e37eb68485e98",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.306615776081425 0.6620253164556962 0.22137404580152673 0.6810126582278481",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09241.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09241.txt",
+    "label_sha256": "15df216336c5a7f716c62ba80538fec14407b6bead332bb81e9760fb586ae42d",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.7331658291457287 0.6613545816733067 0.37286432160804023 0.7569721115537849",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09312.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09312.txt",
+    "label_sha256": "a3e879a37dad51698cc4036a27d393d1878a50296ee98cdb909a9188a58eabcb",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.8744444444444445 0.45454545454545453 0.25333333333333335 0.8221343873517786",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09339.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09339.txt",
+    "label_sha256": "6bf9f623fab32c5c3b65dce06e8e384c2d493006733d3d9ecad802b38c084ca7",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.56375 0.4419642857142857 0.8825000000000001 0.8214285714285714",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09346.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09346.txt",
+    "label_sha256": "607a3ef4297306d6772ae60bb34bc72c255dccc8f5cd652961aab29f2e528f60",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.4746376811594203 0.5095785440613027 0.9371980676328502 0.9846743295019157",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09363.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09363.txt",
+    "label_sha256": "607463ebf21bf5c9f8ac4a53da13cb0fab4cf905c1eab4ad41e6555aed409e3d",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5611111111111111 0.594059405940594 1.0 1.0",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/train/images/WEB09424.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/train/labels/WEB09424.txt",
+    "label_sha256": "a4905bbf546aa68780c4100f736ec4becba91347b69194309a919fdad996d3cf",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.50875 0.46166666666666667 0.9925 0.7633333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04688.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04688.txt",
+    "label_sha256": "abcb828b5b4bcf6dc6ca8d05c8ce8a90c424ed1fbfc926db1bb6c767f021c9b1",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.016796875 0.3180555555555556 0.03515625 0.09166666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04800.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04800.txt",
+    "label_sha256": "51dd7af98734822ca796edad4277a20ad034bc489423f0469ede418f62d932aa",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.01640625 0.3180555555555556 0.034375 0.07777777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04855.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04855.txt",
+    "label_sha256": "62d8f4fae29a4b88f362016377f2563d6c64855fcdaa5e76d98635014038806e",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.989453125 0.41111111111111115 0.022656250000000003 0.09444444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04859.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04859.txt",
+    "label_sha256": "b8a5ad372628dabf89e4038e1eb22a59c3e034b46474c218785eb536a1650214",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.987890625 0.41597222222222224 0.025781250000000002 0.07916666666666666",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04860.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04860.txt",
+    "label_sha256": "b35aad7db41a2725d305237a59d258b5e4c0bc6a68f35800276481c4b7adc8ee",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.8714843750000001 0.28194444444444444 0.26640625 0.3472222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04867.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04867.txt",
+    "label_sha256": "3d061cdda639d72c46f6cc8dcef85aa6c80e01a476ccba11c17b4eacce59ae96",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.97265625 0.37777777777777777 0.05625 0.15555555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04990.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04990.txt",
+    "label_sha256": "fce544e6ff1a19e0de52b3f07047e85b9e20f7d3ddb09adb23e6e01f005d9fea",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.98828125 0.513888888888889 0.025 0.0638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/AoF04998.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/AoF04998.txt",
+    "label_sha256": "1886d4cd55b279f6528f4916ba6cad9d796eca45c4866c046c096c09b6e3acea",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.985546875 0.5145833333333334 0.030468750000000003 0.05694444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB03765.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB03765.txt",
+    "label_sha256": "f0bf57e7656c9cea4b7e65d84d213dc288227519d73a7364761531eaa982895a",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.521484375 0.5097222222222222 0.12578125 0.9861111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB03951.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB03951.txt",
+    "label_sha256": "a039e9b4300fa77e78686fdba51747ca014c6c09472ee58ce7244682ad92ffa3",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.256875 0.94 0.18875 0.12444444444444444",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB04449.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB04449.txt",
+    "label_sha256": "20c780c1722ed2538d72a7c47894f2b6074a77a18a3d8ba96c2d53f4f9cdd00b",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.2765625 0.8494318181818182 0.46875 0.3181818181818182",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB04980.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB04980.txt",
+    "label_sha256": "b02a87f97bebb65ef79112c7b96a36b7c9556712e1484a05291b2fb058a96b24",
+    "errors": [
+      {
+        "line": 8,
+        "text": "0 0.04609375 0.19444444444444445 0.09531250000000001 0.3611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05040.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05040.txt",
+    "label_sha256": "4c867e978bd30571d8cffc23a13a4e58732c3fe61e61a1a5147723d197297c97",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.33578431372549017 0.28055555555555556 0.7598039215686274 0.33333333333333337",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05089.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05089.txt",
+    "label_sha256": "fb24417fdc4783f5a76f7dc4565fef95e370444d9f0a36054645d2e3ded37de8",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.59296875 0.3652777777777778 0.8140625 0.7416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05090.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05090.txt",
+    "label_sha256": "5cf97ea25fc48e58bb10e57af7e9fa05e15f6b96471cc25bc97b52dd4076e0ea",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.5125000000000001 0.34305555555555556 0.921875 0.7027777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05091.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05091.txt",
+    "label_sha256": "cef048e76c6d18414db3ac4d2a6284bbc518cb37450c3247269473f4319e4ced",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.08046875 0.7041666666666667 0.1640625 0.275",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.50625 0.4013888888888889 0.9656250000000001 0.8194444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05097.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05097.txt",
+    "label_sha256": "f7234440decb988ef72d864e769352eb852d1ba2155264648ec96f210e67d03a",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.51328125 0.37083333333333335 0.9734375000000001 0.7527777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05099.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05099.txt",
+    "label_sha256": "1e1dfabe91aee86048aecdf681c99dcd25d3c9e070e2b368f3d1080502ba4806",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.6390625000000001 0.34861111111111115 0.6843750000000001 0.725",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05102.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05102.txt",
+    "label_sha256": "4bc0d1f14ad62c321de0f197085f79716bbfa0497ef74400a217a4786d4cc0e4",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9695312500000001 0.9319444444444445 0.06406250000000001 0.058333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.525 0.3666666666666667 0.9281250000000001 0.7611111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05105.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05105.txt",
+    "label_sha256": "d6b88ff73ca02d5852132796427470b68421e5fb75ae2d54b413a18c45c76fdd",
+    "errors": [
+      {
+        "line": 3,
+        "text": "1 0.96796875 0.8222222222222223 0.0703125 0.22222222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 5,
+        "text": "0 0.5609375 0.3597222222222222 0.8656250000000001 0.7416666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05190.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05190.txt",
+    "label_sha256": "7408c3150e8961ec0c391c88690f8a8236e0f36244377118ce516431163e4c35",
+    "errors": [
+      {
+        "line": 6,
+        "text": "0 0.48203125 0.2847222222222222 0.9671875000000001 0.5305555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05194.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05194.txt",
+    "label_sha256": "f428f6625539276131885a3293499bd593b2d55488c6ff6afcaa1cfd1f3bdb24",
+    "errors": [
+      {
+        "line": 5,
+        "text": "1 0.021875000000000002 0.6416666666666667 0.046875 0.13333333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05199.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05199.txt",
+    "label_sha256": "c9d80b57d599e94ca12fd9e1b184925290066c9e3da158ff4470abdafbb5b683",
+    "errors": [
+      {
+        "line": 6,
+        "text": "1 0.43515625 0.9180555555555556 0.1171875 0.17500000000000002",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 8,
+        "text": "0 0.43671875000000004 0.48750000000000004 0.8796875000000001 0.8361111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05214.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05214.txt",
+    "label_sha256": "c04cd3df3f7602936637c5fd1a3f482f9f8f9832f7b63076367a1008759ca431",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.91171875 0.29305555555555557 0.18906250000000002 0.18611111111111112",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05225.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05225.txt",
+    "label_sha256": "da4fd613429f42eb5d028cada9d22b57325b12fee11d14e89fa0f6c4ed4bd553",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.359375 0.19444444444444445 0.22812500000000002 0.4166666666666667",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05230.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05230.txt",
+    "label_sha256": "c3482f4caea9a2be8a7e5bf2794f8bbc057cc7fc5a02ab638e263ba0dd2d8a40",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.2546875 0.19305555555555556 0.446875 0.4027777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05251.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05251.txt",
+    "label_sha256": "5ef9113f4ec6459fe9c606f783e3b50362a33bf5fc4f1737e20e3e81166382fe",
+    "errors": [
+      {
+        "line": 7,
+        "text": "0 0.64765625 0.27083333333333337 0.5109375 0.5583333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05268.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05268.txt",
+    "label_sha256": "75e3673683171b46de6218fc8e906e815ce8e4f592c24c0be50e40c6674bc145",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.35468750000000004 0.34861111111111115 0.6875 0.725",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05270.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05270.txt",
+    "label_sha256": "2e2bd85305476fd3357b052a2eaad7c59ec3c9b9f020ea74afa4cc7f35da83cd",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.34218750000000003 0.25 0.478125 0.5055555555555555",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05273.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05273.txt",
+    "label_sha256": "3ade0424246de7ba86083deeb706c50f15351dea45fe76994ce9c0eda72932ac",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.37109375 0.4916666666666667 0.7609375 0.8333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05282.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05282.txt",
+    "label_sha256": "5c6d6c5cb033c0788515beef03a28c7a268fc83430ebe80bb23c765535a3ef29",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.434375 0.325 0.8093750000000001 0.7055555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05286.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05286.txt",
+    "label_sha256": "1b1472680fb86f0e10f80f1bcdc28dca0fa89ca24d1c4ab68c72a753786fd1a8",
+    "errors": [
+      {
+        "line": 4,
+        "text": "1 0.05234375 0.6444444444444445 0.11093750000000001 0.3944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05290.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05290.txt",
+    "label_sha256": "ba0e34db7dfe767ba1b158ba03c7426c9031f6a882ca4658fb32eef572dd9914",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.07187500000000001 0.6 0.146875 0.4388888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 6,
+        "text": "0 0.78515625 0.20694444444444446 0.40156250000000004 0.41944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05291.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05291.txt",
+    "label_sha256": "f61bf80d38872336083d579ce1b847cb161c98cb0cd752f0bebf908c303d02b0",
+    "errors": [
+      {
+        "line": 5,
+        "text": "0 0.32734375000000004 0.2833333333333333 0.5421875 0.5777777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05292.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05292.txt",
+    "label_sha256": "1499a50fc64aaf4d435e6ed1c1ef91ede624cdec6017573eea5f9a1f7d893ba7",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.16796875 0.5041666666666667 0.35468750000000004 0.44722222222222224",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05298.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05298.txt",
+    "label_sha256": "6aaab9a856cca5a6ed2a3adc946fe013f3ea201fcd9ec486cad23ba28842d2da",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.85546875 0.4986111111111111 0.3015625 0.3861111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "1 0.13203125000000002 0.7486111111111111 0.2828125 0.16944444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.50234375 0.4222222222222222 0.9828125000000001 0.9611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05301.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05301.txt",
+    "label_sha256": "a7dd9d3e65e20d32725677f81e4b95dd454610200cba572ce3e9a0efc3c94057",
+    "errors": [
+      {
+        "line": 1,
+        "text": "1 0.85546875 0.49722222222222223 0.3015625 0.37222222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 2,
+        "text": "1 0.13203125000000002 0.7472222222222222 0.2859375 0.17222222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05323.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05323.txt",
+    "label_sha256": "5b10698581d3c1bede11ed756f613a051c82a871d1b156c1ba697b95afe516d4",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.50703125 0.35000000000000003 1.0 0.7055555555555556",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05327.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05327.txt",
+    "label_sha256": "c40c36fecc721a5d16419c03725ef75cc131d765629efa7d5e45e28ea6448895",
+    "errors": [
+      {
+        "line": 4,
+        "text": "0 0.49843750000000003 0.21732954545454547 0.30000000000000004 0.45738636363636365",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05347.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05347.txt",
+    "label_sha256": "c92b48d9053bf4c1ad358f2149a942ab15795efbc2a2d4c86c73bdb752fc591c",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.48984375 0.5069444444444444 1.0 0.9194444444444445",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB05365.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB05365.txt",
+    "label_sha256": "96d4d7b603c0d8274a2be2ce93ddf0bc5aefa060ed561cc5f2140aee86a7ff5c",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.49843750000000003 0.26944444444444443 1.0 0.48333333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB06751.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB06751.txt",
+    "label_sha256": "bfe618d04350dba8b7cd22c634caf087a74d099a40f99aebd703c3b7813922e6",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.9656250000000001 0.3138888888888889 0.0703125 0.04722222222222222",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08540.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08540.txt",
+    "label_sha256": "5f64b8552c7f0525fae1ce0edd991ad103f37d902de4fb167703d6c77aa6dfcb",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.05871559633027523 0.017291066282420747 0.0 0.0",
+        "reason": "ZERO_OR_NEGATIVE_AREA"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08560.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08560.txt",
+    "label_sha256": "7227b657546629fe60371e86d2927ce792a0694ffeb991459c0866b0f19e6e48",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.3602941176470588 0.1875 0.7696078431372549 0.375",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08641.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08641.txt",
+    "label_sha256": "0c50a5739d30b6c88672c35e68bc13ef66d33aeacbd42fb552f9b7ea0ed96e05",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.7914062500000001 0.5055555555555555 0.4234375 0.9277777777777778",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08642.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08642.txt",
+    "label_sha256": "408ad38e873b87027f25218aaf0cff91ed11d15a0da12935abce3ee1e257b4eb",
+    "errors": [
+      {
+        "line": 2,
+        "text": "1 0.8125 0.7847222222222222 0.309375 0.4638888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      },
+      {
+        "line": 3,
+        "text": "0 0.721875 0.34861111111111115 0.546875 0.7083333333333334",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08678.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08678.txt",
+    "label_sha256": "58e2dccaff349744b30a970055c4cd38d74b16bb15bb63ca6fa3692b54b71c5e",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.496875 0.4222222222222222 0.946875 0.9333333333333333",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08690.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08690.txt",
+    "label_sha256": "b9d71d9f5bbee5abdfa95c0bc60c53b1b05f8ff7b5d8293b136edc376493f908",
+    "errors": [
+      {
+        "line": 3,
+        "text": "0 0.49765625 0.2625 0.9703125 0.5472222222222223",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08691.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08691.txt",
+    "label_sha256": "0996a7bc868bfe56e3f41a2389703b0736e556a5ea3529b436548f749ebe6f1e",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.4921875 0.4916666666666667 1.0 0.888888888888889",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08701.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08701.txt",
+    "label_sha256": "b395620bd0edd21066ec8f9a57c76aa2b53163df1e260814729e6321fa1bd209",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.31328125 0.2528409090909091 0.6359375 0.5",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08702.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08702.txt",
+    "label_sha256": "9f2660d75ae63bb81e793614462274e4c58ab872cf85e32245de372b6e89a40a",
+    "errors": [
+      {
+        "line": 2,
+        "text": "0 0.31562500000000004 0.37357954545454547 0.6625000000000001 0.5823863636363636",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08709.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08709.txt",
+    "label_sha256": "ed55927c475da73b0044ae8b632059c542d13f0aa8617a222794748c3f7f3f64",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5125786163522013 0.28611111111111115 0.9905660377358491 0.5611111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08710.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08710.txt",
+    "label_sha256": "98d3c3f1770d45205475a0777642e24693e63f3d3b61bc4f26765122ed471c5f",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.5007861635220126 0.33472222222222225 1.0 0.6861111111111111",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  },
+  {
+    "image_path": "datasets/dfire_author_linked_kaggle_v1/data/val/images/WEB08726.jpg",
+    "label_path": "datasets/dfire_author_linked_kaggle_v1/data/val/labels/WEB08726.txt",
+    "label_sha256": "602cb4a39c15f9c8e8b5a4f304f5d2d5e99df3c81e3fcb2000790d5e67cd6978",
+    "errors": [
+      {
+        "line": 1,
+        "text": "0 0.49 0.28750000000000003 1.0 0.5750000000000001",
+        "reason": "OUT_OF_BOUNDS"
+      }
+    ]
+  }
+]

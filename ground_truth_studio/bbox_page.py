@@ -10,6 +10,7 @@ import pandas as pd
 import cv2
 
 from ground_truth_studio.bbox_service import BBoxReviewService, validate_boxes
+from ground_truth_studio.bbox_queue import describe_queue, filter_queue, paginate
 
 canvas = components.declare_component('human_bbox_canvas',path=str(Path(__file__).parent/'bbox_canvas'))
 
@@ -22,11 +23,40 @@ def bbox_page(repository, token: str) -> None:
     st.caption('Phê duyệt bbox riêng với event GT; chưa được phép training khi lineage chưa xác minh.')
     st.write({'Ảnh trong queue đã loại trùng':len(service.queue),'Đã xử lý bởi ngài':len(history),
               'Còn chờ':len(service.queue)-len(history),'Được phép training':0})
-    pending = st.checkbox('Chỉ ảnh tôi chưa xử lý',value=True)
-    identities = [k for k in service.queue if not pending or k not in history]
+    rows = describe_queue(service.queue, history, service.repo)
+    st.caption('Các trạng thái review dưới đây thuộc tài khoản đang đăng nhập; approval không tự xác minh lineage.')
+    st.write({status:sum(r['review_status']==status for r in rows) for status in ('PENDING','APPROVED','REJECTED')})
+    view = st.selectbox('Nhóm dữ liệu', ['Tất cả', 'Suspicious empty labels', 'Needs data investigation'], key='bbox_view')
+    priority = st.checkbox('Priority', key='bbox_priority')
+    empty = st.checkbox('Empty Label', key='bbox_empty')
+    suspicious = st.checkbox('Suspicious Negative', key='bbox_suspicious')
+    status = st.selectbox('Trạng thái review', ['ALL','PENDING','APPROVED','REJECTED'], key='bbox_status')
+    query = st.text_input('Tìm Image ID / Video ID / SHA / path', key='bbox_search')
+    filtered = filter_queue(rows, query=query, priority=priority, empty=empty,
+        suspicious=suspicious or view=='Suspicious empty labels', status=status,
+        investigation=view=='Needs data investigation')
+    st.caption(f"Nhóm nghi vấn từ manifest: {sum(r['suspicious_negative'] for r in rows)} · Label hiện còn rỗng trong nhóm: {sum(r['suspicious_negative'] and r['empty_label'] for r in rows)} · Kết quả bộ lọc: {len(filtered)} / {len(rows)}")
+    size = st.selectbox('Ảnh mỗi trang', [25,50,100], key='bbox_page_size')
+    _, page, pages = paginate(filtered, int(st.session_state.get('bbox_page_number',1)), size)
+    st.session_state['bbox_page_number'] = page
+    page = int(st.number_input('Trang', min_value=1, max_value=pages, step=1, key='bbox_page_number'))
+    subset, _, _ = paginate(filtered, page, size)
+    identities = [r['image_sha256'] for r in subset]
     if identities:
-        identity = st.selectbox('Ảnh cần review',identities,format_func=lambda k:service.queue[k]['image_name'])
-        row,image,initial = service.inspect(token,identity)
+        identity = st.selectbox('Ảnh cần review',identities,format_func=lambda k:service.queue[k].get('image_name',k), key='bbox_selected')
+        metadata = next(r for r in subset if r['image_sha256']==identity)
+        st.caption(f"ID: {metadata['image_id']} · Video: {metadata.get('video_id','UNKNOWN')} · {metadata['review_status']}")
+        st.code(metadata['image_path'])
+        st.caption('Lý do queue: '+metadata['queue_reason'])
+        if metadata['investigation_reasons']:
+            st.warning('Needs data investigation: '+', '.join(metadata['investigation_reasons'])+'. Có thể lưu quyết định bbox; chưa đủ điều kiện đưa ảnh vào training.')
+        try:
+            row,image,initial = service.inspect(token,identity)
+        except (ValueError, OSError) as error:
+            st.error(f'Không đọc được dữ liệu: {error}. Review đã lưu được giữ nguyên.')
+            return
+        if identity in history:
+            initial = history[identity]['boxes']
         st.caption(f"{row['reserved_split']} · LINEAGE_NOT_VERIFIED · {row['image_name']}")
         if not initial:
             st.info('Label hiện có rỗng hoặc thiếu. Xem ảnh để xác nhận âm tính hoặc vẽ box mới.')
@@ -59,8 +89,12 @@ def bbox_page(repository, token: str) -> None:
         left,right = st.columns(2)
         decision = 'APPROVE' if left.button('Phê duyệt phiên bản bbox',type='primary') else 'REJECT' if right.button('Từ chối ảnh/nhãn') else None
         if decision:
-            service.submit(token,identity,current,decision,evidence,attest,negative)
-            st.success('Đã lưu annotation version mới trong private storage; nhãn gốc giữ nguyên.')
-            st.rerun()
+            try:
+                service.submit(token,identity,current,decision,evidence,attest,negative)
+            except (ValueError, OSError) as error:
+                st.error(f'Chưa lưu: {error}')
+            else:
+                st.success('Đã lưu annotation version mới trong private storage; nhãn gốc giữ nguyên.')
+                st.rerun()
     if st.button('Xuất bbox đã phê duyệt của tôi'):
         st.success(str(service.export(token)))

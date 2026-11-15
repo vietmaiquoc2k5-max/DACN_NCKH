@@ -78,7 +78,7 @@ def backbone_prefixes(model: torch.nn.Module) -> tuple[str,...]:
 def configure_parameters(model: torch.nn.Module,strategy: str) -> dict[str,Any]:
     """Set learnable parameter coverage, preserving the fixed DFL projection."""
     if strategy not in STRATEGIES:raise ValueError('UNKNOWN_ADAPTATION_STRATEGY')
-    prefixes=backbone_prefixes(model) if strategy=='freeze_backbone' else ()
+    prefixes=backbone_prefixes(model) if strategy in {'freeze_backbone','replay_20_percent'} else ()
     frozen=[];trainable=[]
     for name,parameter in model.named_parameters():
         active=not (name.startswith(prefixes) or '.dfl.' in name)

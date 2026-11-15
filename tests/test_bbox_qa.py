@@ -105,6 +105,12 @@ if __name__ == "__main__":
                 self.assertFalse(app.exception)
                 self.assertTrue(any('Phê duyệt' in button.label for button in app.button))
                 self.assertEqual(len(app.get('image')),1)
+                app.text_input(key='bbox_search').set_value('NO_SUCH_SYNTHETIC_IMAGE').run()
+                self.assertFalse(app.exception)
+                self.assertFalse(any(s.label=='Ảnh cần review' for s in app.selectbox))
+                app.checkbox(key='bbox_empty').check().run()
+                self.assertEqual(app.text_input(key='bbox_search').value,'NO_SUCH_SYNTHETIC_IMAGE')
+                self.assertFalse(self.service.private.exists())
         finally:
             if original_file is not None:main.__file__=original_file
 

@@ -1,0 +1,35 @@
+{
+  "gates": {
+    "DFIRE_READY": false,
+    "VN_BBOX_READY": false,
+    "SPLIT_READY": false,
+    "BASELINE_CHECKPOINT_READY": true,
+    "RESOURCE_PILOT_READY": false,
+    "WEEK5_TRAINING_READY": false
+  },
+  "blockers": [
+    "DFIRE_CAMERA_SCENE_GROUPS_UNRESOLVED",
+    "BASELINE_TRAIN_MEMBERSHIP_NOT_AUTHENTICATED",
+    "VN_APPROVED_LINEAGE_AND_INDEPENDENT_SPLITS_NOT_COMPLETE",
+    "VN_CROSS_SPLIT_NEAR_DUPLICATES_UNRESOLVED",
+    "NO_VALID_SUBSET_FOR_RESOURCE_PILOT"
+  ],
+  "scope_counts": {
+    "VN_train": 1376,
+    "VN_val": 528,
+    "VN_test": 572,
+    "VN_quarantine": 645,
+    "DFIRE_train": 12409,
+    "DFIRE_val": 2547,
+    "DFIRE_test": 3568
+  },
+  "baseline_checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "training_runs": 0,
+  "completed_epochs": 0,
+  "baseline_vn_map": null,
+  "baseline_dfire_map": null,
+  "adaptation_metrics": null,
+  "resource_pilot": null,
+  "yaml_created": false,
+  "status": "BLOCKED"
+}

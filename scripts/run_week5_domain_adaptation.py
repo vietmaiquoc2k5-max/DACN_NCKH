@@ -32,6 +32,7 @@ from src.domain_adaptation import (backbone_prefixes, configure_parameters, extr
                                    validate_class_mapping, validate_dataset_rows,
                                    validate_resume, verify_file_hash)
 from src.video_audit_v2 import write_json
+from ground_truth_studio.bbox_export_adapter import validate_lineage
 
 LOG=logging.getLogger(__name__)
 
@@ -71,10 +72,18 @@ def validate_inputs(manifest: dict[str,Any],strategy: str) -> tuple[list[dict],l
         proof_path=confined(ROOT,row['frame_lineage_receipt'])
         verify_file_hash(proof_path,row['frame_lineage_receipt_sha256'])
         proof=json.loads(proof_path.read_text(encoding='utf-8'))
-        if proof.get('status')!='VERIFIED_NATIVE_DECODE' or any(
+        validate_lineage(ROOT,proof,row)
+        if any(
             proof.get(key)!=row.get(key) or row.get(key) is None
             for key in ['image_sha256','source_video_sha256','source_frame_index','source_pts_ticks','time_base']):
             raise ValueError('NATIVE_FRAME_LINEAGE_BINDING_MISMATCH')
+        approval_path=confined(ROOT,row['bbox_approval_receipt'])
+        verify_file_hash(approval_path,row['bbox_approval_receipt_sha256'])
+        approval=json.loads(approval_path.read_text(encoding='utf-8'))
+        if approval.get('decision')!='APPROVE' or any(
+            approval.get(key)!=(row.get('bbox_review') or {}).get(key)
+            for key in ['image_sha256','label_sha256','reviewer_id','reviewed_at_utc','attest_frame_review','negative_frame_approved']):
+            raise ValueError('HUMAN_APPROVAL_RECEIPT_BINDING_MISMATCH')
     for row in vn+dfire:
         for field,path_field in [('image_sha256','image_path'),('label_sha256','label_path')]:
             verify_file_hash(confined(ROOT,row[path_field]),row[field])
@@ -125,6 +134,8 @@ def execute(args: argparse.Namespace) -> int:
     if not output.is_relative_to(ROOT/'runs/benchmarks/week5_domain_adaptation'):
         raise ValueError('Unsafe output directory')
     protocol=json.loads(args.protocol.read_text(encoding='utf-8'))
+    if args.strategy=='replay_20_percent' and protocol.get('protocol_version')!='week5_domain_adaptation_v2_freeze_replay':
+        raise ValueError('FREEZE_REPLAY_REQUIRES_VERSIONED_V2_PROTOCOL; legacy replay runs cannot resume with changed parameter policy')
     dataset=json.loads(args.dataset_manifest.read_text(encoding='utf-8'))
     expected={'strategy':args.strategy,'seed':args.seed,'dataset_sha256':sha256(args.dataset_manifest),
               'baseline_sha256':protocol['checkpoint_sha256'],'config_sha256':sha256(args.protocol)}
@@ -198,7 +209,7 @@ def execute(args: argparse.Namespace) -> int:
         before=time.monotonic()
         model=YOLO(str(output/'fit/weights/last.pt') if args.resume else str(checkpoint))
         validate_class_mapping(model.names)
-        prefixes=backbone_prefixes(model.model) if args.strategy=='freeze_backbone' else ()
+        prefixes=backbone_prefixes(model.model) if args.strategy in {'freeze_backbone','replay_20_percent'} else ()
         frozen_before=state_digest(model.model.float(),prefixes) if prefixes else None
         epoch_files: list[str]=[]
 
@@ -305,7 +316,7 @@ def main() -> None:
     """Run a fresh strategy directory, or resume only a matching real checkpoint."""
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dataset-manifest',type=Path,required=True)
-    parser.add_argument('--protocol',type=Path,default=ROOT/'configs/research/week5_execution_protocol_v1.json')
+    parser.add_argument('--protocol',type=Path,default=ROOT/'configs/research/week5_execution_protocol_v2.json')
     parser.add_argument('--strategy',required=True,choices=['full_finetune','freeze_backbone','replay_20_percent'])
     parser.add_argument('--seed',type=int,default=42)
     parser.add_argument('--output-dir',type=Path,required=True)

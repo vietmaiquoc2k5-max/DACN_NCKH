@@ -1,0 +1,89 @@
+{
+  "protocol_version": "week5_domain_adaptation_v2_freeze_replay",
+  "status": "PREPARED_NOT_TRAINED",
+  "checkpoint": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "strategies": [
+    "full_finetune",
+    "freeze_backbone",
+    "replay_20_percent"
+  ],
+  "seeds": [
+    42,
+    123,
+    456
+  ],
+  "epochs": 30,
+  "imgsz": 640,
+  "batch": 8,
+  "workers": 0,
+  "optimizer": "SGD",
+  "lr0": 0.01,
+  "lrf": 0.01,
+  "momentum": 0.937,
+  "weight_decay": 0.0005,
+  "warmup_epochs": 3.0,
+  "deterministic": true,
+  "amp": false,
+  "single_device_only": true,
+  "cpu_fallback": true,
+  "mosaic": 0.0,
+  "mixup": 0.0,
+  "copy_paste": 0.0,
+  "cutmix": 0.0,
+  "close_mosaic": 0,
+  "fraction": 1.0,
+  "compile": false,
+  "freeze_policy": "Read actual model YAML backbone modules; exclude frozen tensors from optimizer; reset backbone eval before each forward; hash parameters AND buffers before/after training",
+  "fixed_projection_policy": "Keep Ultralytics DFL projection fixed for every strategy",
+  "replay": {
+    "definition": "20% D-Fire image presentations in mixed epoch",
+    "dfire_count": "ceil(VN_train_images/4)",
+    "source_split": "train",
+    "replacement": false,
+    "repetition_policy": "Fixed seeded selection per run; each image once per epoch",
+    "record_actual_rounding_fraction": true,
+    "parameter_policy": "Same backbone freeze and buffer preservation as Strategy B"
+  },
+  "evaluation": {
+    "split_for_selection": "val",
+    "imgsz": 640,
+    "iou": 0.7,
+    "conf": 0.001,
+    "same_evaluator_for_baseline_and_adapted": true,
+    "same_image_and_video_scope_hashes": true,
+    "video_sampling": "FULL_DURATION_SAMPLED_5FPS_SOURCE_PTS",
+    "temporal_config_policy": "Keep historical provisional config fixed for checkpoint-only comparison; any retuning requires a new validation-only protocol",
+    "test_policy": "No test metrics before validation selection and verified independence; never train on reserved test candidates"
+  },
+  "model_selection": {
+    "required": [
+      "VN mAP50:95",
+      "D-Fire mAP50:95",
+      "paired validation video metrics",
+      "checkpoint SHA",
+      "runtime feasibility"
+    ],
+    "max_video_recall_drop": 0.05,
+    "max_event_instance_recall_drop": 0.05,
+    "far_must_not_increase": true,
+    "max_mean_matched_delay_sec": 10.0,
+    "ranking": [
+      "VN mAP50:95 descending",
+      "D-Fire mAP50:95 descending",
+      "video recall descending",
+      "FAR/hour ascending",
+      "delay ascending",
+      "checkpoint SHA ascending"
+    ],
+    "no_eligible_model": null
+  },
+  "resource_gate": "Require valid data plus a timed pilot and explicit bounded runtime before training. No estimate available for the current blocked corpus.",
+  "provenance_gate": "Require reviewed bbox/image/label/source hashes, source-PTS lineage, locked grouped splits and resolved leakage candidates. Legacy reviewed=True and event GT are insufficient.",
+  "parent_protocol_sha256": "7ed0017ababc51abfc8522836dcea7a242434e492dfee493fa82ee7874a7db68",
+  "revision_reason": "User requirement: Strategy C is frozen backbone plus 20 percent D-Fire replay, not full finetuning plus replay"
+}

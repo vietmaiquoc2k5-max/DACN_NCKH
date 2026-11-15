@@ -1,0 +1,16 @@
+{
+  "image_sha256": "d5eaf72a3b1baf730e7ed29a737b2d454295b029d5e527661dc4a0a5e50636c5",
+  "image_path": "datasets/vn_dataset/images/test/VN_NEG_60_f000000.jpg",
+  "source_video_path": "datasets/negative_videos/VN_NEG_60.mp4",
+  "source_frame_index": 0,
+  "source_pts_ticks": 512,
+  "time_base": "1/12800",
+  "status": "UNVERIFIED_LEGACY",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "c59d5d40880f56d98f7fb56bae047cb992b8c502dc2570aa9189ef2e1e483842",
+  "ffprobe_output_sha256": "0cb16330d1a72e1267ba66b45a9fd57b164a63e714924eefa138a5d278ff31c2",
+  "reason": "IMAGE_NOT_EXACTLY_REPRODUCIBLE"
+}

@@ -1,0 +1,16 @@
+{
+  "human_approved_count": 107,
+  "eligible_rows": 0,
+  "pending_count": 1815,
+  "rejected_count": 0,
+  "excluded_status_counts": {
+    "APPROVED_PENDING_LINEAGE": 66,
+    "APPROVED_LINEAGE_VERIFIED_PENDING_SPLIT": 41,
+    "LINEAGE_VERIFIED_PENDING_HUMAN_APPROVAL": 10
+  },
+  "negative_attestations": 74,
+  "approved_positive_bbox_images": 33,
+  "bundle_sha256": "37c68cae411085795057270c11b9f9321670d87843839b61c373a2173cc6dd5d",
+  "checksum_manifest_sha256": "6e4d5c98d6c5bd708b765d312aa7bbfdcc3f73b10c256f38e70d4ec1c6a28e8c",
+  "private_export_path": ".tools/week5_readiness_ed406cca/approved_export_final"
+}

@@ -1,0 +1,42 @@
+{
+  "branch": "fix-4",
+  "head": "ed406cca8fced883ec2a35de6a912987e9d69f2e",
+  "git_diff_check_exit_code": 0,
+  "code_sha256": {
+    "ground_truth_studio/bbox_service.py": "b5914a5be93b49d87ad9ecf9ca3dd32c17b80de5f292c4bdbc51a2f235f7d979",
+    "ground_truth_studio/bbox_page.py": "6a4fc52429576e89d2a78f2cf0bbed1ce0f96347f6a14a4ea5cc02b7bfeb3733",
+    "ground_truth_studio/bbox_queue.py": "543e6c6f33b2a15c289efb52ada9e43c85127a88bbd1af3e88a62ce6670091b6",
+    "ground_truth_studio/bbox_snapshot.py": "ca33d68f8cc328cecdfc5151ea843001b13cd80af76cb9c749f8723878d7b055",
+    "ground_truth_studio/bbox_export_adapter.py": "97574b233f2b6c1e6a6dd904d31e81cf89e1d6b0fe610a31ece35c5f3649a3f9",
+    "src/domain_adaptation.py": "10da61968c43f206c2c0e7b4e878e80f33db87cca1bef12c17261ef4a6a66d02",
+    "src/frame_lineage.py": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+    "scripts/run_week5_domain_adaptation.py": "5a7cdd598b14fb0220e7c5f430dd73395a84c49cf3e15a3a6c0e6d6b77a9b955",
+    "scripts/audit_week5_readiness.py": "47236b486102e8351bbdce05aa9d8120a49b69538a0bcf420e97aa7b79b20a21",
+    "scripts/build_week5_readiness_manifest.py": "287ab57ea65508daf414933358ef05dcbda2dc3feeac1b640e013982468b39d3",
+    "scripts/export_week5_bbox_approvals.py": "724a088dc19f69fd65d6763b6c8dee2cc06807af39485f588cea1d06d977aca7",
+    "scripts/recover_week5_frame_lineage.py": "f00e0eae60cd6edc1cd87eca8b3035abea94f74f9800e3e25ba636864502d9df",
+    "tests/test_bbox_qa.py": "ab9709fc1a610caa84383bafc171e6db83f6a9abf164a0a457a82a5e8ded588a",
+    "tests/test_week5_readiness.py": "ac107c1d2f41a674842501f08bc613699956d252dd2218391c2c9e9a9bf96755",
+    "configs/research/week5_execution_protocol_v2.json": "68746b570001a852b87630c29ec9ee7669ded3387047c430cf1a731541b47d51"
+  },
+  "docs_sha256": {
+    "docs/WEEK5_BBOX_QA_QUEUE_RECONCILIATION.md": "6b378e0ce7a01be216641645f02803502ad3b31c40566a35093d9e7731e6ba81",
+    "docs/WEEK5_DATA_READINESS_AND_DOMAIN_ADAPTATION.md": "03063893b53725da0b6dfebc09120e6dd91a31cb5661f1e7bb5b7f6653be2dee"
+  },
+  "private_data_and_contact_sheets_git_ignored": true,
+  "contact_sheet_hashes_verified": 766,
+  "approved_export_checksums_verified": true,
+  "commit_push_performed": false,
+  "commands_completed": {
+    "dfire_reaudit_exit": 0,
+    "lineage_exit": 0,
+    "final_snapshot_reconciliation_exit": 0,
+    "approved_export_exit": 0,
+    "readiness_gate_check_exit_codes": [
+      2,
+      2,
+      2
+    ],
+    "report_generation_exit": 0
+  }
+}

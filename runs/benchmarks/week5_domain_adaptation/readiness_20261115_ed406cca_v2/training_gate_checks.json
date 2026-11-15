@@ -1,0 +1,62 @@
+[
+  {
+    "strategy": "full_finetune",
+    "command": [
+      "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "scripts/run_week5_domain_adaptation.py",
+      "--dataset-manifest",
+      "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\readiness_20261115_ed406cca_v2\\dataset_manifest.json",
+      "--strategy",
+      "full_finetune",
+      "--seed",
+      "42",
+      "--output-dir",
+      "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\readiness_20261115_ed406cca_v2\\gate_checks\\full_finetune"
+    ],
+    "exit_code": 2,
+    "training_executed": false,
+    "completed_epochs": 0,
+    "log": ".tools/week5_readiness_ed406cca/full_finetune_gate.log",
+    "log_sha256": "60e902a8ed1d4004b26ab5404ca4b9b06dce8791c7a514de065fde1dd153dd79"
+  },
+  {
+    "strategy": "freeze_backbone",
+    "command": [
+      "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "scripts/run_week5_domain_adaptation.py",
+      "--dataset-manifest",
+      "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\readiness_20261115_ed406cca_v2\\dataset_manifest.json",
+      "--strategy",
+      "freeze_backbone",
+      "--seed",
+      "42",
+      "--output-dir",
+      "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\readiness_20261115_ed406cca_v2\\gate_checks\\freeze_backbone"
+    ],
+    "exit_code": 2,
+    "training_executed": false,
+    "completed_epochs": 0,
+    "log": ".tools/week5_readiness_ed406cca/freeze_backbone_gate.log",
+    "log_sha256": "60e902a8ed1d4004b26ab5404ca4b9b06dce8791c7a514de065fde1dd153dd79"
+  },
+  {
+    "strategy": "replay_20_percent",
+    "command": [
+      "C:\\Users\\thien\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "scripts/run_week5_domain_adaptation.py",
+      "--dataset-manifest",
+      "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\readiness_20261115_ed406cca_v2\\dataset_manifest.json",
+      "--strategy",
+      "replay_20_percent",
+      "--seed",
+      "42",
+      "--output-dir",
+      "D:\\workspace\\DACN_NCKH\\runs\\benchmarks\\week5_domain_adaptation\\readiness_20261115_ed406cca_v2\\gate_checks\\replay_20_percent"
+    ],
+    "exit_code": 2,
+    "training_executed": false,
+    "completed_epochs": 0,
+    "log": ".tools/week5_readiness_ed406cca/replay_20_percent_gate.log",
+    "log_sha256": "60e902a8ed1d4004b26ab5404ca4b9b06dce8791c7a514de065fde1dd153dd79"
+  }
+]

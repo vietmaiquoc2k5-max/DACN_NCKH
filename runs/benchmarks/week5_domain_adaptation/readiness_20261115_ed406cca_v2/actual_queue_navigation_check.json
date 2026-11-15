@@ -1,0 +1,10 @@
+{
+  "suspicious_ids_searchable": 129,
+  "pagination_unique_visited": 129,
+  "current_empty_labels": 129,
+  "counts_by_status": {
+    "APPROVED": 107,
+    "PENDING": 22
+  },
+  "verification": "Actual catalog + backend filters/pagination; Streamlit rendering tested with synthetic pixels; no production approval generated"
+}

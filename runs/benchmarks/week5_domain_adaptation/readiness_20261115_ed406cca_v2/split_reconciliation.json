@@ -1,0 +1,970 @@
+{
+  "vn_exact_duplicate_groups": [
+    {
+      "image_sha256": "dbd4eae2ea597d9c44cca4c49ec04ca59bb0c4ce294f2092728b9cb17306afaf",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000009.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000009.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "ffaa2fe3af29500985e64397fd57219f2e6b1faafd9552820bc77e0fe419c111",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000120.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000120.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "e6bd96d3d7c21469696b31168fbd5144c7eb42f80152d5fbe187701ec5ab1ede",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000232.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000232.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "acc4e5e2973a384531bab6b3ce5ccfbab3ef781924eeada0b495dc3933ec4022",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000344.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000344.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "7a3f078c74cac116eb33619b24fad8d7f5def69dc04b97c9d2dddd63e2901e1e",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000456.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000456.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "e9b85b25adddf9ce26dddee8724f2e7965311bd2f55a16f3379432f59bbe9e39",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000568.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000568.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "2fd4077300d210fb5eb67d2eba517f9f691a7f4ef57c17b3641124b521c09268",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000680.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000680.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "fd4c8e0f566519d026c45cf2510a99142e81948ed1db8abe45e26d4979dd0219",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000791.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000791.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "b423254a4f2dcef30fc2224b9fd67230dbcbb0e6b053255de20b7834db05c81f",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f000903.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f000903.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "2d31aeb3954d006e4cebbe593ee0ef7d90074d91cff1820f1fc5ed4f52339677",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001015.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001015.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "66cf1d26aac1bff0455431450994ef7e8cfce4cb417b1b9fed07276abe7bf23e",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001127.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001127.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "eaa73bdf5425e655f94795bb919a2db011174f47b360820771340d63613a8c85",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001239.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001239.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "31d32134dbaf9f18925742fe39ba79ad1ecacc6799a6fcd14d008bc0ad9e3738",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001351.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001351.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "988d6e21183b7c073678a478fdcab1832767ad39f2092605406d54bc71b99564",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001462.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001462.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "4548df54261383d4e98dd55adcbe9099c65ddf7790d371af84b48aad056616f0",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001574.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001574.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "020ee5fd99c718513ec66b4d281596ce1cc2882789bf9c2010c6c5e9216c12c3",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001686.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001686.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "5c76766e3c6e4b01216b2dd612599aee99b3cb14f5bfc17a9998bda216082b8f",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001798.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001798.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "680acb510e7fb8a641a7ceeb4712bfa0258dfa609fc0f56fa62bd6a4e7115e0b",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f001910.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f001910.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "621215b711ec58ad3486ddd7e9c515ef52f17caafbd60b2f8db0ba7a7b883170",
+      "members": [
+        "datasets/vn_dataset/images/train/VN_POS_50_f002022.jpg",
+        "datasets/vn_dataset/images/train/VN_POS_51_f002022.jpg"
+      ],
+      "splits": [
+        "train"
+      ]
+    },
+    {
+      "image_sha256": "ab30ea261eb89e2998164ecde71a696021846c47c5e0f19e18601233948d1ece",
+      "members": [
+        "datasets/vn_dataset/images/test/VN_NEG_58_f000000.jpg",
+        "datasets/vn_dataset/images/test/VN_NEG_59_f000000.jpg"
+      ],
+      "splits": [
+        "test"
+      ]
+    }
+  ],
+  "vn_exact_duplicate_extra_paths": 20,
+  "vn_exact_cross_split_groups": 0,
+  "vn_near_candidate_pairs": [
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_NEG_07_f000871.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_NEG_50_f000367.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "3",
+      "color_intersection": "0.96142578125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001483.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f000878.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "4",
+      "dhash_distance": "0",
+      "color_intersection": "0.99462890625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001516.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f000940.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.989501953125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001516.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001346.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.986328125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001549.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f000940.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.9892578125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001549.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001346.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.9892578125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001582.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.98876953125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001582.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.99365234375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001582.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.993408203125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001615.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001002.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.989501953125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001615.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001430.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.984619140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001648.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "4",
+      "dhash_distance": "1",
+      "color_intersection": "0.986328125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001648.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "1",
+      "color_intersection": "0.995849609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001648.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "1",
+      "color_intersection": "0.993408203125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001681.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.984619140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001681.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001681.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.995849609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001714.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.984619140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001714.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001714.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.995849609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001747.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.984619140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001747.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001747.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.995849609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001780.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.984619140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001780.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001780.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.995849609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_04_f001434.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_65_f002013.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "1",
+      "color_intersection": "0.978271484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_04_f001462.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_65_f002013.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "2",
+      "color_intersection": "0.980224609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_04_f001491.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_65_f002013.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "4",
+      "color_intersection": "0.977294921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_04_f001520.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_65_f002013.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "2",
+      "color_intersection": "0.9765625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_04_f001549.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_65_f002013.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "4",
+      "color_intersection": "0.978759765625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_28_f000558.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_NEG_46_f002402.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "4",
+      "dhash_distance": "6",
+      "color_intersection": "0.891845703125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f000914.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f000878.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "2",
+      "color_intersection": "0.995361328125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f000975.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "1",
+      "color_intersection": "0.990478515625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f000975.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.992431640625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f000975.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.99169921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001002.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "5",
+      "color_intersection": "0.992431640625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "2",
+      "color_intersection": "0.9921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "2",
+      "color_intersection": "0.988037109375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001430.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "5",
+      "color_intersection": "0.98583984375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "2",
+      "color_intersection": "0.988037109375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001095.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.986572265625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001095.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.99462890625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001095.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.99658203125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_44_f002018.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_65_f002013.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "6",
+      "dhash_distance": "8",
+      "color_intersection": "0.941650390625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001457.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f000940.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "4",
+      "dhash_distance": "1",
+      "color_intersection": "0.989990234375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001457.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001346.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "4",
+      "dhash_distance": "1",
+      "color_intersection": "0.9873046875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001548.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001002.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.9912109375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001548.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001430.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.98046875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001638.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.9853515625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001638.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.992919921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001638.jpg",
+      "image_b": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "split_a": "train",
+      "split_b": "val",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.997314453125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001516.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001384.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "6",
+      "dhash_distance": "0",
+      "color_intersection": "0.98974609375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001549.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001384.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "4",
+      "dhash_distance": "0",
+      "color_intersection": "0.992919921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001582.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.9921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001615.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001470.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993408203125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001648.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "2",
+      "dhash_distance": "1",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001681.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001714.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001747.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_03_f001780.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f000975.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "1",
+      "color_intersection": "0.9921875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001470.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "6",
+      "dhash_distance": "5",
+      "color_intersection": "0.989990234375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001035.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "6",
+      "dhash_distance": "2",
+      "color_intersection": "0.9892578125",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_32_f001095.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.993896484375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001457.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001384.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "6",
+      "dhash_distance": "1",
+      "color_intersection": "0.9912109375",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001548.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001470.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.99072265625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/train/VN_POS_49_f001638.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "train",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.994384765625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_64_f000940.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001384.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.988525390625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_64_f001002.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001470.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.988525390625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_64_f001064.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.984619140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_64_f001126.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.994140625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_66_f001346.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001384.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "2",
+      "dhash_distance": "0",
+      "color_intersection": "0.9873046875",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_66_f001430.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001470.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.982666015625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    },
+    {
+      "image_a": "datasets/vn_dataset/images/val/VN_POS_66_f001513.jpg",
+      "image_b": "datasets/vn_dataset/images/test/VN_POS_72_f001556.jpg",
+      "split_a": "val",
+      "split_b": "test",
+      "phash_distance": "0",
+      "dhash_distance": "0",
+      "color_intersection": "0.99462890625",
+      "status": "PIXEL_SIMILARITY_CANDIDATE_REQUIRES_HUMAN_SCENE_REVIEW"
+    }
+  ],
+  "scope_counts": {
+    "VN_train": 1376,
+    "VN_val": 528,
+    "VN_test": 572,
+    "VN_quarantine": 645,
+    "DFIRE_train": 12409,
+    "DFIRE_val": 2547,
+    "DFIRE_test": 3568
+  },
+  "source_camera_scene_confirmation": "NOT_COMPLETE",
+  "ready_clean_subset": null,
+  "prior_dfire_quarantined": 3003
+}

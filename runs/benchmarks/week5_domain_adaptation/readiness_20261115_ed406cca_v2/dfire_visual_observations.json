@@ -1,0 +1,25 @@
+{
+  "technical_visual_inspection_not_human_bbox_approval": true,
+  "observations": [
+    {
+      "group_id": "DFIRE_0000",
+      "classification": "SAME_CAMERA_SCENE_VISUAL_EVIDENCE",
+      "members": [
+        "datasets/dfire_author_linked_kaggle_v1/data/test/images/AoF06737.jpg",
+        "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF00098.jpg",
+        "datasets/dfire_author_linked_kaggle_v1/data/train/images/AoF00099.jpg"
+      ],
+      "evidence": [
+        {
+          "path": ".tools/week5_readiness_ed406cca/dfire_contacts_v2/group_0000_000.jpg",
+          "sha256": "52af8d3f6e605c07fd5ac65d58d1fbb71bfa01aeeae781fbed02bb84c4dd7122"
+        }
+      ],
+      "finding": "Same road, trees, skyline and balcony geometry across test/train. Source camera identifier and exact footage timestamp not asserted.",
+      "effect": "Retain quarantine; no test migration; not a global scene catalog"
+    }
+  ],
+  "automatic_group_classification_unresolved": 751,
+  "remaining_without_visual_resolution": 750,
+  "previous_camera0001_val_test_example_retained": true
+}

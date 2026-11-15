@@ -12,6 +12,8 @@ import cv2
 from ground_truth_studio.config import confined
 from ground_truth_studio.integrity_service import sha256
 from ground_truth_studio.models import utc_now
+from ground_truth_studio.bbox_snapshot import committed_reviews
+from ground_truth_studio.bbox_export_adapter import export_approvals
 
 QUEUE = 'runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2'
 
@@ -83,14 +85,8 @@ class BBoxReviewService:
     def history(self, token: str) -> list[dict]:
         """Only expose the current reviewer's immutable annotation versions."""
         actor = self.repository.actor(token)
-        records = []
-        for path in sorted((self.private/'versions').glob('*/review.json')):
-            if not (path.parent/'review.sha256').exists() or sha256(path)!=(path.parent/'review.sha256').read_text().strip():
-                raise ValueError('REVIEW_METADATA_HASH_MISMATCH')
-            data = json.loads(path.read_text(encoding='utf-8'))
-            if data['reviewer_id']==actor['id']:
-                records.append(data)
-        return sorted(records,key=lambda r:r['reviewed_at_utc'])
+        return [row for row in committed_reviews(self.repository.settings.private)
+                if row['reviewer_id'] == actor['id']]
 
     def submit(self, token: str, identity: str, boxes: list[dict], decision: str,
                evidence: str, attest: bool, negative: bool=False) -> dict:
@@ -134,27 +130,15 @@ class BBoxReviewService:
             'approved_for_training':False,'class_mapping':{'0':'smoke','1':'fire'}}
         with (folder/'review.json').open('x',encoding='utf-8') as stream:
             json.dump(record,stream,ensure_ascii=False,indent=2)
-        (folder/'review.sha256').write_text(sha256(folder/'review.json'),encoding='utf-8')
+        marker=folder/'review.sha256.pending'
+        marker.write_text(sha256(folder/'review.json'),encoding='utf-8')
+        marker.rename(folder/'review.sha256')
         return record
 
     def export(self, token: str) -> Path:
         """Export actual latest approvals separately from training eligibility."""
-        latest = {r['image_sha256']:r for r in self.history(token)}
-        approved = []
-        for record in latest.values():
-            self.inspect(token,record['image_sha256'])
-            if sha256(Path(record['label_version_path']))!=record['label_sha256']:
-                raise ValueError('APPROVED_LABEL_HASH_MISMATCH')
-            if record['decision']=='APPROVE':
-                approved.append(record)
         folder = self.private/'exports'/str(uuid.uuid4())
-        folder.mkdir(parents=True,exist_ok=False)
-        for record in approved:
-            original = Path(record['label_version_path'])
-            (folder/(record['image_sha256']+'.txt')).write_bytes(original.read_bytes())
-        payload = {'status':'BLOCKED_LINEAGE_NOT_VERIFIED','approved_bbox_reviews':approved,
-                   'rows':[],'approved_for_training':0,'human_approved_count':len(approved),
-                   'pending_count':len(self.queue)-len(latest),'rejected_count':sum(r['decision']=='REJECT' for r in latest.values())}
-        (folder/'bbox_export.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
-        (folder/'sha256.json').write_text(json.dumps({p.name:sha256(p) for p in folder.iterdir() if p.is_file()},indent=2),encoding='utf-8')
+        lineage = self.repo/'runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/lineage'
+        export_approvals(self.repo,self.history(token),self.queue,folder,
+                         lineage_dir=lineage if lineage.is_dir() else None)
         return folder

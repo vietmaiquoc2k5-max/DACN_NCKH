@@ -1,0 +1,26 @@
+{
+  "files_hash_verified": 43055,
+  "image_count": 21527,
+  "label_count": 21527,
+  "valid_label_images": 21187,
+  "invalid_bbox_images": 340,
+  "error_line_categories": {
+    "ZERO_OR_NEGATIVE_AREA": 18,
+    "OUT_OF_BOUNDS": 379
+  },
+  "corrupt_images": [],
+  "suspected_groups": 751,
+  "group_classifications": {
+    "UNRESOLVED": 751
+  },
+  "exact_sha_duplicate_groups": 0,
+  "source_mapping": [
+    "smoke",
+    "fire"
+  ],
+  "source_files_changed": false,
+  "parent_manifest_sha256": "0ddf3cd2967bdb7652078dc7d250648e2cd3e807f67a77e312971b143584945e",
+  "camera_scene_independence": "UNRESOLVED; prior Camera0001 val/test evidence retained",
+  "baseline_training_membership": "UNVERIFIED",
+  "split_ready": false
+}

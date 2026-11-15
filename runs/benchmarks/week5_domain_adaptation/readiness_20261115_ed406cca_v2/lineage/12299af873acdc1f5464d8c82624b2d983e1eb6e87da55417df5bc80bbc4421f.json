@@ -1,0 +1,16 @@
+{
+  "image_sha256": "12299af873acdc1f5464d8c82624b2d983e1eb6e87da55417df5bc80bbc4421f",
+  "image_path": "datasets/vn_dataset/images/train/VN_NEG_21_f019998.jpg",
+  "source_video_path": "datasets/negative_videos/VN_NEG_21.mp4",
+  "source_frame_index": 19998,
+  "source_pts_ticks": 10239488,
+  "time_base": "1/15360",
+  "status": "UNVERIFIED_LEGACY",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+  "ffprobe_output_sha256": "116af3df89105972dad337b90fa63e1af1f2575fc0a67e634b2868e40851fd1e",
+  "reason": "IMAGE_NOT_EXACTLY_REPRODUCIBLE"
+}
