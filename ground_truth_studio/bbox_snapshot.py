@@ -47,9 +47,16 @@ def scan_reviews(private: Path, *, original_private: Path | None = None) -> tupl
                 'mtime_ns':path.stat().st_mtime_ns if path.exists() else None,
                 'untrusted_claimed_image_sha256':claimed}
             issues.append(issue)
-            logging.getLogger(__name__).error('BBox integrity quarantine version=%s path=%s error=%s',folder.name,path,error)
     # A corrupt newer decision must not silently resurrect an older approval.
     issues=apply_resolutions(private,records,issues)
+    for issue in issues:
+        if issue['status']=='RESOLVED_BY_HUMAN_RECONFIRMATION':
+            logging.getLogger(__name__).debug(
+                'BBox historical integrity RESOLVED version=%s resolution=%s; original checksum remains invalid',
+                issue['version_id'],issue['resolution_id'])
+        else:
+            logging.getLogger(__name__).error('BBox integrity UNRESOLVED version=%s path=%s error=%s',
+                                             issue['version_id'],issue['path'],issue['error'])
     tainted={i['untrusted_claimed_image_sha256'] for i in issues if i['untrusted_claimed_image_sha256'] and i['status']=='INTEGRITY_QUARANTINED'}
     records=[r for r in records if r['image_sha256'] not in tainted]
     return sorted(records,key=lambda r:(r['reviewed_at_utc'],r['version_id'])),issues

@@ -88,6 +88,26 @@ def test_resolution_empty_label_requires_negative_attestation(service):
     assert committed_reviews(service.root/'private')[0]['negative_frame_approved']
 
 
+def test_resolved_historical_mismatch_is_debug_not_error(service,caplog):
+    import logging
+    corrupt(service);resolve(service);caplog.clear()
+    with caplog.at_level(logging.DEBUG,logger='ground_truth_studio.bbox_snapshot'):
+        records,issues=scan_reviews(service.root/'private')
+    assert records and issues[0]['status']=='RESOLVED_BY_HUMAN_RECONFIRMATION'
+    assert any('historical integrity RESOLVED' in r.message for r in caplog.records)
+    assert not any(r.levelno>=logging.ERROR for r in caplog.records)
+
+
+def test_invalid_resolution_still_logs_error_and_blocks_export(service,caplog):
+    import logging
+    corrupt(service);receipt=resolve(service)
+    path=service.root/'private/bbox_qa/resolutions'/receipt['resolution_id']/'resolution.sha256'
+    path.write_text('bad');caplog.clear()
+    with caplog.at_level(logging.ERROR):
+        with pytest.raises(ValueError):committed_reviews(service.root/'private')
+    assert any(r.levelno>=logging.ERROR for r in caplog.records)
+
+
 def test_ui_reconfirmation_requires_human_controls_and_saves_only_synthetic_receipt(service):
     import sys
     from streamlit.testing.v1 import AppTest
