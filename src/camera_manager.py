@@ -1209,6 +1209,8 @@ class MultiCameraManager:
             conf_threshold=self.settings.conf_threshold,
             imgsz=self.settings.imgsz,
         )
+        self._model_switch_lock = threading.Lock()
+        self._model_switch_status: Dict[str, Any] = {"state": "idle"}
 
         self.logs: deque = deque(maxlen=100)
         self.log_lock = threading.Lock()
@@ -1361,17 +1363,42 @@ class MultiCameraManager:
             return list(self.logs)[:limit]
 
     def switch_model(self, model_path: str) -> Dict[str, Any]:
-        """Chuyển đổi trực tiếp mô hình YOLO đang sử dụng cho toàn bộ 9 luồng camera."""
-        self.settings.model_path = model_path
-        ok = self.detector.load_model(model_path)
-        info = self.detector.get_model_info()
-        if ok:
-            self.add_log(
-                f"Đã chuyển sang model: {info['path']} trên {info.get('device', 'CPU')}"
-            )
-        else:
-            self.add_log(f"⚠️ Lỗi khi nạp model '{model_path}': {info.get('error')}")
-        return info
+        """Reload a shared YOLO model on a worker thread to keep the UI responsive."""
+        target = str(Path(model_path).resolve())
+        with self._model_switch_lock:
+            if self._model_switch_status.get("state") == "loading":
+                if self._model_switch_status.get("path") == target:
+                    return dict(self._model_switch_status)
+                return {**self._model_switch_status, "busy": True}
+            current_path = self.detector.resolved_path or self.detector.requested_path
+            current = str(Path(current_path).resolve()) if current_path else ""
+            if target == current and self.detector.model_loaded:
+                return {"state": "ready", "path": target, **self.detector.get_model_info()}
+            self._model_switch_status = {"state": "loading", "path": target}
+
+        def load_in_background() -> None:
+            try:
+                ok, message = self.detector.load_model(target)
+                info = self.detector.get_model_info()
+                if ok:
+                    self.settings.model_path = target
+                    self.add_log(f"Switched model to {info['path']} on {info.get('device', 'CPU')}")
+                    result = {"state": "ready", "path": target, "message": message, **info}
+                else:
+                    self.add_log(f"Model load failed for '{target}': {info.get('error')}")
+                    result = {"state": "error", "path": target, "message": info.get("error", message), **info}
+            except Exception as exc:
+                result = {"state": "error", "path": target, "message": str(exc)}
+                self.add_log(f"Model load failed for '{target}': {type(exc).__name__}")
+            with self._model_switch_lock:
+                self._model_switch_status = result
+
+        threading.Thread(target=load_in_background, name="firewatch-model-reload", daemon=True).start()
+        return self.get_model_switch_status()
+
+    def get_model_switch_status(self) -> Dict[str, Any]:
+        with self._model_switch_lock:
+            return dict(self._model_switch_status)
 
     def set_camera_enabled(self, cam_id: str, enabled: bool):
         """Bật hoặc tắt quyền kích hoạt của một camera độc lập."""
@@ -1612,7 +1639,7 @@ class MultiCameraManager:
             self.settings.frame_skip = 2
             self.settings.target_fps_per_cam = 24
             self.settings.jpeg_quality = 72
-            self.settings.ui_refresh_sec = 0.4
+            self.settings.ui_refresh_sec = 0.2
         self.performance_preset = mode
         self.add_log(
             f"Đã áp dụng chế độ hiệu năng '{mode}' (imgsz={self.settings.imgsz}, skip={self.settings.frame_skip}, target_fps={self.settings.target_fps_per_cam})"

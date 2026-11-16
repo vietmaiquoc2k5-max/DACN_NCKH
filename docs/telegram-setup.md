@@ -1,6 +1,6 @@
 # Telegram alerts setup
 
-FireWatch reads Telegram credentials and the API admin token from the environment of the process that starts Streamlit. It does not read `.env` files or save credentials to SQLite. The dashboard never shows the configured values. Temporary values entered in the test form are used only for that request.
+FireWatch reads Telegram credentials and the API admin token from the project-root `.env` file or the process environment. Process environment values take precedence. Credentials are not saved to SQLite or shown in the dashboard.
 
 ## Windows PowerShell startup
 
@@ -29,7 +29,7 @@ The environment values are inherited by the embedded API because it runs in the 
 
 ## Enable alerts
 
-Open the Telegram page. Confirm that the service Bot Token and Chat ID are configured, unlock administration with `FIREWATCH_API_TOKEN`, and submit the test form with both credential fields empty. This tests the service credentials. Wait for Telegram's acknowledgement, then enable event notifications. If credentials are entered in the form, that test is temporary and does not authorize enabling alerts.
+Open the Telegram page and click **Kiểm tra kết nối và bật cảnh báo** once. FireWatch tests the configured service credentials and enables event notifications in the same action. The dashboard uses the configured API token internally; you do not need to enter it again. Cameras must also have their Telegram notification switch enabled.
 
 `telegram_settings` stores only the enabled flag. The API acknowledgement timestamp means Telegram accepted the request; it does not show that a person read the message. Network timeouts can have an ambiguous outcome, so check Telegram before retrying a test that reports an unknown result.
 

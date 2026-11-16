@@ -2,9 +2,12 @@
 
 ## Local run
 
-1. Copy `.env.example` to `.env`. Set a random `FIREWATCH_API_TOKEN`, choose an
-   existing checkpoint with `FIREWATCH_MODEL_PATH`, and configure exact
-   `FIREWATCH_RTSP_HOSTS` entries for any RTSP sources.
+1. Copy `.env.example` to `.env`. Replace the sample API token with a long random
+   secret, choose an existing checkpoint with `FIREWATCH_MODEL_PATH`, and
+   configure exact `FIREWATCH_RTSP_HOSTS` entries for any RTSP sources. Local
+   Python entry points load this project-root `.env`; variables already present
+   in the process environment take precedence. Docker Compose reads `.env` using
+   its `env_file` setting.
 2. Install `requirements-dev.txt` when running tests.
 3. Launch the Streamlit dashboard with `streamlit run web_app.py`. It creates one
    shared `MultiCameraManager` and starts an embedded FastAPI service on
@@ -25,21 +28,17 @@ inside the repository for API registration.
 
 ## Telegram alerts
 
-Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in the service environment. The
-Telegram dashboard page never saves a bot token; configure it outside Streamlit
-and restart the service after changing it. The enabled/disabled switch is a
-nonsecret SQLite setting. A blank test form uses the service environment; entered
-test credentials are sent only for that test request and are not saved. Test
-messages use a separate history table and never create fire events.
-Before enabling through the dashboard, run a successful connection test using
-the service environment credentials in the current process. Test authorization
-is held in memory; a test performed with unrelated form credentials cannot
-authorize production alerts.
+Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `.env` or the service
+environment. The Telegram dashboard page never saves a bot token; restart the
+service after changing credentials. The enabled/disabled switch is a nonsecret
+SQLite setting. On the Telegram page, one button tests the service credentials
+and enables event notifications. Test messages use a separate history table and
+never create fire events. Tests are rate-limited to one request every 30 seconds
+and send an explicitly labeled Telegram message.
 
-Use an authenticated administrator API token to unlock the dashboard controls.
-The settings page calls the authenticated `/api/telegram/*` endpoints and submits
-test requests through a background executor. Each connection test is rate-limited
-to one request every 30 seconds and sends an explicitly labeled Telegram message.
+The page uses `FIREWATCH_API_TOKEN` from the service environment internally, so
+operators do not have to re-enter it. Keep the dashboard bound to localhost or
+behind an authenticated reverse proxy when accessed remotely.
 The status indicator reports `READY` only after an event delivery API
 acknowledgment; merely setting a token is not a connection check.
 
@@ -56,7 +55,9 @@ dispatcher has alerts disabled.
    Telegram integration. Then run `docker compose config`, followed by
    `docker compose up --build`.
 3. The dashboard listens on 8501 and embedded API on 8000. MediaMTX listens on
-   8554. SQLite data and snapshots use named volumes.
+   8554. SQLite data and snapshots use named volumes. Compose binds these ports
+   to localhost by default; for remote access, put the dashboard behind an
+   authenticated TLS reverse proxy and adjust the host bindings deliberately.
 4. Publish four authorized local test-video replays using FFmpeg, for example:
 
    ```powershell

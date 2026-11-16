@@ -9,8 +9,8 @@ services:
       FIREWATCH_API_HOST: 0.0.0.0
       FIREWATCH_ALLOWED_ORIGINS: ${FIREWATCH_ALLOWED_ORIGINS:-http://localhost:8501,http://127.0.0.1:8501}
     ports:
-      - "8000:8000"
-      - "8501:8501"
+      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:8501:8501"
     volumes:
       - firewatch-data:/data
       - firewatch-snapshots:/app/alerts
@@ -23,8 +23,8 @@ services:
     image: bluenviron/mediamtx:1
     restart: unless-stopped
     ports:
-      - "8554:8554"
-      - "8888:8888"
+      - "127.0.0.1:8554:8554"
+      - "127.0.0.1:8888:8888"
 
 volumes:
   firewatch-data:

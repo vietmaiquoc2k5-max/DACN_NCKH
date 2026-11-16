@@ -5,6 +5,11 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from typing import List, Dict, Tuple, Any, Optional
 
+from dotenv import load_dotenv
+
+PROJECT_ROOT = Path(os.path.abspath(__file__)).parent.parent
+load_dotenv(PROJECT_ROOT / ".env", override=False)
+
 _orig_path_resolve = Path.resolve
 
 
@@ -16,8 +21,6 @@ def _safe_path_resolve(self: Path, strict: bool = False) -> Path:
 
 
 Path.resolve = _safe_path_resolve  # type: ignore[method-assign]
-
-PROJECT_ROOT = Path(os.path.abspath(__file__)).parent.parent
 
 # Danh sách các chế độ vận hành của hệ thống
 OPERATING_MODES: Dict[str, str] = {
@@ -43,22 +46,36 @@ CANDIDATE_MODEL_PATHS: List[str] = [
 ]
 
 
-def get_available_model_choices() -> Dict[str, str]:
-    """Liệt kê tất cả các checkpoint mô hình có sẵn trong dự án (bao gồm các lượt benchmark MT2)."""
-    choices: Dict[str, str] = {}
-    root_best = PROJECT_ROOT / "best.pt"
-    if root_best.exists():
-        choices["best.pt (Model Mặc Định)"] = str(root_best)
+def get_available_model_choices(active_path: Optional[str] = None) -> Dict[str, str]:
+    """Trả về mô hình gốc và các checkpoint đã được đánh giá, giữ lại model đang chạy."""
+    benchmark_root = PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks"
+    presets = [
+        ("best.pt (Mô hình gốc)", PROJECT_ROOT / "best.pt"),
+        (
+            "yolov8n_seed123 (Khuyến nghị · mAP cao nhất)",
+            benchmark_root / "yolov8n_seed123" / "weights" / "best.pt",
+        ),
+        (
+            "yolov8n_seed42 (Tham chiếu vận hành · nhanh)",
+            benchmark_root / "yolov8n_seed42" / "weights" / "best.pt",
+        ),
+    ]
+    choices: Dict[str, str] = {
+        label: str(path) for label, path in presets if path.is_file()
+    }
 
-    bench_dir = PROJECT_ROOT / "runs" / "detect" / "runs" / "benchmarks"
-    if bench_dir.exists():
-        for run_dir in sorted(bench_dir.iterdir()):
-            w_path = run_dir / "weights" / "best.pt"
-            if w_path.exists():
-                choices[f"{run_dir.name} (Benchmark MT2)"] = str(w_path)
+    # Keep a valid non-preset active checkpoint selectable so opening this page
+    # never silently switches the detector to the first preset.
+    if active_path:
+        active = Path(active_path)
+        if not active.is_absolute():
+            active = PROJECT_ROOT / active
+        active = active.resolve()
+        if active.is_file() and all(Path(p).resolve() != active for p in choices.values()):
+            choices[f"Đang dùng · {active.parent.parent.name}"] = str(active)
 
     if not choices:
-        choices["best.pt"] = str(root_best)
+        choices["best.pt (Mô hình gốc)"] = str(PROJECT_ROOT / "best.pt")
     return choices
 
 # Chuẩn hóa tên lớp theo dataset thực tế của dự án (0: smoke, 1: fire)
@@ -282,7 +299,7 @@ class SystemSettings:
     target_fps_per_cam: int = 24
     display_width: int = 420
     jpeg_quality: int = 72
-    ui_refresh_sec: float = 0.4
+    ui_refresh_sec: float = 0.2
     frame_skip: int = 2
     window_size_n: int = 8
     confirm_frames_k: int = 2

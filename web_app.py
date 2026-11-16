@@ -17,7 +17,6 @@ import re
 import secrets
 import sys
 import time
-from concurrent.futures import Future, ThreadPoolExecutor
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -120,12 +119,6 @@ def get_firewatch_station() -> MultiCameraManager:
     return mgr
 
 
-@st.cache_resource
-def get_telegram_api_executor() -> ThreadPoolExecutor:
-    """Provide bounded shared background work for Telegram network actions."""
-    return ThreadPoolExecutor(max_workers=2, thread_name_prefix="firewatch-telegram-ui")
-
-
 def _telegram_api_request(path: str, payload: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Call the local authenticated management API with a fixed timeout."""
     api_token = os.getenv("FIREWATCH_API_TOKEN", "")
@@ -142,6 +135,13 @@ def _telegram_api_request(path: str, payload: Optional[Dict[str, Any]] = None) -
             raise RuntimeError(f"{detail.get('code', 'API_ERROR')}: {detail.get('message', response.reason)}")
         raise RuntimeError(f"API_ERROR: {response.reason}")
     return response.json()
+
+
+def _telegram_check_and_enable() -> Dict[str, Any]:
+    """Test the configured service credentials, then enable event delivery."""
+    test_result = _telegram_api_request("/api/telegram/test")
+    enable_result = _telegram_api_request("/api/telegram/enable")
+    return {"test": test_result, "enable": enable_result}
 
 
 def _telegram_summary(manager: MultiCameraManager) -> Dict[str, Any]:
@@ -267,6 +267,8 @@ st.session_state.setdefault("alert_page", 1)
 st.session_state.setdefault("perf_preset", getattr(cam_system, "performance_preset", "Balanced"))
 st.session_state.setdefault("hero_ack_state", None)
 st.session_state.setdefault("last_unack_top_id", None)
+if st.session_state.pop("_sync_camera_selector", False):
+    st.session_state["ms_camera_selection_box"] = list(st.session_state.selected_cams)
 
 
 def handle_alert_acknowledge(
@@ -359,18 +361,18 @@ render_html(
         background-color: var(--bg-charcoal) !important;
         color: var(--text-primary) !important;
         font-family: "Inter", "Segoe UI", Roboto, sans-serif;
-        font-size: 14.5px;
+        font-size: 16px;
+        line-height: 1.5;
     }
 
     header[data-testid="stHeader"] {
         background: transparent !important;
-        height: 1.4rem !important;
     }
     .block-container {
-        padding-top: 0.35rem !important;
-        padding-bottom: 1.2rem !important;
-        padding-left: 1.0rem !important;
-        padding-right: 1.0rem !important;
+        padding-top: 4rem !important;
+        padding-bottom: 1.5rem !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
         max-width: 100% !important;
     }
 
@@ -392,8 +394,8 @@ render_html(
         background: linear-gradient(90deg, #11151E 0%, #161C28 100%);
         border: 1px solid var(--border-subtle);
         border-radius: 7px;
-        padding: 8px 16px;
-        margin-bottom: 10px;
+        padding: 12px 18px;
+        margin-bottom: 14px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -423,7 +425,7 @@ render_html(
         background-color: var(--bg-slate);
         border: 1px solid var(--border-subtle);
         border-radius: 6px;
-        padding: 5px 12px;
+        padding: 8px 14px;
         display: flex;
         align-items: center;
         gap: 9px;
@@ -434,13 +436,13 @@ render_html(
     }
     .fw-kpi-num {
         font-family: "JetBrains Mono", "Consolas", monospace;
-        font-size: 14.5px;
+        font-size: 17px;
         font-weight: 800;
         color: var(--text-primary);
         line-height: 1.15;
     }
     .fw-kpi-sub {
-        font-size: 11px;
+        font-size: 13px;
         color: var(--text-secondary);
         line-height: 1.15;
     }
@@ -453,8 +455,9 @@ render_html(
         font-weight: 800 !important;
         border-radius: 6px !important;
         box-shadow: 0 2px 8px rgba(249, 115, 22, 0.30) !important;
-        padding: 0.3rem 0.65rem !important;
-        min-height: 34px !important;
+        padding: 0.45rem 0.8rem !important;
+        min-height: 42px !important;
+        font-size: 15px !important;
     }
     div.stButton > button[kind="primary"]:hover {
         background: linear-gradient(180deg, #FB923C 0%, #F97316 100%) !important;
@@ -466,8 +469,9 @@ render_html(
         color: #CBD5E1 !important;
         font-weight: 600 !important;
         border-radius: 6px !important;
-        padding: 0.3rem 0.65rem !important;
-        min-height: 34px !important;
+        padding: 0.45rem 0.8rem !important;
+        min-height: 42px !important;
+        font-size: 15px !important;
     }
     div.stButton > button[kind="secondary"]:hover {
         border-color: #F97316 !important;
@@ -538,10 +542,10 @@ render_html(
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 7px 12px;
+        padding: 10px 14px;
         background: linear-gradient(90deg, #101520 0%, #151C2A 100%);
         border-bottom: 1px solid #232C3E;
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 700;
     }
     .fw-cam-label {
@@ -571,9 +575,9 @@ render_html(
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        padding: 2px 10px;
+        padding: 4px 11px;
         border-radius: 12px;
-        font-size: 11px;
+        font-size: 12.5px;
         font-weight: 700;
         white-space: nowrap;
     }
@@ -617,7 +621,7 @@ render_html(
     .fw-cam-video-el {
         width: 100%;
         aspect-ratio: 16 / 9;
-        max-height: 215px;
+        max-height: 280px;
         object-fit: cover;
         display: block;
     }
@@ -626,7 +630,7 @@ render_html(
     .fw-cam-standby-screen {
         width: 100%;
         aspect-ratio: 16 / 9;
-        max-height: 215px;
+        max-height: 280px;
         background: radial-gradient(circle at 50% 38%, #222B3D 0%, #131824 72%, #0E121B 100%);
         display: flex;
         flex-direction: column;
@@ -638,14 +642,14 @@ render_html(
         overflow: hidden;
     }
     .fw-standby-title {
-        font-size: 13.5px;
+        font-size: 16px;
         font-weight: 700;
         color: #E2E8F0;
         margin-top: 6px;
         z-index: 2;
     }
     .fw-standby-sub {
-        font-size: 12px;
+        font-size: 14px;
         color: #94A3B8;
         margin-top: 2px;
         z-index: 2;
@@ -767,7 +771,7 @@ render_html(
         height: 100%;
     }
     .fw-panel-title {
-        font-size: 13px;
+        font-size: 15px;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.6px;
@@ -785,6 +789,208 @@ render_html(
         border-radius: 6px;
         padding: 8px 10px;
         margin-bottom: 8px;
+    }
+    .fw-header-status > div > div:last-child {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+    }
+    .fw-panel-card [style*="font-size:10.5px"] {
+        font-size: 12.5px !important;
+    }
+    .fw-alert-hero [style*="font-size:12.5px"] {
+        font-size: 14px !important;
+    }
+    .stApp [data-testid="stCaptionContainer"] p {
+        color: #CBD5E1 !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+    }
+    .stApp label p {
+        font-size: 15px !important;
+    }
+    .stApp [data-testid="stDataFrame"] {
+        font-size: 14px !important;
+    }
+
+    /* FireWatch dark monitoring system */
+    :root {
+        --bg-charcoal: #0B1220;
+        --bg-graphite: #111C2E;
+        --bg-slate: #18263B;
+        --bg-slate-2: #1D2D44;
+        --border-subtle: #293B53;
+        --text-primary: #F1F5F9;
+        --text-secondary: #CBD5E1;
+        --text-muted: #94A3B8;
+        --color-fire: #F43F5E;
+        --color-suspect: #F59E0B;
+        --color-warning: #F59E0B;
+        --color-safe: #22C55E;
+        --color-action: #38BDF8;
+    }
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
+        background: var(--bg-charcoal) !important;
+        color: var(--text-primary) !important;
+        color-scheme: dark;
+    }
+    header[data-testid="stHeader"] { background: var(--bg-charcoal) !important; }
+    .block-container { padding: 4rem 1.1rem 1.25rem !important; max-width: 100% !important; }
+    section[data-testid="stSidebar"] {
+        background: var(--bg-graphite) !important;
+        border-right: 1px solid var(--border-subtle) !important;
+    }
+    section[data-testid="stSidebar"] > div:first-child { background: var(--bg-graphite) !important; }
+    section[data-testid="stSidebar"] div[role="radiogroup"] { gap: 4px !important; }
+    section[data-testid="stSidebar"] div[role="radiogroup"] > label {
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: 8px !important;
+        padding: 8px 10px !important;
+    }
+    section[data-testid="stSidebar"] div[role="radiogroup"] > label:hover { background: #18263B !important; }
+    section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checked) {
+        background: #1D3149 !important;
+        border-color: #2B4966 !important;
+    }
+    section[data-testid="stSidebar"] div[role="radiogroup"] > label p { color: #CBD5E1 !important; }
+    section[data-testid="stSidebar"] div[role="radiogroup"] > label:has(input:checked) p {
+        color: #F1F5F9 !important;
+        font-weight: 750 !important;
+    }
+    .fw-header-bar {
+        background: #111C2E !important;
+        border: 1px solid #293B53 !important;
+        border-radius: 10px !important;
+        padding: 10px 14px !important;
+        box-shadow: none !important;
+    }
+    .fw-header-status {
+        background: #18263B !important;
+        border-color: #293B53 !important;
+        border-radius: 8px !important;
+    }
+    .fw-header-status > div > div:first-child { color: #F1F5F9 !important; }
+    .fw-header-status > div > div:last-child { color: #94A3B8 !important; }
+    .fw-kpi-strip { gap: 8px !important; }
+    .fw-kpi-box, .fw-sidebar-card, .fw-panel-card, .fw-recent-row {
+        background: #18263B !important;
+        border: 1px solid #293B53 !important;
+        border-radius: 9px !important;
+        box-shadow: none !important;
+        color: #F1F5F9 !important;
+    }
+    .fw-kpi-box.kpi-alert { background: #2B1724 !important; border-color: #9F304A !important; }
+    .fw-sidebar-summary { padding: 12px !important; margin-top: 18px; }
+    .fw-sidebar-summary-title { color: #94A3B8; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+    .fw-sidebar-state { color: #F1F5F9; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; }
+    .fw-sidebar-state span { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+    .fw-sidebar-meta { color: #94A3B8; font-size: 12px; margin-top: 7px; }
+    .fw-kpi-box { padding: 7px 11px !important; }
+    .fw-kpi-num { color: #F1F5F9; }
+    .fw-kpi-sub, .fw-panel-card small { color: #94A3B8 !important; }
+    .fw-panel-title { color: #F1F5F9 !important; border-color: #293B53 !important; }
+    .fw-cam-frame {
+        background: #111C2E !important;
+        border: 1px solid #293B53 !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+    .fw-cam-frame.state-running { border-color: #315A56 !important; }
+    .fw-cam-frame.state-fire { border: 2px solid #F43F5E !important; box-shadow: none !important; }
+    .fw-cam-frame.state-suspect { border: 1px solid #A66B1C !important; }
+    .fw-cam-top { background: #111C2E !important; border-color: #293B53 !important; }
+    .fw-cam-label { color: #F1F5F9 !important; }
+    .fw-cam-icon-badge {
+        background: #1D3149 !important;
+        border: 1px solid #31516F !important;
+        color: #7DD3FC !important;
+    }
+    .fw-cam-bottom { background: #111C2E !important; color: #CBD5E1 !important; }
+    .fw-cam-video-box, .fw-alert-img-wrap, .fw-recent-img { background: #070D18 !important; }
+    .fw-cam-video-el { max-height: 320px !important; }
+    .fw-cam-standby-screen {
+        background: #111C2E !important;
+        color: #94A3B8 !important;
+    }
+    .fw-standby-title { color: #CBD5E1 !important; }
+    .fw-standby-sub { color: #94A3B8 !important; }
+    .fw-corner-tl, .fw-corner-tr, .fw-corner-bl, .fw-corner-br { border-color: #41536B !important; }
+    .fw-pill-running, .fw-pill-stopped {
+        background: #12352F !important; color: #86EFAC !important; border-color: #24634E !important;
+    }
+    .fw-pill-connecting {
+        background: #3A2C13 !important; color: #FCD34D !important; border-color: #73551B !important;
+    }
+    .fw-pill-fire, .fw-pill-error {
+        background: #451D2A !important; color: #FDA4AF !important; border-color: #9F304A !important;
+    }
+    .fw-pill-suspect {
+        background: #3A2A15 !important; color: #FCD34D !important; border-color: #79561D !important;
+    }
+    .fw-alert-hero {
+        background: #18263B !important;
+        border: 1px solid #293B53 !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+    .fw-alert-hero.critical { background: #211A2B !important; border-color: #F43F5E !important; }
+    .fw-alert-hero.suspect { background: #211F1A !important; border-color: #A66B1C !important; }
+    .fw-alert-hero.critical .fw-alert-hero-top { color: #FDA4AF !important; }
+    .fw-alert-hero.suspect .fw-alert-hero-top { color: #FCD34D !important; border-bottom-color: #79561D !important; }
+    .fw-alert-hero div[style*="color:#F1F5F9"],
+    .fw-alert-hero div[style*="color:#FFFFFF"] { color: #F1F5F9 !important; }
+    .fw-alert-hero div[style*="color:#CBD5E1"],
+    .fw-alert-hero span[style*="color:#FECACA"] { color: #CBD5E1 !important; }
+    .fw-recent-row { background: #111C2E !important; }
+    .fw-panel-card div[style*="background:#161C28"] {
+        background: #111C2E !important;
+        border-color: #293B53 !important;
+    }
+    div.stButton > button[kind="primary"] {
+        background: #38BDF8 !important;
+        border: 1px solid #38BDF8 !important;
+        color: #071522 !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        font-weight: 750 !important;
+    }
+    div.stButton > button[kind="primary"]:hover {
+        background: #7DD3FC !important; border-color: #7DD3FC !important; color: #071522 !important;
+    }
+    div.stButton > button[kind="secondary"] {
+        background: #1D2D44 !important;
+        border: 1px solid #3A4E68 !important;
+        color: #E2E8F0 !important;
+        border-radius: 8px !important;
+    }
+    div.stButton > button[kind="secondary"]:hover {
+        background: #273B55 !important; border-color: #56708D !important; color: #FFFFFF !important;
+    }
+    .stApp [data-testid="stCaptionContainer"] p { color: #94A3B8 !important; font-size: 13px !important; }
+    .stApp [data-testid="stExpander"] {
+        background: #111C2E !important; border: 1px solid #293B53 !important; border-radius: 9px !important;
+    }
+    .stApp [data-testid="stExpander"] summary { color: #E2E8F0 !important; }
+    .stApp [data-baseweb="select"] > div,
+    .stApp [data-baseweb="input"] > div,
+    .stApp textarea {
+        background: #111C2E !important; border-color: #3A4E68 !important; color: #F1F5F9 !important;
+    }
+    .stApp [data-testid="stDataFrame"], .stApp [data-testid="stTable"] {
+        background: #111C2E !important; color: #F1F5F9 !important;
+    }
+    .stApp hr { border-color: #293B53 !important; }
+    @media (max-width: 900px) {
+        .block-container { padding: 4rem 0.6rem 0.6rem !important; }
+        .fw-header-bar { gap: 8px !important; }
+        .fw-kpi-strip { width: 100%; }
+        .fw-kpi-box { flex: 1 1 130px; }
+        .fw-cam-video-el { max-height: 240px !important; }
+        [data-testid="stHorizontalBlock"] { flex-wrap: wrap !important; }
+        [data-testid="stHorizontalBlock"] > [data-testid="column"] {
+            min-width: min(100%, 340px) !important;
+            flex: 1 1 100% !important;
+        }
     }
 </style>
 """
@@ -841,26 +1047,31 @@ def classify_event_category(ev: Dict[str, Any]) -> Tuple[str, str, str]:
     - Cảnh báo đã bỏ qua
     Trả về: (Nhãn loại phát hiện, Nhãn trạng thái xử lý, Mã màu).
     """
-    lbl = str(ev.get("label", "FIRE")).upper()
-    lvl = str(ev.get("alert_level", "FIRE")).upper()
+    lbl = str(ev.get("label") or "").upper()
+    lvl = str(ev.get("alert_level") or "").upper()
     stt = str(ev.get("status", "NEW")).upper()
     act = str(ev.get("action_taken", "")).lower()
 
     if lvl == "SUSPECT":
         det_type = f"Cảnh báo nghi ngờ ({translate_detection_label(lbl)})"
-        color = "#F97316"
+        color = "#F59E0B"
     elif "SMOKE" in lbl:
         det_type = "Cảnh báo khói"
-        color = "#EAB308"
-    else:
+        color = "#F59E0B"
+    elif "FIRE" in lbl or "LỬA" in lbl:
         det_type = "Cảnh báo cháy"
-        color = "#EF4444"
+        color = "#F43F5E"
+    else:
+        det_type = "Sự kiện chưa phân loại"
+        color = "#94A3B8"
 
     if stt == "ACKNOWLEDGED":
         if "bỏ qua" in act or "giả" in act:
             proc_state = "Đã bỏ qua"
         else:
             proc_state = "Đã xác nhận"
+    elif stt == "DISMISSED":
+        proc_state = "Đã bỏ qua"
     else:
         proc_state = "Chờ xử lý"
 
@@ -885,8 +1096,19 @@ def select_camera_count(count_n: int) -> None:
     st.session_state.cam_count_preset = count_n
     st.session_state.pending_cams = list(chosen)
     st.session_state.selected_cams = list(chosen)
+    st.session_state["_sync_camera_selector"] = True
     if chosen and st.session_state.focus_cam_id not in chosen:
         st.session_state.focus_cam_id = chosen[0]
+
+
+def on_manual_camera_selection_change() -> None:
+    """Treat an explicit multiselect change as the new camera layout."""
+    chosen = list(st.session_state.get("ms_camera_selection_box", []))
+    if not chosen:
+        return
+    st.session_state.selected_cams = chosen
+    st.session_state.pending_cams = list(chosen)
+    st.session_state.cam_count_preset = len(chosen) if len(chosen) in (1, 4, 9) else 0
 
 
 # ==============================================================================
@@ -990,33 +1212,6 @@ def clean_camera_display_name(cam_id: str, raw_name: str) -> str:
     return s
 
 
-@st.cache_data(show_spinner=False)
-def get_fallback_alert_thumb_b64() -> str:
-    """Trích xuất 1 khung hình thực tế từ kho ảnh cảnh báo hoặc video Việt Nam làm ảnh hiển thị khi DB trống."""
-    alerts_dir = PROJECT_ROOT / "alerts"
-    if alerts_dir.exists():
-        jpgs = sorted(alerts_dir.glob("*.jpg"), key=lambda p: p.stat().st_mtime, reverse=True)
-        for jp in jpgs:
-            try:
-                return base64.b64encode(jp.read_bytes()).decode("ascii")
-            except Exception:
-                pass
-    for vid_rel in ("videovietnam/VN_POS_02.mp4", "videovietnam/VN_POS_01.mp4"):
-        vp = PROJECT_ROOT / vid_rel
-        if vp.exists():
-            cap = cv2.VideoCapture(str(vp))
-            if cap.isOpened():
-                cap.set(cv2.CAP_PROP_POS_FRAMES, 15)
-                ok, frame = cap.read()
-                cap.release()
-                if ok and frame is not None:
-                    frame_small = cv2.resize(frame, (480, 270))
-                    ok_enc, buf = cv2.imencode(".jpg", frame_small, [int(cv2.IMWRITE_JPEG_QUALITY), 78])
-                    if ok_enc:
-                        return base64.b64encode(buf.tobytes()).decode("ascii")
-    return ""
-
-
 def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact: bool = False) -> None:
     """Hiển thị một khung camera liền khối chuẩn ảnh mẫu FIREWATCH V2."""
     cid = snap["cam_id"]
@@ -1058,9 +1253,9 @@ def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact:
     if lc_state == "RUNNING":
         det_vn = translate_detection_label(snap["primary_label"])
         if lvl == "FIRE":
-            ov_col, ov_bg, ov_txt = "#FCA5A5", "rgba(185,28,28,0.82)", f"🚨 Cảnh báo: {det_vn} ({conf_pct:.0f}%)"
+            ov_col, ov_bg, ov_txt = "#FDA4AF", "rgba(136,19,55,0.88)", f"🚨 Cảnh báo: {det_vn} ({conf_pct:.0f}%)"
         elif lvl == "SUSPECT":
-            ov_col, ov_bg, ov_txt = "#FDBA74", "rgba(194,65,12,0.82)", f"⚠️ Cảnh báo: {det_vn} ({conf_pct:.0f}%)"
+            ov_col, ov_bg, ov_txt = "#FCD34D", "rgba(120,77,12,0.90)", f"⚠️ Cảnh báo: {det_vn} ({conf_pct:.0f}%)"
         else:
             ov_col, ov_bg, ov_txt = "#A7F3D0", "rgba(6,95,70,0.78)", "● Bình thường"
 
@@ -1113,26 +1308,7 @@ def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact:
         body_html = f"""
         <div class="fw-cam-standby-screen">
             {corners_html}
-            <svg style="position:absolute; bottom:0; left:0; width:100%; height:58%; opacity:0.16; pointer-events:none;" viewBox="0 0 400 110" preserveAspectRatio="none" fill="#64748B">
-                <rect x="8" y="55" width="22" height="55" />
-                <rect x="34" y="38" width="28" height="72" />
-                <rect x="66" y="62" width="18" height="48" />
-                <rect x="88" y="24" width="34" height="86" />
-                <rect x="126" y="48" width="24" height="62" />
-                <rect x="155" y="30" width="30" height="80" />
-                <rect x="190" y="58" width="22" height="52" />
-                <rect x="218" y="20" width="36" height="90" />
-                <rect x="258" y="46" width="26" height="64" />
-                <rect x="288" y="34" width="30" height="76" />
-                <rect x="322" y="52" width="24" height="58" />
-                <rect x="350" y="28" width="34" height="82" />
-            </svg>
-            <svg width="56" height="46" viewBox="0 0 64 48" fill="none" style="z-index:2; margin-bottom:2px;">
-                <path d="M12 20L46 10L52 24L18 34L12 20Z" fill="#475569" stroke="#64748B" stroke-width="1.8"/>
-                <path d="M48 14L58 12L60 20L50 22L48 14Z" fill="#334155" stroke="#64748B" stroke-width="1.5"/>
-                <path d="M26 31L22 42H10" stroke="#64748B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="26" cy="31" r="3" fill="#94A3B8"/>
-            </svg>
+            <div style="font-size:22px; color:#94A3B8; margin-bottom:5px;">■</div>
             <div class="fw-standby-title">{esc(title_msg)}</div>
             <div class="fw-standby-sub">{esc(sub_msg)}</div>
         </div>
@@ -1158,43 +1334,42 @@ def render_camera_frame(snap: Dict[str, Any], key_prefix: str = "grid", compact:
     with stat_col:
         accounting = snap.get("inference_accounting", {})
         st.caption(
-            f"Capture {snap['capture_fps']:.1f} FPS · Inference {snap['inference_fps']:.1f} FPS · "
-            f"Display ACK {snap.get('display_fps', 0.0):.1f} FPS · "
-            f"{snap.get('dropped_frames', 0)} dropped\n"
-            f"AI calls {accounting.get('inference_attempts', 0)} · "
-            f"completed {accounting.get('inference_completed', 0)} · "
-            f"busy {accounting.get('inference_skipped_busy', 0)} · "
-            f"busy ratio {snap.get('inference_busy_ratio', 0.0):.0%} | "
-            f"last success age {snap.get('last_successful_inference_age_seconds') if snap.get('last_successful_inference_age_seconds') is not None else 'unknown'} s | "
-            f"max gap {snap.get('max_inference_gap_seconds', 0.0):.2f} s | "
-            f"frame age {snap.get('frame_age_at_inference_ms', 0.0):.1f} ms | "
-            f"errors {accounting.get('inference_errors', 0)}"
+            f"Đọc hình {snap['capture_fps']:.1f} FPS · AI {snap['inference_fps']:.1f} FPS · "
+            f"Lỗi {accounting.get('inference_errors', 0)}"
         )
+        with st.expander("Chi tiết hiệu năng", expanded=False):
+            st.caption(
+                f"Hiển thị {snap.get('display_fps', 0.0):.1f} FPS · "
+                f"Bỏ qua {snap.get('dropped_frames', 0)} khung · "
+                f"Lượt AI {accounting.get('inference_attempts', 0)} · "
+                f"Hoàn tất {accounting.get('inference_completed', 0)} · "
+                f"Đang bận {accounting.get('inference_skipped_busy', 0)} · "
+                f"Tỷ lệ bận {snap.get('inference_busy_ratio', 0.0):.0%} · "
+                f"Lỗi {accounting.get('inference_errors', 0)}"
+            )
     with action_col:
+        camera_action = None
         if lc_state == "RUNNING":
-            if st.button("■ Disconnect", key=f"{key_prefix}_disconnect_{cid}", use_container_width=True):
-                cam_system.stop_camera(cid)
-                st.rerun()
+            camera_action = "disconnect"
+            action_label = "Ngắt kết nối"
         elif lc_state in ("ERROR", "RECONNECTING"):
-            if st.button("↻ Reconnect", key=f"{key_prefix}_reconnect_{cid}", use_container_width=True):
-                cam_system.reconnect_camera(cid)
-                st.rerun()
+            camera_action = "reconnect"
+            action_label = "Kết nối lại"
         elif snap.get("source_type") != "UNASSIGNED":
-            if st.button("▶ Connect", key=f"{key_prefix}_connect_{cid}", use_container_width=True):
-                cam_system.start_camera(cid)
-                st.rerun()
+            camera_action = "connect"
+            action_label = "Kết nối"
 
-    if lc_state == "ERROR" and not compact:
-        if st.button(
-            f"🔄 Thử kết nối lại {cid}",
-            key=f"{key_prefix}_retry_{cid}",
+        if camera_action and st.button(
+            action_label,
+            key=f"{key_prefix}_camera_action_{cid}",
             use_container_width=True,
         ):
-            st.session_state.is_monitoring = True
-            if st.session_state.monitoring_started_ts == 0.0:
-                st.session_state.monitoring_started_ts = time.time()
-            cam_system.reconnect_camera(cid)
-            st.rerun()
+            if camera_action == "disconnect":
+                cam_system.stop_camera(cid)
+            elif camera_action == "reconnect":
+                cam_system.reconnect_camera(cid)
+            else:
+                cam_system.start_camera(cid)
 
 
 # ==============================================================================
@@ -1233,6 +1408,7 @@ actual_latency_ms = (
     if running_cams_count > 0
     else 0.0
 )
+telegram_header_state = _telegram_summary(cam_system)
 
 if st.session_state.is_monitoring and st.session_state.monitoring_started_ts > 0:
     el_sec = max(0, int(time.time() - st.session_state.monitoring_started_ts))
@@ -1249,16 +1425,16 @@ else:
 with st.sidebar:
     render_html(
         """
-        <div style="display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid #232C3D; margin-bottom:10px;">
-            <div style="width:38px; height:40px; border-radius:9px; background:linear-gradient(180deg, #F97316 0%, #C2410C 100%); display:flex; align-items:center; justify-content:center; font-size:21px; box-shadow:0 0 12px rgba(249,115,22,0.35);">
-                🔥
+        <div class="fw-sidebar-brand" style="display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom:1px solid #293B53; margin-bottom:10px;">
+            <div style="width:38px; height:40px; border-radius:9px; background:#18263B; border:1px solid #293B53; display:flex; align-items:center; justify-content:center; font-size:21px;">
+                <span style="color:#38BDF8; font-size:15px; font-weight:800;">FW</span>
             </div>
             <div>
-                <div style="font-size:18px; font-weight:900; letter-spacing:0.6px; color:#FB923C; line-height:1.1;">
+                <div style="font-size:18px; font-weight:800; letter-spacing:0.3px; color:#38BDF8; line-height:1.1;">
                     FIREWATCH
                 </div>
-                <div style="font-size:10.5px; color:#94A3B8; margin-top:2px;">
-                    Intelligent Monitoring Station
+                <div style="font-size:11px; color:#94A3B8; margin-top:3px;">
+                    Giám sát an toàn
                 </div>
             </div>
         </div>
@@ -1276,13 +1452,13 @@ with st.sidebar:
     ]
     badge_txt = f" ({unack_count})" if unack_count > 0 else ""
     nav_labels = {
-        "Tổng quan": "🏠  Tổng quan",
-        "Giám sát camera": "📹  Giám sát camera",
-        "Trung tâm cảnh báo": f"🔔  Trung tâm cảnh báo{badge_txt}",
-        "Lịch sử sự kiện": "📑  Lịch sử sự kiện",
-        "Quản lý camera và ROI": "📷  Quản lý camera",
-        "Cấu hình hệ thống": "⚙️  Cấu hình hệ thống",
-        "Telegram": "✉️  Cảnh báo Telegram",
+        "Tổng quan": "Tổng quan",
+        "Giám sát camera": "Giám sát camera",
+        "Trung tâm cảnh báo": f"Trung tâm cảnh báo{badge_txt}",
+        "Lịch sử sự kiện": "Lịch sử sự kiện",
+        "Quản lý camera và ROI": "Quản lý camera",
+        "Cấu hình hệ thống": "Cấu hình hệ thống",
+        "Telegram": "Cảnh báo Telegram",
     }
 
     picked_nav = st.radio(
@@ -1299,11 +1475,15 @@ with st.sidebar:
 
     st.markdown("<div style='height:18px;'></div>", unsafe_allow_html=True)
 
-    # Khối 1 cuối Sidebar: Trạng thái hệ thống
+    # Tóm tắt trạng thái giữ gọn trong sidebar.
     if sys_metrics["fire_cam_count"] > 0:
-        sb_stt_col, sb_stt_bg, sb_stt_txt = "#FCA5A5", "rgba(239,68,68,0.18)", "🔥 Đang báo động cháy"
+        sb_stt_col, sb_stt_txt = "#F43F5E", "Có cảnh báo cháy"
+    elif running_cams_count > 0:
+        sb_stt_col, sb_stt_txt = "#22C55E", "Đang giám sát"
+    elif error_cams_count > 0:
+        sb_stt_col, sb_stt_txt = "#F59E0B", "Có camera mất kết nối"
     else:
-        sb_stt_col, sb_stt_bg, sb_stt_txt = "#34D399", "rgba(16,185,129,0.14)", "Đang hoạt động"
+        sb_stt_col, sb_stt_txt = "#94A3B8", "Sẵn sàng"
 
     perf_map_vn = {
         "Low Resource": "Tiết kiệm tài nguyên",
@@ -1311,35 +1491,14 @@ with st.sidebar:
         "High Performance": "Hiệu suất cao",
     }
     curr_perf_vn = perf_map_vn.get(st.session_state.perf_preset, "Cân bằng")
-    raw_dev = str(cam_system.detector.device_label)
-    short_gpu = "GPU: RTX 3050" if "3050" in raw_dev else (raw_dev[:22] if raw_dev else "GPU / CPU")
 
     render_html(
         f"""
-        <div class="fw-sidebar-card" style="padding:10px 12px;">
-            <div style="font-size:12px; color:#CBD5E1; font-weight:700; margin-bottom:7px;">Trạng thái hệ thống</div>
-            <div style="display:flex; align-items:center; gap:8px; background:{sb_stt_bg}; border:1px solid rgba(16,185,129,0.30); border-radius:16px; padding:5px 10px;">
-                <span style="background:#10B981; color:#0B0E14; width:18px; height:18px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:900;">✓</span>
-                <span style="font-size:12.5px; font-weight:700; color:{sb_stt_col};">{esc(sb_stt_txt)}</span>
-            </div>
-        </div>
-        <div class="fw-sidebar-card" style="display:flex; align-items:center; gap:10px; padding:10px 12px;">
-            <div style="width:32px; height:32px; border-radius:50%; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.35); display:flex; align-items:center; justify-content:center; font-size:15px;">
-                ⏱️
-            </div>
-            <div>
-                <div style="font-size:11.5px; color:#CBD5E1; font-weight:600;">Chế độ hiệu năng</div>
-                <div style="font-size:13px; font-weight:800; color:#10B981;">{esc(curr_perf_vn)}</div>
-            </div>
-        </div>
-        <div class="fw-sidebar-card" style="display:flex; align-items:center; gap:10px; padding:10px 12px;">
-            <div style="width:32px; height:32px; border-radius:8px; background:rgba(56,189,248,0.14); border:1px solid rgba(56,189,248,0.35); display:flex; align-items:center; justify-content:center; font-size:15px;">
-                🎛️
-            </div>
-            <div>
-                <div style="font-size:11.5px; color:#CBD5E1; font-weight:600;">Thiết bị xử lý</div>
-                <div style="font-size:12.5px; font-weight:800; color:#F8FAFC;">{esc(short_gpu)}</div>
-            </div>
+        <div class="fw-sidebar-card fw-sidebar-summary">
+            <div class="fw-sidebar-summary-title">Trạng thái</div>
+            <div class="fw-sidebar-state"><span style="background:{sb_stt_col};"></span>{esc(sb_stt_txt)}</div>
+            <div class="fw-sidebar-meta">{running_cams_count} / {total_configured_cams} camera đang chạy</div>
+            <div class="fw-sidebar-meta">Hiệu năng: {esc(curr_perf_vn)}</div>
         </div>
         """
     )
@@ -1360,82 +1519,57 @@ with st.sidebar:
 
 
 # ==============================================================================
-# 10. KHU VỰC B: HEADER BAR (CHUẨN BỐ CỤC ẢNH THIẾT KẾ FIREWATCH V2)
+# 10. KHU VỰC B: HEADER BAR
 # ==============================================================================
-clock_str = time.strftime("%H:%M:%S")
-weekday_map = {
-    0: "Thứ Hai",
-    1: "Thứ Ba",
-    2: "Thứ Tư",
-    3: "Thứ Năm",
-    4: "Thứ Sáu",
-    5: "Thứ Bảy",
-    6: "Chủ Nhật",
-}
-now_struct = time.localtime()
-date_vn_str = f"{weekday_map.get(now_struct.tm_wday, '')}, {time.strftime('%d/%m/%Y', now_struct)}"
 
 if sys_metrics["fire_cam_count"] > 0:
-    hdr_led = "#EF4444"
+    hdr_led = "#F43F5E"
     hdr_title = "BÁO ĐỘNG CHÁY KHẨN CẤP"
     hdr_desc = f"Phát hiện cháy tại: {', '.join(sys_metrics['fire_cameras'])}"
 elif running_cams_count > 0:
-    hdr_led = "#10B981"
+    hdr_led = "#22C55E"
     hdr_title = "Đang giám sát"
     hdr_desc = "Phát hiện cháy & khói theo thời gian thực"
 elif error_cams_count > 0:
-    hdr_led = "#EAB308"
+    hdr_led = "#F59E0B"
     hdr_title = "Cảnh báo kết nối camera"
     hdr_desc = f"Có {error_cams_count} camera không thể kết nối nguồn"
 else:
-    hdr_led = "#10B981"
+    hdr_led = "#22C55E"
     hdr_title = "Sẵn sàng giám sát"
     hdr_desc = "Nhấn Bắt đầu giám sát để khởi động camera"
+
+tg_state_code = telegram_header_state["state"]
+tg_header_label = TELEGRAM_STATE_LABELS_VI.get(tg_state_code, tg_state_code)
+tg_header_color = "#22C55E" if tg_state_code == "ENABLED" else "#F59E0B"
 
 render_html(
     f"""
     <div class="fw-header-bar">
-        <div class="fw-header-status" style="background:#151B28; border:1px solid #263044; border-radius:8px; padding:7px 16px; min-width:300px;">
+        <div class="fw-header-status" style="border-radius:8px; padding:8px 12px; min-width:270px;">
             <span class="fw-status-led" style="color:{hdr_led}; background-color:{hdr_led}; width:14px; height:14px;"></span>
             <div>
-                <div style="font-size:15px; font-weight:800; color:#F8FAFC; line-height:1.2;">{esc(hdr_title)}</div>
-                <div style="font-size:11.5px; color:#94A3B8; margin-top:1px;">{esc(hdr_desc)}</div>
+                <div style="font-size:15px; font-weight:750; color:#F1F5F9; line-height:1.2;">{esc(hdr_title)}</div>
+                <div style="font-size:12px; color:#94A3B8; margin-top:2px;">{esc(hdr_desc)}</div>
             </div>
         </div>
         <div class="fw-kpi-strip">
             <div class="fw-kpi-box">
-                <span style="font-size:18px; color:#94A3B8;">📹</span>
                 <div>
                     <div class="fw-kpi-num">{running_cams_count}/{total_configured_cams}</div>
-                    <div class="fw-kpi-sub">Camera hoạt động</div>
+                    <div class="fw-kpi-sub">Camera đang chạy</div>
                 </div>
             </div>
             <div class="fw-kpi-box {'kpi-alert' if unack_count > 0 else ''}">
-                <span style="font-size:18px; color:#EF4444;">⚠️</span>
                 <div>
-                    <div class="fw-kpi-num" style="color:{'#EF4444' if unack_count > 0 else '#F8FAFC'};">{unack_count}</div>
-                    <div class="fw-kpi-sub">Cảnh báo chờ xử lý</div>
+                    <div class="fw-kpi-num" style="color:{'#F43F5E' if unack_count > 0 else '#F1F5F9'};">{unack_count}</div>
+                    <div class="fw-kpi-sub">Cảnh báo cần xử lý</div>
                 </div>
             </div>
-            <div class="fw-kpi-box">
-                <span style="font-size:16px; color:#10B981; font-family:monospace; font-weight:900;">0:8</span>
+            <div class="fw-kpi-box fw-telegram-status">
                 <div>
-                    <div class="fw-kpi-num">{actual_total_fps:.1f} <span style="font-size:11.5px; color:#94A3B8;">FPS</span></div>
-                    <div class="fw-kpi-sub">Tổng FPS</div>
-                </div>
-            </div>
-            <div class="fw-kpi-box">
-                <span style="font-size:18px; color:#F59E0B;">⚡</span>
-                <div>
-                    <div class="fw-kpi-num">{actual_latency_ms:.1f} <span style="font-size:11.5px; color:#94A3B8;">ms</span></div>
-                    <div class="fw-kpi-sub">Độ trễ TB</div>
-                </div>
-            </div>
-            <div class="fw-kpi-box">
-                <span style="font-size:18px; color:#94A3B8;">🕒</span>
-                <div>
-                    <div class="fw-kpi-num" style="font-size:15.5px;">{esc(clock_str)}</div>
-                    <div class="fw-kpi-sub">{esc(date_vn_str)}</div>
+                    <div class="fw-kpi-num" style="font-size:14px; color:{tg_header_color};">{esc(tg_header_label)}</div>
+                    <div class="fw-kpi-sub">Telegram</div>
                 </div>
             </div>
         </div>
@@ -1547,10 +1681,10 @@ def get_cached_hardware_cameras(max_check: int = 4) -> List[Dict[str, Any]]:
 
 def render_left_filter_bar() -> None:
     """Hiển thị 4 nhóm điều khiển phía trên lưới camera: Số lượng | Chế độ xem | Chọn camera hoạt động | Test Cam bằng File."""
-    fb1, fb2, fb3, fb4 = st.columns([1.18, 1.22, 1.02, 0.96])
+    fb1, fb2, fb3, fb4 = st.columns([1.15, 1.15, 1.0, 0.95])
 
     with fb1:
-        render_html('<div style="font-size:12px; color:#CBD5E1; font-weight:600; margin-bottom:4px;">Số lượng camera hiển thị:</div>')
+        render_html('<div style="font-size:14px; color:#CBD5E1; font-weight:700; margin-bottom:6px;">Số camera:</div>')
         c_cols = st.columns(3)
         for i, cnt in enumerate([1, 4, 9]):
             with c_cols[i]:
@@ -1565,7 +1699,7 @@ def render_left_filter_bar() -> None:
                     st.rerun()
 
     with fb2:
-        render_html('<div style="font-size:12px; color:#CBD5E1; font-weight:600; margin-bottom:4px;">Chế độ xem:</div>')
+        render_html('<div style="font-size:14px; color:#CBD5E1; font-weight:700; margin-bottom:6px;">Bố cục:</div>')
         v_modes = [("Lưới", "⊞ Lưới"), ("Ưu tiên 1 cam", "Ưu tiên 1 cam"), ("Danh sách", "Danh sách")]
         v_cols = st.columns(3)
         for i, (vm_key, vm_lbl) in enumerate(v_modes):
@@ -1598,7 +1732,7 @@ def render_left_filter_bar() -> None:
             cam_label_map[cfg.cam_id] = f"⚪ {cfg.cam_id} – {c_title} [Chưa gán nguồn]"
 
     with fb3:
-        render_html('<div style="font-size:12px; color:#CBD5E1; font-weight:600; margin-bottom:4px;">Chọn camera:</div>')
+        render_html('<div style="font-size:14px; color:#CBD5E1; font-weight:700; margin-bottom:6px;">Nguồn camera:</div>')
         active_badge_cnt = len(active_hw_cams) + len(assigned_cam_ids)
         pop_title = (
             f"🟢 Đang hoạt động ({active_badge_cnt})"
@@ -1630,6 +1764,7 @@ def render_left_filter_bar() -> None:
                         bound_ids = cam_system.assign_active_hardware_cameras(picked_hw, auto_start=False)
                         st.session_state.pending_cams = list(bound_ids)
                         st.session_state.selected_cams = list(bound_ids)
+                        st.session_state["_sync_camera_selector"] = True
                         st.session_state.cam_count_preset = len(bound_ids) if len(bound_ids) in (1, 2, 4, 6, 9) else 0
                         st.toast(f"Đã gán {len(bound_ids)} camera đang hoạt động vào {', '.join(bound_ids)}!")
                         st.rerun()
@@ -1652,6 +1787,7 @@ def render_left_filter_bar() -> None:
                 ):
                     st.session_state.selected_cams = list(assigned_cam_ids)
                     st.session_state.pending_cams = list(assigned_cam_ids)
+                    st.session_state["_sync_camera_selector"] = True
                     st.session_state.cam_count_preset = len(assigned_cam_ids) if len(assigned_cam_ids) in (1, 2, 4, 6, 9) else 0
                     st.rerun()
             with b_all2:
@@ -1665,12 +1801,8 @@ def render_left_filter_bar() -> None:
                 default=[c for c in st.session_state.selected_cams if c in all_cam_ids],
                 format_func=lambda cid: cam_label_map.get(cid, cid),
                 key="ms_camera_selection_box",
+                on_change=on_manual_camera_selection_change,
             )
-            if manual_list and set(manual_list) != set(st.session_state.selected_cams):
-                st.session_state.selected_cams = list(manual_list)
-                st.session_state.pending_cams = list(manual_list)
-                st.session_state.cam_count_preset = len(manual_list) if len(manual_list) in (1, 2, 4, 6, 9) else 0
-                st.rerun()
 
             st.markdown("---")
             zoom_pick = st.selectbox(
@@ -1684,7 +1816,7 @@ def render_left_filter_bar() -> None:
                 st.rerun()
 
     with fb4:
-        render_html('<div style="font-size:12px; color:#CBD5E1; font-weight:600; margin-bottom:4px;">Kiểm thử bằng File:</div>')
+        render_html('<div style="font-size:14px; color:#CBD5E1; font-weight:700; margin-bottom:6px;">Video thử:</div>')
         with st.popover("🎬 Test Cam File", use_container_width=True):
             st.markdown("**🎬 Gắn File Video để Test Camera (Không tự động tìm kết nối)**")
             target_test_cam = st.selectbox(
@@ -1742,6 +1874,7 @@ def render_left_filter_bar() -> None:
                                 if target_test_cam not in st.session_state.selected_cams:
                                     st.session_state.selected_cams.append(target_test_cam)
                                     st.session_state.pending_cams = list(st.session_state.selected_cams)
+                                    st.session_state["_sync_camera_selector"] = True
                                 st.toast(f"🎬 {msg} — Đang chạy kiểm thử!")
                                 st.rerun()
                             else:
@@ -1775,6 +1908,7 @@ def render_left_filter_bar() -> None:
                             if target_test_cam not in st.session_state.selected_cams:
                                 st.session_state.selected_cams.append(target_test_cam)
                                 st.session_state.pending_cams = list(st.session_state.selected_cams)
+                                st.session_state["_sync_camera_selector"] = True
                             st.toast(f"📌 {msg}. Camera ở trạng thái Sẵn sàng (Nhấn Bắt đầu giám sát để chạy).")
                             st.rerun()
                         else:
@@ -1806,6 +1940,7 @@ def render_left_filter_bar() -> None:
         with p_col2:
             if st.button("✓ ÁP DỤNG CẤU HÌNH MỚI", key="btn_apply_pending", type="primary", use_container_width=True):
                 st.session_state.selected_cams = list(st.session_state.pending_cams)
+                st.session_state["_sync_camera_selector"] = True
                 if st.session_state.focus_cam_id not in st.session_state.selected_cams:
                     st.session_state.focus_cam_id = st.session_state.selected_cams[0]
                 st.toast(f"Đã áp dụng cấu hình mới ({len(st.session_state.selected_cams)} camera).")
@@ -1823,16 +1958,17 @@ def render_left_filter_bar() -> None:
 
 def render_right_start_stop_bar() -> None:
     """Hiển thị 2 nút [ ▶ BẮT ĐẦU GIÁM SÁT ] và [ ■ DỪNG ] nằm góc trên bên phải đúng chuẩn ảnh mẫu V2."""
-    render_html('<div style="height:18px;"></div>')
+    render_html('<div style="height:6px;"></div>')
     act1, act2 = st.columns([1.48, 0.92])
     with act1:
         if st.button(
-            "▶  BẮT ĐẦU GIÁM SÁT",
+            "▶ Bắt đầu giám sát",
             key="btn_manual_start",
             type="primary",
             use_container_width=True,
         ):
             st.session_state.selected_cams = list(st.session_state.pending_cams)
+            st.session_state["_sync_camera_selector"] = True
             res = cam_system.start_monitoring(st.session_state.selected_cams)
             if not res.get("assigned"):
                 st.session_state.is_monitoring = False
@@ -1849,7 +1985,7 @@ def render_right_start_stop_bar() -> None:
             st.rerun()
     with act2:
         if st.button(
-            "■  DỪNG",
+            "■ Dừng giám sát",
             key="btn_manual_stop",
             type="secondary",
             use_container_width=True,
@@ -1950,8 +2086,16 @@ def render_alert_center_right() -> None:
     3. Biểu đồ sự kiện theo giờ (SVG đường cong phát sáng Cháy vs Khói).
     """
     real_evs = list(db_summary["real_records"])
-    unack_evs = [e for e in real_evs if e.get("status") != "ACKNOWLEDGED"]
-    fallback_b64 = get_fallback_alert_thumb_b64()
+    unack_evs = [e for e in real_evs if e.get("status") == "UNREAD"]
+
+    if not real_evs:
+        render_html(
+            '<div class="fw-panel-card" style="padding:22px 16px; text-align:center;">'
+            '<div style="font-size:16px; font-weight:700; color:#F1F5F9;">Chưa có cảnh báo</div>'
+            '<div style="font-size:13px; color:#94A3B8; margin-top:5px;">'
+            'Sự kiện mới sẽ xuất hiện tại đây khi camera phát hiện khói hoặc lửa.</div></div>'
+        )
+        return
 
     if unack_evs:
         hero = unack_evs[0]
@@ -1960,37 +2104,35 @@ def render_alert_center_right() -> None:
             st.session_state.hero_ack_state = None
     elif real_evs:
         hero = real_evs[0]
-    else:
-        hero = {
-            "id": 3,
-            "camera_name": "CAM-02",
-            "label": "FIRE",
-            "alert_level": "FIRE",
-            "confidence": 0.987,
-            "timestamp": time.strftime("14:28:15 - %d/%m/%Y"),
-            "status": "UNREAD",
-            "action_taken": "Chưa xử lý",
-            "image_path": "",
-        }
-
-    h_id = int(hero.get("id") or 3)
-    h_cam_id = str(hero.get("camera_name", "CAM-02")).split()[0]
+    h_id = int(hero["id"])
+    h_cam_id = str(hero.get("camera_name") or "Chưa rõ camera").split()[0]
     h_cam_title = clean_camera_display_name(h_cam_id, h_cam_id)
-    h_lbl_raw = str(hero.get("label", "FIRE")).upper()
-    h_badge_txt = "💨 KHÓI" if "SMOKE" in h_lbl_raw else "🔥 CHÁY"
-    h_badge_col = "#F59E0B" if "SMOKE" in h_lbl_raw else "#EF4444"
-    h_conf = round(float(hero.get("confidence", 0.987)) * 100, 1)
-    h_ts = str(hero.get("timestamp", "14:28:15 - 10/11/2026"))
+    h_lbl_raw = str(hero.get("label") or "").upper()
+    h_is_smoke = "SMOKE" in h_lbl_raw
+    h_is_fire = "FIRE" in h_lbl_raw or "LỬA" in h_lbl_raw
+    h_is_suspect = str(hero.get("alert_level", "")).upper() == "SUSPECT"
+    h_icon = "💨" if h_is_smoke else ("🔥" if h_is_fire else "•")
+    h_badge_txt = "💨 KHÓI" if h_is_smoke else ("🔥 CHÁY" if h_is_fire else "SỰ KIỆN")
+    h_badge_col = "#F59E0B" if h_is_smoke or h_is_suspect else ("#F43F5E" if h_is_fire else "#64748B")
+    h_badge_bg = f"{h_badge_col}33"
+    h_conf = round(float(hero.get("confidence") or 0.0) * 100, 1)
+    h_ts = str(hero.get("timestamp") or "Chưa rõ thời gian")
+    _, h_verification_state, _ = classify_event_category(hero)
+    h_severity_class = "suspect" if h_is_smoke or h_is_suspect else ("critical" if h_is_fire else "")
+    h_heading = (
+        "CẢNH BÁO NGHI NGỜ" if h_is_suspect else
+        ("CẢNH BÁO KHÓI" if h_is_smoke else ("CẢNH BÁO CHÁY" if h_is_fire else "SỰ KIỆN CẦN XEM"))
+    )
     if len(h_ts) == 19 and "-" in h_ts[:10]:
         parts = h_ts.split(" ")
         d_p = parts[0].split("-")
         h_ts = f"{parts[1]} - {d_p[2]}/{d_p[1]}/{d_p[0]}"
 
-    h_b64 = load_image_b64(hero.get("image_path", "")) or fallback_b64
+    h_b64 = load_image_b64(hero.get("image_path", ""))
     h_img_html = (
         f"""
         <div class="fw-alert-img-wrap" style="border-radius:6px; margin-bottom:8px;">
-            <img class="fw-alert-img" style="height:152px; object-fit:cover;" src="data:image/jpeg;base64,{h_b64}" alt="Sự kiện #{h_id}" />
+            <img class="fw-alert-img" style="height:190px; object-fit:cover;" src="data:image/jpeg;base64,{h_b64}" alt="Sự kiện #{h_id}" />
             <span class="fw-alert-badge-overlay" style="background:{h_badge_col}; border-radius:12px; padding:3px 10px;">{h_badge_txt}</span>
         </div>
         """
@@ -2014,21 +2156,24 @@ def render_alert_center_right() -> None:
 
     render_html(
         f"""
-        <div class="fw-alert-hero" style="background:linear-gradient(180deg, #3B1219 0%, #171822 100%); border:1.5px solid #EF4444; border-radius:8px; padding:10px 12px; margin-top:4px; box-shadow:0 0 18px rgba(239,68,68,0.22);">
-            <div class="fw-alert-hero-top" style="color:#FFFFFF; font-size:14px; border-bottom:1px solid rgba(239,68,68,0.32);">
-                <span style="display:flex; align-items:center; gap:6px;"><span style="color:#F87171;">🔔</span> CẢNH BÁO KHẨN CẤP</span>
-                <span style="background:rgba(239,68,68,0.32); border:1px solid rgba(248,113,113,0.45); color:#FECACA; padding:1px 9px; border-radius:10px; font-family:monospace; font-size:12px;">#{int(h_id):03d}</span>
+        <div class="fw-alert-hero {h_severity_class}" style="border-radius:10px; padding:12px 13px; margin-top:4px;">
+            <div class="fw-alert-hero-top" style="color:#FFFFFF; font-size:16px; border-bottom:1px solid {h_badge_bg};">
+                <span style="display:flex; align-items:center; gap:6px;">{h_heading}</span>
+                <span style="background:{h_badge_bg}; border:1px solid {h_badge_col}; color:#F1F5F9; padding:1px 9px; border-radius:10px; font-family:monospace; font-size:12px;">#{int(h_id):03d}</span>
             </div>
             {h_img_html}
-            <div style="font-size:13px; line-height:1.68; color:#F1F5F9; padding:0 2px;">
-                <div style="font-weight:800; font-size:14.5px; color:#FFFFFF;">
-                    🔥 {esc(h_cam_id)} – {esc(h_cam_title)}
+            <div style="font-size:14.5px; line-height:1.75; color:#F1F5F9; padding:0 2px;">
+                <div style="font-weight:800; font-size:16px; color:#FFFFFF;">
+                    {h_icon} {esc(h_cam_id)} – {esc(h_cam_title)}
                 </div>
                 <div style="color:#CBD5E1; font-size:12.5px;">
                     🕒 {esc(h_ts)}
                 </div>
                 <div style="color:#CBD5E1; font-size:12.5px;">
                     🛡️ Độ tin cậy: <b>{h_conf:.1f}%</b>
+                </div>
+                <div style="color:#CBD5E1; font-size:12.5px;">
+                    Trạng thái: <b>{esc(h_verification_state)}</b>
                 </div>
             </div>
             {ack_banner_html}
@@ -2038,7 +2183,7 @@ def render_alert_center_right() -> None:
 
     hb1, hb2 = st.columns(2)
     with hb1:
-        if st.button("✓  Xác nhận", key="btn_hero_ack", type="primary", use_container_width=True):
+        if st.button("✓  Xác nhận", key="btn_hero_ack", type="primary", use_container_width=True, disabled=hero.get("status") != "UNREAD"):
             handle_alert_acknowledge(
                 int(h_id),
                 action_taken="Đã xác nhận cháy thật",
@@ -2049,7 +2194,7 @@ def render_alert_center_right() -> None:
             st.toast("🔕 Đã xác nhận cảnh báo và tắt âm báo còi hú.")
             st.rerun()
     with hb2:
-        if st.button("✕  Bỏ qua", key="btn_hero_dis", type="secondary", use_container_width=True):
+        if st.button("✕  Bỏ qua", key="btn_hero_dis", type="secondary", use_container_width=True, disabled=hero.get("status") != "UNREAD"):
             handle_alert_acknowledge(
                 int(h_id),
                 note="Đã bỏ qua (Báo động giả)",
@@ -2062,22 +2207,16 @@ def render_alert_center_right() -> None:
     # 2. Khối Sự kiện gần đây (3 dòng chuẩn ảnh mẫu V2)
     recent_items: List[Dict[str, Any]] = []
     for ev in real_evs[:3]:
-        lbl_u = str(ev.get("label", "FIRE")).upper()
-        ts_only = str(ev.get("timestamp", "")).split(" ")[-1] if ev.get("timestamp") else "14:28:15"
-        c_id = str(ev.get("camera_name", "CAM-02")).split()[0]
-        b64_t = load_image_b64(ev.get("image_path", "")) or fallback_b64
+        lbl_u = str(ev.get("label") or "").upper()
+        ts_only = str(ev.get("timestamp") or "—").split(" ")[-1]
+        c_id = str(ev.get("camera_name") or "Không rõ camera").split()[0]
+        b64_t = load_image_b64(ev.get("image_path", ""))
         if "SMOKE" in lbl_u:
             recent_items.append({"b64": b64_t, "icon": "💨", "col": "#F59E0B", "txt": f"Khói | {c_id}", "time": ts_only})
-        else:
+        elif "FIRE" in lbl_u:
             recent_items.append({"b64": b64_t, "icon": "🔥", "col": "#EF4444", "txt": f"Cháy | {c_id}", "time": ts_only})
-
-    default_recent = [
-        {"b64": fallback_b64, "icon": "🔥", "col": "#EF4444", "txt": "Cháy | CAM-02", "time": "14:28:15"},
-        {"b64": fallback_b64, "icon": "💨", "col": "#F59E0B", "txt": "Khói | CAM-03", "time": "14:27:32"},
-        {"b64": fallback_b64, "icon": "✔", "col": "#10B981", "txt": "Bình thường | CAM-01", "time": "14:26:50"},
-    ]
-    while len(recent_items) < 3:
-        recent_items.append(default_recent[len(recent_items)])
+        else:
+            recent_items.append({"b64": b64_t, "icon": "•", "col": "#94A3B8", "txt": f"Sự kiện | {c_id}", "time": ts_only})
 
     rows_html_list: List[str] = []
     for item in recent_items[:3]:
@@ -2112,53 +2251,6 @@ def render_alert_center_right() -> None:
         """
     )
 
-    # 3. Khối Biểu đồ sự kiện theo giờ (SVG đường cong phát sáng chuẩn ảnh mẫu V2)
-    render_html(
-        """
-        <div class="fw-panel-card" style="margin-top:8px; padding:10px 12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                <span style="font-size:13px; font-weight:800; color:#F8FAFC;">Biểu đồ sự kiện theo giờ</span>
-                <div style="display:flex; align-items:center; gap:10px; font-size:11.5px; font-weight:700;">
-                    <span style="color:#EF4444;">● <span style="color:#E2E8F0;">Cháy</span></span>
-                    <span style="color:#F59E0B;">● <span style="color:#E2E8F0;">Khói</span></span>
-                </div>
-            </div>
-            <svg width="100%" height="128" viewBox="0 0 340 125" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="fireGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#EF4444" stop-opacity="0.42"/>
-                        <stop offset="100%" stop-color="#EF4444" stop-opacity="0.0"/>
-                    </linearGradient>
-                </defs>
-                <!-- Lưới ngang & Nhãn trục Y -->
-                <line x1="28" y1="16" x2="326" y2="16" stroke="#222B3C" stroke-width="1"/>
-                <line x1="28" y1="44" x2="326" y2="44" stroke="#222B3C" stroke-width="1"/>
-                <line x1="28" y1="72" x2="326" y2="72" stroke="#222B3C" stroke-width="1"/>
-                <line x1="28" y1="100" x2="326" y2="100" stroke="#222B3C" stroke-width="1"/>
-                <text x="6" y="20" fill="#94A3B8" font-size="10">15</text>
-                <text x="6" y="48" fill="#94A3B8" font-size="10">10</text>
-                <text x="11" y="76" fill="#94A3B8" font-size="10">5</text>
-                <text x="11" y="103" fill="#94A3B8" font-size="10">0</text>
-                <!-- Vùng đổ bóng & Đường cong Cháy + Khói -->
-                <path d="M 38 82 C 75 82, 95 79, 112 72 C 145 62, 165 36, 184 36 C 205 36, 225 65, 255 72 C 280 78, 305 74, 322 72 L 322 100 L 38 100 Z" fill="url(#fireGrad)"/>
-                <path d="M 38 82 C 75 82, 95 79, 112 72 C 145 62, 165 36, 184 36 C 205 36, 225 65, 255 72 C 280 78, 305 74, 322 72" fill="none" stroke="#EF4444" stroke-width="2.4"/>
-                <path d="M 38 84 C 75 83, 95 81, 112 76 C 145 68, 165 55, 184 55 C 205 55, 225 69, 255 74 C 280 79, 305 75, 322 73" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-opacity="0.85"/>
-                <!-- Điểm nút -->
-                <circle cx="38" cy="82" r="3" fill="#F59E0B"/>
-                <circle cx="112" cy="72" r="3" fill="#F59E0B"/>
-                <circle cx="184" cy="36" r="4" fill="#EF4444" stroke="#FCA5A5" stroke-width="1.2"/>
-                <circle cx="255" cy="72" r="3" fill="#F59E0B"/>
-                <circle cx="322" cy="72" r="3" fill="#F59E0B"/>
-                <!-- Nhãn trục X -->
-                <text x="30" y="118" fill="#CBD5E1" font-size="10.5">12h</text>
-                <text x="103" y="118" fill="#CBD5E1" font-size="10.5">13h</text>
-                <text x="175" y="118" fill="#CBD5E1" font-size="10.5">14h</text>
-                <text x="246" y="118" fill="#CBD5E1" font-size="10.5">15h</text>
-                <text x="310" y="118" fill="#CBD5E1" font-size="10.5">16h</text>
-            </svg>
-        </div>
-        """
-    )
 
 
 # ==============================================================================
@@ -2213,17 +2305,13 @@ def render_bottom_statistics_and_history() -> None:
     with b2:
         recent_rows: List[str] = []
         for r in db_summary["real_records"][:2]:
-            lbl_u = str(r.get("label", "FIRE")).upper()
-            ts_short = str(r.get("timestamp", "")).split(" ")[-1] if r.get("timestamp") else "14:28:15"
-            c_id = str(r.get("camera_name", "CAM-02")).split()[0]
-            conf_r = round(float(r.get("confidence", 0.987)) * 100, 1)
-            is_ack = (r.get("status") == "ACKNOWLEDGED")
-            type_html = '<span style="color:#EF4444; font-weight:700;">🔥 Cháy</span>' if "SMOKE" not in lbl_u else '<span style="color:#F59E0B; font-weight:700;">💨 Khói</span>'
-            stt_badge = (
-                '<span style="background:#263042; color:#E2E8F0; padding:2px 9px; border-radius:4px; font-size:11px; font-weight:700;">Đã xác nhận</span>'
-                if is_ack
-                else '<span style="background:rgba(234,179,8,0.22); border:1px solid rgba(234,179,8,0.50); color:#FDE047; padding:2px 9px; border-radius:4px; font-size:11px; font-weight:700;">Chờ xử lý</span>'
-            )
+            ts_short = str(r.get("timestamp") or "—").split(" ")[-1]
+            c_id = str(r.get("camera_name") or "Không rõ camera").split()[0]
+            confidence = r.get("confidence")
+            conf_label = f"{round(float(confidence) * 100, 1):.1f}%" if confidence is not None else "—"
+            type_label, proc_label, proc_color = classify_event_category(r)
+            type_html = f'<span style="color:{proc_color}; font-weight:700;">{esc(type_label)}</span>'
+            stt_badge = f'<span style="color:{proc_color}; font-weight:700;">{esc(proc_label)}</span>'
             recent_rows.append(
                 f"""
                 <tr style="border-bottom:1px solid #1E2534;">
@@ -2231,42 +2319,19 @@ def render_bottom_statistics_and_history() -> None:
                     <td style="padding:7px 6px; font-weight:700; color:#F8FAFC;">{esc(c_id)}</td>
                     <td style="padding:7px 6px;">{type_html}</td>
                     <td style="padding:7px 6px;">{stt_badge}</td>
-                    <td style="padding:7px 6px; font-family:monospace; text-align:right; color:#F8FAFC; font-weight:700;">{conf_r:.1f}%</td>
+                    <td style="padding:7px 6px; font-family:monospace; text-align:right; color:#F1F5F9; font-weight:700;">{conf_label}</td>
                 </tr>
                 """
             )
 
         if not recent_rows:
-            recent_rows.append(
-                """
-                <tr style="border-bottom:1px solid #1E2534;">
-                    <td style="padding:7px 6px; font-family:monospace; color:#CBD5E1;">14:28:15</td>
-                    <td style="padding:7px 6px; font-weight:700; color:#F8FAFC;">CAM-02</td>
-                    <td style="padding:7px 6px;"><span style="color:#EF4444; font-weight:700;">🔥 Cháy</span></td>
-                    <td style="padding:7px 6px;"><span style="background:rgba(234,179,8,0.22); border:1px solid rgba(234,179,8,0.50); color:#FDE047; padding:2px 9px; border-radius:4px; font-size:11px; font-weight:700;">Chờ xử lý</span></td>
-                    <td style="padding:7px 6px; font-family:monospace; text-align:right; color:#F8FAFC; font-weight:700;">98.7%</td>
-                </tr>
-                <tr style="border-bottom:1px solid #1E2534;">
-                    <td style="padding:7px 6px; font-family:monospace; color:#CBD5E1;">14:27:32</td>
-                    <td style="padding:7px 6px; font-weight:700; color:#F8FAFC;">CAM-03</td>
-                    <td style="padding:7px 6px;"><span style="color:#F59E0B; font-weight:700;">💨 Khói</span></td>
-                    <td style="padding:7px 6px;"><span style="background:#263042; color:#E2E8F0; padding:2px 9px; border-radius:4px; font-size:11px; font-weight:700;">Đã xác nhận</span></td>
-                    <td style="padding:7px 6px; font-family:monospace; text-align:right; color:#F8FAFC; font-weight:700;">88.2%</td>
-                </tr>
-                """
+            render_html(
+                '<div class="fw-panel-card" style="padding:22px 16px; text-align:center;">'
+                '<div style="font-weight:700; color:#F1F5F9;">Chưa có sự kiện</div>'
+                '<div style="font-size:13px; color:#94A3B8; margin-top:4px;">'
+                'Lịch sử sẽ xuất hiện tại đây sau khi hệ thống ghi nhận sự kiện.</div></div>'
             )
-
-        recent_rows.append(
-            """
-            <tr>
-                <td style="padding:7px 6px; font-family:monospace; color:#CBD5E1;">14:26:50</td>
-                <td style="padding:7px 6px; font-weight:700; color:#F8FAFC;">CAM-01</td>
-                <td style="padding:7px 6px;"><span style="color:#10B981; font-weight:700;">✔ Bình thường</span></td>
-                <td style="padding:7px 6px; color:#64748B;">-</td>
-                <td style="padding:7px 6px; text-align:right; color:#64748B;">-</td>
-            </tr>
-            """
-        )
+            return
 
         render_html(
             f"""
@@ -2297,7 +2362,18 @@ def render_bottom_statistics_and_history() -> None:
 # ==============================================================================
 # 16. ĐIỀU PHỐI NỘI DUNG THEO 6 TRANG SIDEBAR (CHUẨN BỐ CỤC 2 CỘT TRÁI-PHẢI V2)
 # ==============================================================================
-_live_interval = max(0.45, float(cam_system.settings.ui_refresh_sec)) if st.session_state.is_monitoring else None
+_selected_camera_count = len(st.session_state.selected_cams)
+_refresh_floor = {1: 0.15, 2: 0.20, 4: 0.30, 6: 0.40, 9: 0.50}.get(
+    _selected_camera_count, 0.20
+)
+_selected_camera_running = any(
+    cid in cam_system.workers and cam_system.workers[cid].running
+    for cid in st.session_state.selected_cams
+)
+_live_interval = (
+    max(_refresh_floor, float(cam_system.settings.ui_refresh_sec))
+    if _selected_camera_running else None
+)
 
 
 @st.fragment(run_every=_live_interval)
@@ -2323,19 +2399,11 @@ def render_live_command_workspace() -> None:
     stopped_cams_count = max(0, total_configured_cams - running_cams_count)
     unack_count = db_summary["unconfirmed"]
 
-    telegram_state = _telegram_summary(cam_system)
-    st.caption(
-        f"Telegram: **{TELEGRAM_STATE_LABELS_VI.get(telegram_state['state'], telegram_state['state'])}** · "
-        f"{telegram_state['pending']} đang chờ · {telegram_state['failed']} thất bại/chưa rõ · "
-        f"Telegram xác nhận gần nhất: {telegram_state['last_ack'] or 'chưa có'}"
-    )
-
-    ws_left, ws_right = st.columns([2.42, 1.05])
+    ws_left, ws_right = st.columns([2.12, 1.2])
     with ws_left:
-        render_left_filter_bar()
+        with st.expander("Chọn camera hoặc video thử nghiệm", expanded=False):
+            render_left_filter_bar()
         render_live_camera_feed_fragment()
-        if st.session_state.nav_page == "Tổng quan":
-            render_bottom_statistics_and_history()
     with ws_right:
         render_right_start_stop_bar()
         render_live_alert_panel_fragment()
@@ -2631,6 +2699,7 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                             st.session_state.selected_cams.remove(cid)
                         if cid in st.session_state.pending_cams:
                             st.session_state.pending_cams.remove(cid)
+                        st.session_state["_sync_camera_selector"] = True
                         st.success(f"Đã xóa camera {cid}.")
                         st.rerun()
 
@@ -2638,12 +2707,12 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
     render_html('<div class="fw-panel-title"><span>⚙️ Cấu hình Mô hình Phát hiện YOLO, Chuỗi Thời gian K/N & Hiệu năng</span></div>')
     cfg_c1, cfg_c2 = st.columns(2)
     with cfg_c1:
-        model_choices = get_available_model_choices()
         active_path = (
             getattr(cam_system.detector, "resolved_path", None)
             or getattr(cam_system.detector, "requested_path", None)
             or cam_system.settings.model_path
         )
+        model_choices = get_available_model_choices(active_path)
         curr_model_path = str(Path(active_path).resolve()) if active_path else ""
         choice_labels = list(model_choices.keys())
         curr_idx = 0
@@ -2654,9 +2723,26 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
 
         picked_model_lbl = st.selectbox("Trọng số mô hình YOLO (Shared Detector):", choice_labels, index=curr_idx)
         target_model_path = model_choices[picked_model_lbl]
-        if str(Path(target_model_path).resolve()) != curr_model_path:
-            cam_system.switch_model(target_model_path)
-            st.rerun()
+        target_model_resolved = str(Path(target_model_path).resolve())
+        if target_model_resolved == curr_model_path:
+            st.session_state.pop("_model_switch_requested_path", None)
+        elif st.session_state.get("_model_switch_requested_path") != target_model_resolved:
+            st.session_state["_model_switch_requested_path"] = target_model_resolved
+            switch_status = cam_system.switch_model(target_model_path)
+            if switch_status.get("busy"):
+                st.session_state.pop("_model_switch_requested_path", None)
+            if switch_status.get("state") == "loading":
+                st.info("Loading model in the background. The app and cameras remain available.")
+            elif switch_status.get("busy"):
+                st.warning("Another model is loading. Select this model again when that load finishes.")
+            elif switch_status.get("state") == "error":
+                st.error(f"Model load failed: {switch_status.get('message', 'Unknown error')}")
+
+        switch_status = cam_system.get_model_switch_status()
+        if switch_status.get("state") == "loading":
+            st.info(f"Loading {Path(switch_status.get('path', '')).name}. Other features remain available.")
+        elif switch_status.get("state") == "error":
+            st.error(f"Model load failed: {switch_status.get('message', 'Unknown error')}")
 
         cam_system.settings.conf_threshold = st.slider(
             "Ngưỡng độ tin cậy nhận diện (Confidence):",
@@ -2751,7 +2837,7 @@ elif st.session_state.nav_page == "Telegram":
         if tg["service_credentials_tested"]:
             st.success("Thông tin đăng nhập dịch vụ đã được kiểm tra thành công trong phiên backend hiện tại.")
         else:
-            st.info("Cần gửi tin nhắn kiểm tra bằng thông tin đăng nhập dịch vụ trong phiên backend này trước khi dispatcher gửi cảnh báo tự động.")
+            st.info("Bấm nút cài đặt nhanh bên dưới một lần để kiểm tra Telegram và bật cảnh báo.")
     if tg["last_test"]:
         test_status, test_ack, used_service, test_error = tg["last_test"]
         if test_status == "SENDING":
@@ -2766,89 +2852,37 @@ elif st.session_state.nav_page == "Telegram":
     t2.metric("Đang chờ gửi", tg["pending"])
     t3.metric("Thất bại / chưa rõ", tg["failed"])
     t4.metric("Telegram xác nhận gần nhất", tg["last_ack"] or "Chưa có")
+    if st.session_state.get("telegram_action_flash"):
+        st.success(st.session_state.pop("telegram_action_flash"))
 
-    st.markdown("### Quyền quản trị")
-    st.session_state.setdefault("telegram_admin_authorized", False)
-    with st.form("telegram_admin_auth_form"):
-        admin_token = st.text_input("Mã truy cập quản trị API", type="password", key="telegram_admin_token")
-        auth_submit = st.form_submit_button("Mở khóa cài đặt Telegram")
-    if auth_submit:
-        expected_admin = os.getenv("FIREWATCH_API_TOKEN", "")
-        st.session_state.telegram_admin_authorized = bool(
-            expected_admin and secrets.compare_digest(admin_token, expected_admin)
-        )
-        if st.session_state.telegram_admin_authorized:
-            st.success("Đã xác thực quyền quản trị cho phiên trình duyệt này.")
-        else:
-            st.session_state.telegram_admin_authorized = False
-            st.error("Mã quản trị không hợp lệ.")
-
-    if not st.session_state.telegram_admin_authorized:
-        st.info("Nhập mã quản trị để kiểm tra gửi tin nhắn hoặc bật/tắt cảnh báo Telegram.")
+    dispatcher = cam_system.telegram_alerts
+    admin_token_configured = bool(os.getenv("FIREWATCH_API_TOKEN", ""))
+    if not admin_token_configured:
+        st.error("Chưa cấu hình mã quản trị trong .env. Thêm FIREWATCH_API_TOKEN rồi khởi động lại FireWatch.")
+    elif not tg["api_ready"]:
+        st.error("Dịch vụ chưa sẵn sàng. Khởi động lại FireWatch rồi thử lại.")
+    elif tg["missing"]:
+        st.warning("Thiếu cấu hình: " + ", ".join(tg["missing"]) + ". Cập nhật trong .env rồi khởi động lại FireWatch.")
     else:
-        dispatcher = cam_system.telegram_alerts
-        if not tg["api_ready"]:
-            st.error("Không gửi được thao tác: backend API chưa sẵn sàng.")
-        elif dispatcher.enabled:
-            if st.button("Tắt gửi cảnh báo sự kiện qua Telegram", key="telegram_disable"):
-                st.session_state.telegram_action_future = (
-                    "disable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/disable")
-                )
-        else:
-            if st.button("Bật gửi cảnh báo sự kiện qua Telegram", key="telegram_enable"):
-                st.session_state.telegram_action_future = (
-                    "enable", get_telegram_api_executor().submit(_telegram_api_request, "/api/telegram/enable")
-                )
-        action = st.session_state.get("telegram_action_future")
-        if action:
-            action_name, action_future = action
-            if action_future.done():
+        with st.container(border=True):
+            st.markdown("### Cài đặt nhanh")
+            st.caption("Bấm một lần để kiểm tra Telegram và bật gửi cảnh báo. Camera cần bật tùy chọn gửi Telegram trong phần cấu hình camera.")
+            action_cols = st.columns([2, 1])
+            if action_cols[0].button("Kiểm tra kết nối và bật cảnh báo", type="primary", key="telegram_check_enable"):
                 try:
-                    action_future.result()
-                    action_label = "đã bật" if action_name == "enable" else "đã tắt"
-                    st.success(f"Đã cập nhật cài đặt: cảnh báo Telegram {action_label}. Hệ thống vẫn tiếp tục nhận diện và lưu sự kiện.")
-                except Exception as exc:
-                    st.error(f"Không thể thay đổi cài đặt Telegram: {exc}")
-                del st.session_state.telegram_action_future
-                st.rerun()
-            else:
-                st.info("Đang cập nhật cài đặt Telegram ở chế độ nền.")
-                if st.button("Cập nhật trạng thái", key="telegram_action_refresh"):
+                    with st.spinner("Đang kiểm tra Telegram và bật cảnh báo..."):
+                        _telegram_check_and_enable()
+                    st.session_state["telegram_action_flash"] = "Telegram đã kết nối và gửi cảnh báo sự kiện đã được bật."
                     st.rerun()
-
-        st.markdown("### Gửi tin nhắn kiểm tra")
-        with st.form("telegram_test_form"):
-            test_token = st.text_input("Mã bot (để trống sẽ dùng cấu hình máy chủ)", type="password")
-            test_chat_id = st.text_input("Chat ID (để trống sẽ dùng cấu hình máy chủ)")
-            test_submit = st.form_submit_button("Gửi tin nhắn kiểm tra")
-        if test_submit:
-            payload = {key: value for key, value in {
-                "token": test_token.strip(), "chat_id": test_chat_id.strip()
-            }.items() if value}
-            st.session_state.telegram_test_future = get_telegram_api_executor().submit(
-                _telegram_api_request, "/api/telegram/test", payload
-            )
-            st.session_state.telegram_test_result = {"status": "PROCESSING", "error": None, "result": None}
-        test_future: Optional[Future] = st.session_state.get("telegram_test_future")
-        if test_future is not None:
-            if test_future.done():
+                except Exception as exc:
+                    st.error(f"Chưa bật được Telegram: {exc}")
+            if dispatcher.enabled and action_cols[1].button("Tắt cảnh báo", key="telegram_disable_simple"):
                 try:
-                    result = test_future.result()
-                    st.session_state.telegram_test_result = {"status": "DELIVERED", "error": None, "result": result}
-                    st.success(f"Telegram đã xác nhận tin nhắn kiểm tra lúc {result['acknowledged_at']}.")
-                except Exception as exc:
-                    st.session_state.telegram_test_result = {"status": "FAILED", "error": str(exc), "result": None}
-                    st.error(f"Gửi tin nhắn kiểm tra thất bại: {exc}")
-                del st.session_state.telegram_test_future
-            else:
-                st.info("Đang gửi tin nhắn kiểm tra ở chế độ nền.")
-                if st.button("Cập nhật kết quả", key="telegram_test_refresh"):
+                    _telegram_api_request("/api/telegram/disable")
+                    st.session_state["telegram_action_flash"] = "Đã tắt gửi cảnh báo Telegram."
                     st.rerun()
-        prior_test = st.session_state.get("telegram_test_result")
-        if prior_test and prior_test["status"] == "DELIVERED" and (test_future is None or not test_future.done()):
-            st.success(f"Kết quả đã lưu trong phiên: Telegram xác nhận lúc {prior_test['result']['acknowledged_at']}.")
-        elif prior_test and prior_test["status"] == "FAILED" and (test_future is None or not test_future.done()):
-            st.error(f"Kết quả đã lưu trong phiên: {prior_test['error']}")
+                except Exception as exc:
+                    st.error(f"Không tắt được Telegram: {exc}")
 
     st.markdown("### Lịch sử gửi cảnh báo")
     status_filter = st.selectbox(
