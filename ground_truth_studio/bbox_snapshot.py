@@ -10,6 +10,7 @@ from contextlib import closing
 from pathlib import Path
 
 from ground_truth_studio.integrity_service import sha256
+from ground_truth_studio.bbox_resolution import apply_resolutions
 
 
 def scan_reviews(private: Path, *, original_private: Path | None = None) -> tuple[list[dict],list[dict]]:
@@ -48,7 +49,8 @@ def scan_reviews(private: Path, *, original_private: Path | None = None) -> tupl
             issues.append(issue)
             logging.getLogger(__name__).error('BBox integrity quarantine version=%s path=%s error=%s',folder.name,path,error)
     # A corrupt newer decision must not silently resurrect an older approval.
-    tainted={i['untrusted_claimed_image_sha256'] for i in issues if i['untrusted_claimed_image_sha256']}
+    issues=apply_resolutions(private,records,issues)
+    tainted={i['untrusted_claimed_image_sha256'] for i in issues if i['untrusted_claimed_image_sha256'] and i['status']=='INTEGRITY_QUARANTINED'}
     records=[r for r in records if r['image_sha256'] not in tainted]
     return sorted(records,key=lambda r:(r['reviewed_at_utc'],r['version_id'])),issues
 
@@ -60,7 +62,7 @@ def committed_reviews(private: Path, *, original_private: Path | None = None) ->
     Existing versions are validated on every read, including original label bytes.
     """
     checked,issues=scan_reviews(private,original_private=original_private)
-    blocking=[i for i in issues if i['error']!='MISSING_CHECKSUM_OR_INFLIGHT_SUBMISSION']
+    blocking=[i for i in issues if i['status']=='INTEGRITY_QUARANTINED' and i['error']!='MISSING_CHECKSUM_OR_INFLIGHT_SUBMISSION']
     if blocking:
         raise ValueError(blocking[0]['error']+'; version_id='+blocking[0]['version_id'])
     return checked
@@ -86,10 +88,9 @@ def snapshot_studio(private: Path, target: Path) -> dict:
                     raise ValueError('SQLITE_BACKUP_INTEGRITY_FAILURE')
     records = committed_reviews(private)
     checksums = {}
-    for row in records:
-        folder = private / 'bbox_qa/versions' / row['version_id']
-        for name in ('review.json', 'review.sha256', 'labels.txt'):
-            src = folder / name
+    paths=list((private/'bbox_qa/versions').glob('*/*'))+list((private/'bbox_qa/resolutions').glob('*/*'))
+    for src in paths:
+        if src.is_file():
             relative = src.relative_to(private)
             dst = target / relative
             expected = sha256(src)

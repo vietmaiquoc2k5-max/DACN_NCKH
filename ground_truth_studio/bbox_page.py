@@ -20,10 +20,15 @@ def bbox_page(repository, token: str) -> None:
     service = BBoxReviewService(repository)
     history = {r['image_sha256']:r for r in service.history(token)}
     issues=getattr(service,'integrity_issues',[])
+    resolution_mode=False
+    affected={i['untrusted_claimed_image_sha256'] for i in issues if i.get('untrusted_claimed_image_sha256') in service.queue}
     if issues:
         st.warning(f'{len(issues)} version đang INTEGRITY_QUARANTINED; chưa tính là approval và export bị chặn. Các review hợp lệ khác vẫn dùng được.')
         with st.expander('Chi tiết integrity quarantine'):
             st.dataframe([{'version_id':i['version_id'],'error':i['error'],'path':i['path']} for i in issues])
+        resolution_mode=st.checkbox('Xác nhận lại các ảnh INTEGRITY_QUARANTINED',key='bbox_resolution_mode')
+        if resolution_mode:
+            st.info('Xem lại ảnh và bbox từ nguồn đã kiểm hash. Quyết định mới tạo resolution receipt; không khôi phục tính xác thực của checksum cũ.')
     st.subheader('Human bbox QA · 0 SMOKE / 1 FIRE')
     st.caption('Phê duyệt bbox riêng với event GT; chưa được phép training khi lineage chưa xác minh.')
     st.write({'Ảnh trong queue đã loại trùng':len(service.queue),'Đã xử lý bởi ngài':len(history),
@@ -40,6 +45,9 @@ def bbox_page(repository, token: str) -> None:
     filtered = filter_queue(rows, query=query, priority=priority, empty=empty,
         suspicious=suspicious or view=='Suspicious empty labels', status=status,
         investigation=view=='Needs data investigation')
+    if resolution_mode:
+        filtered=[r for r in rows if r['image_sha256'] in affected]
+        st.caption(f'Có {len(filtered)} ảnh cần xác nhận lại; view này giữ đúng scope quarantine, không áp dụng các filter bên trên.')
     st.caption(f"Nhóm nghi vấn từ manifest: {sum(r['suspicious_negative'] for r in rows)} · Label hiện còn rỗng trong nhóm: {sum(r['suspicious_negative'] and r['empty_label'] for r in rows)} · Kết quả bộ lọc: {len(filtered)} / {len(rows)}")
     size = st.selectbox('Ảnh mỗi trang', [25,50,100], key='bbox_page_size')
     _, page, pages = paginate(filtered, int(st.session_state.get('bbox_page_number',1)), size)
@@ -91,11 +99,18 @@ def bbox_page(repository, token: str) -> None:
         evidence = st.text_input('Bằng chứng / ghi chú quyết định',key='evidence_'+identity)
         attest = st.checkbox('Tôi đã xem toàn bộ ảnh và kiểm từng bbox',key='attest_'+identity)
         negative = st.checkbox('Tôi xác nhận ảnh thực sự âm tính (không có box)',key='negative_'+identity)
+        reconfirm=False
+        if resolution_mode:
+            st.write('Affected version IDs:',[i['version_id'] for i in issues if i['untrusted_claimed_image_sha256']==identity])
+            reconfirm=st.checkbox('Tôi xác nhận lại ảnh này để giải quyết các version lỗi đã liệt kê; giữ nguyên bản lỗi',key='reconfirm_'+identity)
         left,right = st.columns(2)
         decision = 'APPROVE' if left.button('Phê duyệt phiên bản bbox',type='primary') else 'REJECT' if right.button('Từ chối ảnh/nhãn') else None
         if decision:
             try:
-                service.submit(token,identity,current,decision,evidence,attest,negative)
+                if resolution_mode:
+                    service.resolve(token,identity,current,decision,evidence,attest,negative,reconfirm)
+                else:
+                    service.submit(token,identity,current,decision,evidence,attest,negative)
             except (ValueError, OSError) as error:
                 st.error(f'Chưa lưu: {error}')
             else:

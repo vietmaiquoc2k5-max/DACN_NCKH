@@ -15,6 +15,7 @@ from ground_truth_studio.models import utc_now
 from ground_truth_studio.bbox_snapshot import committed_reviews, scan_reviews
 import os
 from ground_truth_studio.bbox_export_adapter import export_approvals
+from ground_truth_studio.bbox_resolution import fingerprints, publish_resolution
 
 QUEUE = 'runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2'
 
@@ -86,7 +87,9 @@ class BBoxReviewService:
     def history(self, token: str) -> list[dict]:
         """Only expose the current reviewer's immutable annotation versions."""
         actor = self.repository.actor(token)
-        records,self.integrity_issues=scan_reviews(self.repository.settings.private)
+        records,issues=scan_reviews(self.repository.settings.private)
+        self.integrity_issues=[i for i in issues if i['status']=='INTEGRITY_QUARANTINED']
+        self.resolved_integrity_issues=[i for i in issues if i['status']!='INTEGRITY_QUARANTINED']
         return [row for row in records
                 if row['reviewer_id'] == actor['id']]
 
@@ -149,3 +152,17 @@ class BBoxReviewService:
         export_approvals(self.repo,self.history(token),self.queue,folder,
                          lineage_dir=lineage if lineage.is_dir() else None)
         return folder
+
+    def resolve(self, token: str, identity: str, boxes: list[dict], decision: str,
+                evidence: str, attest: bool, negative: bool, reconfirm: bool) -> dict:
+        """Reconfirm the affected image through a new authenticated human decision."""
+        self.repository.actor(token,{'annotator_01','annotator_02','adjudicator'})
+        if reconfirm is not True:raise ValueError('EXPLICIT_RECONFIRMATION_REQUIRED')
+        _,issues=scan_reviews(self.repository.settings.private)
+        affected={i['version_id']:fingerprints(self.private/'versions'/i['version_id']) for i in issues
+                  if i['status']=='INTEGRITY_QUARANTINED' and i['untrusted_claimed_image_sha256']==identity}
+        if not affected:raise ValueError('NO_UNRESOLVED_VERSIONS_FOR_IMAGE')
+        review=self.submit(token,identity,boxes,decision,evidence,attest,negative)
+        if any(fingerprints(self.private/'versions'/v)!=binding for v,binding in affected.items()):
+            raise ValueError('FORENSIC_BYTES_CHANGED_DURING_RESOLUTION')
+        return publish_resolution(self.repository.settings.private,review,affected,evidence)
