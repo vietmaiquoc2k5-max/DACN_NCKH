@@ -867,6 +867,9 @@ class CameraStreamWorker:
                     is_demo=0,
                     event_confirmed_at=utc_now(),
                 )
+                if self.telegram_alerts is not None and self.config.telegram_enabled:
+                    saved_event["camera_display_name"] = self.config.name
+                    self.telegram_alerts.enqueue(saved_event)
                 if self.notification_manager is not None:
                     saved_event["camera_display_name"] = self.config.name
                     self.notification_manager.enqueue_event(saved_event, self.config.cam_id)

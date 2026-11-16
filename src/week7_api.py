@@ -587,6 +587,23 @@ def telegram_test(payload: Any = Body(default=None), manager: MultiCameraManager
             "message": "Telegram acknowledged the labeled test message; it is not a fire event."}
 
 
+@app.post("/api/telegram/connect")
+def telegram_connect(payload: TelegramTestInput, manager: MultiCameraManager = Depends(_manager),
+                     _: None = Depends(_authorized), __: None = Depends(_same_dashboard_instance)):
+    """Test the entered or service credentials, then enable Telegram delivery."""
+    result = telegram_test(payload, manager=manager, _=None, __=None)
+    dispatcher = manager.telegram_alerts
+    token = (payload.token or dispatcher.token).strip()
+    chat_id = (payload.chat_id or dispatcher.chat_id).strip()
+    if not dispatcher.service_credentials_tested:
+        dispatcher.set_runtime_credentials(token, chat_id)
+    try:
+        dispatcher.set_enabled(True)
+    except (ValueError, RuntimeError) as exc:
+        raise HTTPException(409, detail={"code": "TELEGRAM_ENABLE_FAILED", "message": str(exc)}) from None
+    return {"enabled": True, "test_id": result["test_id"], "acknowledged_at": result["acknowledged_at"]}
+
+
 @app.post("/api/telegram/enable")
 def telegram_enable(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized),
                     __: None = Depends(_same_dashboard_instance)):

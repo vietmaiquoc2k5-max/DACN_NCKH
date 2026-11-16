@@ -240,6 +240,16 @@ class TelegramAlertDispatcher:
         else:
             self.wakeup.set()
 
+    def set_runtime_credentials(self, token: str, chat_id: str) -> None:
+        """Keep explicitly tested credentials in process memory, never SQLite."""
+        token = str(token or "").strip()
+        chat_id = str(chat_id or "").strip()
+        if not token or not chat_id:
+            raise ValueError("Telegram bot token and chat ID are required")
+        self.token = token
+        self.chat_id = chat_id
+        self.service_credentials_tested = True
+
     def _recover_interrupted(self, conn: sqlite3.Connection) -> None:
         """Recover queued rows; mark interrupted network attempts as ambiguous."""
         now = utc_now()

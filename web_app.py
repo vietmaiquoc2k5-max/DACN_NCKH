@@ -1451,6 +1451,7 @@ with st.sidebar:
         "Quản lý camera và ROI",
         "Cấu hình hệ thống",
         "Web Push",
+        "Telegram",
     ]
     badge_txt = f" ({unack_count})" if unack_count > 0 else ""
     nav_labels = {
@@ -1461,6 +1462,7 @@ with st.sidebar:
         "Quản lý camera và ROI": "Quản lý camera",
         "Cấu hình hệ thống": "Cấu hình hệ thống",
         "Web Push": "Web Push notifications",
+        "Telegram": "Telegram",
     }
 
     picked_nav = st.radio(
@@ -2624,6 +2626,7 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                     final_src = st.text_input("Đường dẫn tệp Video:", value=cfg.source, key=f"ed_vid_{cid}")
 
                 ed_en = st.checkbox("Cho phép kích hoạt camera", value=cfg.enabled, key=f"ed_en_{cid}")
+                ed_telegram = st.checkbox("G\u1eedi c\u1ea3nh b\u00e1o Telegram cho camera n\u00e0y", value=cfg.telegram_enabled, key=f"ed_telegram_{cid}")
                 ed_fps = st.number_input(
                     "Inference FPS target", min_value=1, max_value=60,
                     value=int(cfg.inference_fps), key=f"ed_fps_{cid}"
@@ -2641,6 +2644,7 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                             source_reference=final_src if ed_type == "IP_CAMERA" else None,
                         )
                         cam_system.update_camera_inference_fps(cid, int(ed_fps))
+                        cam_system.set_camera_telegram_enabled(cid, ed_telegram)
                         st.success(f"Saved {cid}; camera remains disconnected until Connect.")
                         st.rerun()
                     except (ValueError, OSError) as exc:
@@ -2994,3 +2998,66 @@ elif st.session_state.nav_page == "Web Push":
         st.caption("Push service nhận yêu cầu không đồng nghĩa thiết bị đã hiển thị thông báo.")
     else:
         st.info("Chưa có thông báo Web Push.")
+
+
+elif st.session_state.nav_page == "Telegram":
+    render_html('<div class="fw-panel-title"><span>K\u1ebft n\u1ed1i Telegram</span></div>')
+    telegram = cam_system.telegram_alerts
+    tg = _telegram_summary(cam_system)
+    if not tg["api_ready"]:
+        st.error("API qu\u1ea3n tr\u1ecb ch\u01b0a s\u1eb5n s\u00e0ng.")
+    status_cols = st.columns(4)
+    status_cols[0].metric("Tr\u1ea1ng th\u00e1i", TELEGRAM_STATE_LABELS_VI.get(tg["state"], tg["state"]))
+    status_cols[1].metric("\u0110ang ch\u1edd", tg["pending"])
+    status_cols[2].metric("L\u1ed7i / ch\u01b0a r\u00f5", tg["failed"])
+    status_cols[3].metric("Telegram x\u00e1c nh\u1eadn", tg["last_ack"] or "Ch\u01b0a c\u00f3")
+
+    if not os.getenv("FIREWATCH_API_TOKEN", ""):
+        st.error("Thi\u1ebfu FIREWATCH_API_TOKEN; h\u00e3y c\u1ea5u h\u00ecnh API tr\u01b0\u1edbc khi k\u1ebft n\u1ed1i Telegram.")
+    with st.form("telegram_connect_form", clear_on_submit=True):
+        st.markdown("### Ki\u1ec3m tra v\u00e0 k\u1ebft n\u1ed1i")
+        st.caption("Nh\u1eadp bot token v\u00e0 Chat ID. Th\u00f4ng tin ch\u1ec9 gi\u1eef trong b\u1ed9 nh\u1edb backend hi\u1ec7n t\u1ea1i; c\u00f3 th\u1ec3 b\u1ecf tr\u1ed1ng n\u1ebfu \u0111\u00e3 c\u1ea5u h\u00ecnh trong service environment.")
+        token = st.text_input("Telegram bot token", type="password", autocomplete="off")
+        chat_id = st.text_input("Chat ID ho\u1eb7c @channel")
+        connect_clicked = st.form_submit_button("G\u1eedi tin ki\u1ec3m tra v\u00e0 b\u1eadt c\u1ea3nh b\u00e1o", type="primary", use_container_width=True)
+    if connect_clicked:
+        payload = {}
+        if token.strip():
+            payload["token"] = token.strip()
+        if chat_id.strip():
+            payload["chat_id"] = chat_id.strip()
+        try:
+            result = _telegram_api_request("/api/telegram/connect", payload)
+            st.success("Telegram \u0111\u00e3 nh\u1eadn tin ki\u1ec3m tra; c\u1ea3nh b\u00e1o s\u1ef1 ki\u1ec7n \u0111\u00e3 b\u1eadt.")
+            st.caption("Tin ki\u1ec3m tra: {} ? {}".format(result.get("test_id"), result.get("acknowledged_at")))
+            st.rerun()
+        except Exception as exc:
+            st.error("K\u1ebft n\u1ed1i Telegram th\u1ea5t b\u1ea1i: " + str(exc))
+
+    if telegram.enabled and st.button("T\u1eaft c\u1ea3nh b\u00e1o Telegram"):
+        try:
+            _telegram_api_request("/api/telegram/disable")
+            st.success("\u0110\u00e3 t\u1eaft Telegram.")
+            st.rerun()
+        except Exception as exc:
+            st.error("Kh\u00f4ng t\u1eaft \u0111\u01b0\u1ee3c Telegram: " + str(exc))
+
+    if not telegram.token or not telegram.chat_id:
+        st.info("Ch\u01b0a c\u00f3 th\u00f4ng tin Telegram trong service environment. Nh\u1eadp th\u00f4ng tin trong bi\u1ec3u m\u1eabu ph\u00eda tr\u00ean \u0111\u1ec3 k\u1ebft n\u1ed1i phi\u00ean hi\u1ec7n t\u1ea1i.")
+    else:
+        st.caption("Telegram credentials \u0111ang \u0111\u01b0\u1ee3c gi\u1eef trong b\u1ed9 nh\u1edb backend; gi\u00e1 tr\u1ecb b\u00ed m\u1eadt kh\u00f4ng hi\u1ec3n th\u1ecb l\u1ea1i.")
+
+    st.markdown("### L\u1ecbch s\u1eed g\u1eedi Telegram")
+    with telegram._connection() as conn:
+        rows = conn.execute("""SELECT d.event_id,e.camera_name,e.label,d.event_confirmed_at,d.queued_at,
+            d.attempt_started_at,d.telegram_acknowledged_at,d.status,d.attempt_count,d.error_category,d.error_message
+            FROM alert_deliveries d JOIN alert_logs e ON e.id=d.event_id WHERE d.channel='telegram'
+            ORDER BY d.queued_at DESC LIMIT 100""").fetchall()
+        test_rows = conn.execute("SELECT requested_at,status,acknowledged_at,error_category FROM telegram_test_deliveries ORDER BY test_id DESC LIMIT 10").fetchall()
+    if rows:
+        st.dataframe(pd.DataFrame(rows, columns=["Event ID", "Camera", "Lo\u1ea1i", "Th\u1eddi \u0111i\u1ec3m x\u00e1c nh\u1eadn", "X\u1ebfp h\u00e0ng", "B\u1eaft \u0111\u1ea7u g\u1eedi", "Telegram x\u00e1c nh\u1eadn", "Tr\u1ea1ng th\u00e1i", "S\u1ed1 l\u1ea7n th\u1eed", "M\u00e3 l\u1ed7i", "Chi ti\u1ebft l\u1ed7i"]), use_container_width=True, hide_index=True)
+    else:
+        st.info("Ch\u01b0a c\u00f3 l\u1ecbch s\u1eed g\u1eedi Telegram.")
+    if test_rows:
+        st.markdown("### Tin ki\u1ec3m tra (kh\u00f4ng ph\u1ea3i s\u1ef1 ki\u1ec7n ch\u00e1y)")
+        st.dataframe(pd.DataFrame(test_rows, columns=["Y\u00eau c\u1ea7u l\u00fac", "Tr\u1ea1ng th\u00e1i", "\u0110\u01b0\u1ee3c Telegram x\u00e1c nh\u1eadn", "M\u00e3 l\u1ed7i"]), use_container_width=True, hide_index=True)
