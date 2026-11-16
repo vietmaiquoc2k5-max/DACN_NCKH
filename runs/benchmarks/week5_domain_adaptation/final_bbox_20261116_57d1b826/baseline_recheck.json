@@ -1,0 +1,10 @@
+{
+  "old_checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  },
+  "membership_status": "BASELINE_MEMBERSHIP_NOT_VERIFIED",
+  "new_initialization_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "training_executed": false
+}

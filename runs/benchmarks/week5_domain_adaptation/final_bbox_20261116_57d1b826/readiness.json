@@ -1,0 +1,18 @@
+{
+  "BBOX_REVIEW_COMPLETE": true,
+  "BBOX_INTEGRITY_READY": true,
+  "SPLIT_READY": false,
+  "VN_BBOX_READY": false,
+  "DFIRE_READY": false,
+  "RESOURCE_PILOT_READY": false,
+  "WEEK5_TRAINING_READY": false,
+  "eligible_train": 0,
+  "eligible_validation": 0,
+  "eligible_test": 0,
+  "reason": "No authenticated opposing source/scene independence decisions; UNKNOWN remains excluded",
+  "resource_pilot": null,
+  "training_runs": 0,
+  "epochs": 0,
+  "metrics": null,
+  "parent_readiness_sha256": "efa815b86737da9f6f563ecb414f0509ca916b3bd3f4b00825955442303c1ca4"
+}

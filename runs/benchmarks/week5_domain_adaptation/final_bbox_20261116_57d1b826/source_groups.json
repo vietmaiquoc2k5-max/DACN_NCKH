@@ -1,0 +1,1442 @@
+[
+  {
+    "source_video_sha256": "01b4b563e0e50f23cb999dc7dfa587dabbd86f887b8d7159dcce49abd4eb2644",
+    "video_ids": [
+      "VN_NEG_38"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_38.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "02594a376735377d85b62b4630ee50e4bab0332a76f02dfc25d1a6693c9cc4da",
+    "video_ids": [
+      "VN_NEG_29"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_29.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "0e6a343c81cea59e54551cee61d30df97d921b9e9c98cf674db91fea57649c28",
+    "video_ids": [
+      "VN_NEG_45"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_45.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "0ee3d9e16ed5eaedbdbc47afb5f2f3d954e1c154a31ee8f96ffd7c5995655bb6",
+    "video_ids": [
+      "VN_NEG_42"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_42.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "10acf139ef0e18386cb6a006722b2739f270a297461dbc21301b11dab7e547da",
+    "video_ids": [
+      "VN_NEG_63"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_63.mp4"
+    ],
+    "reservations": {
+      "test": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "12a664e6d98107252041b5f90d3149edd3ce64983828f50823eefc556589953c",
+    "video_ids": [
+      "VN_POS_58"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_58.mp4"
+    ],
+    "reservations": {
+      "val": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+    "video_ids": [
+      "VN_POS_17"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_17.mp4"
+    ],
+    "reservations": {
+      "val": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "140ab2a2b12c5c3a5d2b0b3f8b319e88f2a0eafaea86dec110f7dae45c7c589c",
+    "video_ids": [
+      "VN_NEG_09"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_09.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+    "video_ids": [
+      "VN_NEG_41"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_41.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+    "video_ids": [
+      "VN_NEG_22"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_22.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "1a735ce99aebaba1a43bfcf13bcdce6565a1f8f5f9d473d52d1c30aadebf33af",
+    "video_ids": [
+      "VN_NEG_33"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_33.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "2052a0b8d37cb73c6941ab0eb8b52f0b75d26de99aa59c74b9caa686b8503525",
+    "video_ids": [
+      "VN_NEG_26"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_26.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "21c67fe7388f1092ac95683dc37c37ab5eded6bf2f6a337136027f3d287351c8",
+    "video_ids": [
+      "VN_NEG_34"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_34.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+    "video_ids": [
+      "VN_POS_05"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_05.mp4"
+    ],
+    "reservations": {
+      "train": 55
+    },
+    "images": 55,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "25fda9ea2b1ca96ca51b74fa34b6b75e67ffb06daa0fc0cb4f7eeb1f840e6b94",
+    "video_ids": [
+      "VN_NEG_03"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_03.mp4"
+    ],
+    "reservations": {
+      "val": 120
+    },
+    "images": 120,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "273294e4a2c3e2c8ec5902b4c5848e45b7b2a74d3f0079516ac3b68ca44fc160",
+    "video_ids": [
+      "VN_NEG_52"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_52.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "2828f46f4aca2600082509da8240e407d215f0585fe440833dc84ace831b9f1a",
+    "video_ids": [
+      "VN_NEG_32"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_32.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+    "video_ids": [
+      "VN_NEG_01"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_01.mp4"
+    ],
+    "reservations": {
+      "train": 360
+    },
+    "images": 360,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "2c1a0dababe5a006d657d40b28ddc526f0d8e21da28027f4fd944594241ffadb",
+    "video_ids": [
+      "VN_NEG_53"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_53.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "2cdac58ec5d0ff56d0ca7ee339ba8712fb476cc384c19e38569eeff853c2dac5",
+    "video_ids": [
+      "VN_NEG_27"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_27.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+    "video_ids": [
+      "VN_NEG_21"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_21.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "32e9376142620ecd21c80e501824f1d9c36542e125ca8557a64aeac4fc1f0159",
+    "video_ids": [
+      "VN_POS_36"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_36.mp4"
+    ],
+    "reservations": {
+      "train": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "346db12914a5f2d51b8681bd33fb494f6f54e84543f071ac281e674d91f65b22",
+    "video_ids": [
+      "VN_NEG_46"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_46.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "3985959d733de6041830067dcf11596c245f8b771c4c09aaf6927cf4abf43e61",
+    "video_ids": [
+      "VN_POS_29"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_29.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "39f72bdf2a04b64aa9a418cfc01572fe659ec44566268b5c97ebcf57920946b6",
+    "video_ids": [
+      "VN_NEG_20"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_20.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "3b6f4e6cda8b6662072408828e020dc9818f76f394a613e5f810b54f120e9bad",
+    "video_ids": [
+      "VN_NEG_47"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_47.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "3ed5b015393ce74d1da992dece66ce4a4b7abcd4b77ce5d3d23264794c4eacbe",
+    "video_ids": [
+      "VN_NEG_10"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_10.mp4"
+    ],
+    "reservations": {
+      "train": 10
+    },
+    "images": 10,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+    "video_ids": [
+      "VN_NEG_08"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_08.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "4ea7a95b4f1d0b2560c4c6383b547394975c2aa392ee3f770cb0be3d31961b5a",
+    "video_ids": [
+      "VN_NEG_19"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_19.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+    "video_ids": [
+      "VN_NEG_39"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_39.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "5ebaa0b8b8b0bf84c799a94717600522f1323c1b1872e8eb2f9d57fe64858922",
+    "video_ids": [
+      "VN_POS_27"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_27.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+    "video_ids": [
+      "VN_POS_07"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_07.mp4"
+    ],
+    "reservations": {
+      "val": 55
+    },
+    "images": 55,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "624ec8250d9c227580fc06ffe99ce3b21562070fe9358c47789b9fbb5028a0c1",
+    "video_ids": [
+      "VN_NEG_06"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_06.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "660a9a381609496fccc0d7da9de95b0ad7961ec2fdf329f849654120ebcebd85",
+    "video_ids": [
+      "VN_POS_25"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_25.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "670f179162bf5698244f5ba84fe56a7275114febaf6b259fcbaa23897f13b936",
+    "video_ids": [
+      "VN_POS_38"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_38.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+    "video_ids": [
+      "VN_POS_16"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_16.mp4"
+    ],
+    "reservations": {
+      "train": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "6a7dee5d035ee983aab5d811d80c5627f54785edd0e58ca006d7a327d6f6de0a",
+    "video_ids": [
+      "VN_NEG_12"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_12.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "6b9827179674cc46d3b07305d8b84c7d69e5efd5a0714d507693592d243cfc4f",
+    "video_ids": [
+      "VN_NEG_35"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_35.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "6bd343e24e0a948011b0058ac6f46b281e677268429d27f7ca8f159024da7bff",
+    "video_ids": [
+      "VN_NEG_30"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_30.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+    "video_ids": [
+      "VN_POS_13"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_13.mp4"
+    ],
+    "reservations": {
+      "train": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "712ab0b474690b047bca2bfc83c30d405f76374dd0add83259ec45145bc9f361",
+    "video_ids": [
+      "VN_NEG_50"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_50.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "77f40db8756583d9afb84a12e497499f3347cce6f0a58ac8aceb58ad5ffbc59e",
+    "video_ids": [
+      "VN_POS_42"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_42.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "79fa585cf4706209ffffd90ccf7b3ba4e54ffafe36e4af6de728ccd1533c05e6",
+    "video_ids": [
+      "VN_POS_54"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_54.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+    "video_ids": [
+      "VN_POS_02"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_02.mp4"
+    ],
+    "reservations": {
+      "train": 55
+    },
+    "images": 55,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+    "video_ids": [
+      "VN_POS_01"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_01.mp4"
+    ],
+    "reservations": {
+      "train": 55
+    },
+    "images": 55,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "837cca6113345151a14c02e69aadd795ba5f2bb9bcc9c2933f25725a272ba545",
+    "video_ids": [
+      "VN_NEG_14"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_14.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "83d329a0c51f95768fd3c7bdf6a99f87b849fdb1a9c2821ab615784b71ccbafd",
+    "video_ids": [
+      "VN_POS_35"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_35.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+    "video_ids": [
+      "VN_NEG_18"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_18.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "89ef2f108c75ffc17ad820d32429e6d2b39fb1f20fa259646b3cf9095d21befe",
+    "video_ids": [
+      "VN_POS_37"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_37.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "8ac96f57d46d64a70949ef26e2d0b4adcc563819f3a5686192f274c2931b75a9",
+    "video_ids": [
+      "VN_POS_24"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_24.mp4"
+    ],
+    "reservations": {
+      "train": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "8b0685f19c9a08610453b0451bdfa22a8a0997425db2aaf93543877cc077a0f4",
+    "video_ids": [
+      "VN_POS_48"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_48.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "8bc0fcc631d363e4cb98a2fc103989d01b9691541f9199c2ac2ac2b9025ab20c",
+    "video_ids": [
+      "VN_POS_22"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_22.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "90c0a880490c9c7219c366355ef46603c219db3c8479d070975d5029d8297339",
+    "video_ids": [
+      "VN_NEG_51"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_51.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "91fd7a4ffa55ebe25a2047df016bd2a4e71086b3fa0cc0fa2c09e6c9ca46846d",
+    "video_ids": [
+      "VN_POS_26"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_26.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "94afc57759a24ce828937e8026c6d41879234503fe0e4c18254178a8c61f5b78",
+    "video_ids": [
+      "VN_POS_57"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_57.mp4"
+    ],
+    "reservations": {
+      "val": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "955182cd25ac0ec1601d1e2a65516301d8673c0162b6702eaa8ab118e74a3e98",
+    "video_ids": [
+      "VN_NEG_40"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_40.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+    "video_ids": [
+      "VN_POS_14"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_14.mp4"
+    ],
+    "reservations": {
+      "train": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "a7806ceb28aab94423d9557582bd2cc985029641ff76758aaa67871ea981e90d",
+    "video_ids": [
+      "VN_POS_30"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_30.mp4"
+    ],
+    "reservations": {
+      "train": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "a7f2b4dab016b39e4559f997a9dfef11d5c7da5f64d283a1ebb7d6c993349894",
+    "video_ids": [
+      "VN_POS_63"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_63.mp4"
+    ],
+    "reservations": {
+      "val": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "aea3279cd69c7b7ba5ba04374208b238a80cc94ccb910149ce4bdbef0984d0eb",
+    "video_ids": [
+      "VN_POS_55"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_55.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "b0a62d91a1b6d717ef08944ae143d4426492d52b6ef7bdb868a1a0a031a2e416",
+    "video_ids": [
+      "VN_NEG_15"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_15.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+    "video_ids": [
+      "VN_NEG_43"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_43.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "b4b766383b57e8eff74b1479005650345d21978bd511d293d6cd5b134fce42b4",
+    "video_ids": [
+      "VN_NEG_31"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_31.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+    "video_ids": [
+      "VN_NEG_25"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_25.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "b6d2ad884e5a922e38735482d519442093b30f054d5325438ce51b4801303b73",
+    "video_ids": [
+      "VN_POS_62"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_62.mp4"
+    ],
+    "reservations": {
+      "val": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "beb07e78c7e95e21530f6b64018ef6538935b4d1b9709ed0bb108e558eea303f",
+    "video_ids": [
+      "VN_POS_18"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_18.mp4"
+    ],
+    "reservations": {
+      "val": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "beea573ebb7a6a856bd40d772530e9bbc5842457c4ed64695793087fed42531c",
+    "video_ids": [
+      "VN_NEG_11"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_11.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+    "video_ids": [
+      "VN_NEG_23"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_23.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+    "video_ids": [
+      "VN_NEG_13"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_13.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "c3e0cf598318cb44c9ebd86713f0ee091b4a364da37767a14d5bc486e3421c16",
+    "video_ids": [
+      "VN_POS_61"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_61.mp4"
+    ],
+    "reservations": {
+      "val": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "c59d5d40880f56d98f7fb56bae047cb992b8c502dc2570aa9189ef2e1e483842",
+    "video_ids": [
+      "VN_NEG_60"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_60.mp4"
+    ],
+    "reservations": {
+      "test": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "ce46bcb59a421bcde16c34f0601ec941da23d74327284ac9d009b94275145281",
+    "video_ids": [
+      "VN_NEG_07"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_07.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d03d94a07065ace339b25506d56a70eafadc438b717c980bdcbb164a0a9b6748",
+    "video_ids": [
+      "VN_NEG_16"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_16.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+    "video_ids": [
+      "VN_POS_12"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_12.mp4"
+    ],
+    "reservations": {
+      "train": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+    "video_ids": [
+      "VN_NEG_48"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_48.mp4"
+    ],
+    "reservations": {
+      "val": 3
+    },
+    "images": 3,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+    "video_ids": [
+      "VN_POS_11"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_11.mp4"
+    ],
+    "reservations": {
+      "train": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+    "video_ids": [
+      "VN_NEG_36"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_36.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d5d383a7ebc1305e14851ff3f99d25f93a5a5d3042f3572261b891ce105f3180",
+    "video_ids": [
+      "VN_POS_34"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_34.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d6e0b3d8661b9a8e6293798a0f8b8de767174549caf6ef582bb66b3d9f5adbc9",
+    "video_ids": [
+      "VN_NEG_24"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_24.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "d94d87467334a576b07dfbefffeeaf7db13ef76cd4a894f01d82849a99fc7e35",
+    "video_ids": [
+      "VN_NEG_37"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_37.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "db494e51f8900c965364a297142bc1745413b71319d16916af020e1c5a02d448",
+    "video_ids": [
+      "VN_NEG_28"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_28.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "e0a2599f06c7a9774a1ff391b38828e09d36464d58fe8131eb35a27cfaf75b74",
+    "video_ids": [
+      "VN_NEG_49"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_49.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "e6ba45f4ac24f0ec59d8704136ac121c2b4c71d64d7af65a45dfab76f63a47ec",
+    "video_ids": [
+      "VN_POS_46"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_46.mp4"
+    ],
+    "reservations": {
+      "train": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "ecd80364b9403b461978d44c7500ca532eb7c5dad9e68fd1d602da9480d327bd",
+    "video_ids": [
+      "VN_POS_43"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_43.mp4"
+    ],
+    "reservations": {
+      "train": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+    "video_ids": [
+      "VN_POS_08"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_08.mp4"
+    ],
+    "reservations": {
+      "val": 55
+    },
+    "images": 55,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+    "video_ids": [
+      "VN_POS_15"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_15.mp4"
+    ],
+    "reservations": {
+      "train": 30
+    },
+    "images": 30,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+    "video_ids": [
+      "VN_NEG_44"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_44.mp4"
+    ],
+    "reservations": {
+      "val": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "f8b891c85c00bbe93ab88e539b0bb7b2d173bbbd8dae04dce993fab058e3b565",
+    "video_ids": [
+      "VN_POS_59"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_59.mp4"
+    ],
+    "reservations": {
+      "val": 20
+    },
+    "images": 20,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "f8c095c7e448101b5bdde26d5d599529ff7ebaccdca80bcfde69da373e6d39f4",
+    "video_ids": [
+      "VN_POS_60"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_POS_60.mp4"
+    ],
+    "reservations": {
+      "val": 19
+    },
+    "images": 19,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  },
+  {
+    "source_video_sha256": "fcb18ca2944fba3ad266cee2cc06152abdf0be789573fe16a37f06e4d7a77f65",
+    "video_ids": [
+      "VN_NEG_17"
+    ],
+    "source_paths": [
+      "datasets/negative_videos/VN_NEG_17.mp4"
+    ],
+    "reservations": {
+      "train": 9
+    },
+    "images": 9,
+    "camera_id": null,
+    "scene_group_id": null,
+    "scene_status": "UNKNOWN_NOT_INDEPENDENT"
+  }
+]

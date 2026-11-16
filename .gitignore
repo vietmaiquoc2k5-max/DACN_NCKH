@@ -132,6 +132,7 @@ graphify-out/
 !/runs/benchmarks/week5_domain_adaptation/recovery_20261115_e733a6c3/*.json
 !/runs/benchmarks/week5_domain_adaptation/scene_20261115_72a6d1eb/*.json
 !/runs/benchmarks/week5_domain_adaptation/policy_20261116_20b050e6/*.json
+!/runs/benchmarks/week5_domain_adaptation/final_bbox_20261116_57d1b826/*.json
 !/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.json
 !/runs/benchmarks/week5_domain_adaptation/dataset_candidate_20261114_73034262/*.csv
 /runs/benchmarks/week5_domain_adaptation/run_20261114_73034262/**
