@@ -173,7 +173,8 @@ def execute(args: argparse.Namespace) -> int:
                 raise ValueError('RESUME_LOCKED_INPUTS_CHANGED')
             for name,digest in locked['staged_input_sha256'].items():
                 verify_file_hash(confined(output,name),digest)
-        device='0' if torch.cuda.is_available() else 'cpu'
+        from src.week5_comparison import training_device
+        device=training_device(torch.cuda.is_available(),protocol['cpu_fallback'])
         if budget.get('device')!=device:raise ValueError('PILOT_DEVICE_MISMATCH')
         if not args.resume:
             train=[r for r in vn if r['split']=='train']
