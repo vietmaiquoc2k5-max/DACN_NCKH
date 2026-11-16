@@ -2,6 +2,7 @@
 import base64
 import hashlib
 import json
+import uuid
 from pathlib import Path
 
 import streamlit as st
@@ -18,6 +19,34 @@ canvas = components.declare_component('human_bbox_canvas',path=str(Path(__file__
 def bbox_page(repository, token: str) -> None:
     """Display/edit real boxes, with explicit approval and separate lineage gate."""
     service = BBoxReviewService(repository)
+    bundle=service.repo/'.tools/week5_deadline_20261116'
+    if (bundle/'source_priority_report.json').is_file():
+        with st.expander('Week 5 · nhập quyết định source/scene đã review'):
+            actor=repository.actor(token,{'annotator_01','annotator_02','adjudicator'})
+            st.caption('Reviewer ID: '+actor['id']+' · Xem human_scene_review.html trong bundle deadline, rồi upload JSON. Không mở training tự động.')
+            uploaded=st.file_uploader('Scene decision batch JSON',type=['json'],key='scene_batch')
+            attest_scene=st.checkbox('Tôi đã kiểm chứng source/camera/context và chịu trách nhiệm các quyết định này',key='scene_attest')
+            if st.button('Kiểm chứng evidence và tính lại subset',key='scene_import'):
+                if not uploaded or not attest_scene:
+                    st.error('Cần file quyết định và xác nhận của reviewer.')
+                else:
+                    try:
+                        from scripts.prepare_week5_deadline import advance
+                        from ground_truth_studio.integrity_service import sha256
+                        existing={}
+                        for path in (bundle/'decision_batches').glob('*/scene_decisions.json'):
+                            receipt=json.loads(path.with_name('decision_receipt.json').read_text(encoding='utf-8'))
+                            if receipt['scope_sha256']!=sha256(bundle/'source_priority_report.json'):raise ValueError('OLD_SCENE_CONTEXT_MISMATCH')
+                            if sha256(path)!=receipt['batch_sha256']:raise ValueError('OLD_SCENE_BATCH_HASH_MISMATCH')
+                            for d in json.loads(path.read_text(encoding='utf-8')):
+                                key=tuple(sorted(d['member_sha256']))
+                                if key in existing and existing[key]!=d:raise ValueError('CONFLICTING_STORED_DECISIONS')
+                                existing[key]=d
+                        result=advance(bundle,json.loads(uploaded.getvalue().decode('utf-8')),actor,
+                                       bundle/'decision_batches'/str(uuid.uuid4()),list(existing.values()))
+                        st.success(f"Subset candidate: train={result['train_count']}, val={result['val_count']}. Pilot/research/D-Fire gates vẫn kiểm riêng.")
+                    except (ValueError,KeyError,TypeError,OSError,PermissionError) as error:
+                        st.error(f'Không import: {error}')
     history = {r['image_sha256']:r for r in service.history(token)}
     issues=getattr(service,'integrity_issues',[])
     resolution_mode=False
