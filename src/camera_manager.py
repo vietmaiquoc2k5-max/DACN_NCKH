@@ -45,6 +45,7 @@ from src.temporal_features import TemporalFeatureExtractor
 from src.database import EventDatabase
 from alert_manager import AlertManager
 from src.telegram_alerts import TelegramAlertDispatcher, utc_now
+from src.notifications import NotificationManager
 
 LOGGER = logging.getLogger(__name__)
 
@@ -329,11 +330,13 @@ class CameraStreamWorker:
         settings: SystemSettings,
         log_callback=None,
         telegram_alerts: Optional[TelegramAlertDispatcher] = None,
+        notification_manager: Optional[NotificationManager] = None,
     ):
         self.config = config
         self.detector = detector
         self.event_db = event_db
         self.telegram_alerts = telegram_alerts
+        self.notification_manager = notification_manager
         self.settings = settings
         self.log_callback = log_callback
 
@@ -864,9 +867,9 @@ class CameraStreamWorker:
                     is_demo=0,
                     event_confirmed_at=utc_now(),
                 )
-                if self.telegram_alerts is not None and self.config.telegram_enabled:
+                if self.notification_manager is not None:
                     saved_event["camera_display_name"] = self.config.name
-                    self.telegram_alerts.enqueue(saved_event)
+                    self.notification_manager.enqueue_event(saved_event, self.config.cam_id)
                 if not self.settings.mute_audio and self.config.cam_id not in self.event_db.alert_manager.acknowledged_cameras:
                     self.event_db.alert_manager.play_alarm(camera_name=self.config.cam_id)
                 self._log(
@@ -1204,6 +1207,7 @@ class MultiCameraManager:
         self.alert_manager = AlertManager(db_path=db_path)
         self.event_db = EventDatabase(alert_manager=self.alert_manager, db_path=db_path)
         self.telegram_alerts = TelegramAlertDispatcher(db_path=db_path)
+        self.notification_manager = NotificationManager(db_path=db_path)
         self.detector = detector or SharedFireSmokeDetector(
             model_path=self.settings.model_path,
             conf_threshold=self.settings.conf_threshold,
@@ -1230,6 +1234,7 @@ class MultiCameraManager:
                 settings=self.settings,
                 log_callback=self.add_log,
                 telegram_alerts=self.telegram_alerts,
+                notification_manager=self.notification_manager,
             )
 
         self.add_log("Khởi tạo trung tâm điều hành 9 Camera (3x3 Grid) thành công.")
@@ -1698,6 +1703,7 @@ class MultiCameraManager:
             settings=self.settings,
             log_callback=self.add_log,
             telegram_alerts=self.telegram_alerts,
+            notification_manager=self.notification_manager,
         )
         self.workers[cam_id] = worker
         self._persist_camera_config(cfg)

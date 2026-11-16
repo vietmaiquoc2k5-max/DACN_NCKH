@@ -28,6 +28,7 @@ from pydantic import BaseModel, Field
 from src.camera_manager import MultiCameraManager
 from src.config import PROJECT_ROOT, mask_rtsp_credentials
 from src.telegram_alerts import TelegramTestError, send_test_message
+from src.notifications import CameraLocation
 
 
 class CameraInput(BaseModel):
@@ -51,6 +52,19 @@ class TelegramTestInput(BaseModel):
     # cannot echo a rejected secret back to the caller.
     token: Optional[str] = None
     chat_id: Optional[str] = None
+
+
+class PushSubscriptionInput(BaseModel):
+    endpoint: str
+    keys: dict[str, str]
+
+
+class CameraLocationInput(BaseModel):
+    location_name: str = Field(default="", max_length=200)
+    address: str = Field(default="", max_length=500)
+    latitude: float
+    longitude: float
+    location_verified: bool = False
 
 
 def _manager(request: Request) -> MultiCameraManager:
@@ -204,6 +218,7 @@ async def _lifespan(application: FastAPI):
         if owns_manager:
             manager.stop_monitoring()
             manager.telegram_alerts.close()
+            manager.notification_manager.close()
         application.state.manager = None
 
 
@@ -633,6 +648,122 @@ def alert_deliveries(limit: int = Query(100, ge=1, le=1000), manager: MultiCamer
                "attempt_started_at", "telegram_acknowledged_at", "next_attempt_at", "attempt_count",
                "error_category", "error_message")
     return [dict(zip(columns, row)) for row in rows]
+
+
+@app.get("/service-worker.js")
+def service_worker():
+    """Serve the worker at API origin root, its only valid service-worker scope."""
+    from fastapi.responses import Response
+    script = '''self.addEventListener("push", event => { let data = {}; try { data = event.data.json(); } catch (_) {} const loc = data.location || {}; const title = `${data.type || "ALERT"} · ${data.camera_name || "FireWatch"}`; const body = `Event ${data.event_id} · ${data.confirmed_at || ""} · ${loc.location_name || loc.address || "Location not set"}`; event.waitUntil(self.registration.showNotification(title, {body, data: {url: loc.maps_url || "/"}, tag: `firewatch-${data.event_id}`})); }); self.addEventListener("notificationclick", event => { event.notification.close(); const url = event.notification.data && event.notification.data.url || "/"; event.waitUntil(clients.openWindow(url)); });'''
+    return Response(script, media_type="application/javascript", headers={"Service-Worker-Allowed": "/", "Cache-Control": "no-cache"})
+
+
+@app.get("/notifications/subscribe")
+def push_subscription_page():
+    from fastapi.responses import HTMLResponse
+    public_key = os.getenv("FIREWATCH_VAPID_PUBLIC_KEY", "")
+    page = '''<!doctype html><meta name="viewport" content="width=device-width"><title>FireWatch Web Push</title><h1>FireWatch Web Push</h1><p id="state">Nhấn nút để trình duyệt hỏi quyền nhận thông báo.</p><button id="subscribe">Đăng ký thiết bị này</button><button id="remove">Hủy đăng ký</button><script>
+const key = "''' + public_key + '''"; const state = document.querySelector('#state');
+function decode(s){const p='='.repeat((4-s.length%4)%4);return Uint8Array.from(atob((s+p).replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));}
+document.querySelector('#subscribe').onclick=async()=>{try{if(!window.isSecureContext||!('serviceWorker' in navigator)||!('PushManager' in window))throw Error('Cần HTTPS và trình duyệt hỗ trợ Web Push'); if(!key)throw Error('Backend chưa cấu hình VAPID public key'); const permission=await Notification.requestPermission();if(permission!=='granted')throw Error('Bạn chưa cấp quyền thông báo');const reg=await navigator.serviceWorker.register('/service-worker.js',{scope:'/'});const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:decode(key)});const r=await fetch('/api/notifications/browser-subscriptions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(sub)});if(!r.ok)throw Error('Backend từ chối subscription ('+r.status+')');state.textContent='Thiết bị đã đăng ký.';}catch(e){state.textContent=e.message;}};
+document.querySelector('#remove').onclick=async()=>{try{const reg=await navigator.serviceWorker.getRegistration('/');const sub=reg&&await reg.pushManager.getSubscription();if(sub){await fetch('/api/notifications/browser-subscriptions',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint})});await sub.unsubscribe();}state.textContent='Đã hủy đăng ký thiết bị.';}catch(e){state.textContent=e.message;}};
+</script>'''
+    return HTMLResponse(page, headers={"Cache-Control": "no-store", "Content-Security-Policy": "default-src 'self'; script-src 'unsafe-inline'; connect-src 'self'"})
+
+
+def _push_origin_allowed(request: Request):
+    expected = os.getenv("FIREWATCH_PUSH_PUBLIC_ORIGIN", "").rstrip("/")
+    supplied = (request.headers.get("origin") or "").rstrip("/")
+    if not expected or not supplied or not secrets.compare_digest(expected, supplied):
+        raise HTTPException(403, detail={"code": "PUSH_ORIGIN_REJECTED", "message": "Configure FIREWATCH_PUSH_PUBLIC_ORIGIN and use the subscription page at that origin"})
+
+
+@app.post("/api/notifications/browser-subscriptions", status_code=201)
+def browser_push_subscribe(payload: PushSubscriptionInput, request: Request, manager: MultiCameraManager = Depends(_manager)):
+    _push_origin_allowed(request)
+    if not manager.notification_manager.webpush.configured:
+        raise HTTPException(503, detail={"code": "VAPID_NOT_CONFIGURED", "message": "Web Push VAPID keys are not configured"})
+    try:
+        sid = manager.notification_manager.queue.subscribe(payload.dict())
+    except ValueError as exc:
+        raise HTTPException(422, detail={"code": "INVALID_SUBSCRIPTION", "message": str(exc)})
+    return {"subscription_id": sid, "stored": True}
+
+
+@app.delete("/api/notifications/browser-subscriptions")
+def browser_push_unsubscribe(request: Request, payload: dict = Body(...),
+                             manager: MultiCameraManager = Depends(_manager)):
+    _push_origin_allowed(request)
+    endpoint = payload.get("endpoint") if isinstance(payload, dict) else None
+    try:
+        manager.notification_manager.queue.validate_subscription({"endpoint": endpoint, "keys": {"p256dh": "x", "auth": "x"}})
+    except ValueError as exc:
+        raise HTTPException(422, detail={"code": "INVALID_SUBSCRIPTION", "message": str(exc)})
+    manager.notification_manager.queue.unsubscribe(endpoint)
+    return {"removed": True}
+
+
+@app.get("/api/notifications/status")
+def notification_status(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    with manager.notification_manager.queue.connect() as conn:
+        count = conn.execute("SELECT COUNT(*) FROM push_subscriptions WHERE active=1").fetchone()[0]
+    notifier = manager.notification_manager.webpush
+    return {"enabled": manager.notification_manager.enabled, "vapid_configured": notifier.configured,
+            "public_key": notifier.public_key if notifier.configured else None, "active_subscriptions": count,
+            "service_worker_url": "/service-worker.js", "secure_context_required": True}
+
+
+@app.post("/api/notifications/subscriptions", status_code=201)
+def add_push_subscription(payload: PushSubscriptionInput, manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    try:
+        sid = manager.notification_manager.queue.subscribe(payload.dict())
+    except ValueError as exc:
+        raise HTTPException(422, detail={"code": "INVALID_SUBSCRIPTION", "message": str(exc)})
+    return {"subscription_id": sid, "stored": True}
+
+
+@app.delete("/api/notifications/subscriptions")
+def remove_push_subscription(payload: dict = Body(...), manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    endpoint = payload.get("endpoint") if isinstance(payload, dict) else None
+    try:
+        manager.notification_manager.queue.validate_subscription({"endpoint": endpoint, "keys": {"p256dh": "x", "auth": "x"}})
+    except ValueError as exc:
+        raise HTTPException(422, detail={"code": "INVALID_SUBSCRIPTION", "message": str(exc)})
+    manager.notification_manager.queue.unsubscribe(endpoint)
+    return {"removed": True}
+
+
+@app.get("/api/cameras/{camera_id}/location")
+def get_camera_location(camera_id: str, manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    return next((loc for loc in manager.notification_manager.queue.locations() if loc["camera_id"] == camera_id), None)
+
+
+@app.put("/api/cameras/{camera_id}/location")
+def set_camera_location(camera_id: str, payload: CameraLocationInput, manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    if camera_id not in manager.workers:
+        raise HTTPException(404, detail={"code": "CAMERA_NOT_FOUND", "message": "Unknown camera id"})
+    try:
+        location = CameraLocation(camera_id, payload.location_name, payload.address, payload.latitude,
+                                  payload.longitude, payload.location_verified)
+    except ValueError as exc:
+        raise HTTPException(422, detail={"code": "INVALID_LOCATION", "message": str(exc)})
+    manager.notification_manager.queue.set_location(location)
+    return {"camera_id": camera_id, "location_name": location.location_name, "address": location.address,
+            "latitude": location.latitude, "longitude": location.longitude,
+            "location_verified": location.location_verified, "maps_url": location.maps_url}
+
+
+@app.get("/api/notifications/history")
+def notification_history(limit: int = Query(100, ge=1, le=1000), manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    return manager.notification_manager.queue.history(limit)
+
+
+@app.post("/api/notifications/test")
+def notification_test(manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
+    try:
+        return manager.notification_manager.send_test()
+    except ValueError as exc:
+        raise HTTPException(409, detail={"code": "PUSH_TEST_UNAVAILABLE", "message": str(exc)})
 
 
 @app.websocket("/ws/cameras")

@@ -1408,7 +1408,7 @@ actual_latency_ms = (
     if running_cams_count > 0
     else 0.0
 )
-telegram_header_state = _telegram_summary(cam_system)
+webpush_header_enabled = cam_system.notification_manager.enabled and cam_system.notification_manager.webpush.configured
 
 if st.session_state.is_monitoring and st.session_state.monitoring_started_ts > 0:
     el_sec = max(0, int(time.time() - st.session_state.monitoring_started_ts))
@@ -1448,7 +1448,7 @@ with st.sidebar:
         "Lịch sử sự kiện",
         "Quản lý camera và ROI",
         "Cấu hình hệ thống",
-        "Telegram",
+        "Web Push",
     ]
     badge_txt = f" ({unack_count})" if unack_count > 0 else ""
     nav_labels = {
@@ -1458,7 +1458,7 @@ with st.sidebar:
         "Lịch sử sự kiện": "Lịch sử sự kiện",
         "Quản lý camera và ROI": "Quản lý camera",
         "Cấu hình hệ thống": "Cấu hình hệ thống",
-        "Telegram": "Cảnh báo Telegram",
+        "Web Push": "Web Push notifications",
     }
 
     picked_nav = st.radio(
@@ -1539,9 +1539,8 @@ else:
     hdr_title = "Sẵn sàng giám sát"
     hdr_desc = "Nhấn Bắt đầu giám sát để khởi động camera"
 
-tg_state_code = telegram_header_state["state"]
-tg_header_label = TELEGRAM_STATE_LABELS_VI.get(tg_state_code, tg_state_code)
-tg_header_color = "#22C55E" if tg_state_code == "ENABLED" else "#F59E0B"
+tg_header_label = "Enabled" if webpush_header_enabled else "Disabled"
+tg_header_color = "#22C55E" if webpush_header_enabled else "#F59E0B"
 
 render_html(
     f"""
@@ -1569,7 +1568,7 @@ render_html(
             <div class="fw-kpi-box fw-telegram-status">
                 <div>
                     <div class="fw-kpi-num" style="font-size:14px; color:{tg_header_color};">{esc(tg_header_label)}</div>
-                    <div class="fw-kpi-sub">Telegram</div>
+                    <div class="fw-kpi-sub">Web Push</div>
                 </div>
             </div>
         </div>
@@ -2623,8 +2622,6 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                     final_src = st.text_input("Đường dẫn tệp Video:", value=cfg.source, key=f"ed_vid_{cid}")
 
                 ed_en = st.checkbox("Cho phép kích hoạt camera", value=cfg.enabled, key=f"ed_en_{cid}")
-                ed_telegram = st.checkbox("Gửi cảnh báo Telegram cho camera này", value=cfg.telegram_enabled,
-                                          key=f"ed_telegram_{cid}")
                 ed_fps = st.number_input(
                     "Inference FPS target", min_value=1, max_value=60,
                     value=int(cfg.inference_fps), key=f"ed_fps_{cid}"
@@ -2642,7 +2639,6 @@ elif st.session_state.nav_page == "Quản lý camera và ROI":
                             source_reference=final_src if ed_type == "IP_CAMERA" else None,
                         )
                         cam_system.update_camera_inference_fps(cid, int(ed_fps))
-                        cam_system.set_camera_telegram_enabled(cid, ed_telegram)
                         st.success(f"Saved {cid}; camera remains disconnected until Connect.")
                         st.rerun()
                     except (ValueError, OSError) as exc:
@@ -2823,110 +2819,65 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
         logs = cam_system.get_recent_logs(limit=20)
         st.text_area("Nhật ký vận hành trạm (Đã ẩn mật khẩu RTSP):", value="\n".join(logs), height=220, disabled=True)
 
-elif st.session_state.nav_page == "Telegram":
-    render_html('<div class="fw-panel-title"><span>Gửi cảnh báo qua Telegram</span></div>')
-    tg = _telegram_summary(cam_system)
-    if not tg["api_ready"]:
-        st.error("Backend API không khởi động được. Kiểm tra cổng FIREWATCH_API_PORT và nhật ký vận hành trước khi quản lý Telegram.")
-    if not os.getenv("FIREWATCH_API_TOKEN", ""):
-        st.error("Thiếu FIREWATCH_API_TOKEN. Các thao tác quản trị Telegram cần mã quản trị được cấu hình trong môi trường dịch vụ.")
-    if tg["missing"]:
-        st.warning("Thiếu cấu hình dịch vụ: " + ", ".join(tg["missing"]) + ". Đặt biến môi trường và khởi động lại FireWatch.")
-    elif tg["api_ready"]:
-        st.success("Đã cấu hình Bot Token và Chat ID cho dịch vụ. Giá trị bí mật không được hiển thị trong dashboard.")
-        if tg["service_credentials_tested"]:
-            st.success("Thông tin đăng nhập dịch vụ đã được kiểm tra thành công trong phiên backend hiện tại.")
+elif st.session_state.nav_page == "Web Push":
+    render_html('<div class="fw-panel-title"><span>Web Push notifications</span></div>')
+    manager = cam_system.notification_manager
+    status = {"enabled": manager.enabled, "vapid_configured": manager.webpush.configured,
+              "subscriptions": 0}
+    with manager.queue.connect() as conn:
+        status["subscriptions"] = conn.execute("SELECT COUNT(*) FROM push_subscriptions WHERE active=1").fetchone()[0]
+    a, b, c = st.columns(3)
+    a.metric("Notifications", "Enabled" if status["enabled"] else "Disabled")
+    b.metric("VAPID", "Configured" if status["vapid_configured"] else "Not configured")
+    c.metric("Subscribed devices", status["subscriptions"])
+    st.caption("Browser subscription requires HTTPS, VAPID keys, and a reverse proxy that puts the dashboard and API on one origin.")
+    if status["vapid_configured"]:
+        public_origin = os.getenv("FIREWATCH_PUSH_PUBLIC_ORIGIN", "").rstrip("/")
+        if public_origin:
+            st.link_button("Subscribe this device", public_origin + "/notifications/subscribe", use_container_width=True)
         else:
-            st.info("Bấm nút cài đặt nhanh bên dưới một lần để kiểm tra Telegram và bật cảnh báo.")
-    if tg["last_test"]:
-        test_status, test_ack, used_service, test_error = tg["last_test"]
-        if test_status == "SENDING":
-            st.info("Yêu cầu kiểm tra Telegram đang được xử lý.")
-        elif test_status == "DELIVERED":
-            credential_kind = "service credentials" if used_service else "temporary credentials"
-            st.caption(f"Tin kiểm tra gần nhất đã được Telegram chấp nhận lúc {test_ack} ({credential_kind}).")
-        else:
-            st.caption(f"Tin kiểm tra gần nhất: {test_status}" + (f" · {test_error}" if test_error else ""))
-    t1, t2, t3, t4 = st.columns(4)
-    t1.metric("Trạng thái", TELEGRAM_STATE_LABELS_VI.get(tg["state"], tg["state"]))
-    t2.metric("Đang chờ gửi", tg["pending"])
-    t3.metric("Thất bại / chưa rõ", tg["failed"])
-    t4.metric("Telegram xác nhận gần nhất", tg["last_ack"] or "Chưa có")
-    if st.session_state.get("telegram_action_flash"):
-        st.success(st.session_state.pop("telegram_action_flash"))
-
-    dispatcher = cam_system.telegram_alerts
-    admin_token_configured = bool(os.getenv("FIREWATCH_API_TOKEN", ""))
-    if not admin_token_configured:
-        st.error("Chưa cấu hình mã quản trị trong .env. Thêm FIREWATCH_API_TOKEN rồi khởi động lại FireWatch.")
-    elif not tg["api_ready"]:
-        st.error("Dịch vụ chưa sẵn sàng. Khởi động lại FireWatch rồi thử lại.")
-    elif tg["missing"]:
-        st.warning("Thiếu cấu hình: " + ", ".join(tg["missing"]) + ". Cập nhật trong .env rồi khởi động lại FireWatch.")
-    else:
-        with st.container(border=True):
-            st.markdown("### Cài đặt nhanh")
-            st.caption("Bấm một lần để kiểm tra Telegram và bật gửi cảnh báo. Camera cần bật tùy chọn gửi Telegram trong phần cấu hình camera.")
-            action_cols = st.columns([2, 1])
-            if action_cols[0].button("Kiểm tra kết nối và bật cảnh báo", type="primary", key="telegram_check_enable"):
+            st.warning("Set FIREWATCH_PUSH_PUBLIC_ORIGIN to the public HTTPS origin shared by the dashboard and API.")
+        enable = st.checkbox("Enable event notifications", value=manager.enabled, key="webpush_enabled_toggle")
+        if enable != manager.enabled:
+            try:
+                manager.set_enabled(enable)
+                st.success("Web Push setting updated.")
+                st.rerun()
+            except ValueError as exc:
+                st.error(str(exc))
+        if st.button("Send test notification", disabled=status["subscriptions"] == 0):
+            try:
+                result = _telegram_api_request("/api/notifications/test")
+                st.info("Push service accepted the test request for {} device(s). This does not confirm display on a device.".format(result.get("accepted_subscriptions", 0)))
+            except Exception as exc:
+                st.error("Test notification failed: " + str(exc))
+    st.code("WEB_PUSH_ENABLED=false\nFIREWATCH_VAPID_PUBLIC_KEY=<public key>\nFIREWATCH_VAPID_PRIVATE_KEY=<private key>\nFIREWATCH_VAPID_SUBJECT=mailto:admin@example.com\nFIREWATCH_PUSH_PUBLIC_ORIGIN=https://firewatch.example.com", language="text")
+    st.info("Devices are never subscribed automatically. The Subscribe button opens a page that requests browser permission only after an explicit click.")
+    st.markdown("### Camera locations")
+    cameras = list(cam_system.workers.values())
+    cam_ids = [worker.config.cam_id for worker in cameras]
+    if cam_ids:
+        selected = st.selectbox("Camera", cam_ids, format_func=lambda cid: cam_system.workers[cid].config.name + " (" + cid + ")")
+        existing = next((loc for loc in manager.queue.locations() if loc["camera_id"] == selected), {})
+        with st.form("camera_location_form"):
+            loc_name = st.text_input("Location name", value=existing.get("location_name", ""))
+            address = st.text_input("Address", value=existing.get("address", ""))
+            lat = st.number_input("Latitude", min_value=-90.0, max_value=90.0, value=float(existing.get("latitude", 0.0)), format="%.7f")
+            lon = st.number_input("Longitude", min_value=-180.0, max_value=180.0, value=float(existing.get("longitude", 0.0)), format="%.7f")
+            verified = st.checkbox("Camera location verified", value=bool(existing.get("location_verified", False)))
+            if st.form_submit_button("Save location"):
                 try:
-                    with st.spinner("Đang kiểm tra Telegram và bật cảnh báo..."):
-                        _telegram_check_and_enable()
-                    st.session_state["telegram_action_flash"] = "Telegram đã kết nối và gửi cảnh báo sự kiện đã được bật."
+                    from src.notifications import CameraLocation
+                    item = CameraLocation(selected, loc_name, address, lat, lon, verified)
+                    manager.queue.set_location(item)
+                    st.success("Location saved. New confirmed events will preserve this location snapshot.")
                     st.rerun()
-                except Exception as exc:
-                    st.error(f"Chưa bật được Telegram: {exc}")
-            if dispatcher.enabled and action_cols[1].button("Tắt cảnh báo", key="telegram_disable_simple"):
-                try:
-                    _telegram_api_request("/api/telegram/disable")
-                    st.session_state["telegram_action_flash"] = "Đã tắt gửi cảnh báo Telegram."
-                    st.rerun()
-                except Exception as exc:
-                    st.error(f"Không tắt được Telegram: {exc}")
-
-    st.markdown("### Lịch sử gửi cảnh báo")
-    status_filter = st.selectbox(
-        "Lọc theo trạng thái gửi",
-        ["All", "QUEUED", "SENDING", "RETRY_PENDING", "DELIVERED", "FAILED", "AMBIGUOUS"],
-        key="telegram_delivery_filter",
-        format_func=lambda value: "Tất cả" if value == "All" else TELEGRAM_DELIVERY_LABELS_VI[value],
-    )
-    delivery_sql = """SELECT d.event_id,e.camera_name,e.label,d.event_confirmed_at,d.queued_at,
-        d.attempt_started_at,d.telegram_acknowledged_at,d.status,d.attempt_count,d.error_category,d.error_message
-        FROM alert_deliveries d JOIN alert_logs e ON e.id=d.event_id"""
-    delivery_args: Tuple[Any, ...] = ()
-    if status_filter != "All":
-        delivery_sql += " WHERE d.status=?"
-        delivery_args = (status_filter,)
-    delivery_sql += " ORDER BY d.queued_at DESC LIMIT 250"
-    with cam_system.telegram_alerts._connect() as conn:
-        delivery_rows = conn.execute(delivery_sql, delivery_args).fetchall()
-    history = []
-    for row in delivery_rows:
-        try:
-            latency = (datetime.fromisoformat(row[6]) - datetime.fromisoformat(row[3])).total_seconds() * 1000 if row[6] and row[3] else None
-        except (TypeError, ValueError):
-            latency = None
-        record = dict(zip(("Mã sự kiện", "Camera", "Loại sự kiện", "Thời điểm xác nhận", "Thời điểm xếp hàng",
-                           "Bắt đầu gửi", "Telegram xác nhận", "Trạng thái gửi",
-                           "Số lần thử", "Mã lỗi", "Chi tiết lỗi"), row))
-        record["Loại sự kiện"] = {"FIRE": "CHÁY", "SMOKE": "KHÓI"}.get(record["Loại sự kiện"], record["Loại sự kiện"])
-        record["Trạng thái gửi"] = _telegram_delivery_label_vi(record["Trạng thái gửi"])
-        history.append(record | {"Độ trễ (ms)": round(latency, 3) if latency is not None else None})
-    if history:
-        st.dataframe(pd.DataFrame(history), use_container_width=True, hide_index=True)
+                except ValueError as exc:
+                    st.error(str(exc))
+    st.markdown("### Notification history")
+    jobs = manager.queue.history(250)
+    if jobs:
+        st.dataframe(pd.DataFrame(jobs), use_container_width=True, hide_index=True)
+        st.caption("ACCEPTED_BY_PUSH_SERVICE means the push service accepted the request; it does not confirm display on a device.")
     else:
-        st.info("Chưa có lịch sử gửi cảnh báo Telegram.")
-    if any(item["Trạng thái gửi"] == TELEGRAM_DELIVERY_LABELS_VI["AMBIGUOUS"] for item in history):
-        st.warning("Trạng thái ‘Chưa rõ kết quả’ nghĩa là Telegram có thể đã nhận tin nhưng phản hồi bị thất lạc. Gửi lại có thể tạo tin nhắn trùng.")
-
-    with cam_system.telegram_alerts._connect() as conn:
-        test_rows = conn.execute(
-            "SELECT requested_at,status,acknowledged_at,error_category FROM telegram_test_deliveries ORDER BY test_id DESC LIMIT 10"
-        ).fetchall()
-    if test_rows:
-        st.markdown("### Lịch sử tin nhắn kiểm tra (không tính là sự kiện cháy)")
-        test_history = pd.DataFrame(test_rows, columns=["Thời điểm yêu cầu", "Trạng thái", "Telegram xác nhận", "Mã lỗi"])
-        test_history["Trạng thái"] = test_history["Trạng thái"].map(TELEGRAM_DELIVERY_LABELS_VI).fillna(test_history["Trạng thái"])
-        st.dataframe(test_history,
-                     use_container_width=True, hide_index=True)
+        st.info("No Web Push jobs yet.")
