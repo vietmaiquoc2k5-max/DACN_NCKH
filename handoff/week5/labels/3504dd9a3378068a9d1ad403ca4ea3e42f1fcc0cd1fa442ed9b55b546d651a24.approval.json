@@ -1,0 +1,34 @@
+{
+  "version_id": "31623fd0-0461-4285-b60e-7879cd857dfb",
+  "image_sha256": "3504dd9a3378068a9d1ad403ca4ea3e42f1fcc0cd1fa442ed9b55b546d651a24",
+  "image_path": "datasets/vn_dataset/images/val/VN_NEG_50_f000367.jpg",
+  "original_label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "label_version_path": "handoff/week5/labels/3504dd9a3378068a9d1ad403ca4ea3e42f1fcc0cd1fa442ed9b55b546d651a24.txt",
+  "boxes": [],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T11:13:47.836675+00:00",
+  "evidence_ref": "Negative",
+  "attest_frame_review": true,
+  "negative_frame_approved": true,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "712ab0b474690b047bca2bfc83c30d405f76374dd0add83259ec45145bc9f361",
+  "scene_group_id": "UNCONFIRMED_VN_NEG_50",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/val/VN_NEG_50_f000367.jpg",
+      "label_path": "datasets/vn_dataset/labels/val/VN_NEG_50_f000367.txt",
+      "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reserved_split": "VAL_LEGACY_RESERVATION"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

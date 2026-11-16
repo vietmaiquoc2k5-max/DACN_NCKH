@@ -1,0 +1,24 @@
+{
+  "image_sha256": "01698cf01508efbbe8a0a1a3755cbc2b807e7866cb3408fb22b2f12b8a126454",
+  "image_path": "datasets/vn_dataset/images/val/VN_NEG_43_f001299.jpg",
+  "source_video_path": "datasets/negative_videos/VN_NEG_43.mp4",
+  "source_frame_index": 1299,
+  "source_pts_ticks": 665600,
+  "time_base": "1/15360",
+  "status": "VERIFIED_DERIVED_IMAGE",
+  "search_scope": "Declared candidate video and frame index; no exhaustive source search",
+  "matching_algorithm": "Sequential OpenCV decode; exact bytes of documented resize + JPEG95",
+  "extractor_code_sha256": "3047f6874bbb4d56d46cbd40a88e172e115fef4a0e5f458edab60536b2953073",
+  "verifier_code_sha256": "f84b4d353594496a8b926bba52336c7f51f85f7cb7aec816e48fc15a274b9f3b",
+  "source_video_sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+  "ffprobe_output_sha256": "8b2deec4ed385dec0cd4bbcd016d355c3a85ed23309bf97b95d9db21170f57b4",
+  "transformation": {
+    "resize": null,
+    "jpeg_quality": 95,
+    "encoder": "OpenCV 5.0.0",
+    "anonymization": "No transform needed to reproduce exact stored bytes"
+  },
+  "match_evidence": "EXACT_ENCODED_IMAGE_SHA256",
+  "confidence": "DETERMINISTIC_EXACT_REPRODUCTION",
+  "decoded_pixel_sha256": "f72396b389ad342b598b301aca9d916c446b5fcee7b3e7fafe850e3a1da18d8a"
+}

@@ -1,0 +1,77 @@
+{
+  "version_id": "d18f1020-2a37-440a-be4a-0f381639a432",
+  "image_sha256": "83103f6da5a4e1591a8744bece2df18dcb0299621a212f46f7a265388e7aacfa",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_26_f000295.jpg",
+  "original_label_sha256": "ffd0db74c4d84c73664f088622b719d9311eea9d9763987d70377f79d1c9c8b8",
+  "label_sha256": "0ea072340ec737297fac72df33b7393ecad52785671d010fe74cb155e7e2794a",
+  "label_version_path": "handoff/week5/labels/83103f6da5a4e1591a8744bece2df18dcb0299621a212f46f7a265388e7aacfa.txt",
+  "boxes": [
+    {
+      "class_id": 1,
+      "x": 0.235944,
+      "y": 0.290485,
+      "w": 0.201571,
+      "h": 0.358634
+    },
+    {
+      "class_id": 1,
+      "x": 0.38737,
+      "y": 0.598041,
+      "w": 0.077554,
+      "h": 0.102593
+    },
+    {
+      "class_id": 1,
+      "x": 0.7305350282841739,
+      "y": 0.3918216689179389,
+      "w": 0.5370882166626796,
+      "h": 0.7766785620253822
+    },
+    {
+      "class_id": 1,
+      "x": 0.26236521244053274,
+      "y": 0.7160005593303478,
+      "w": 0.3840418301604951,
+      "h": 0.12156708028167207
+    },
+    {
+      "class_id": 1,
+      "x": 0.26569231728860954,
+      "y": 0.9473156853179291,
+      "w": 0.40210322034567625,
+      "h": 0.10468282798444095
+    },
+    {
+      "class_id": 1,
+      "x": 0.9192288650332677,
+      "y": 0.9338082834801442,
+      "w": 0.09505982381014078,
+      "h": 0.09117519427585175
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T07:41:49.014663+00:00",
+  "evidence_ref": "fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "91fd7a4ffa55ebe25a2047df016bd2a4e71086b3fa0cc0fa2c09e6c9ca46846d",
+  "scene_group_id": "SCENE_3bd96470ded692b2",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_26_f000295.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_26_f000295.txt",
+      "label_sha256": "ffd0db74c4d84c73664f088622b719d9311eea9d9763987d70377f79d1c9c8b8",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

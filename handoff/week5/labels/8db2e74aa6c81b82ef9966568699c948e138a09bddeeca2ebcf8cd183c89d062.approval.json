@@ -1,0 +1,49 @@
+{
+  "version_id": "90f6014c-f87d-4106-ad46-991c22113a79",
+  "image_sha256": "8db2e74aa6c81b82ef9966568699c948e138a09bddeeca2ebcf8cd183c89d062",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_27_f001334.jpg",
+  "original_label_sha256": "cc65968343dc28de5a07bf2e31fa01df3e3971316af8cf9101ecdf93c83b95a1",
+  "label_sha256": "32b41e679865b27cd2fcb048c43dcf6dfcc795901186b8e637e4bfa4a8c57032",
+  "label_version_path": "handoff/week5/labels/8db2e74aa6c81b82ef9966568699c948e138a09bddeeca2ebcf8cd183c89d062.txt",
+  "boxes": [
+    {
+      "class_id": 1,
+      "x": 0.837466,
+      "y": 0.625605,
+      "w": 0.06557,
+      "h": 0.246711
+    },
+    {
+      "class_id": 1,
+      "x": 0.265608,
+      "y": 0.498967,
+      "w": 0.200869,
+      "h": 0.544806
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T07:53:36.289644+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "5ebaa0b8b8b0bf84c799a94717600522f1323c1b1872e8eb2f9d57fe64858922",
+  "scene_group_id": "SCENE_4e34b7c8296c7a8b",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_27_f001334.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_27_f001334.txt",
+      "label_sha256": "cc65968343dc28de5a07bf2e31fa01df3e3971316af8cf9101ecdf93c83b95a1",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "version_id": "ac605921-6b8b-4f9e-a147-eaf4570e4100",
+  "image_sha256": "4c4f14f2c27c6cd95f2394d23a0d9041756be764f4865e8973b4e80efcf44b27",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_29_f000399.jpg",
+  "original_label_sha256": "771811ef8bee76c899a749a66e0a32c5ea21ceac687c63fbe2b78deea0c324ac",
+  "label_sha256": "e211b120afdaec61734f3686c94042d35dcd817db55b5141c7db01f7d1cbd6f6",
+  "label_version_path": "handoff/week5/labels/4c4f14f2c27c6cd95f2394d23a0d9041756be764f4865e8973b4e80efcf44b27.txt",
+  "boxes": [
+    {
+      "class_id": 1,
+      "x": 0.215508,
+      "y": 0.165719,
+      "w": 0.080968,
+      "h": 0.108492
+    },
+    {
+      "class_id": 1,
+      "x": 0.502063,
+      "y": 0.258528,
+      "w": 0.215819,
+      "h": 0.246937
+    },
+    {
+      "class_id": 0,
+      "x": 0.3688322697735471,
+      "y": 0.10895660181394849,
+      "w": 0.39354785333677533,
+      "h": 0.21791320362789698
+    },
+    {
+      "class_id": 0,
+      "x": 0.7747378740966704,
+      "y": 0.19934051160901758,
+      "w": 0.4410777652418457,
+      "h": 0.39171624740753946
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T07:56:23.886984+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "3985959d733de6041830067dcf11596c245f8b771c4c09aaf6927cf4abf43e61",
+  "scene_group_id": "SCENE_3d6c423844c0032a",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_29_f000399.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_29_f000399.txt",
+      "label_sha256": "771811ef8bee76c899a749a66e0a32c5ea21ceac687c63fbe2b78deea0c324ac",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

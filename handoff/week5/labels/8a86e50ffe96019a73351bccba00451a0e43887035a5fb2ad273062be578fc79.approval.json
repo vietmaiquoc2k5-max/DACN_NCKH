@@ -1,0 +1,77 @@
+{
+  "version_id": "3bc28a7b-2b2c-488e-b3b6-b2c715dd1f8e",
+  "image_sha256": "8a86e50ffe96019a73351bccba00451a0e43887035a5fb2ad273062be578fc79",
+  "image_path": "datasets/vn_dataset/images/val/VN_POS_58_f000464.jpg",
+  "original_label_sha256": "d7f22ddaf9772f649df02f0a7504220d77e2c8767d34ef6a649190ba78a90034",
+  "label_sha256": "1299e24697e861f6e6588364de807fbf60ae11ee352df0828c026d9542373c71",
+  "label_version_path": "handoff/week5/labels/8a86e50ffe96019a73351bccba00451a0e43887035a5fb2ad273062be578fc79.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.512017,
+      "y": 0.297247,
+      "w": 0.975966,
+      "h": 0.569274
+    },
+    {
+      "class_id": 1,
+      "x": 0.823363,
+      "y": 0.531609,
+      "w": 0.046198,
+      "h": 0.101542
+    },
+    {
+      "class_id": 1,
+      "x": 0.638855,
+      "y": 0.499789,
+      "w": 0.036937,
+      "h": 0.073117
+    },
+    {
+      "class_id": 1,
+      "x": 0.465986,
+      "y": 0.473372,
+      "w": 0.119358,
+      "h": 0.158633
+    },
+    {
+      "class_id": 1,
+      "x": 0.05646,
+      "y": 0.347492,
+      "w": 0.016823,
+      "h": 0.021714
+    },
+    {
+      "class_id": 1,
+      "x": 0.628261,
+      "y": 0.40086,
+      "w": 0.063588,
+      "h": 0.179091
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T12:24:07.191383+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "12a664e6d98107252041b5f90d3149edd3ce64983828f50823eefc556589953c",
+  "scene_group_id": "SCENE_908325e56e4cefb6",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/val/VN_POS_58_f000464.jpg",
+      "label_path": "datasets/vn_dataset/labels/val/VN_POS_58_f000464.txt",
+      "label_sha256": "d7f22ddaf9772f649df02f0a7504220d77e2c8767d34ef6a649190ba78a90034",
+      "reserved_split": "VALIDATION_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

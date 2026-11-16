@@ -1,0 +1,63 @@
+{
+  "version_id": "f50b59aa-7612-4466-b6d9-263460ede966",
+  "image_sha256": "e12500463ac80d16101a403d616210fd8c5ff67a223220b8fd96b9ff2c13dd05",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_26_f000438.jpg",
+  "original_label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "label_sha256": "932e0cb194370bc077ff627cebfe21268a40ae68a9626df5d39dec22842b914b",
+  "label_version_path": "handoff/week5/labels/e12500463ac80d16101a403d616210fd8c5ff67a223220b8fd96b9ff2c13dd05.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.18489143339389527,
+      "y": 0.40617333046934245,
+      "w": 0.34316610551418186,
+      "h": 0.7547289398414676
+    },
+    {
+      "class_id": 0,
+      "x": 0.9353890122356425,
+      "y": 0.3825352939246487,
+      "w": 0.12547899353835612,
+      "h": 0.7648595419415447
+    },
+    {
+      "class_id": 0,
+      "x": 0.8075335149429796,
+      "y": 0.21369212606166393,
+      "w": 0.13023200104696975,
+      "h": 0.4069120165073463
+    },
+    {
+      "class_id": 1,
+      "x": 0.5484954053107604,
+      "y": 0.3951985302463291,
+      "w": 0.38023945842162793,
+      "h": 0.773301689828048
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T07:42:24.120276+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "91fd7a4ffa55ebe25a2047df016bd2a4e71086b3fa0cc0fa2c09e6c9ca46846d",
+  "scene_group_id": "SCENE_3bd96470ded692b2",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_26_f000438.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_26_f000438.txt",
+      "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "version_id": "ff7ca009-cdda-4198-875e-8ea523fcc1a5",
+  "image_sha256": "3933600b126deef8caf284aa4b9199cff0c9f71ff12e91f30d95c8191576c88c",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_37_f000341.jpg",
+  "original_label_sha256": "e586b98919b3c1016646bd3b5a2e4d9112cbf88957a1f05be5a3efafd74fb4db",
+  "label_sha256": "6c48d9c2e4fde13ea438f2b0e1c5c96620170ea16982840a60a36e19520a3851",
+  "label_version_path": "handoff/week5/labels/3933600b126deef8caf284aa4b9199cff0c9f71ff12e91f30d95c8191576c88c.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.310595,
+      "y": 0.330187,
+      "w": 0.578812,
+      "h": 0.617009
+    },
+    {
+      "class_id": 1,
+      "x": 0.05438,
+      "y": 0.760988,
+      "w": 0.108683,
+      "h": 0.333502
+    },
+    {
+      "class_id": 1,
+      "x": 0.547286,
+      "y": 0.67844,
+      "w": 0.115922,
+      "h": 0.183496
+    },
+    {
+      "class_id": 1,
+      "x": 0.399615,
+      "y": 0.736155,
+      "w": 0.399488,
+      "h": 0.252544
+    },
+    {
+      "class_id": 1,
+      "x": 0.393427,
+      "y": 0.58523,
+      "w": 0.416485,
+      "h": 0.560728
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T08:29:59.722289+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "89ef2f108c75ffc17ad820d32429e6d2b39fb1f20fa259646b3cf9095d21befe",
+  "scene_group_id": "SCENE_c08d53f8618f0878",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_37_f000341.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_37_f000341.txt",
+      "label_sha256": "e586b98919b3c1016646bd3b5a2e4d9112cbf88957a1f05be5a3efafd74fb4db",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

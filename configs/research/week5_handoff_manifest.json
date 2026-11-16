@@ -1,0 +1,95 @@
+{
+  "version": "week5_gpu_training_handoff_v1",
+  "created_at_utc": "2026-11-16T17:05:00Z",
+  "git_context": {
+    "branch": "fix-4",
+    "base_commit": "62b926aab240616c63e7a10af8df26ec3d38ba92",
+    "remote_url": "https://github.com/vietmaiquoc2k5-max/DACN_NCKH"
+  },
+  "hardware_context": {
+    "sender_machine": "Intel Core i5-11400H, NVIDIA RTX 3060 Laptop (PyTorch CPU fallback)",
+    "target_machine": "NVIDIA GPU with CUDA support (RTX 3060/4060/4070/3080/4080/4090/T4/A10G)",
+    "recommended_cuda_version": "12.1"
+  },
+  "datasets": {
+    "vn_dataset": {
+      "corpus": "VN",
+      "total_images_in_repo": 3121,
+      "eligible_approved_frames": 786,
+      "train_frames": 585,
+      "val_frames": 201,
+      "test_frames_preserved": 630,
+      "train_videos_count": 61,
+      "val_videos_count": 23,
+      "cross_split_video_overlap": 0,
+      "class_mapping": {
+        "0": "smoke",
+        "1": "fire"
+      },
+      "val_class_representation": {
+        "smoke_images": 107,
+        "fire_images": 34,
+        "negative_images": 76
+      },
+      "labels_portable_path": "handoff/week5/labels",
+      "lineage_portable_path": "handoff/week5/lineage"
+    },
+    "dfire_dataset": {
+      "corpus": "DFIRE",
+      "clean_train_frames": 12409,
+      "clean_val_frames": 2547,
+      "clean_test_frames_preserved": 3568,
+      "quarantined_groups_excluded": 751,
+      "bbox_issues_excluded": 340,
+      "strategy_c_replay_count": 147,
+      "expected_local_path": "datasets/dfire_author_linked_kaggle_v1/data"
+    }
+  },
+  "checkpoints": {
+    "baseline_checkpoint": {
+      "path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+      "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+      "training_epochs": 50,
+      "dfire_val_map50": 0.83868,
+      "dfire_val_map50_95": 0.52272,
+      "origin": "Week 3 MT2 D-Fire Baseline (Verified 100% hash bound)"
+    },
+    "initialization": {
+      "path": "yolov8n.pt",
+      "sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "origin": "COCO Pretrained Official Weights"
+    },
+    "interrupted_strategy_b_checkpoint": {
+      "path": "runs/benchmarks/week5_domain_adaptation/execution_20261116/run_freeze_backbone_seed42/fit/weights/best.pt",
+      "sha256": "280511cd51b778121f9f1ec89d8411e0d2daa556d99c0845423c5873b934ef5f",
+      "status": "COMPLETED_30_EPOCHS",
+      "vn_val_map50": 0.47284,
+      "dfire_val_map50": 0.81291,
+      "resumable": false,
+      "reusable_as_strategy_b_result": true
+    }
+  },
+  "execution_contracts": {
+    "dataset_manifest": "handoff/week5/dataset_manifest.json",
+    "protocol": "handoff/week5/protocol.json",
+    "budget_receipt": "handoff/week5/budget_receipt_gpu.json",
+    "entry_point": "scripts/run_week5_handoff.py",
+    "verifier": "scripts/verify_week5_handoff.py",
+    "strategies": [
+      "full_finetune",
+      "freeze_backbone",
+      "replay_20_percent"
+    ],
+    "seeds": [42],
+    "epochs": 30,
+    "batch": 8,
+    "imgsz": 640,
+    "optimizer": "SGD",
+    "lr0": 0.01,
+    "lrf": 0.01,
+    "momentum": 0.937,
+    "weight_decay": 0.0005,
+    "device": "0"
+  }
+}
+

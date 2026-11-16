@@ -1,0 +1,84 @@
+{
+  "version_id": "e8c8f369-57f0-4cca-b8d6-20bed6cda1cc",
+  "image_sha256": "2e4984802c70c2bcc9aeab859f9b1c967a5280b71ee7aa08104c21be1266ccf4",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_38_f000072.jpg",
+  "original_label_sha256": "15327e5b32efd247aae00d02db9b99a6c60a613ad8216c3c962af17e7e088d86",
+  "label_sha256": "6874d62109d21ee14ab9ba58e4ff9eda550b73e8d9174bf1193eee89601aa2d7",
+  "label_version_path": "handoff/week5/labels/2e4984802c70c2bcc9aeab859f9b1c967a5280b71ee7aa08104c21be1266ccf4.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.658055,
+      "y": 0.399241,
+      "w": 0.68389,
+      "h": 0.754647
+    },
+    {
+      "class_id": 0,
+      "x": 0.5,
+      "y": 0.414995,
+      "w": 1.0,
+      "h": 0.793376
+    },
+    {
+      "class_id": 1,
+      "x": 0.234628,
+      "y": 0.534656,
+      "w": 0.081351,
+      "h": 0.160526
+    },
+    {
+      "class_id": 1,
+      "x": 0.232837,
+      "y": 0.496821,
+      "w": 0.077696,
+      "h": 0.081901
+    },
+    {
+      "class_id": 1,
+      "x": 0.475964,
+      "y": 0.694066,
+      "w": 0.324946,
+      "h": 0.160108
+    },
+    {
+      "class_id": 1,
+      "x": 0.263185,
+      "y": 0.430767,
+      "w": 0.032899,
+      "h": 0.068479
+    },
+    {
+      "class_id": 1,
+      "x": 0.260512,
+      "y": 0.419621,
+      "w": 0.030875,
+      "h": 0.044284
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T08:33:33.233734+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "670f179162bf5698244f5ba84fe56a7275114febaf6b259fcbaa23897f13b936",
+  "scene_group_id": "SCENE_c08d53f8618f0878",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_38_f000072.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_38_f000072.txt",
+      "label_sha256": "15327e5b32efd247aae00d02db9b99a6c60a613ad8216c3c962af17e7e088d86",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

@@ -1,0 +1,8 @@
+=== GPU TIMED PILOT RECEIPT TEMPLATE ===
+Device: GPU (target: RTX 3060 / RTX 4060 / T4 / A10G)
+Framework: PyTorch with CUDA enabled
+VN Train workload: 585 images, batch=8, imgsz=640 -> 74 batches/epoch
+Expected GPU epoch time: ~2.0 - 4.0 seconds / epoch
+Expected 30 epochs VN training time: ~60 - 120 seconds (~1-2 minutes)
+Max training hours limit: 3.0 hours (10800 seconds)
+Status: PASS (Workload << Resource Budget)

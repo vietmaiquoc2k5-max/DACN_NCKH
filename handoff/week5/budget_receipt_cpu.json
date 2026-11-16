@@ -1,0 +1,12 @@
+{
+  "status": "PILOT_MEASURED_PASS",
+  "dataset_sha256": "b72e210b29724943bf762b1b17bbdf0d06ee077a3630061e58c4b593f07d2864",
+  "baseline_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "device": "cpu",
+  "measured_epoch_seconds": 170.2,
+  "max_training_hours": 10.0,
+  "pilot_log": "handoff/week5/gpu_pilot.log",
+  "pilot_log_sha256": "f7b6f73bbea957fe8ea22b7c5452565e459ce31b78be7af084b07b31c42111de",
+  "measured_batches_per_epoch": 74,
+  "measured_seconds_per_batch": 2.3
+}

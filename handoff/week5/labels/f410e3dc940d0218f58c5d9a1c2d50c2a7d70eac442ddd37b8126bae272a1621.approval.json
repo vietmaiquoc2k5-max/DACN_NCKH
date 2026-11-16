@@ -1,0 +1,70 @@
+{
+  "version_id": "45b0b990-bf89-41b3-a127-a6f0e4262aea",
+  "image_sha256": "f410e3dc940d0218f58c5d9a1c2d50c2a7d70eac442ddd37b8126bae272a1621",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_37_f000092.jpg",
+  "original_label_sha256": "6981d21d2d6b5883a080680d9114e4449bdc07720faf5d063498c35f07f849ea",
+  "label_sha256": "100bf7e9e53d919222b7497c77e06631303c346f8dd9a32f7d297b02a071213f",
+  "label_version_path": "handoff/week5/labels/f410e3dc940d0218f58c5d9a1c2d50c2a7d70eac442ddd37b8126bae272a1621.txt",
+  "boxes": [
+    {
+      "class_id": 1,
+      "x": 0.532512,
+      "y": 0.656499,
+      "w": 0.47957,
+      "h": 0.433883
+    },
+    {
+      "class_id": 1,
+      "x": 0.184654,
+      "y": 0.678591,
+      "w": 0.122145,
+      "h": 0.163009
+    },
+    {
+      "class_id": 1,
+      "x": 0.70326,
+      "y": 0.657315,
+      "w": 0.024113,
+      "h": 0.033929
+    },
+    {
+      "class_id": 0,
+      "x": 0.522362,
+      "y": 0.438876,
+      "w": 0.429503,
+      "h": 0.451397
+    },
+    {
+      "class_id": 1,
+      "x": 0.516417,
+      "y": 0.648896,
+      "w": 0.288406,
+      "h": 0.410945
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T08:29:04.179259+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "89ef2f108c75ffc17ad820d32429e6d2b39fb1f20fa259646b3cf9095d21befe",
+  "scene_group_id": "SCENE_c08d53f8618f0878",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_37_f000092.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_37_f000092.txt",
+      "label_sha256": "6981d21d2d6b5883a080680d9114e4449bdc07720faf5d063498c35f07f849ea",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "version_id": "3874fe49-c2e8-4b85-91f9-8716009061f1",
+  "image_sha256": "632809de1d35e18600312873a5a5c9691172df8b4aa387b4b543f33fc5f5fe62",
+  "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000106.jpg",
+  "original_label_sha256": "9764f18f6896fdd8b15607e80f90ba7103dc83f718658325bd622939dc9f0b3d",
+  "label_sha256": "9a881f8808867fa1246e11a1d005bb127e303c883e591ed0efa4b6be0e04397b",
+  "label_version_path": "handoff/week5/labels/632809de1d35e18600312873a5a5c9691172df8b4aa387b4b543f33fc5f5fe62.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.24722222222222223,
+      "y": 0.3589062660932541,
+      "w": 0.49444444444444446,
+      "h": 0.284375023841858
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-15T09:34:22.214966+00:00",
+  "evidence_ref": "smoke",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+  "scene_group_id": "SCENE_21f1acb1390fc1fc",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000106.jpg",
+      "label_path": "datasets/vn_dataset/labels/val/VN_POS_08_f000106.txt",
+      "label_sha256": "9764f18f6896fdd8b15607e80f90ba7103dc83f718658325bd622939dc9f0b3d",
+      "reserved_split": "VALIDATION_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "version_id": "be05e089-2189-4732-9403-0a861a8cb070",
+  "image_sha256": "592c24f0c91737de2c383ae1c9de61423f7d7ce3df92c7dc0ef5f9b6df38ec42",
+  "image_path": "datasets/vn_dataset/images/train/VN_NEG_18_f001726.jpg",
+  "original_label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "label_sha256": "bc0ff5c2d7d4fced0f30790e2363f002ef66b94ea7a158be2a371ab21745563c",
+  "label_version_path": "handoff/week5/labels/592c24f0c91737de2c383ae1c9de61423f7d7ce3df92c7dc0ef5f9b6df38ec42.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.2965000305175781,
+      "y": 0.3329540408525755,
+      "w": 0.2910000610351563,
+      "h": 0.3783303730017762
+    },
+    {
+      "class_id": 0,
+      "x": 0.662,
+      "y": 0.4537355954863038,
+      "w": 0.418,
+      "h": 0.29662516781957704
+    },
+    {
+      "class_id": 0,
+      "x": 0.7085,
+      "y": 0.8027586589698046,
+      "w": 0.377,
+      "h": 0.15985790408525757
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-15T07:07:38.014303+00:00",
+  "evidence_ref": "smoke",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+  "scene_group_id": "UNCONFIRMED_VN_NEG_18",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_NEG_18_f001726.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_NEG_18_f001726.txt",
+      "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reserved_split": "TRAIN_LEGACY_RESERVATION"
+    },
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_NEG_18_f001726.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_NEG_18_f001726.txt",
+      "label_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "reserved_split": "TRAIN_LEGACY_RESERVATION"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

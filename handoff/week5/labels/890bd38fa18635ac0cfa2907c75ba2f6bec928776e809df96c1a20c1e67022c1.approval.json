@@ -1,0 +1,77 @@
+{
+  "version_id": "ed5911f2-a479-4760-bd6f-be5a985a0b4a",
+  "image_sha256": "890bd38fa18635ac0cfa2907c75ba2f6bec928776e809df96c1a20c1e67022c1",
+  "image_path": "datasets/vn_dataset/images/train/VN_POS_54_f001968.jpg",
+  "original_label_sha256": "1d90fc0daa70cc460c350a4cfd2d741e6d8e60044e8480e44577ceb12b3ceff1",
+  "label_sha256": "6221a091df43b10e616175ca17a48f2529171f20d6c4bda5c0328dbe45b22880",
+  "label_version_path": "handoff/week5/labels/890bd38fa18635ac0cfa2907c75ba2f6bec928776e809df96c1a20c1e67022c1.txt",
+  "boxes": [
+    {
+      "class_id": 1,
+      "x": 0.509251,
+      "y": 0.702871,
+      "w": 0.113501,
+      "h": 0.141323
+    },
+    {
+      "class_id": 1,
+      "x": 0.479372,
+      "y": 0.693935,
+      "w": 0.052184,
+      "h": 0.126505
+    },
+    {
+      "class_id": 1,
+      "x": 0.472247,
+      "y": 0.436379,
+      "w": 0.055401,
+      "h": 0.050269
+    },
+    {
+      "class_id": 1,
+      "x": 0.431172,
+      "y": 0.618502,
+      "w": 0.059809,
+      "h": 0.040717
+    },
+    {
+      "class_id": 0,
+      "x": 0.563313,
+      "y": 0.3095,
+      "w": 0.358666,
+      "h": 0.552792
+    },
+    {
+      "class_id": 1,
+      "x": 0.6109482299952655,
+      "y": 0.35926970552576426,
+      "w": 0.12693594136246145,
+      "h": 0.1391985540629287
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T12:07:42.477248+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "79fa585cf4706209ffffd90ccf7b3ba4e54ffafe36e4af6de728ccd1533c05e6",
+  "scene_group_id": "SCENE_1c27dc49a21bbb16",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/train/VN_POS_54_f001968.jpg",
+      "label_path": "datasets/vn_dataset/labels/train/VN_POS_54_f001968.txt",
+      "label_sha256": "1d90fc0daa70cc460c350a4cfd2d741e6d8e60044e8480e44577ceb12b3ceff1",
+      "reserved_split": "TRAIN_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}

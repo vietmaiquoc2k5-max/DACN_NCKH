@@ -1,0 +1,91 @@
+{
+  "version_id": "4623cbc8-9db7-4a08-a132-8657e0f5ebaf",
+  "image_sha256": "fe2353332f3512d7dcee3348bcd3522f06e0c068694458c69db614ee59c94844",
+  "image_path": "datasets/vn_dataset/images/val/VN_POS_63_f000673.jpg",
+  "original_label_sha256": "a11b9935e67cc9f053a718a6b19bc8482bfba359dd62730a924216d80e37929f",
+  "label_sha256": "e0454dde5732bd7b8aee4e0a0953095a1901f8cb2db10e61d982d332ecac2de8",
+  "label_version_path": "handoff/week5/labels/fe2353332f3512d7dcee3348bcd3522f06e0c068694458c69db614ee59c94844.txt",
+  "boxes": [
+    {
+      "class_id": 0,
+      "x": 0.501489,
+      "y": 0.24054,
+      "w": 0.99698,
+      "h": 0.469984
+    },
+    {
+      "class_id": 1,
+      "x": 0.503599,
+      "y": 0.476109,
+      "w": 0.17994,
+      "h": 0.08616
+    },
+    {
+      "class_id": 1,
+      "x": 0.735453,
+      "y": 0.473246,
+      "w": 0.055456,
+      "h": 0.085979
+    },
+    {
+      "class_id": 1,
+      "x": 0.835719,
+      "y": 0.493671,
+      "w": 0.077463,
+      "h": 0.059107
+    },
+    {
+      "class_id": 1,
+      "x": 0.235094,
+      "y": 0.468171,
+      "w": 0.155372,
+      "h": 0.088831
+    },
+    {
+      "class_id": 1,
+      "x": 0.63369,
+      "y": 0.492649,
+      "w": 0.045316,
+      "h": 0.051954
+    },
+    {
+      "class_id": 1,
+      "x": 0.078242,
+      "y": 0.476817,
+      "w": 0.04896,
+      "h": 0.051571
+    },
+    {
+      "class_id": 1,
+      "x": 0.167021,
+      "y": 0.481497,
+      "w": 0.040786,
+      "h": 0.053335
+    }
+  ],
+  "decision": "APPROVE",
+  "status": "SUBMITTED_BBOX_REVIEW",
+  "reviewer_id": "REVIEWER01",
+  "reviewed_at_utc": "2026-11-16T09:54:11.022514+00:00",
+  "evidence_ref": "smoke fire",
+  "attest_frame_review": true,
+  "negative_frame_approved": false,
+  "source_video_sha256": null,
+  "candidate_source_video_sha256": "a7f2b4dab016b39e4559f997a9dfef11d5c7da5f64d283a1ebb7d6c993349894",
+  "scene_group_id": "SCENE_cfbf32584d7a0513",
+  "aliases": [
+    {
+      "image_path": "datasets/vn_dataset/images/val/VN_POS_63_f000673.jpg",
+      "label_path": "datasets/vn_dataset/labels/val/VN_POS_63_f000673.txt",
+      "label_sha256": "a11b9935e67cc9f053a718a6b19bc8482bfba359dd62730a924216d80e37929f",
+      "reserved_split": "VALIDATION_CANDIDATE"
+    }
+  ],
+  "lineage_status": "LINEAGE_NOT_VERIFIED",
+  "lineage_verified": false,
+  "approved_for_training": false,
+  "class_mapping": {
+    "0": "smoke",
+    "1": "fire"
+  }
+}
