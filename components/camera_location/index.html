@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    html, body { margin: 0; padding: 0; background: #101827; color: #e5edf7; font: 14px sans-serif; }
+    #controls { display:flex; gap:10px; align-items:center; margin:0 0 9px; flex-wrap:wrap; }
+    button { background:#155e75; border:1px solid #38bdf8; border-radius:7px; color:white; padding:9px 12px; cursor:pointer; }
+    button:disabled { opacity:.6; cursor:wait; }
+    #hint { color:#cbd5e1; min-height:18px; }
+    #map { height:340px; border:1px solid #334155; border-radius:9px; }
+    .leaflet-container { background:#1e293b; }
+  </style>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <div id="controls">
+    <button id="locate" type="button">📍 Lấy vị trí hiện tại</button>
+    <span id="hint" role="status">Chọn điểm trên bản đồ hoặc lấy vị trí thiết bị sau khi bấm nút.</span>
+  </div>
+  <div id="map" aria-label="Bản đồ vị trí camera"></div>
+  <script>
+  (() => {
+    const hint = document.getElementById('hint');
+    const locateButton = document.getElementById('locate');
+    let map = null, marker = null, initial = null, currentName = '';
+    const fallbackCenter = [16.0, 108.0]; // Approximate Vietnam view only; never saved as a camera location.
+    function send(data) {
+      window.parent.postMessage({isStreamlitMessage:true, type:'streamlit:setComponentValue', dataType:'json', value:data}, '*');
+    }
+    function onMarkerDrag() {
+      const p = marker.getLatLng();
+      setPoint(p.lat, p.lng, 'MAP_SELECTION', null);
+    }
+    function ensureMarker(point) {
+      if (!marker) {
+        marker = L.marker(point, {draggable:true}).addTo(map);
+        marker.on('dragend', onMarkerDrag);
+      } else marker.setLatLng(point);
+      if (currentName) marker.bindTooltip(document.createTextNode(currentName)); else marker.unbindTooltip();
+    }
+    function height() {
+      window.parent.postMessage({isStreamlitMessage:true, type:'streamlit:setFrameHeight', height:390}, '*');
+    }
+    function setPoint(lat, lon, source, accuracy) {
+      const point = [lat, lon];
+      ensureMarker(point);
+      map.setView(point, Math.max(map.getZoom(), 15));
+      hint.textContent = source === 'BROWSER_GEOLOCATION'
+        ? `Vị trí thiết bị: ${lat.toFixed(6)}, ${lon.toFixed(6)} · sai số khoảng ${Math.round(accuracy)} m. Chỉ lưu nếu camera thật sự ở đây.`
+        : `Đã chọn: ${lat.toFixed(6)}, ${lon.toFixed(6)}. Vị trí chưa được xác minh.`;
+      send({latitude:lat, longitude:lon, accuracy_meters:accuracy, location_source:source,
+            location_verified:false, action:'location_changed'});
+    }
+    function init(args) {
+      if (!window.L) { hint.textContent = 'Không tải được thư viện bản đồ. Kiểm tra kết nối mạng rồi tải lại trang.'; return; }
+      if (!map) {
+        map = L.map('map', {scrollWheelZoom:true}).setView(fallbackCenter, 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom:19, attribution:'© OpenStreetMap contributors'
+        }).addTo(map);
+        map.on('click', e => setPoint(e.latlng.lat, e.latlng.lng, 'MAP_SELECTION', null));
+        setTimeout(() => map.invalidateSize(), 50);
+      }
+      currentName = args.location_name || '';
+      const lat = args.latitude, lon = args.longitude;
+      const hasPoint = typeof lat === 'number' && typeof lon === 'number' && Number.isFinite(lat) && Number.isFinite(lon);
+      const token = hasPoint ? `${lat},${lon}` : '';
+      if (token !== initial) {
+        initial = token;
+        if (hasPoint) {
+          ensureMarker([lat,lon]);
+          map.setView([lat,lon], 15);
+        } else if (marker) { map.removeLayer(marker); marker = null; map.setView(fallbackCenter, 5); }
+      }
+      if (marker && currentName) marker.bindTooltip(document.createTextNode(currentName));
+      height();
+    }
+    locateButton.addEventListener('click', async () => {
+      if (!navigator.geolocation) { hint.textContent = 'Trình duyệt này không hỗ trợ định vị.'; return; }
+      try {
+        if (navigator.permissions && navigator.permissions.query) {
+          const permission = await navigator.permissions.query({name:'geolocation'});
+          if (permission.state === 'denied') { hint.textContent = 'Quyền định vị đã bị từ chối. Hãy cho phép trong cài đặt trang của trình duyệt.'; return; }
+        }
+      } catch (_) { /* Older browsers may not expose the Permissions API. */ }
+      locateButton.disabled = true;
+      hint.textContent = 'Đang chờ trình duyệt lấy vị trí. Hãy xác nhận quyền nếu được hỏi.';
+      navigator.geolocation.getCurrentPosition(position => {
+        locateButton.disabled = false;
+        const c = position.coords;
+        setPoint(c.latitude, c.longitude, 'BROWSER_GEOLOCATION', c.accuracy);
+        if (c.accuracy > 100) hint.textContent += ' Sai số lớn; hãy chọn lại trên bản đồ nếu cần.';
+      }, error => {
+        locateButton.disabled = false;
+        const messages = {1:'Bạn đã từ chối quyền định vị.', 2:'Không lấy được vị trí. Kiểm tra dịch vụ định vị của thiết bị.', 3:'Đã hết thời gian chờ vị trí. Hãy thử lại khi tín hiệu tốt hơn.'};
+        hint.textContent = messages[error.code] || 'Không lấy được vị trí thiết bị.';
+      }, {enableHighAccuracy:true, timeout:15000, maximumAge:0});
+    });
+    window.addEventListener('message', event => {
+      if (event.data && event.data.type === 'streamlit:render') init((event.data.args || {}));
+    });
+    window.parent.postMessage({isStreamlitMessage:true, type:'streamlit:componentReady', apiVersion:1}, '*');
+    height();
+  })();
+  </script>
+</body>
+</html>

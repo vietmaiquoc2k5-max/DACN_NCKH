@@ -21,6 +21,7 @@ from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
+from urllib.parse import quote_plus
 
 import cv2
 import numpy as np
@@ -119,16 +120,17 @@ def get_firewatch_station() -> MultiCameraManager:
     return mgr
 
 
-def _telegram_api_request(path: str, payload: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def _telegram_api_request(path: str, payload: Optional[Dict[str, Any]] = None,
+                          method: str = "POST") -> Dict[str, Any]:
     """Call the local authenticated management API with a fixed timeout."""
     api_token = os.getenv("FIREWATCH_API_TOKEN", "")
     if not api_token:
         raise RuntimeError("FIREWATCH_API_TOKEN is not configured for dashboard administration")
     base = os.getenv("FIREWATCH_API_INTERNAL_URL", "http://127.0.0.1:8000").rstrip("/")
-    response = requests.post(base + path, json=payload or {},
-                             headers={"Authorization": f"Bearer {api_token}",
-                                      "X-FireWatch-Instance-ID": get_firewatch_station()._fw_api_instance_id},
-                             timeout=10)
+    response = requests.request(method.upper(), base + path, json=payload or {},
+                                headers={"Authorization": f"Bearer {api_token}",
+                                         "X-FireWatch-Instance-ID": get_firewatch_station()._fw_api_instance_id},
+                                timeout=10)
     if not response.ok:
         detail = response.json().get("detail", {}) if response.headers.get("content-type", "").startswith("application/json") else {}
         if isinstance(detail, dict):
@@ -2820,64 +2822,175 @@ elif st.session_state.nav_page == "Cấu hình hệ thống":
         st.text_area("Nhật ký vận hành trạm (Đã ẩn mật khẩu RTSP):", value="\n".join(logs), height=220, disabled=True)
 
 elif st.session_state.nav_page == "Web Push":
-    render_html('<div class="fw-panel-title"><span>Web Push notifications</span></div>')
+    render_html('<div class="fw-panel-title"><span>Thông báo Web Push và vị trí camera</span></div>')
     manager = cam_system.notification_manager
     status = {"enabled": manager.enabled, "vapid_configured": manager.webpush.configured,
               "subscriptions": 0}
     with manager.queue.connect() as conn:
         status["subscriptions"] = conn.execute("SELECT COUNT(*) FROM push_subscriptions WHERE active=1").fetchone()[0]
     a, b, c = st.columns(3)
-    a.metric("Notifications", "Enabled" if status["enabled"] else "Disabled")
-    b.metric("VAPID", "Configured" if status["vapid_configured"] else "Not configured")
-    c.metric("Subscribed devices", status["subscriptions"])
-    st.caption("Browser subscription requires HTTPS, VAPID keys, and a reverse proxy that puts the dashboard and API on one origin.")
+    a.metric("Thông báo", "Đã bật" if status["enabled"] else "Đang tắt")
+    b.metric("VAPID", "Đã cấu hình" if status["vapid_configured"] else "Chưa cấu hình")
+    c.metric("Thiết bị đã đăng ký", status["subscriptions"])
+    st.caption("Đăng ký thiết bị cần HTTPS, VAPID và reverse proxy đưa Dashboard cùng API về một origin.")
     if status["vapid_configured"]:
         public_origin = os.getenv("FIREWATCH_PUSH_PUBLIC_ORIGIN", "").rstrip("/")
         if public_origin:
-            st.link_button("Subscribe this device", public_origin + "/notifications/subscribe", use_container_width=True)
+            st.link_button("Đăng ký thiết bị này", public_origin + "/notifications/subscribe", use_container_width=True)
         else:
-            st.warning("Set FIREWATCH_PUSH_PUBLIC_ORIGIN to the public HTTPS origin shared by the dashboard and API.")
-        enable = st.checkbox("Enable event notifications", value=manager.enabled, key="webpush_enabled_toggle")
+            st.warning("Hãy đặt FIREWATCH_PUSH_PUBLIC_ORIGIN thành origin HTTPS dùng chung cho Dashboard và API.")
+        enable = st.checkbox("Bật thông báo sự kiện", value=manager.enabled, key="webpush_enabled_toggle")
         if enable != manager.enabled:
             try:
                 manager.set_enabled(enable)
-                st.success("Web Push setting updated.")
+                st.success("Đã cập nhật cài đặt Web Push.")
                 st.rerun()
             except ValueError as exc:
                 st.error(str(exc))
-        if st.button("Send test notification", disabled=status["subscriptions"] == 0):
+        if st.button("Gửi thông báo kiểm tra", disabled=status["subscriptions"] == 0):
             try:
                 result = _telegram_api_request("/api/notifications/test")
-                st.info("Push service accepted the test request for {} device(s). This does not confirm display on a device.".format(result.get("accepted_subscriptions", 0)))
+                st.info("Push service đã nhận yêu cầu cho {} thiết bị; điều này chưa xác nhận thông báo đã hiển thị trên thiết bị.".format(result.get("accepted_subscriptions", 0)))
             except Exception as exc:
-                st.error("Test notification failed: " + str(exc))
-    st.code("WEB_PUSH_ENABLED=false\nFIREWATCH_VAPID_PUBLIC_KEY=<public key>\nFIREWATCH_VAPID_PRIVATE_KEY=<private key>\nFIREWATCH_VAPID_SUBJECT=mailto:admin@example.com\nFIREWATCH_PUSH_PUBLIC_ORIGIN=https://firewatch.example.com", language="text")
-    st.info("Devices are never subscribed automatically. The Subscribe button opens a page that requests browser permission only after an explicit click.")
-    st.markdown("### Camera locations")
+                st.error("Không gửi được thông báo kiểm tra: " + str(exc))
+    st.info("FireWatch không tự xin vị trí. Vị trí thiết bị mở Dashboard có thể khác vị trí camera RTSP; chỉ lưu sau khi đối chiếu thực địa.")
+    with st.expander("Cấu hình Web Push", expanded=not status["vapid_configured"]):
+        st.code("WEB_PUSH_ENABLED=false\nFIREWATCH_VAPID_PUBLIC_KEY=<public key>\nFIREWATCH_VAPID_PRIVATE_KEY=<private key>\nFIREWATCH_VAPID_SUBJECT=mailto:admin@example.com\nFIREWATCH_PUSH_PUBLIC_ORIGIN=https://firewatch.example.com", language="text")
+    st.markdown("### Quản lý vị trí camera")
     cameras = list(cam_system.workers.values())
     cam_ids = [worker.config.cam_id for worker in cameras]
     if cam_ids:
-        selected = st.selectbox("Camera", cam_ids, format_func=lambda cid: cam_system.workers[cid].config.name + " (" + cid + ")")
+        selected = st.selectbox("Chọn camera", cam_ids, format_func=lambda cid: cam_system.workers[cid].config.name + " (" + cid + ")")
         existing = next((loc for loc in manager.queue.locations() if loc["camera_id"] == selected), {})
+        drafts = st.session_state.setdefault("camera_location_drafts", {})
+        draft = drafts.setdefault(selected, dict(existing))
+        widget_defaults = {
+            "name": draft.get("location_name", ""),
+            "address": draft.get("address", ""),
+            "latitude": "" if draft.get("latitude") is None else str(draft.get("latitude")),
+            "longitude": "" if draft.get("longitude") is None else str(draft.get("longitude")),
+            "accuracy": draft.get("accuracy_meters"),
+        }
+        widget_keys = {name: "camera_location_{}_{}".format(name, selected) for name in widget_defaults}
+        for name, key in widget_keys.items():
+            if key not in st.session_state:
+                st.session_state[key] = widget_defaults[name]
+        def parse_coordinate(value):
+            if value is None or not str(value).strip():
+                return None
+            return float(value)
+
+        try:
+            draft_latitude = parse_coordinate(st.session_state[widget_keys["latitude"]])
+            draft_longitude = parse_coordinate(st.session_state[widget_keys["longitude"]])
+        except (TypeError, ValueError):
+            draft_latitude, draft_longitude = None, None
+        component_value = None
+        try:
+            from src.camera_location_component import render_camera_location_map
+            component_value = render_camera_location_map(
+                draft_latitude,
+                draft_longitude,
+                st.session_state[widget_keys["name"]],
+                key="camera_location_map_" + selected,
+            )
+        except Exception as exc:
+            st.error("Không tải được bản đồ tương tác: {}".format(type(exc).__name__))
+        if isinstance(component_value, dict) and component_value.get("action") == "location_changed":
+            new_lat = component_value.get("latitude")
+            new_lon = component_value.get("longitude")
+            if (new_lat, new_lon, component_value.get("location_source")) != (
+                draft.get("latitude"), draft.get("longitude"), draft.get("location_source")
+            ):
+                draft.update({"latitude": new_lat, "longitude": new_lon,
+                              "accuracy_meters": component_value.get("accuracy_meters"),
+                              "location_source": component_value.get("location_source"),
+                              "location_verified": False})
+                st.session_state[widget_keys["latitude"]] = str(new_lat)
+                st.session_state[widget_keys["longitude"]] = str(new_lon)
+                st.session_state[widget_keys["accuracy"]] = component_value.get("accuracy_meters")
+                drafts[selected] = draft
+                st.rerun()
+        if existing.get("latitude") is None and existing.get("longitude") is None:
+            st.caption("Bản đồ đang ở chế độ xem gần đúng khu vực Việt Nam; chưa có vị trí camera nào được gán.")
+        st.caption("Bản đồ dùng ô bản đồ OpenStreetMap. Nhà cung cấp ô bản đồ nhận yêu cầu tải vùng bản đồ; FireWatch không gửi dữ liệu đến dịch vụ geocoding.")
+        verification = existing.get("location_verified", False)
+        draft_location_changed = (draft.get("address", ""), draft.get("latitude"), draft.get("longitude")) != (
+            existing.get("address", ""), existing.get("latitude"), existing.get("longitude")
+        )
+        if draft_location_changed:
+            st.warning("Vị trí đang chỉnh sửa chưa được xác minh; hãy lưu sau khi đối chiếu camera thực tế.")
+        elif existing and (existing.get("latitude") is not None or existing.get("address")):
+            if verification:
+                st.success("Vị trí đã xác minh · {}".format(existing.get("verified_at") or "thời điểm cũ chưa lưu"))
+            else:
+                st.warning("Vị trí chưa xác minh")
+        else:
+            st.info("Chưa có vị trí")
+
         with st.form("camera_location_form"):
-            loc_name = st.text_input("Location name", value=existing.get("location_name", ""))
-            address = st.text_input("Address", value=existing.get("address", ""))
-            lat = st.number_input("Latitude", min_value=-90.0, max_value=90.0, value=float(existing.get("latitude", 0.0)), format="%.7f")
-            lon = st.number_input("Longitude", min_value=-180.0, max_value=180.0, value=float(existing.get("longitude", 0.0)), format="%.7f")
-            verified = st.checkbox("Camera location verified", value=bool(existing.get("location_verified", False)))
-            if st.form_submit_button("Save location"):
+            loc_name = st.text_input("Tên khu vực", key=widget_keys["name"])
+            address = st.text_input("Địa chỉ", key=widget_keys["address"])
+            lat_text = st.text_input("Vĩ độ", key=widget_keys["latitude"], placeholder="Chưa nhập")
+            lon_text = st.text_input("Kinh độ", key=widget_keys["longitude"], placeholder="Chưa nhập")
+            accuracy_text = "Chưa có"
+            if st.session_state[widget_keys["accuracy"]] is not None:
+                accuracy_text = "{:.1f} m".format(float(st.session_state[widget_keys["accuracy"]]))
+            st.text_input("Độ chính xác ước tính", value=accuracy_text, disabled=True)
+            try:
+                lat = parse_coordinate(lat_text)
+                lon = parse_coordinate(lon_text)
+            except (TypeError, ValueError):
+                lat, lon = None, None
+            source = draft.get("location_source") or ("MANUAL_COORDINATES" if lat is not None or lon is not None else "MANUAL_ADDRESS")
+            source_labels = {"BROWSER_GEOLOCATION": "Vị trí trình duyệt", "MAP_SELECTION": "Chọn trên bản đồ", "MANUAL_COORDINATES": "Nhập tọa độ thủ công", "MANUAL_ADDRESS": "Nhập địa chỉ thủ công"}
+            st.text_input("Nguồn vị trí", value=source_labels.get(source, source), disabled=True)
+            confirm_verified = st.checkbox("Tôi xác nhận vị trí này khớp với vị trí thực tế của camera", key="camera_location_verify_" + selected, help="Chỉ xác nhận sau khi đối chiếu camera thực tế. Vị trí trình duyệt hoặc chọn trên bản đồ không tự xác minh camera.")
+            zero_zero = st.checkbox("Xác nhận tọa độ (0, 0) là vị trí camera có chủ đích", key="camera_location_zero_zero_" + selected)
+            if st.form_submit_button("Lưu vị trí"):
                 try:
                     from src.notifications import CameraLocation
-                    item = CameraLocation(selected, loc_name, address, lat, lon, verified)
-                    manager.queue.set_location(item)
-                    st.success("Location saved. New confirmed events will preserve this location snapshot.")
+                    lat = parse_coordinate(lat_text)
+                    lon = parse_coordinate(lon_text)
+                    geographic_changed = (address.strip(), lat, lon) != (
+                        existing.get("address", ""), existing.get("latitude"), existing.get("longitude")
+                    )
+                    verified = bool(confirm_verified or (existing.get("location_verified") and not geographic_changed))
+                    if lat is None and lon is None and address.strip():
+                        source = "MANUAL_ADDRESS"
+                    elif lat is not None and lon is not None:
+                        if (lat, lon) != (draft.get("latitude"), draft.get("longitude")):
+                            source = "MANUAL_COORDINATES"
+                    accuracy = st.session_state[widget_keys["accuracy"]]
+                    item = CameraLocation(selected, loc_name, address, lat, lon, verified,
+                                          accuracy if source == "BROWSER_GEOLOCATION" else None,
+                                          source, zero_zero_confirmed=zero_zero)
+                    _telegram_api_request("/api/cameras/{}/location".format(selected), {
+                        "location_name": item.location_name,
+                        "address": item.address,
+                        "latitude": item.latitude,
+                        "longitude": item.longitude,
+                        "accuracy_meters": item.accuracy_meters,
+                        "location_source": item.location_source,
+                        "location_verified": item.location_verified,
+                        "zero_zero_confirmed": zero_zero,
+                    }, method="PUT")
+                    drafts.pop(selected, None)
+                    st.session_state.pop("camera_location_zero_zero_" + selected, None)
+                    st.session_state.pop("camera_location_verify_" + selected, None)
+                    st.success("Đã lưu vị trí camera.")
                     st.rerun()
                 except ValueError as exc:
                     st.error(str(exc))
-    st.markdown("### Notification history")
+        saved = next((loc for loc in manager.queue.locations() if loc["camera_id"] == selected), {})
+        if saved.get("latitude") is not None and saved.get("longitude") is not None:
+            st.link_button("Mở Google Maps", CameraLocation(selected, saved.get("location_name", ""), saved.get("address", ""), saved["latitude"], saved["longitude"], bool(saved.get("location_verified")), saved.get("accuracy_meters"), saved.get("location_source", "MANUAL_COORDINATES"), saved.get("verified_at"), zero_zero_confirmed=(saved["latitude"] == 0 and saved["longitude"] == 0)).maps_url)
+        elif saved.get("address"):
+            st.link_button("Tìm địa chỉ trên Google Maps", "https://www.google.com/maps/search/?api=1&query=" + quote_plus(saved["address"]))
+    st.markdown("### Lịch sử thông báo")
     jobs = manager.queue.history(250)
     if jobs:
         st.dataframe(pd.DataFrame(jobs), use_container_width=True, hide_index=True)
-        st.caption("ACCEPTED_BY_PUSH_SERVICE means the push service accepted the request; it does not confirm display on a device.")
+        st.caption("Push service nhận yêu cầu không đồng nghĩa thiết bị đã hiển thị thông báo.")
     else:
-        st.info("No Web Push jobs yet.")
+        st.info("Chưa có thông báo Web Push.")

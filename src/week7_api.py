@@ -23,7 +23,7 @@ from urllib.parse import urlsplit
 
 from fastapi import Body, Depends, FastAPI, Header, HTTPException, Query, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 from src.camera_manager import MultiCameraManager
 from src.config import PROJECT_ROOT, mask_rtsp_credentials
@@ -62,9 +62,18 @@ class PushSubscriptionInput(BaseModel):
 class CameraLocationInput(BaseModel):
     location_name: str = Field(default="", max_length=200)
     address: str = Field(default="", max_length=500)
-    latitude: float
-    longitude: float
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    accuracy_meters: Optional[float] = Field(default=None, ge=0)
+    location_source: str = "MANUAL_COORDINATES"
     location_verified: bool = False
+    zero_zero_confirmed: bool = False
+
+    @validator("latitude", "longitude", pre=True)
+    def reject_boolean_coordinates(cls, value):
+        if isinstance(value, bool):
+            raise ValueError("Coordinates must be numeric values, not booleans")
+        return value
 
 
 def _manager(request: Request) -> MultiCameraManager:
@@ -654,7 +663,7 @@ def alert_deliveries(limit: int = Query(100, ge=1, le=1000), manager: MultiCamer
 def service_worker():
     """Serve the worker at API origin root, its only valid service-worker scope."""
     from fastapi.responses import Response
-    script = '''self.addEventListener("push", event => { let data = {}; try { data = event.data.json(); } catch (_) {} const loc = data.location || {}; const title = `${data.type || "ALERT"} · ${data.camera_name || "FireWatch"}`; const body = `Event ${data.event_id} · ${data.confirmed_at || ""} · ${loc.location_name || loc.address || "Location not set"}`; event.waitUntil(self.registration.showNotification(title, {body, data: {url: loc.maps_url || "/"}, tag: `firewatch-${data.event_id}`})); }); self.addEventListener("notificationclick", event => { event.notification.close(); const url = event.notification.data && event.notification.data.url || "/"; event.waitUntil(clients.openWindow(url)); });'''
+    script = '''self.addEventListener("push", event => { let data = {}; try { data = event.data.json(); } catch (_) {} const loc = data.location || {}; const title = `${data.type || "ALERT"} · ${data.camera_name || "FireWatch"}`; const place = [loc.location_name, loc.address].filter(Boolean).join(" · ") || "Chưa cấu hình vị trí camera"; const coords = Number.isFinite(loc.latitude) && Number.isFinite(loc.longitude) ? ` (${loc.latitude}, ${loc.longitude})` : ""; const body = `Event ${data.event_id} · ${data.camera_id || ""} · ${data.confirmed_at || ""}\\n${place}${coords}`; event.waitUntil(self.registration.showNotification(title, {body, data: {url: loc.maps_url || "/"}, tag: `firewatch-${data.event_id}`})); }); self.addEventListener("notificationclick", event => { event.notification.close(); const url = event.notification.data && event.notification.data.url || "/"; event.waitUntil(clients.openWindow(url)); });'''
     return Response(script, media_type="application/javascript", headers={"Service-Worker-Allowed": "/", "Cache-Control": "no-cache"})
 
 
@@ -744,13 +753,17 @@ def set_camera_location(camera_id: str, payload: CameraLocationInput, manager: M
         raise HTTPException(404, detail={"code": "CAMERA_NOT_FOUND", "message": "Unknown camera id"})
     try:
         location = CameraLocation(camera_id, payload.location_name, payload.address, payload.latitude,
-                                  payload.longitude, payload.location_verified)
+                                  payload.longitude, payload.location_verified, payload.accuracy_meters,
+                                  payload.location_source, zero_zero_confirmed=payload.zero_zero_confirmed)
     except ValueError as exc:
         raise HTTPException(422, detail={"code": "INVALID_LOCATION", "message": str(exc)})
     manager.notification_manager.queue.set_location(location)
+    saved = next((loc for loc in manager.notification_manager.queue.locations() if loc["camera_id"] == camera_id), {})
     return {"camera_id": camera_id, "location_name": location.location_name, "address": location.address,
             "latitude": location.latitude, "longitude": location.longitude,
-            "location_verified": location.location_verified, "maps_url": location.maps_url}
+            "accuracy_meters": location.accuracy_meters, "location_source": location.location_source,
+            "location_verified": bool(saved.get("location_verified")), "verified_at": saved.get("verified_at"),
+            "maps_url": location.maps_url}
 
 
 @app.get("/api/notifications/history")

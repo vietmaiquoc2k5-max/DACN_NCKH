@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import os
 import re
 import sqlite3
@@ -16,7 +17,7 @@ import uuid
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from typing import Any, Dict, Optional
-from urllib.parse import urlsplit
+from urllib.parse import quote_plus, urlsplit
 
 LOGGER = logging.getLogger(__name__)
 
@@ -25,30 +26,70 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="microseconds")
 
 
-def validate_coordinates(latitude: Any, longitude: Any):
+LOCATION_SOURCES = {
+    "BROWSER_GEOLOCATION", "MAP_SELECTION", "MANUAL_COORDINATES", "MANUAL_ADDRESS"
+}
+
+
+def validate_coordinates(latitude: Any, longitude: Any, allow_zero_zero: bool = False):
+    if latitude is None and longitude is None:
+        return None, None
+    if latitude is None or longitude is None:
+        raise ValueError("Latitude and longitude must both be provided")
+    if isinstance(latitude, bool) or isinstance(longitude, bool):
+        raise ValueError("Latitude and longitude must be numeric coordinates")
     try:
         lat, lon = float(latitude), float(longitude)
     except (TypeError, ValueError):
         raise ValueError("Latitude and longitude must be numeric")
-    if not (-90 <= lat <= 90 and -180 <= lon <= 180):
+    if not (math.isfinite(lat) and math.isfinite(lon) and -90 <= lat <= 90 and -180 <= lon <= 180):
         raise ValueError("Coordinates are outside valid latitude/longitude ranges")
+    if lat == 0 and lon == 0 and not allow_zero_zero:
+        raise ValueError("Coordinates 0, 0 require explicit confirmation")
     return lat, lon
 
 
 class CameraLocation:
     def __init__(self, camera_id: str, location_name: str = "", address: str = "",
-                 latitude: Any = None, longitude: Any = None, location_verified: bool = False):
+                 latitude: Any = None, longitude: Any = None, location_verified: bool = False,
+                 accuracy_meters: Any = None, location_source: str = "MANUAL_COORDINATES",
+                 verified_at: Optional[str] = None, zero_zero_confirmed: bool = False):
         if not camera_id or len(camera_id) > 120:
             raise ValueError("camera_id is required")
         self.camera_id = camera_id
         self.location_name = location_name.strip()
         self.address = address.strip()
-        self.latitude, self.longitude = validate_coordinates(latitude, longitude)
+        self.latitude, self.longitude = validate_coordinates(latitude, longitude, zero_zero_confirmed)
+        self.accuracy_meters = None
+        if accuracy_meters is not None:
+            try:
+                accuracy = float(accuracy_meters)
+            except (TypeError, ValueError):
+                raise ValueError("Accuracy must be numeric")
+            if not math.isfinite(accuracy) or accuracy < 0:
+                raise ValueError("Accuracy must be a finite non-negative number")
+            self.accuracy_meters = accuracy
+        self.location_source = str(location_source or "MANUAL_COORDINATES").upper()
+        if self.location_source not in LOCATION_SOURCES:
+            raise ValueError("Unsupported location source")
         self.location_verified = bool(location_verified)
+        if self.location_source == "MANUAL_ADDRESS" and not self.address:
+            raise ValueError("An address is required for MANUAL_ADDRESS")
+        if self.location_source != "MANUAL_ADDRESS" and self.latitude is None:
+            raise ValueError("Coordinates are required for this location source")
+        if self.location_verified and self.latitude is None and not self.address:
+            raise ValueError("A location is required before it can be verified")
+        if self.accuracy_meters is not None and self.latitude is None:
+            raise ValueError("Accuracy requires coordinates")
+        self.verified_at = verified_at
 
     @property
-    def maps_url(self) -> str:
-        return "https://www.google.com/maps/search/?api=1&query={},{}".format(self.latitude, self.longitude)
+    def maps_url(self) -> Optional[str]:
+        if self.latitude is not None and self.longitude is not None:
+            return "https://www.google.com/maps/search/?api=1&query={},{}".format(self.latitude, self.longitude)
+        if self.address:
+            return "https://www.google.com/maps/search/?api=1&query={}".format(quote_plus(self.address))
+        return None
 
 
 class NotificationQueue:
@@ -73,26 +114,47 @@ class NotificationQueue:
             conn.execute("CREATE TABLE IF NOT EXISTS push_subscriptions (subscription_id TEXT PRIMARY KEY, endpoint TEXT NOT NULL UNIQUE, subscription_json TEXT NOT NULL, created_at TEXT NOT NULL, active INTEGER NOT NULL DEFAULT 1)")
             conn.execute("CREATE TABLE IF NOT EXISTS camera_locations (camera_id TEXT PRIMARY KEY, location_name TEXT NOT NULL DEFAULT '', address TEXT NOT NULL DEFAULT '', latitude REAL NOT NULL, longitude REAL NOT NULL, location_verified INTEGER NOT NULL DEFAULT 0, updated_at TEXT NOT NULL)")
             conn.execute("CREATE TABLE IF NOT EXISTS event_location_snapshots (event_id INTEGER PRIMARY KEY, camera_id TEXT NOT NULL, location_name TEXT NOT NULL, address TEXT NOT NULL, latitude REAL NOT NULL, longitude REAL NOT NULL, location_verified INTEGER NOT NULL, maps_url TEXT NOT NULL, FOREIGN KEY(event_id) REFERENCES alert_logs(id))")
+            conn.execute("CREATE TABLE IF NOT EXISTS camera_location_records (camera_id TEXT PRIMARY KEY, location_name TEXT NOT NULL DEFAULT '', address TEXT NOT NULL DEFAULT '', latitude REAL, longitude REAL, accuracy_meters REAL, location_source TEXT NOT NULL DEFAULT 'MANUAL_COORDINATES', location_verified INTEGER NOT NULL DEFAULT 0, verified_at TEXT, updated_at TEXT NOT NULL)")
+            conn.execute("INSERT OR IGNORE INTO camera_location_records(camera_id,location_name,address,latitude,longitude,location_source,location_verified,updated_at) SELECT camera_id,location_name,address,latitude,longitude,'MANUAL_COORDINATES',location_verified,updated_at FROM camera_locations")
+            conn.execute("CREATE TABLE IF NOT EXISTS event_location_records (event_id INTEGER PRIMARY KEY, camera_id TEXT NOT NULL, location_name TEXT NOT NULL DEFAULT '', address TEXT NOT NULL DEFAULT '', latitude REAL, longitude REAL, accuracy_meters REAL, location_source TEXT NOT NULL DEFAULT 'MANUAL_COORDINATES', location_verified INTEGER NOT NULL DEFAULT 0, verified_at TEXT, maps_url TEXT, FOREIGN KEY(event_id) REFERENCES alert_logs(id))")
+            conn.execute("INSERT OR IGNORE INTO event_location_records(event_id,camera_id,location_name,address,latitude,longitude,location_verified,maps_url) SELECT event_id,camera_id,location_name,address,latitude,longitude,location_verified,maps_url FROM event_location_snapshots")
+            event_columns = {row[1] for row in conn.execute("PRAGMA table_info(event_location_records)")}
+            for column, sql_type in (("accuracy_meters", "REAL"),
+                                     ("location_source", "TEXT NOT NULL DEFAULT 'MANUAL_COORDINATES'"),
+                                     ("verified_at", "TEXT")):
+                if column not in event_columns:
+                    conn.execute("ALTER TABLE event_location_records ADD COLUMN {} {}".format(column, sql_type))
             conn.execute("CREATE TABLE IF NOT EXISTS notification_jobs (job_id TEXT PRIMARY KEY, event_id INTEGER NOT NULL, provider TEXT NOT NULL, status TEXT NOT NULL, payload_json TEXT NOT NULL, attempt_count INTEGER NOT NULL DEFAULT 0, next_attempt_at TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, error_message TEXT, UNIQUE(event_id,provider))")
             conn.execute("CREATE TABLE IF NOT EXISTS notification_settings (setting_id INTEGER PRIMARY KEY CHECK(setting_id=1), enabled INTEGER NOT NULL, updated_at TEXT NOT NULL)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_notification_jobs_pending ON notification_jobs(status,next_attempt_at,created_at)")
 
     def set_location(self, location: CameraLocation):
         with self.connect() as conn:
-            conn.execute("INSERT INTO camera_locations VALUES(?,?,?,?,?,?,?) ON CONFLICT(camera_id) DO UPDATE SET location_name=excluded.location_name,address=excluded.address,latitude=excluded.latitude,longitude=excluded.longitude,location_verified=excluded.location_verified,updated_at=excluded.updated_at", (location.camera_id, location.location_name, location.address, location.latitude, location.longitude, int(location.location_verified), _now()))
+            old = conn.execute("SELECT address,latitude,longitude,location_verified,verified_at FROM camera_location_records WHERE camera_id=?", (location.camera_id,)).fetchone()
+            geo_changed = bool(old and (old[0], old[1], old[2]) != (location.address, location.latitude, location.longitude))
+            verified = location.location_verified
+            if verified:
+                if not geo_changed and old and old[3] and old[4]:
+                    verified_at = old[4]
+                else:
+                    verified_at = location.verified_at or _now()
+            else:
+                verified_at = None
+            conn.execute("INSERT INTO camera_location_records(camera_id,location_name,address,latitude,longitude,accuracy_meters,location_source,location_verified,verified_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(camera_id) DO UPDATE SET location_name=excluded.location_name,address=excluded.address,latitude=excluded.latitude,longitude=excluded.longitude,accuracy_meters=excluded.accuracy_meters,location_source=excluded.location_source,location_verified=excluded.location_verified,verified_at=excluded.verified_at,updated_at=excluded.updated_at", (location.camera_id, location.location_name, location.address, location.latitude, location.longitude, location.accuracy_meters, location.location_source, int(verified), verified_at if verified else None, _now()))
 
     def locations(self):
         with self.connect() as conn:
-            return [dict(zip(("camera_id", "location_name", "address", "latitude", "longitude", "location_verified", "updated_at"), row)) for row in conn.execute("SELECT camera_id,location_name,address,latitude,longitude,location_verified,updated_at FROM camera_locations ORDER BY camera_id")]
+            return [dict(zip(("camera_id", "location_name", "address", "latitude", "longitude", "accuracy_meters", "location_source", "location_verified", "verified_at", "updated_at"), row)) for row in conn.execute("SELECT camera_id,location_name,address,latitude,longitude,accuracy_meters,location_source,location_verified,verified_at,updated_at FROM camera_location_records ORDER BY camera_id")]
 
     def snapshot_location(self, event_id: int, camera_id: str):
         with self.connect() as conn:
-            row = conn.execute("SELECT location_name,address,latitude,longitude,location_verified FROM camera_locations WHERE camera_id=?", (camera_id,)).fetchone()
+            row = conn.execute("SELECT location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at FROM camera_location_records WHERE camera_id=?", (camera_id,)).fetchone()
             if not row:
                 return None
-            maps = "https://www.google.com/maps/search/?api=1&query={},{}".format(row[2], row[3])
-            conn.execute("INSERT OR IGNORE INTO event_location_snapshots VALUES(?,?,?,?,?,?,?,?)", (event_id, camera_id) + row + (maps,))
-            return {"camera_id": camera_id, "location_name": row[0], "address": row[1], "latitude": row[2], "longitude": row[3], "location_verified": bool(row[4]), "maps_url": maps}
+            location = CameraLocation(camera_id, row[0], row[1], row[2], row[3], bool(row[4]), row[5], row[6], row[7], zero_zero_confirmed=(row[2] == 0 and row[3] == 0))
+            conn.execute("INSERT OR IGNORE INTO event_location_records(event_id,camera_id,location_name,address,latitude,longitude,location_verified,maps_url,accuracy_meters,location_source,verified_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)", (event_id, camera_id, row[0], row[1], row[2], row[3], row[4], location.maps_url, row[5], row[6], row[7]))
+            snapshot = conn.execute("SELECT camera_id,location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at,maps_url FROM event_location_records WHERE event_id=?", (event_id,)).fetchone()
+            return {"camera_id": snapshot[0], "location_name": snapshot[1], "address": snapshot[2], "latitude": snapshot[3], "longitude": snapshot[4], "location_verified": bool(snapshot[5]), "accuracy_meters": snapshot[6], "location_source": snapshot[7], "verified_at": snapshot[8], "maps_url": snapshot[9]}
 
     @staticmethod
     def validate_subscription(data: Any):
