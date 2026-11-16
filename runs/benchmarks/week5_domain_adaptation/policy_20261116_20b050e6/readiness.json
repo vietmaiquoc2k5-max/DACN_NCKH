@@ -1,0 +1,37 @@
+{
+  "gates": {
+    "BBOX_INTEGRITY_READY": true,
+    "SPLIT_READY": false,
+    "VN_BBOX_READY": false,
+    "DFIRE_READY": false,
+    "RESOURCE_PILOT_READY": false,
+    "WEEK5_TRAINING_READY": false
+  },
+  "eligible_train": 0,
+  "eligible_val": 0,
+  "eligible_test": 0,
+  "class_mapping": [
+    "smoke",
+    "fire"
+  ],
+  "source_yaml_sha256": "cf0ef58ab837152ed4482a05327da76e5d2006f316d1f19e317f1568f7c9ee7f",
+  "baseline_membership": "BASELINE_MEMBERSHIP_NOT_VERIFIED",
+  "initialization_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+  "pilot": {
+    "status": "NOT_RUN_NO_VALID_TRAIN_VAL",
+    "measurements": null
+  },
+  "experiments": {
+    "runs": 0,
+    "epochs": 0,
+    "seeds_completed": 0,
+    "metrics": null
+  },
+  "blockers": [
+    "SOURCE_SCENE_INDEPENDENCE_NOT_VERIFIED",
+    "BASELINE_MEMBERSHIP_NOT_VERIFIED"
+  ],
+  "sample_size_suitability": "NOT_ESTABLISHED; empty eligible subset cannot satisfy research sample-size requirements",
+  "proposal_changes_current_labels": false,
+  "original_test_reservations_preserved": true
+}

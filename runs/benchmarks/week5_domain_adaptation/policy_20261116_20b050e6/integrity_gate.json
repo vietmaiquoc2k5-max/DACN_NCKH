@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-11-16T17:56:47.030357+07:00",
+  "status": "PASS",
+  "resolved": 5,
+  "unresolved": 0,
+  "strict_export_integrity": "PASS",
+  "historical_resolved_error_logs": [],
+  "valid_versions": 1748,
+  "unique_valid_images": 1727,
+  "decisions": {
+    "APPROVE": 1727
+  },
+  "resolution_checksums": {
+    "ba5e6914-35e5-4e21-8e1f-764276c02937": "4e58aaf30bd8e5ea1c4bd6f9a386266f3454e3757cdd857f1939663eaa360a80",
+    "687dc382-dd33-4f25-8e44-e4ec8486c9d0": "beec11a28f133c03070fe91d7db0cdad88272c017e00ca81c78cf417335664b3",
+    "b317248c-874b-4fdb-844b-cb7e445a20d5": "c92cef1f41af895e0889d6d73c2400c18a3284aa7a9564f543cae08c46f8b28f",
+    "fb59d457-bca9-4e86-b084-1f8793d68c0a": "7c311fba525012134092ff1a04203cb067cbcfc5922d72318d9e8a6986897e97",
+    "2255621e-a71c-47cf-9c19-cbcc497287f9": "11ab44f19a660f6e4b39d2231ebb6d821d64e802a3ec200a9ff4244b34f69586"
+  },
+  "new_human_approvals_created_by_agent": 0
+}

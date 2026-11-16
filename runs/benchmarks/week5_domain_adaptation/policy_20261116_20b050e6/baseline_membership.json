@@ -1,0 +1,37 @@
+{
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "epoch": -1,
+  "date": "2026-10-28T00:55:42.324330",
+  "version": "8.4.75",
+  "train_args_data": "data_dfire.yaml",
+  "checkpoint_keys": [
+    "best_fitness",
+    "date",
+    "docs",
+    "ema",
+    "epoch",
+    "git",
+    "license",
+    "model",
+    "optimizer",
+    "scaler",
+    "train_args",
+    "train_metrics",
+    "train_results",
+    "updates",
+    "version"
+  ],
+  "status": "TRAINING_MEMBERSHIP_NOT_AUTHENTICATED",
+  "reason": "Dataset path/training metrics do not bind the image bytes presented during training",
+  "independent_evaluation_claimed": false,
+  "fallback_protocol": {
+    "status": "PROPOSED_NOT_EXECUTED",
+    "initialization": "New explicitly recorded pretrained checkpoint or random initialization",
+    "required": [
+      "Locked source/scene-disjoint train/val/test with per-image SHA",
+      "Train new baseline only on locked train; select checkpoint on validation",
+      "Use same resulting baseline for A/B/C; keep reserved test sealed"
+    ],
+    "reuse_historical_test_for_training": false
+  }
+}

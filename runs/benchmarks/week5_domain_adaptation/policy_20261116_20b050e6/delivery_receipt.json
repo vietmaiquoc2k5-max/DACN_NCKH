@@ -1,0 +1,13 @@
+{
+  "head": "20b050e6a865888ba9f76cecc190f6f56dff25a8",
+  "metadata_artifacts_verified": 17,
+  "frozen_gt_preserved": true,
+  "diff_check_exit_code": 0,
+  "production_labels_modified": 0,
+  "human_approvals_created": 0,
+  "training_runs": 0,
+  "epochs": 0,
+  "policy_sha256": "40ca9f80dd8d15ad3226e41f2ee6992f75fdb3154f5f9fb1fb0d37590cfb15d3",
+  "code_sha256": "139d55e7b15f317f97d645a35988ec8aea5ae8ce882a612f43334e254655b239",
+  "report_sha256": "4400149c4b1eb11f8427c5f2d387ea3ac99b291d6770bcd3feac2ed835a3a067"
+}

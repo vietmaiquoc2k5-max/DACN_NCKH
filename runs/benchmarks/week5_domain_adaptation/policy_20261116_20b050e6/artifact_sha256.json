@@ -1,0 +1,19 @@
+{
+  "analysis_implementation.json": "9804eaa546e765c0394504d663fc0b94d209d154a61defd7847220452716a8ab",
+  "annotation_impact.json": "be5785cb6c190758dc74311b23fc8dbad8a5e229f00f89ab90a605b3161dc842",
+  "baseline_membership.json": "70d77e27db0418f04ce78f8e53d53cf38176d5688e0d21ac7fc1a2ecc554f76e",
+  "baseline_recheck.json": "d006a130c9cfb8f4f12bf6b21ca77addde203bdf46fa000fd1899ac04a954521",
+  "clean_dfire_manifest.json": "9ace30438a7ffb4898b61d84ed667ea2a24c0ba3f4679fd0e01653cd27bd8fb7",
+  "clean_subset_manifest.json": "dde3f6ebfbc0356f79c59ed03e05487f7b74ef50947e3745f51922c493258bf3",
+  "export_reproducibility.json": "323af1267f870480b7c17d337cd64ffd91296ee711c90678ae069eae6e83500c",
+  "human_source_shortlist.json": "119c3649d139ad6a01055a4651ef7f6a754bcca745ca59d5aad3ce087cb888fd",
+  "human_source_shortlist_current.json": "e2e1fe2c520894a44bf0b0467ab2f9e25df21d1ae1040d887467abdf06aad6c5",
+  "integrity_gate.json": "91af77330b4786ae8b07403651bf2ec72a84b59b5a9c0532b51f1dda25852d68",
+  "lineage_summary.json": "1c73cf652540ee81071bc04090347871105b6741150ddd2e7c57ab28ba08ea51",
+  "new_baseline_protocol.json": "360e89cf47a8a896a28dd18138a1faba8369a46d730005248aad2f227933725b",
+  "parents.json": "787367c7072c907252a205927596e178b3694c4760ea3cd13008a8fa8703b65e",
+  "readiness.json": "efa815b86737da9f6f563ecb414f0509ca916b3bd3f4b00825955442303c1ca4",
+  "scene_group_manifest.json": "06aa6f78b428117f4a7a70aac3ea5f659857f64428cd5b4de975e85a6c924f4e",
+  "scene_summary.json": "d72f4dc7339ea3f44ce4275bfd183074850fd11d58a550215111ff396bc86eeb",
+  "tests.json": "9dbf96bf112246e942130cc5f575f84078bc6cee4c1a0dca413fef8fd8f2cc90"
+}

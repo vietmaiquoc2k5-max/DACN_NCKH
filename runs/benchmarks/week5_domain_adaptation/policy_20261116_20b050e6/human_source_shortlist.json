@@ -1,0 +1,3782 @@
+[
+  {
+    "source_pair": [
+      "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 122,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+        "video_ids": [
+          "VN_NEG_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_01.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_01.jpg",
+      "sha256": "0e66d3b829b6c3259bb09201cb498b8155f0616ddd891b0fd94d68fce7e830cc",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_NEG_01_f000000.jpg",
+          "image_sha256": "b90e8fb94067863e46820270857b0f2a5af39e007d052aa48daf460006cf0bf3"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 110,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+        "video_ids": [
+          "VN_POS_05"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_05.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_02.jpg",
+      "sha256": "a51ac79e8d41d7e0155e6af6a9d3b9107668502e931f156e18280dcbf52f06a5",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_05_f000000.jpg",
+          "image_sha256": "907bbcde9ab25b3a52fae5707c51c0cf6caa4392f1f0504d65e7bc262cdc6a16"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 103,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+        "video_ids": [
+          "VN_NEG_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_01.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_03.jpg",
+      "sha256": "eab3ae1a21c00cdcb3e20f80a72c48c058efac91c5a8a9eab5caa67189bccfd9",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_NEG_01_f000000.jpg",
+          "image_sha256": "b90e8fb94067863e46820270857b0f2a5af39e007d052aa48daf460006cf0bf3"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_07_f000000.jpg",
+          "image_sha256": "27084d959ac0d8fcd252b66a58e2c1c362e6d898e449fdbf501793d2b19fa984"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 91,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+        "video_ids": [
+          "VN_POS_05"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_05.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_04.jpg",
+      "sha256": "b9786a8f5fbdf22848113a744fb9e6b3adb26c743340c58be59f65c3f145e334",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_05_f000000.jpg",
+          "image_sha256": "907bbcde9ab25b3a52fae5707c51c0cf6caa4392f1f0504d65e7bc262cdc6a16"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_07_f000000.jpg",
+          "image_sha256": "27084d959ac0d8fcd252b66a58e2c1c362e6d898e449fdbf501793d2b19fa984"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 85,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+        "video_ids": [
+          "VN_POS_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_13.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_05.jpg",
+      "sha256": "6da4d77e6302927c492223a9604f1e6a7d4d24e2a233e5a7a95b96c6206dc87e",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_13_f001944.jpg",
+          "image_sha256": "661fd9a8586159d7f017a5f080cab354c790bcbc462a1f8626b83564f8813a12"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 85,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+        "video_ids": [
+          "VN_POS_02"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_02.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_06.jpg",
+      "sha256": "886d19f615ca0489fed7e7bfef09911b322383c87e266db6af5167071ba279d8",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_02_f000000.jpg",
+          "image_sha256": "ce9b418065586c47b0affaa6627ffd56b63ccbdfc73fdf606cf33c092432b269"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 83,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+        "video_ids": [
+          "VN_POS_14"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_14.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_07.jpg",
+      "sha256": "5b9a7e0b2ea323a8175d02f7b502813bf40d5d2e94c8b47b5133d9e27678648c",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_14_f000954.jpg",
+          "image_sha256": "092322f4b96e75fa734b93aab2c3e174ed58094780b90e65d6ffb062c2d01e58"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a"
+    ],
+    "approved_verified_impact": 80,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+        "video_ids": [
+          "VN_NEG_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_01.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_08.jpg",
+      "sha256": "0e82310980253c59da47daa3761fb0c307a4a4c4428947642619e55b22633502",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_17_f000780.jpg",
+          "image_sha256": "a08b973fb6cefd95afdfef6aa8a49f6628d7e7f185c4b3a833773b2462a266d4"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_NEG_01_f000000.jpg",
+          "image_sha256": "b90e8fb94067863e46820270857b0f2a5af39e007d052aa48daf460006cf0bf3"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 79,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+        "video_ids": [
+          "VN_POS_11"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_11.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_09.jpg",
+      "sha256": "2386bfa1b9ad017e23d43045bc4f88c8344ba045e2c8dfb657164479866e6c04",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_11_f000059.jpg",
+          "image_sha256": "9556e3fef79b664bf0b18e30588cc38a1deeb9eae0b29e32b041c2c67271e121"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 72,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+        "video_ids": [
+          "VN_NEG_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_01.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_10.jpg",
+      "sha256": "11baf1abbc1b1c511aa196a089671138ec0b6e8f833005db900b2b1d241fde46",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_NEG_01_f000000.jpg",
+          "image_sha256": "b90e8fb94067863e46820270857b0f2a5af39e007d052aa48daf460006cf0bf3"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_NEG_44_f000000.jpg",
+          "image_sha256": "037c2e1a916180ef91e981e92a13a6600bef1f535190c47cd4a287c9ab95e61c"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 72,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+        "video_ids": [
+          "VN_POS_12"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_12.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_11.jpg",
+      "sha256": "4125b1bb445de5a7aac2b57b23a36d9e7cb07eb7302ffe0a59dddf8d312f51fe",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_POS_12_f000020.jpg",
+          "image_sha256": "c73fc35aa67bb86e100ba81a4d0c35f76f3a96212c94df9e0637b233479f9bb6"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_POS_08_f000000.jpg",
+          "image_sha256": "834269c40ea858ad6363b9c39a2b36eb03303a782d75cd0b8dfb30c5b77d7e5f"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 71,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+        "video_ids": [
+          "VN_NEG_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_01.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ],
+    "contact_sheet": {
+      "path": ".tools/week5_scene_72a6d1eb/contacts/priority_12.jpg",
+      "sha256": "0afc9874863bfb0133d2b7ac92099108c1a6e62a101a6219420ce000def52908",
+      "members": [
+        {
+          "image_path": "datasets/vn_dataset/images/train/VN_NEG_01_f000000.jpg",
+          "image_sha256": "b90e8fb94067863e46820270857b0f2a5af39e007d052aa48daf460006cf0bf3"
+        },
+        {
+          "image_path": "datasets/vn_dataset/images/val/VN_NEG_43_f000000.jpg",
+          "image_sha256": "29ed66e73c3ff11925293f3dbb2e8b8686120feddeb61360ebf20f467b975b22"
+        }
+      ],
+      "limitation": "Representative frames for investigation only; not proof of whole-source independence"
+    }
+  },
+  {
+    "source_pair": [
+      "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 69,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "2a149fd6839b87956025e11d30743f8bb324f2b6dc8b43162d59bf5e207c874a",
+        "video_ids": [
+          "VN_NEG_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_01.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc"
+    ],
+    "approved_verified_impact": 68,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+        "video_ids": [
+          "VN_POS_05"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_05.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076"
+    ],
+    "approved_verified_impact": 66,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+        "video_ids": [
+          "VN_POS_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_13.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb"
+    ],
+    "approved_verified_impact": 66,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+        "video_ids": [
+          "VN_POS_02"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_02.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7"
+    ],
+    "approved_verified_impact": 64,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+        "video_ids": [
+          "VN_POS_14"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_14.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+      "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c"
+    ],
+    "approved_verified_impact": 64,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      },
+      {
+        "sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+        "video_ids": [
+          "VN_POS_15"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_15.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 61,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+        "video_ids": [
+          "VN_POS_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_01.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 61,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+        "video_ids": [
+          "VN_NEG_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_13.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 60,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+        "video_ids": [
+          "VN_POS_05"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_05.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8"
+    ],
+    "approved_verified_impact": 60,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+        "video_ids": [
+          "VN_POS_11"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_11.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 59,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+        "video_ids": [
+          "VN_NEG_22"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_22.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 59,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+        "video_ids": [
+          "VN_POS_05"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_05.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 59,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+        "video_ids": [
+          "VN_NEG_18"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_18.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 59,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+        "video_ids": [
+          "VN_NEG_23"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_23.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 59,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+        "video_ids": [
+          "VN_NEG_36"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_36.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 58,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+        "video_ids": [
+          "VN_NEG_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_08.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 58,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+        "video_ids": [
+          "VN_NEG_25"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_25.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 57,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+        "video_ids": [
+          "VN_NEG_41"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_41.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 57,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "237f62247a753c09d8f3a21db8b5b23f4d6bfd21fadd36e5e5aa979f9adfcadc",
+        "video_ids": [
+          "VN_POS_05"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_05.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 57,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+        "video_ids": [
+          "VN_POS_16"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_16.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 56,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+        "video_ids": [
+          "VN_NEG_21"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_21.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+      "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870"
+    ],
+    "approved_verified_impact": 56,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+        "video_ids": [
+          "VN_NEG_39"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_39.mp4"
+        ]
+      },
+      {
+        "sha256": "ecdccc494555a09ae60bedfd4fe67100be90446316fe083a914ac4ff4a654870",
+        "video_ids": [
+          "VN_POS_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971"
+    ],
+    "approved_verified_impact": 53,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+        "video_ids": [
+          "VN_POS_12"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_12.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c"
+    ],
+    "approved_verified_impact": 45,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+        "video_ids": [
+          "VN_POS_15"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_15.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076"
+    ],
+    "approved_verified_impact": 43,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+        "video_ids": [
+          "VN_POS_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_13.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb"
+    ],
+    "approved_verified_impact": 43,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+        "video_ids": [
+          "VN_POS_02"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_02.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166"
+    ],
+    "approved_verified_impact": 42,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+        "video_ids": [
+          "VN_POS_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_01.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b"
+    ],
+    "approved_verified_impact": 42,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+        "video_ids": [
+          "VN_NEG_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_13.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7"
+    ],
+    "approved_verified_impact": 41,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+        "video_ids": [
+          "VN_POS_14"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_14.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 40,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+        "video_ids": [
+          "VN_NEG_22"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_22.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee"
+    ],
+    "approved_verified_impact": 40,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+        "video_ids": [
+          "VN_NEG_18"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_18.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23"
+    ],
+    "approved_verified_impact": 40,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+        "video_ids": [
+          "VN_NEG_23"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_23.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013"
+    ],
+    "approved_verified_impact": 40,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+        "video_ids": [
+          "VN_NEG_36"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_36.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 39,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+        "video_ids": [
+          "VN_NEG_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_08.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe"
+    ],
+    "approved_verified_impact": 39,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+        "video_ids": [
+          "VN_NEG_25"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_25.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 38,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+        "video_ids": [
+          "VN_NEG_41"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_41.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+      "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d"
+    ],
+    "approved_verified_impact": 38,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      },
+      {
+        "sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+        "video_ids": [
+          "VN_POS_16"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_16.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8"
+    ],
+    "approved_verified_impact": 37,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+        "video_ids": [
+          "VN_POS_11"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_11.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 37,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+        "video_ids": [
+          "VN_NEG_21"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_21.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+      "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7"
+    ],
+    "approved_verified_impact": 37,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+        "video_ids": [
+          "VN_NEG_39"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_39.mp4"
+        ]
+      },
+      {
+        "sha256": "60d119f204a1da65f641e46d5774c5452711e0d1d0f5977fe41622a6ff5339e7",
+        "video_ids": [
+          "VN_POS_07"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_07.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 35,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+        "video_ids": [
+          "VN_POS_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_13.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 35,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+        "video_ids": [
+          "VN_POS_02"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_02.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 34,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+        "video_ids": [
+          "VN_POS_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_13.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 34,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+        "video_ids": [
+          "VN_POS_02"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_02.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 33,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+        "video_ids": [
+          "VN_POS_14"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_14.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 32,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "706500fbee8966c8586f2164864635cdea9c04c6a8089b2b9315528aacc4c076",
+        "video_ids": [
+          "VN_POS_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_13.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 32,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7b8afe26cf51c17bace804b9930ea27e32b78ea53249a9a9021e2b0550fa82bb",
+        "video_ids": [
+          "VN_POS_02"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_02.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 32,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+        "video_ids": [
+          "VN_POS_14"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_14.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971"
+    ],
+    "approved_verified_impact": 30,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+        "video_ids": [
+          "VN_POS_12"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_12.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 30,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "9861ef71459906c8476864a6c4048e4bb807f849e7282a458a335764004d0fc7",
+        "video_ids": [
+          "VN_POS_14"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_14.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 29,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+        "video_ids": [
+          "VN_POS_11"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_11.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8"
+    ],
+    "approved_verified_impact": 28,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+        "video_ids": [
+          "VN_POS_11"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_11.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+      "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8"
+    ],
+    "approved_verified_impact": 26,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      },
+      {
+        "sha256": "d46673ab0cbf8c92200e514285249ba27bf1b4ad8c6555c92756a9bf8799f9d8",
+        "video_ids": [
+          "VN_POS_11"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_11.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c"
+    ],
+    "approved_verified_impact": 22,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+        "video_ids": [
+          "VN_POS_15"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_15.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 22,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+        "video_ids": [
+          "VN_POS_12"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_12.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971"
+    ],
+    "approved_verified_impact": 21,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+        "video_ids": [
+          "VN_POS_12"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_12.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166"
+    ],
+    "approved_verified_impact": 19,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+        "video_ids": [
+          "VN_POS_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_01.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b"
+    ],
+    "approved_verified_impact": 19,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+        "video_ids": [
+          "VN_NEG_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_13.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 19,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d0b63a6729482267354cb758ff60bcefce8f64ab578ba6316f76e43f10d06971",
+        "video_ids": [
+          "VN_POS_12"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_12.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814"
+    ],
+    "approved_verified_impact": 17,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+        "video_ids": [
+          "VN_NEG_22"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_22.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee"
+    ],
+    "approved_verified_impact": 17,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+        "video_ids": [
+          "VN_NEG_18"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_18.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23"
+    ],
+    "approved_verified_impact": 17,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+        "video_ids": [
+          "VN_NEG_23"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_23.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013"
+    ],
+    "approved_verified_impact": 17,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+        "video_ids": [
+          "VN_NEG_36"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_36.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648"
+    ],
+    "approved_verified_impact": 16,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+        "video_ids": [
+          "VN_NEG_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_08.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe"
+    ],
+    "approved_verified_impact": 16,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+        "video_ids": [
+          "VN_NEG_25"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_25.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618"
+    ],
+    "approved_verified_impact": 15,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+        "video_ids": [
+          "VN_NEG_41"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_41.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d"
+    ],
+    "approved_verified_impact": 15,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+        "video_ids": [
+          "VN_POS_16"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_16.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f"
+    ],
+    "approved_verified_impact": 14,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+        "video_ids": [
+          "VN_NEG_21"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_21.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+      "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb"
+    ],
+    "approved_verified_impact": 14,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "12b0557237d1f68acf667f8574011b4ff542d3241305fd4efab8d06bf541408e",
+        "video_ids": [
+          "VN_POS_17"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_17.mp4"
+        ]
+      },
+      {
+        "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+        "video_ids": [
+          "VN_NEG_39"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_39.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 14,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+        "video_ids": [
+          "VN_POS_15"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_15.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c"
+    ],
+    "approved_verified_impact": 13,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+        "video_ids": [
+          "VN_POS_15"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_15.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 11,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+        "video_ids": [
+          "VN_POS_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_01.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 11,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+        "video_ids": [
+          "VN_NEG_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_13.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+      "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c"
+    ],
+    "approved_verified_impact": 11,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      },
+      {
+        "sha256": "ed2324509f011ca711f653568a723040e5371d19aba3fb7df6c163f6ed01041c",
+        "video_ids": [
+          "VN_POS_15"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_15.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 10,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+        "video_ids": [
+          "VN_POS_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_01.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b"
+    ],
+    "approved_verified_impact": 10,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+        "video_ids": [
+          "VN_NEG_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_13.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 9,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+        "video_ids": [
+          "VN_NEG_22"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_22.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 9,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+        "video_ids": [
+          "VN_NEG_18"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_18.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 9,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+        "video_ids": [
+          "VN_NEG_23"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_23.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 9,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+        "video_ids": [
+          "VN_NEG_36"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_36.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+        "video_ids": [
+          "VN_NEG_22"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_22.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+        "video_ids": [
+          "VN_NEG_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_08.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "7f1e9eba56e2ab31c9fb4d32a115c916d5235e1e73bd0a394b5ccde5bdc7e166",
+        "video_ids": [
+          "VN_POS_01"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_01.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+        "video_ids": [
+          "VN_NEG_18"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_18.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+        "video_ids": [
+          "VN_NEG_23"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_23.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+        "video_ids": [
+          "VN_NEG_36"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_36.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+        "video_ids": [
+          "VN_NEG_25"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_25.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 8,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "bffc8c288551137d8601b20b03af0e259262e6d53fa1072e08079074f716c25b",
+        "video_ids": [
+          "VN_NEG_13"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_13.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 7,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+        "video_ids": [
+          "VN_NEG_41"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_41.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 7,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+        "video_ids": [
+          "VN_NEG_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_08.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 7,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+        "video_ids": [
+          "VN_POS_16"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_16.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+      "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe"
+    ],
+    "approved_verified_impact": 7,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      },
+      {
+        "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+        "video_ids": [
+          "VN_NEG_25"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_25.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+        "video_ids": [
+          "VN_NEG_41"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_41.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "18d2d6d7149721194d271284559f3af859551a95ef1582475a4fcc341820d814",
+        "video_ids": [
+          "VN_NEG_22"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_22.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+        "video_ids": [
+          "VN_NEG_21"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_21.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+      "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+        "video_ids": [
+          "VN_NEG_39"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_39.mp4"
+        ]
+      },
+      {
+        "sha256": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+        "video_ids": [
+          "VN_NEG_44"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_44.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+        "video_ids": [
+          "VN_POS_16"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_16.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "8754096e851891f40e6cbc8c6233818f440be8d9c9dd07606d1506da092981ee",
+        "video_ids": [
+          "VN_NEG_18"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_18.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "bf64e530af6b3660a48b2dadaed1daa6d3916f198f3fc47cdc650cf957be2f23",
+        "video_ids": [
+          "VN_NEG_23"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_23.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+      "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013"
+    ],
+    "approved_verified_impact": 6,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      },
+      {
+        "sha256": "d4ea581aeb97aad33c5d25b38373a09c49d220b71323ba7bcb795ee17cae0013",
+        "video_ids": [
+          "VN_NEG_36"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_36.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 5,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+        "video_ids": [
+          "VN_NEG_21"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_21.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 5,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "4969658c119976e53674cd89e64294cd32255b8921bdcd64b186e2bd4c385648",
+        "video_ids": [
+          "VN_NEG_08"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_08.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+      "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4"
+    ],
+    "approved_verified_impact": 5,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+        "video_ids": [
+          "VN_NEG_39"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_39.mp4"
+        ]
+      },
+      {
+        "sha256": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+        "video_ids": [
+          "VN_NEG_43"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_43.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 5,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "b5c7f7deca007718b327045e189ad5de0c43a3256a8e33cbd864f52435a6b8fe",
+        "video_ids": [
+          "VN_NEG_25"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_25.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 4,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "17f71af8bb495a586fa530ac92638d74e825242881da412a8a6602fe2ccb3618",
+        "video_ids": [
+          "VN_NEG_41"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_41.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 4,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "678ad727e7193c6f53978849bab7318d73d3d5ef4ba94bf5048c76ada461865d",
+        "video_ids": [
+          "VN_POS_16"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_POS_16.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 3,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "3255ecb137bcf31295a12829db28616b1b1968e0d0f2edd031c0b2e85a93a72f",
+        "video_ids": [
+          "VN_NEG_21"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_21.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  },
+  {
+    "source_pair": [
+      "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+      "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942"
+    ],
+    "approved_verified_impact": 3,
+    "decision": "UNRESOLVED",
+    "needed": "Source/camera/visual scene evidence, reviewer/time, member hash bindings",
+    "test_reserved": true,
+    "sources": [
+      {
+        "sha256": "54c1f5bba394eeff6a54da50d60bc1c34c2ca4783f00134c96ac43d4a334fedb",
+        "video_ids": [
+          "VN_NEG_39"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_39.mp4"
+        ]
+      },
+      {
+        "sha256": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+        "video_ids": [
+          "VN_NEG_48"
+        ],
+        "paths": [
+          "datasets/negative_videos/VN_NEG_48.mp4"
+        ]
+      }
+    ]
+  }
+]
