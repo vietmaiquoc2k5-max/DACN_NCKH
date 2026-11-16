@@ -1,0 +1,13 @@
+{
+  "version": "week5_scene_evidence_proposal_v3",
+  "status": "PROPOSED_NOT_ACTIVE",
+  "replaces_locked_protocol": false,
+  "gps_required": false,
+  "source_url_required": false,
+  "original_camera_id_required": false,
+  "required": ["human bbox approval and checksums", "source/video split reservation", "lineage and source byte identity", "recorded footage coverage", "exact/near/reused-footage risk screen", "scene/context evidence", "all retained opposing groups resolved", "test isolation"],
+  "overlap_rule": "Confirmed exact/reused/same-scene relations form connected components; components cannot cross splits. Unresolved risk relations remain quarantined or excluded, not declared independent.",
+  "independence_rule": "May be supported by footage geometry/context, temporal coverage, multiple comparison methods and scoped human observation. Absence of pHash/ORB matches alone is insufficient; metadata is optional corroboration.",
+  "small_subset": "Technical pilot candidates must be separated from formal study acceptance; >=1000 VN labelled frames is a proposal-level dataset target, not permission to claim an arbitrary small validation scope is representative.",
+  "activation": "Requires explicit protocol acceptance; no production gates modified by this proposal."
+}
