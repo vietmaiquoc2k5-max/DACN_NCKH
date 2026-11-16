@@ -768,10 +768,13 @@ def get_camera_location(camera_id: str, manager: MultiCameraManager = Depends(_m
 def set_camera_location(camera_id: str, payload: CameraLocationInput, manager: MultiCameraManager = Depends(_manager), _: None = Depends(_authorized)):
     if camera_id not in manager.workers:
         raise HTTPException(404, detail={"code": "CAMERA_NOT_FOUND", "message": "Unknown camera id"})
+    source = payload.location_source
+    if payload.latitude is None and payload.longitude is None and payload.address.strip():
+        source = "MANUAL_ADDRESS"
     try:
         location = CameraLocation(camera_id, payload.location_name, payload.address, payload.latitude,
                                   payload.longitude, payload.location_verified, payload.accuracy_meters,
-                                  payload.location_source, zero_zero_confirmed=payload.zero_zero_confirmed)
+                                  source, zero_zero_confirmed=payload.zero_zero_confirmed)
     except ValueError as exc:
         raise HTTPException(422, detail={"code": "INVALID_LOCATION", "message": str(exc)})
     manager.notification_manager.queue.set_location(location)

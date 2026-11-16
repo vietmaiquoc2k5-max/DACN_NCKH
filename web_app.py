@@ -2969,16 +2969,19 @@ elif st.session_state.nav_page == "Web Push":
                     item = CameraLocation(selected, loc_name, address, lat, lon, verified,
                                           accuracy if source == "BROWSER_GEOLOCATION" else None,
                                           source, zero_zero_confirmed=zero_zero)
-                    _telegram_api_request("/api/cameras/{}/location".format(selected), {
-                        "location_name": item.location_name,
-                        "address": item.address,
-                        "latitude": item.latitude,
-                        "longitude": item.longitude,
-                        "accuracy_meters": item.accuracy_meters,
-                        "location_source": item.location_source,
-                        "location_verified": item.location_verified,
-                        "zero_zero_confirmed": zero_zero,
-                    }, method="PUT")
+                    try:
+                        _telegram_api_request("/api/cameras/{}/location".format(selected), {
+                            "location_name": item.location_name,
+                            "address": item.address,
+                            "latitude": item.latitude,
+                            "longitude": item.longitude,
+                            "accuracy_meters": item.accuracy_meters,
+                            "location_source": item.location_source,
+                            "location_verified": item.location_verified,
+                            "zero_zero_confirmed": zero_zero,
+                        }, method="PUT")
+                    except Exception:
+                        manager.queue.set_location(item)
                     drafts.pop(selected, None)
                     st.session_state.pop("camera_location_zero_zero_" + selected, None)
                     st.session_state.pop("camera_location_verify_" + selected, None)

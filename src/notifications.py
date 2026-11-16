@@ -148,13 +148,68 @@ class NotificationQueue:
 
     def snapshot_location(self, event_id: int, camera_id: str):
         with self.connect() as conn:
-            row = conn.execute("SELECT location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at FROM camera_location_records WHERE camera_id=?", (camera_id,)).fetchone()
+            existing = conn.execute(
+                "SELECT camera_id,location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at,maps_url "
+                "FROM event_location_records WHERE event_id=?", (event_id,)
+            ).fetchone()
+            if existing:
+                return {
+                    "camera_id": existing[0], "location_name": existing[1], "address": existing[2],
+                    "latitude": existing[3], "longitude": existing[4], "location_verified": bool(existing[5]),
+                    "accuracy_meters": existing[6], "location_source": existing[7], "verified_at": existing[8],
+                    "maps_url": existing[9]
+                }
+            row = conn.execute(
+                "SELECT location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at "
+                "FROM camera_location_records WHERE camera_id=?", (camera_id,)
+            ).fetchone()
             if not row:
                 return None
-            location = CameraLocation(camera_id, row[0], row[1], row[2], row[3], bool(row[4]), row[5], row[6], row[7], zero_zero_confirmed=(row[2] == 0 and row[3] == 0))
-            conn.execute("INSERT OR IGNORE INTO event_location_records(event_id,camera_id,location_name,address,latitude,longitude,location_verified,maps_url,accuracy_meters,location_source,verified_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)", (event_id, camera_id, row[0], row[1], row[2], row[3], row[4], location.maps_url, row[5], row[6], row[7]))
-            snapshot = conn.execute("SELECT camera_id,location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at,maps_url FROM event_location_records WHERE event_id=?", (event_id,)).fetchone()
-            return {"camera_id": snapshot[0], "location_name": snapshot[1], "address": snapshot[2], "latitude": snapshot[3], "longitude": snapshot[4], "location_verified": bool(snapshot[5]), "accuracy_meters": snapshot[6], "location_source": snapshot[7], "verified_at": snapshot[8], "maps_url": snapshot[9]}
+            loc_source = row[6] or "MANUAL_COORDINATES"
+            if row[2] is None and loc_source != "MANUAL_ADDRESS":
+                if row[1]:
+                    loc_source = "MANUAL_ADDRESS"
+            try:
+                location = CameraLocation(
+                    camera_id, row[0], row[1], row[2], row[3], bool(row[4]), row[5],
+                    loc_source, row[7], zero_zero_confirmed=(row[2] == 0 and row[3] == 0)
+                )
+                maps_url = location.maps_url
+            except ValueError:
+                maps_url = None
+            conn.execute(
+                "INSERT OR IGNORE INTO event_location_records"
+                "(event_id,camera_id,location_name,address,latitude,longitude,location_verified,maps_url,accuracy_meters,location_source,verified_at) "
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                (event_id, camera_id, row[0], row[1], row[2], row[3], row[4], maps_url, row[5], loc_source, row[7])
+            )
+            snapshot = conn.execute(
+                "SELECT camera_id,location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at,maps_url "
+                "FROM event_location_records WHERE event_id=?", (event_id,)
+            ).fetchone()
+            if not snapshot:
+                return None
+            return {
+                "camera_id": snapshot[0], "location_name": snapshot[1], "address": snapshot[2],
+                "latitude": snapshot[3], "longitude": snapshot[4], "location_verified": bool(snapshot[5]),
+                "accuracy_meters": snapshot[6], "location_source": snapshot[7], "verified_at": snapshot[8],
+                "maps_url": snapshot[9]
+            }
+
+    def get_event_location(self, event_id: int) -> Optional[Dict[str, Any]]:
+        with self.connect() as conn:
+            snapshot = conn.execute(
+                "SELECT camera_id,location_name,address,latitude,longitude,location_verified,accuracy_meters,location_source,verified_at,maps_url "
+                "FROM event_location_records WHERE event_id=?", (event_id,)
+            ).fetchone()
+            if not snapshot:
+                return None
+            return {
+                "camera_id": snapshot[0], "location_name": snapshot[1], "address": snapshot[2],
+                "latitude": snapshot[3], "longitude": snapshot[4], "location_verified": bool(snapshot[5]),
+                "accuracy_meters": snapshot[6], "location_source": snapshot[7], "verified_at": snapshot[8],
+                "maps_url": snapshot[9]
+            }
 
     @staticmethod
     def validate_subscription(data: Any):

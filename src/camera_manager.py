@@ -867,12 +867,38 @@ class CameraStreamWorker:
                     is_demo=0,
                     event_confirmed_at=utc_now(),
                 )
-                if self.telegram_alerts is not None and self.config.telegram_enabled:
-                    saved_event["camera_display_name"] = self.config.name
-                    self.telegram_alerts.enqueue(saved_event)
+                # Snapshot camera location associated with this confirmed event
+                loc_snapshot = None
                 if self.notification_manager is not None:
-                    saved_event["camera_display_name"] = self.config.name
-                    self.notification_manager.enqueue_event(saved_event, self.config.cam_id)
+                    try:
+                        loc_snapshot = self.notification_manager.queue.snapshot_location(
+                            saved_event["id"], self.config.cam_id
+                        )
+                    except Exception as exc:
+                        LOGGER.debug("NotificationManager location snapshot failed for %s: %s", self.config.cam_id, exc)
+                else:
+                    try:
+                        from src.notifications import NotificationQueue
+                        loc_snapshot = NotificationQueue(self.event_db.db_path).snapshot_location(
+                            saved_event["id"], self.config.cam_id
+                        )
+                    except Exception as exc:
+                        LOGGER.debug("Direct location snapshot fallback failed for %s: %s", self.config.cam_id, exc)
+
+                saved_event["camera_display_name"] = self.config.name
+                saved_event["location"] = loc_snapshot
+
+                if self.telegram_alerts is not None and self.config.telegram_enabled:
+                    try:
+                        self.telegram_alerts.enqueue(saved_event)
+                    except Exception as exc:
+                        LOGGER.error("Failed to enqueue event %s to Telegram dispatcher: %s", saved_event.get("id"), exc)
+
+                if self.notification_manager is not None:
+                    try:
+                        self.notification_manager.enqueue_event(saved_event, self.config.cam_id)
+                    except Exception as exc:
+                        LOGGER.error("Failed to enqueue event %s to Web Push manager: %s", saved_event.get("id"), exc)
                 if not self.settings.mute_audio and self.config.cam_id not in self.event_db.alert_manager.acknowledged_cameras:
                     self.event_db.alert_manager.play_alarm(camera_name=self.config.cam_id)
                 self._log(

@@ -31,3 +31,22 @@ Khởi động bằng `python -m streamlit run web_app.py`, mở `http://localho
 9. Lặp lại với camera RTSP ở xa thiết bị; không chấp nhận GPS của thiết bị như vị trí RTSP nếu hai nơi khác nhau.
 
 Test tự động dùng dữ liệu giả cho tọa độ và kiểm tra mã component. Chúng không thay thế kiểm thử permission/GPS/map trong trình duyệt thật.
+
+## Tích hợp cảnh báo Telegram kèm GPS & Google Maps
+
+Khi sự kiện cháy/khói được xác nhận bởi `TemporalVerifier`, FireWatch tự động trích xuất snapshot vị trí của camera tại thời điểm xảy ra sự kiện (`event_location_records`) và gửi thông báo qua Telegram:
+
+1. **Định dạng tin nhắn Telegram**:
+   - Tiêu đề: `🚨 FIREWATCH — CẢNH BÁO ĐÃ XÁC NHẬN #<ID>`
+   - Loại sự kiện: `🔥 CHÁY (FIRE)` hoặc `💨 KHÓI (SMOKE)`
+   - Thông tin camera: `📷 Camera: <CAM_ID> / <Tên hiển thị>`
+   - Vị trí camera:
+     * Tên khu vực: `🏢 Khu vực: <Tên khu vực>` (nếu có)
+     * Địa chỉ: `🏠 Địa chỉ: <Địa chỉ vật lý>` (nếu có)
+     * Tọa độ GPS: `🌐 GPS: <Vĩ độ>, <Kinh độ> (<Đã xác minh / Chưa xác minh>)` (khi tọa độ hợp lệ)
+     * Liên kết Google Maps: `🗺️ Google Maps:\nhttps://www.google.com/maps?q=<lat>,<lon>` (mở trực tiếp vị trí trên Google Maps)
+     * Trường hợp camera chưa cấu hình vị trí: `📍 Vị trí camera: Chưa cấu hình` (không tạo GPS hay liên kết Maps giả mạo)
+     * Trường hợp chỉ có địa chỉ: hiển thị địa chỉ mà không tạo GPS giả.
+   - Snapshot đính kèm: Ảnh frame phát hiện có vẽ bounding box và độ tin cậy được gửi kèm qua API `sendPhoto`. Nếu ảnh lỗi/thiếu, hệ thống tự động fallback gửi văn bản qua `sendMessage` mà không làm gián đoạn cảnh báo.
+   - An toàn độ dài caption: Tự động kiểm soát độ dài không vượt quá giới hạn 1.024 ký tự của Telegram `sendPhoto`, bảo toàn 100% ID sự kiện, loại sự kiện, camera và đường link Google Maps.
+

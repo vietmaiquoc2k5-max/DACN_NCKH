@@ -3,11 +3,13 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import os
 import sqlite3
 from contextlib import contextmanager
 import threading
 import time
+from typing import Any, Dict, Optional
 import uuid
 from urllib.parse import urlencode
 from datetime import datetime, timezone
@@ -98,6 +100,130 @@ def send_test_message(token: str, chat_id: str, timeout: float = 8.0) -> str:
 def utc_now() -> str:
     """Return a UTC timestamp with microsecond precision."""
     return datetime.now(timezone.utc).isoformat(timespec="microseconds")
+
+
+def format_telegram_alert(event: dict, max_length: int = 1024) -> str:
+    """Build a confirmed-event Telegram caption with camera location and Google Maps link.
+
+    Respects the Telegram 1024-character caption limit for sendPhoto. Essential alert
+    identifiers, event label, and the Google Maps link are prioritized and preserved.
+    """
+    event_id = event.get("id", "?")
+    raw_label = str(event.get("label", "unknown")).strip().upper()
+    if "FIRE" in raw_label or raw_label in ("LỬA", "CHÁY"):
+        event_label = "CHÁY (FIRE)"
+        header_icon = "🚨"
+        label_icon = "🔥"
+    elif "SMOKE" in raw_label or raw_label == "KHÓI":
+        event_label = "KHÓI (SMOKE)"
+        header_icon = "🚨"
+        label_icon = "💨"
+    else:
+        event_label = raw_label
+        header_icon = "⚠️"
+        label_icon = "⚠️"
+
+    cam_id = str(event.get("camera_name", "unknown")).strip()
+    cam_display = str(event.get("camera_display_name", "")).strip()
+    if cam_display and cam_display != cam_id:
+        camera_str = f"{cam_id} / {cam_display}"
+    else:
+        camera_str = cam_id
+
+    conf = float(event.get("confidence", 0.0))
+    confirmed_at = str(event.get("event_confirmed_at") or event.get("timestamp") or "Chưa rõ")
+    status_str = str(event.get("status") or "ĐÃ XÁC NHẬN").upper()
+    if status_str in ("CONFIRMED", "UNREAD"):
+        status_str = "ĐÃ XÁC NHẬN"
+
+    loc = event.get("location")
+    has_location_data = False
+    loc_name = ""
+    address = ""
+    has_gps = False
+    flat: Optional[float] = None
+    flon: Optional[float] = None
+    verified = False
+    maps_url: Optional[str] = None
+
+    if isinstance(loc, dict):
+        loc_name = str(loc.get("location_name") or "").strip()
+        address = str(loc.get("address") or "").strip()
+        verified = bool(loc.get("location_verified", False))
+
+        lat_val = loc.get("latitude")
+        lon_val = loc.get("longitude")
+        if lat_val is not None and lon_val is not None and not isinstance(lat_val, bool) and not isinstance(lon_val, bool):
+            try:
+                candidate_lat = float(lat_val)
+                candidate_lon = float(lon_val)
+                if (math.isfinite(candidate_lat) and math.isfinite(candidate_lon) and
+                        -90.0 <= candidate_lat <= 90.0 and -180.0 <= candidate_lon <= 180.0):
+                    flat = candidate_lat
+                    flon = candidate_lon
+                    has_gps = True
+                    maps_url = f"https://www.google.com/maps?q={flat:.6f},{flon:.6f}"
+            except (TypeError, ValueError):
+                has_gps = False
+                flat, flon = None, None
+
+        if loc_name or address or has_gps:
+            has_location_data = True
+
+    header = f"{header_icon} FIREWATCH — CẢNH BÁO ĐÃ XÁC NHẬN #{event_id}\n\n"
+    info = (
+        f"{label_icon} Loại sự kiện: {event_label}\n"
+        f"📷 Camera: {camera_str}\n"
+        f"🎯 Độ tin cậy: {conf:.1%}\n"
+        f"⏰ Thời điểm xác nhận: {confirmed_at}\n"
+        f"📊 Trạng thái: {status_str}\n\n"
+    )
+
+    if not has_location_data:
+        location_sec = "📍 Vị trí camera: Chưa cấu hình\n"
+    else:
+        verify_tag = " (Đã xác minh)" if verified else " (Chưa xác minh)"
+        lines = ["📍 VỊ TRÍ CAMERA"]
+        if loc_name:
+            lines.append(f"🏢 Khu vực: {loc_name}")
+        if address:
+            lines.append(f"🏠 Địa chỉ: {address}")
+        if has_gps and flat is not None and flon is not None:
+            lines.append(f"🌐 GPS: {flat:.6f}, {flon:.6f}{verify_tag}")
+            lines.append(f"🗺️ Google Maps:\n{maps_url}")
+        location_sec = "\n".join(lines) + "\n"
+
+    full_message = header + info + location_sec
+
+    # Safeguard against Telegram caption limit (1024 characters for sendPhoto)
+    if len(full_message) > max_length:
+        overflow = len(full_message) - max_length + 3  # for '...'
+        if address and len(address) > overflow + 20:
+            trimmed_addr = address[:max(10, len(address) - overflow)] + "..."
+            lines = ["📍 VỊ TRÍ CAMERA"]
+            if loc_name:
+                lines.append(f"🏢 Khu vực: {loc_name}")
+            lines.append(f"🏠 Địa chỉ: {trimmed_addr}")
+            if has_gps and flat is not None and flon is not None:
+                lines.append(f"🌐 GPS: {flat:.6f}, {flon:.6f}{verify_tag}")
+                lines.append(f"🗺️ Google Maps:\n{maps_url}")
+            location_sec = "\n".join(lines) + "\n"
+            full_message = header + info + location_sec
+        elif loc_name and len(loc_name) > overflow + 20:
+            trimmed_loc = loc_name[:max(10, len(loc_name) - overflow)] + "..."
+            lines = ["📍 VỊ TRÍ CAMERA"]
+            lines.append(f"🏢 Khu vực: {trimmed_loc}")
+            if address:
+                lines.append(f"🏠 Địa chỉ: {address}")
+            if has_gps and flat is not None and flon is not None:
+                lines.append(f"🌐 GPS: {flat:.6f}, {flon:.6f}{verify_tag}")
+                lines.append(f"🗺️ Google Maps:\n{maps_url}")
+            location_sec = "\n".join(lines) + "\n"
+            full_message = header + info + location_sec
+        else:
+            full_message = full_message[:max_length - 3] + "..."
+
+    return full_message.strip()
 
 
 class TelegramAlertDispatcher:
@@ -250,6 +376,64 @@ class TelegramAlertDispatcher:
         self.chat_id = chat_id
         self.service_credentials_tested = True
 
+    def _lookup_event_location(self, event_id: int, camera_id: str) -> Optional[dict]:
+        """Query existing event snapshot, or snapshot current camera location if missing."""
+        try:
+            with self._connection() as conn:
+                tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+                if "event_location_records" in tables:
+                    snap = conn.execute(
+                        "SELECT camera_id, location_name, address, latitude, longitude, "
+                        "location_verified, accuracy_meters, location_source, verified_at, maps_url "
+                        "FROM event_location_records WHERE event_id=?", (event_id,)
+                    ).fetchone()
+                    if snap:
+                        return {
+                            "camera_id": snap[0], "location_name": snap[1], "address": snap[2],
+                            "latitude": snap[3], "longitude": snap[4], "location_verified": bool(snap[5]),
+                            "accuracy_meters": snap[6], "location_source": snap[7], "verified_at": snap[8],
+                            "maps_url": snap[9]
+                        }
+                if "camera_location_records" in tables and camera_id:
+                    cam_row = conn.execute(
+                        "SELECT location_name, address, latitude, longitude, "
+                        "location_verified, accuracy_meters, location_source, verified_at "
+                        "FROM camera_location_records WHERE camera_id=?", (camera_id,)
+                    ).fetchone()
+                    if cam_row:
+                        from src.notifications import CameraLocation
+                        loc_source = cam_row[6] or "MANUAL_COORDINATES"
+                        if cam_row[2] is None and loc_source != "MANUAL_ADDRESS":
+                            if cam_row[1]:
+                                loc_source = "MANUAL_ADDRESS"
+                        try:
+                            loc_obj = CameraLocation(
+                                camera_id, cam_row[0], cam_row[1], cam_row[2], cam_row[3],
+                                bool(cam_row[4]), cam_row[5], loc_source, cam_row[7],
+                                zero_zero_confirmed=(cam_row[2] == 0 and cam_row[3] == 0)
+                            )
+                            maps_url = loc_obj.maps_url
+                        except ValueError:
+                            maps_url = None
+                        if "event_location_records" in tables:
+                            conn.execute(
+                                "INSERT OR IGNORE INTO event_location_records"
+                                "(event_id, camera_id, location_name, address, latitude, longitude, "
+                                "location_verified, maps_url, accuracy_meters, location_source, verified_at) "
+                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                (event_id, camera_id, cam_row[0], cam_row[1], cam_row[2], cam_row[3],
+                                 cam_row[4], maps_url, cam_row[5], loc_source, cam_row[7])
+                            )
+                        return {
+                            "camera_id": camera_id, "location_name": cam_row[0], "address": cam_row[1],
+                            "latitude": cam_row[2], "longitude": cam_row[3], "location_verified": bool(cam_row[4]),
+                            "accuracy_meters": cam_row[5], "location_source": loc_source, "verified_at": cam_row[7],
+                            "maps_url": maps_url
+                        }
+        except Exception as exc:
+            LOGGER.debug("Could not lookup location for event %s: %s", event_id, exc)
+        return None
+
     def _recover_interrupted(self, conn: sqlite3.Connection) -> None:
         """Recover queued rows; mark interrupted network attempts as ambiguous."""
         now = utc_now()
@@ -274,6 +458,7 @@ class TelegramAlertDispatcher:
                 keys = ("timestamp", "camera_name", "label", "confidence", "alert_level", "image_path", "status")
                 payload = dict(zip(keys, row))
                 payload["id"] = event_id
+                payload["location"] = self._lookup_event_location(event_id, payload.get("camera_name", ""))
                 conn.execute("UPDATE alert_deliveries SET payload_json=?,event_confirmed_at=COALESCE(event_confirmed_at,?) WHERE delivery_id=?",
                              (json.dumps(payload, separators=(",", ":")), payload.get("timestamp"), delivery_id))
 
@@ -287,6 +472,25 @@ class TelegramAlertDispatcher:
             return False
         event_id = int(event["id"])
         image_path = Path(str(event.get("image_path") or ""))
+        loc = event.get("location")
+        if loc is None and event_id:
+            loc = self._lookup_event_location(event_id, str(event.get("camera_name", "")))
+
+        payload_loc = None
+        if isinstance(loc, dict):
+            payload_loc = {
+                "camera_id": str(loc.get("camera_id") or event.get("camera_name") or ""),
+                "location_name": str(loc.get("location_name") or ""),
+                "address": str(loc.get("address") or ""),
+                "latitude": loc.get("latitude"),
+                "longitude": loc.get("longitude"),
+                "location_verified": bool(loc.get("location_verified", False)),
+                "accuracy_meters": loc.get("accuracy_meters"),
+                "location_source": str(loc.get("location_source") or "MANUAL_COORDINATES"),
+                "verified_at": loc.get("verified_at"),
+                "maps_url": loc.get("maps_url"),
+            }
+
         payload = {
             "id": event_id,
             "timestamp": str(event.get("timestamp", "")),
@@ -297,6 +501,7 @@ class TelegramAlertDispatcher:
             "alert_level": str(event.get("alert_level", "CONFIRMED")),
             "image_path": str(image_path),
             "status": str(event.get("status", "UNREAD")),
+            "location": payload_loc,
         }
         confirmed_at = str(event.get("event_confirmed_at") or payload["timestamp"] or utc_now())
         queued_at = utc_now()
@@ -387,14 +592,7 @@ class TelegramAlertDispatcher:
         """Send an event snapshot, falling back to text when it is unavailable."""
         image = Path(str(event.get("image_path") or ""))
         snapshot = self._read_snapshot(image)
-        raw_label = str(event.get("label", "unknown")).upper()
-        event_label = {"FIRE": "CHÁY (FIRE)", "SMOKE": "KHÓI (SMOKE)"}.get(raw_label, raw_label)
-        caption = (f"🔥 FIREWATCH — CẢNH BÁO ĐÃ XÁC NHẬN #{event['id']}\n"
-                   f"Camera: {event.get('camera_name', 'unknown')} / {event.get('camera_display_name', 'unknown')}\n"
-                   f"Loại sự kiện: {event_label}\n"
-                   f"Độ tin cậy: {float(event.get('confidence', 0)):.1%}\n"
-                   f"Thời điểm xác nhận: {event.get('event_confirmed_at') or event.get('timestamp', 'unknown')}\n"
-                   "Trạng thái: ĐÃ XÁC NHẬN")
+        caption = format_telegram_alert(event, max_length=1024)
         if snapshot is not None:
             boundary = "----firewatch" + uuid.uuid4().hex
             body = bytearray()
