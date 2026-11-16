@@ -106,7 +106,7 @@ def execute(args: argparse.Namespace) -> int:
             if time.monotonic() - before > budget["max_training_hours"] * 3600:
                 raise TimeoutError("TRAINING_RESOURCE_BUDGET_EXCEEDED")
         def epoch_end(trainer: Any) -> None:
-            if int(trainer.epoch) + 1 <= receipt["epochs_actually_completed"]:
+            if int(trainer.epoch) + 1 <= receipt["epochs_actually_completed"] or receipt["epochs_actually_completed"] >= limits["epochs"]:
                 return
             if Counter(epoch_files) != expected:
                 raise ValueError("ACTUAL_TRAIN_MEMBERSHIP_MISMATCH")

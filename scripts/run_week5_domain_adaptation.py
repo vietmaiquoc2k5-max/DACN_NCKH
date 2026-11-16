@@ -252,7 +252,7 @@ def execute(args: argparse.Namespace) -> int:
 
         def epoch_end(trainer: Any) -> None:
             # Ultralytics also invokes on_fit_epoch_end during final_eval: guard it.
-            if int(trainer.epoch)+1<=receipt['epochs_actually_completed']:return
+            if int(trainer.epoch)+1<=receipt['epochs_actually_completed'] or receipt['epochs_actually_completed']>=protocol['epochs']:return
             counts=Counter(epoch_files);epoch_files.clear()
             train_paths=list((output/'vn/images/train').glob('*'))
             if counts!=Counter(p.stem for p in train_paths):
