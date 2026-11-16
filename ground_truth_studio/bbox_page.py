@@ -19,6 +19,11 @@ def bbox_page(repository, token: str) -> None:
     """Display/edit real boxes, with explicit approval and separate lineage gate."""
     service = BBoxReviewService(repository)
     history = {r['image_sha256']:r for r in service.history(token)}
+    issues=getattr(service,'integrity_issues',[])
+    if issues:
+        st.warning(f'{len(issues)} version đang INTEGRITY_QUARANTINED; chưa tính là approval và export bị chặn. Các review hợp lệ khác vẫn dùng được.')
+        with st.expander('Chi tiết integrity quarantine'):
+            st.dataframe([{'version_id':i['version_id'],'error':i['error'],'path':i['path']} for i in issues])
     st.subheader('Human bbox QA · 0 SMOKE / 1 FIRE')
     st.caption('Phê duyệt bbox riêng với event GT; chưa được phép training khi lineage chưa xác minh.')
     st.write({'Ảnh trong queue đã loại trùng':len(service.queue),'Đã xử lý bởi ngài':len(history),
@@ -97,4 +102,5 @@ def bbox_page(repository, token: str) -> None:
                 st.success('Đã lưu annotation version mới trong private storage; nhãn gốc giữ nguyên.')
                 st.rerun()
     if st.button('Xuất bbox đã phê duyệt của tôi'):
-        st.success(str(service.export(token)))
+        try:st.success(str(service.export(token)))
+        except (ValueError,OSError) as error:st.error(f'Export bị chặn: {error}')

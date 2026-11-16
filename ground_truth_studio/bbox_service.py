@@ -12,7 +12,8 @@ import cv2
 from ground_truth_studio.config import confined
 from ground_truth_studio.integrity_service import sha256
 from ground_truth_studio.models import utc_now
-from ground_truth_studio.bbox_snapshot import committed_reviews
+from ground_truth_studio.bbox_snapshot import committed_reviews, scan_reviews
+import os
 from ground_truth_studio.bbox_export_adapter import export_approvals
 
 QUEUE = 'runs/benchmarks/week5_domain_adaptation/run_20261114_73034262_v2'
@@ -85,7 +86,8 @@ class BBoxReviewService:
     def history(self, token: str) -> list[dict]:
         """Only expose the current reviewer's immutable annotation versions."""
         actor = self.repository.actor(token)
-        return [row for row in committed_reviews(self.repository.settings.private)
+        records,self.integrity_issues=scan_reviews(self.repository.settings.private)
+        return [row for row in records
                 if row['reviewer_id'] == actor['id']]
 
     def submit(self, token: str, identity: str, boxes: list[dict], decision: str,
@@ -131,13 +133,18 @@ class BBoxReviewService:
         with (folder/'review.json').open('x',encoding='utf-8') as stream:
             json.dump(record,stream,ensure_ascii=False,indent=2)
         marker=folder/'review.sha256.pending'
-        marker.write_text(sha256(folder/'review.json'),encoding='utf-8')
+        # Flush original bytes and marker before atomic publication on Windows.
+        for durable in (label,folder/'review.json'):
+            with durable.open('r+b') as stream:stream.flush();os.fsync(stream.fileno())
+        with marker.open('x',encoding='utf-8') as stream:
+            stream.write(sha256(folder/'review.json'));stream.flush();os.fsync(stream.fileno())
         marker.rename(folder/'review.sha256')
         return record
 
     def export(self, token: str) -> Path:
         """Export actual latest approvals separately from training eligibility."""
         folder = self.private/'exports'/str(uuid.uuid4())
+        committed_reviews(self.repository.settings.private)  # strict export gate
         lineage = self.repo/'runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/lineage'
         export_approvals(self.repo,self.history(token),self.queue,folder,
                          lineage_dir=lineage if lineage.is_dir() else None)
