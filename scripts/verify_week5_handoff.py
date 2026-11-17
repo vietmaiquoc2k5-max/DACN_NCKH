@@ -197,6 +197,12 @@ def test_11_checksum_verification() -> tuple[bool, str]:
                 return False, f"Missing file: {rel}"
             actual_h = sha256_file(fp)
             if actual_h != expected_h:
+                # Hỗ trợ tự động chuẩn hóa LF đối với tệp markdown/text khi git checkout trên Windows
+                if fp.name.endswith((".md", ".txt")):
+                    content_lf = fp.read_bytes().replace(b"\r\n", b"\n")
+                    if hashlib.sha256(content_lf).hexdigest() == expected_h:
+                        actual_h = expected_h
+            if actual_h != expected_h:
                 return False, f"Checksum mismatch for {rel}"
             checked += 1
         return True, f"Verified all {checked} checksums in handoff package"
@@ -224,13 +230,15 @@ def test_13_pytest_suite() -> tuple[bool, str]:
     """Test 13: Run relevant pytest test suite."""
     try:
         import subprocess
+        env = dict(os.environ)
+        env["PYTHONPATH"] = str(ROOT) + (os.pathsep + env["PYTHONPATH"] if "PYTHONPATH" in env else "")
         res = subprocess.run([
             sys.executable, "-m", "pytest", "-q",
             "tests/test_domain_adaptation.py",
             "tests/test_week5_comparison.py",
             "tests/test_scene_subset.py",
             "tests/test_scene_evidence_requirements.py"
-        ], capture_output=True, text=True, cwd=ROOT)
+        ], capture_output=True, text=True, cwd=ROOT, env=env)
         passed = (res.returncode == 0)
         summary = res.stdout.strip().splitlines()[-1] if res.stdout.strip() else res.stderr
         return passed, summary
