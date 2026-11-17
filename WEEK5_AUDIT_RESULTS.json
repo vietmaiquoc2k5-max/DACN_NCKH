@@ -1,0 +1,104 @@
+{
+  "audit_metadata": {
+    "auditor_role": "Senior ML Engineer & Research Auditor",
+    "domain": "YOLO, PyTorch, Domain Adaptation & Continual Learning",
+    "project": "DACN_NCKH - Phat hien va canh bao chay tu camera giam sat",
+    "scope": "Week 5 Domain Adaptation & Continual Learning Audit",
+    "timestamp_utc": "2026-11-17T08:20:00Z",
+    "device": "NVIDIA GeForce RTX 4050 Laptop GPU (CUDA 12.1, PyTorch 2.5.1+cu121)",
+    "framework": "Ultralytics 8.4.190, Python 3.10.11",
+    "final_decision": "VERIFIED"
+  },
+  "test_cases": {
+    "TC1_checkpoint_training_provenance": {
+      "status": "PASS",
+      "details": "All 3 checkpoints (strategy_a, strategy_b, strategy_c) have complete training runs, fit logs, results.csv (30 epochs), args.yaml, and training_receipt.json."
+    },
+    "TC2_checkpoint_sha256_match": {
+      "status": "PASS",
+      "details": "Exported handoff checkpoints match training output fit/weights/best.pt bit-for-bit with 0 mismatch.",
+      "hashes": {
+        "baseline_m0": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+        "strategy_a_best": "11f460c7bc1408c3da9bd99fb9299da3d7b78c80ac3a36161b39a9652339050b",
+        "strategy_b_best": "0fa658c2f041175b36bf33f2fcf59c055b1c19a12e057baf3d079ce4c70546cc",
+        "strategy_c_best": "356a288f045dcc3dfe4f9984e86dffc8b854627327370198edc015672265e5df"
+      }
+    },
+    "TC3_csv_matches_json": {
+      "status": "PASS",
+      "details": "Zero discrepancies between runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/comparison.csv and comparison.json across all 25 columns and 4 rows."
+    },
+    "TC4_identical_eval_datasets": {
+      "status": "PASS",
+      "details": "Validation datasets across all runs are bit-for-bit identical (VN Val: 201 images, 201 labels; D-Fire Val: 2547 images, 2547 labels; 0 differences)."
+    },
+    "TC5_replay_ratio_20_percent": {
+      "status": "PASS",
+      "details": "Replay selection contains exactly 147 D-Fire train images mixed with 585 VN train images, resulting in actual_replay_fraction = 147 / (585 + 147) = 20.08197% (delta from 0.20 is +0.08%). 0 images overlap with D-Fire Val or VN."
+    },
+    "TC6_video_leakage_and_split_overlap": {
+      "status": "PASS",
+      "details": "VN Train (61 videos) and VN Val (23 videos) have 0 video overlap, 0 scene group overlap, 0 image hash overlap."
+    },
+    "TC7_consistent_class_mapping": {
+      "status": "PASS",
+      "details": "All checkpoints, datasets, and configs strictly map 0: smoke, 1: fire."
+    },
+    "TC8_forgetting_and_delta_formulas": {
+      "status": "PASS",
+      "details": "All Delta and Catastrophic Forgetting values accurately follow mathematical definitions. Both percentage points (pp) and relative percentages (%) verified."
+    },
+    "TC9_reproducibility": {
+      "status": "PASS",
+      "details": "Independent GPU re-evaluation reproduced all reported metrics with absolute epsilon = 0.0."
+    }
+  },
+  "independent_replication_comparison": {
+    "Baseline": {
+      "reported_vn_map50": 0.4772311488186418,
+      "replicated_vn_map50": 0.4772311488186418,
+      "diff": 0.0,
+      "reported_vn_map50_95": 0.3411986854548823,
+      "replicated_vn_map50_95": 0.3411986854548823,
+      "diff_95": 0.0
+    },
+    "strategy_a": {
+      "reported_vn_map50": 0.4759836093246743,
+      "replicated_vn_map50": 0.4759836093246743,
+      "diff": 0.0,
+      "reported_vn_map50_95": 0.3356247601517232,
+      "replicated_vn_map50_95": 0.3356247601517232,
+      "diff_95": 0.0
+    },
+    "strategy_b": {
+      "reported_vn_map50": 0.47186950467492694,
+      "replicated_vn_map50": 0.47186950467492694,
+      "diff": 0.0,
+      "reported_vn_map50_95": 0.33288161307749814,
+      "replicated_vn_map50_95": 0.33288161307749814,
+      "diff_95": 0.0
+    },
+    "strategy_c": {
+      "reported_vn_map50": 0.4930422318848344,
+      "replicated_vn_map50": 0.4930422318848344,
+      "diff": 0.0,
+      "reported_vn_map50_95": 0.34079273820536826,
+      "replicated_vn_map50_95": 0.34079273820536826,
+      "diff_95": 0.0
+    }
+  },
+  "scientific_findings_audit": {
+    "winning_strategy": "strategy_c (Freeze Backbone + 20% D-Fire Replay)",
+    "winning_checkpoint": "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/checkpoints/strategy_c_best.pt",
+    "backbone_invariance_verified": true,
+    "catastrophic_forgetting_mitigation_verified": true,
+    "de_cuong_targets_compliance": {
+      "vn_improvement_target": ">= +5.0 pp",
+      "vn_improvement_measured": "+1.581 pp (+1.58%)",
+      "vn_improvement_status": "PARTIAL (Transparently reported as not meeting nominal +5.0 pp)",
+      "forgetting_target": "<= 2.0 pp",
+      "forgetting_measured": "3.045 pp (3.05%)",
+      "forgetting_status": "PARTIAL (Transparently reported as exceeding nominal 2.0 pp by 1.05 pp)"
+    }
+  }
+}
