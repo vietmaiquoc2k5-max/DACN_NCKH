@@ -1,0 +1,104 @@
+# WEEK 6 EXPERIMENT PROTOCOL SPECIFICATION
+# Project: DACN_NCKH - Early Fire and Smoke Detection from Surveillance Cameras
+# Phase: Week 6 Infrastructure & Ablation Design
+
+protocol_version: "week6_v1_ablation_and_deployment"
+status: "ACTIVE"
+
+# Operating Point Designation
+operating_point:
+  status: "PROVISIONAL"
+  lock_status: "UNLOCKED"
+  reason: "24 of 35 Ground Truth events are pending second annotator cross-verification; 0 validation positive videos are verified."
+  provisional_parameters:
+    confidence: 0.35
+    k: 3
+    n: 8
+    feature_threshold: 0.02
+    cooldown_sec: 5.0
+    merge_gap_sec: 2.0
+  policy: "PROVISIONAL operating point CANNOT be promoted to LOCKED until 100% of validation positive GT events are cross-verified."
+
+# Model & Checkpoint Invariants
+checkpoints:
+  winning_model:
+    name: "Strategy C (Freeze Backbone + 20% D-Fire Replay)"
+    path: "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/checkpoints/strategy_c_best.pt"
+    sha256: "356a288f045dcc3dfe4f9984e86dffc8b854627327370198edc015672265e5df"
+    architecture: "YOLOv8n"
+    classes:
+      0: "smoke"
+      1: "fire"
+  baseline_model:
+    name: "Baseline M0 (MT2 D-Fire Pre-trained)"
+    path: "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt"
+    sha256: "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6"
+    architecture: "YOLOv8n"
+    classes:
+      0: "smoke"
+      1: "fire"
+
+# Data Manifest Invariants
+manifests:
+  dataset_manifest:
+    path: "handoff/week5/dataset_manifest.json"
+    sha256: "b72e210b29724943bf762b1b17bbdf0d06ee077a3630061e58c4b593f07d2864"
+    split_scope: "train_val_only"
+  negative_videos_manifest:
+    path: "data/negative_videos_manifest.json"
+    sha256: "5ba1855d624f65339f60fcd741ed2edc874ac5e327529a0d2c99c8460592ef23"
+    video_count: 79
+    target_hours: 5.0
+    actual_hours: 7.2026
+  ground_truth_events:
+    path: "data/ground_truth/events.jsonl"
+    sha256: "8c6f30bbd057d5b5ae453feb64eb010387c2087ab9350ccea922ba04325bf7c3"
+    total_events: 35
+    cross_verified_events: 11
+    pending_verification_events: 24
+
+# Detection & Tracking Protocol
+inference_parameters:
+  imgsz_baseline: 640
+  imgsz_ablation: [416, 640, 960]
+  conf_baseline: 0.35
+  conf_ablation: [0.25, 0.35, 0.50]
+  iou_nms: 0.70
+  sampling_rate_fps: 5.0
+  sampling_mode: "NATIVE_PTS_SAMPLING"
+
+tracker_parameters:
+  tracker_type: "bytetrack"
+  track_thresh: 0.35
+  match_thresh: 0.80
+  track_buffer: 30
+  frame_rate: 5
+
+temporal_verifier_parameters:
+  window_size_n: 8
+  confirm_frames_k: 3
+  suspect_frames_k: 1
+  cooldown_sec: 5.0
+  feature_threshold: 0.02
+  merge_gap_sec: 2.0
+  ablation_k_n:
+    - [2, 8]
+    - [3, 8]
+    - [4, 10]
+
+# Hardware & Environment Specifications
+environment:
+  python: "3.10.11"
+  torch: "2.5.1+cu121"
+  cuda: "12.1"
+  ultralytics: "8.4.190"
+  device: "cuda:0"
+  gpu_name: "NVIDIA GeForce RTX 4050 Laptop GPU"
+  vram_mb: 6140
+  cpu_architecture: "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel"
+
+# Strict Experimental Guards
+rules:
+  test_split_protection: "Test split (630 frames / 29 videos) is STRICTLY FORBIDDEN for hyperparameter tuning or ablation."
+  event_recall_guard: "Event recall and delay cannot be tuned on pending Ground Truth; pending events MUST NOT be treated as verified."
+  reproducibility: "All runs must log config SHA256, model SHA256, timestamp, and hardware state."
