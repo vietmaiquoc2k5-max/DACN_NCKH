@@ -1,0 +1,293 @@
+{
+  "total_targets": 36,
+  "artifacts": [
+    {
+      "path": "runs/detect/runs/benchmarks/yolov8n_seed42/weights/best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6247332,
+      "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+      "description": "Baseline M0 weights trained on D-Fire"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/checkpoints/strategy_a_best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "11f460c7bc1408c3da9bd99fb9299da3d7b78c80ac3a36161b39a9652339050b",
+      "description": "Strategy A handoff checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/checkpoints/strategy_b_best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "0fa658c2f041175b36bf33f2fcf59c055b1c19a12e057baf3d079ce4c70546cc",
+      "description": "Strategy B handoff checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/checkpoints/strategy_c_best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "356a288f045dcc3dfe4f9984e86dffc8b854627327370198edc015672265e5df",
+      "description": "Strategy C handoff checkpoint (Winning Model)"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_full_finetune_seed42/fit/weights/best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "11f460c7bc1408c3da9bd99fb9299da3d7b78c80ac3a36161b39a9652339050b",
+      "description": "Strategy A fit best checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_full_finetune_seed42/fit/weights/last.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "9bb9ed7a2f7459bbc4003febcf1dc6d1fcc59da8116683efa4882ec602062f5e",
+      "description": "Strategy A fit last checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_freeze_backbone_seed42/fit/weights/best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "0fa658c2f041175b36bf33f2fcf59c055b1c19a12e057baf3d079ce4c70546cc",
+      "description": "Strategy B fit best checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_freeze_backbone_seed42/fit/weights/last.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "9a33cf309619ccafb02750eb81991acb28ee1d7fa5fb836552f5721f2a4ab120",
+      "description": "Strategy B fit last checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/fit/weights/best.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "356a288f045dcc3dfe4f9984e86dffc8b854627327370198edc015672265e5df",
+      "description": "Strategy C fit best checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/fit/weights/last.pt",
+      "category": "CHECKPOINT",
+      "status": "EXISTS",
+      "size_bytes": 6223523,
+      "sha256": "b1362e6e5801494e406bbe685b6da50b1694edd73e9beb41310b7e97de9bf856",
+      "description": "Strategy C fit last checkpoint"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_full_finetune_seed42/training_receipt.json",
+      "category": "TRAINING_RECEIPT",
+      "status": "EXISTS",
+      "size_bytes": 24141,
+      "sha256": "d577d064f062a2de89cc32e7d7fd35e8e68404ac73d6ff1e4440bbf0349be228",
+      "description": "Strategy A full training receipt"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_full_finetune_seed42/locked_inputs.json",
+      "category": "PROVENANCE",
+      "status": "EXISTS",
+      "size_bytes": 1116932,
+      "sha256": "3dca8a16e21ca6669729441dd3d31d2e82ebe442f86e7fd4efd3db14e60c79ef",
+      "description": "Strategy A locked inputs digest"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_full_finetune_seed42/fit/results.csv",
+      "category": "TRAINING_LOG",
+      "status": "EXISTS",
+      "size_bytes": 3640,
+      "sha256": "12cdf57ae59b6b67322a1f1bcfdd3f297c077e87328515882067bfb48d240a06",
+      "description": "Strategy A 30-epoch results CSV"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_full_finetune_seed42/fit/args.yaml",
+      "category": "TRAINING_LOG",
+      "status": "EXISTS",
+      "size_bytes": 2043,
+      "sha256": "39c70e0aa70dec781e151848c1e58abd3840922db9cb45378bb384b698298951",
+      "description": "Strategy A training arguments"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_freeze_backbone_seed42/training_receipt.json",
+      "category": "TRAINING_RECEIPT",
+      "status": "EXISTS",
+      "size_bytes": 24510,
+      "sha256": "72d364ca3a47641c912ec8ef73d2db40caee0c84c94d352653c38bc56b47d40a",
+      "description": "Strategy B full training receipt"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_freeze_backbone_seed42/locked_inputs.json",
+      "category": "PROVENANCE",
+      "status": "EXISTS",
+      "size_bytes": 1116934,
+      "sha256": "578fb059e79639cf4733f1f2444f629ff81a6b2f2670922fb9b49c9c64876775",
+      "description": "Strategy B locked inputs digest"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_freeze_backbone_seed42/fit/results.csv",
+      "category": "TRAINING_LOG",
+      "status": "EXISTS",
+      "size_bytes": 3651,
+      "sha256": "a557461f3c6b566ffe3430a9abe0c281309838af8dfabd8840c14860c247254f",
+      "description": "Strategy B 30-epoch results CSV"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_freeze_backbone_seed42/fit/args.yaml",
+      "category": "TRAINING_LOG",
+      "status": "EXISTS",
+      "size_bytes": 2047,
+      "sha256": "6f49539a3babcf7c940d07934ad37bcef09c9a35faf88f505247686c6ff23c52",
+      "description": "Strategy B training arguments"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/training_receipt.json",
+      "category": "TRAINING_RECEIPT",
+      "status": "EXISTS",
+      "size_bytes": 24578,
+      "sha256": "bcaf4663ec7843240b7155d0b1e5e834562f9b60b5df352b3786868da2031c0e",
+      "description": "Strategy C full training receipt"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/locked_inputs.json",
+      "category": "PROVENANCE",
+      "status": "EXISTS",
+      "size_bytes": 1166034,
+      "sha256": "912ccb4a61176357fe50699a198f07bf4b3f208f112ee0d8732e6896c5e3b0f3",
+      "description": "Strategy C locked inputs digest"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/replay_selection.json",
+      "category": "PROVENANCE",
+      "status": "EXISTS",
+      "size_bytes": 82712,
+      "sha256": "08cc563ff46b80377f932a5e603800f8fd110eb3efa6e2f86285c4788a5df728",
+      "description": "Strategy C 147-image replay selection receipt"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/fit/results.csv",
+      "category": "TRAINING_LOG",
+      "status": "EXISTS",
+      "size_bytes": 3647,
+      "sha256": "dbccc3796f6de165f1e43cb20b0f7f5dbb5c30ebe73e062bcab863351173a045",
+      "description": "Strategy C 30-epoch results CSV"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/run_replay_20_percent_seed42/fit/args.yaml",
+      "category": "TRAINING_LOG",
+      "status": "EXISTS",
+      "size_bytes": 2053,
+      "sha256": "58b5f235161bdd78272dd35c56d3f6fbfbeabf6fee9540cd943b8089023ea833",
+      "description": "Strategy C training arguments"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/comparison.csv",
+      "category": "EVALUATION_OUTPUT",
+      "status": "EXISTS",
+      "size_bytes": 1903,
+      "sha256": "5394a5c203d95887335c8af6aac2dc994fa352e1869d6e5f0d62d20a6b323d65",
+      "description": "25-column benchmark comparison CSV"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/final_gpu_handoff/comparison.json",
+      "category": "EVALUATION_OUTPUT",
+      "status": "EXISTS",
+      "size_bytes": 6029,
+      "sha256": "f11863a2565c8ce068899aaa9f7377a85a70b9939cec94bdbdbb1ae9968a8f49",
+      "description": "Benchmark comparison JSON with input hashes"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/comparison/comparison.csv",
+      "category": "EVALUATION_OUTPUT",
+      "status": "EXISTS",
+      "size_bytes": 1903,
+      "sha256": "5394a5c203d95887335c8af6aac2dc994fa352e1869d6e5f0d62d20a6b323d65",
+      "description": "Training output comparison CSV"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/gpu_training/comparison/comparison.json",
+      "category": "EVALUATION_OUTPUT",
+      "status": "EXISTS",
+      "size_bytes": 6029,
+      "sha256": "f11863a2565c8ce068899aaa9f7377a85a70b9939cec94bdbdbb1ae9968a8f49",
+      "description": "Training output comparison JSON"
+    },
+    {
+      "path": "handoff/week5/dataset_manifest.json",
+      "category": "MANIFEST",
+      "status": "EXISTS",
+      "size_bytes": 10925327,
+      "sha256": "b72e210b29724943bf762b1b17bbdf0d06ee077a3630061e58c4b593f07d2864",
+      "description": "Week 5 dataset manifest (15,742 rows: 786 VN, 14,956 DFire)"
+    },
+    {
+      "path": "handoff/week5/protocol.json",
+      "category": "CONFIGURATION",
+      "status": "EXISTS",
+      "size_bytes": 3371,
+      "sha256": "42317372c1a622c7ba41c3c1d26ebab454f8b0ec85a606d6de9d5cf3701bdd47",
+      "description": "Week 5 protocol specification v2"
+    },
+    {
+      "path": "configs/research/week5_execution_protocol_v2.json",
+      "category": "CONFIGURATION",
+      "status": "EXISTS",
+      "size_bytes": 3395,
+      "sha256": "68746b570001a852b87630c29ec9ee7669ded3387047c430cf1a731541b47d51",
+      "description": "Execution protocol v2 configuration"
+    },
+    {
+      "path": "requirements-training.txt",
+      "category": "CONFIGURATION",
+      "status": "EXISTS",
+      "size_bytes": 446,
+      "sha256": "452defe8eb4cd5827115beb8eff262904a70197933edebbbaee5f660a7848e2b",
+      "description": "Pinned dependencies for GPU training"
+    },
+    {
+      "path": "docs/WEEK5_DOMAIN_ADAPTATION_REPORT.md",
+      "category": "REPORT",
+      "status": "EXISTS",
+      "size_bytes": 12230,
+      "sha256": "80c00ae0fba91dc6b4529266ef27dea2c064fecf813ef309c053ac8b83d92f93",
+      "description": "Official Week 5 Domain Adaptation Scientific Report"
+    },
+    {
+      "path": "WEEK5_AUDIT_REPORT.md",
+      "category": "REPORT",
+      "status": "EXISTS",
+      "size_bytes": 18476,
+      "sha256": "e9d55c32989c38033cbc9ff8ca4678500867809ccf1e4c38500a8baad5f190ea",
+      "description": "Auditor initial report"
+    },
+    {
+      "path": "WEEK5_AUDIT_RESULTS.json",
+      "category": "REPORT",
+      "status": "EXISTS",
+      "size_bytes": 4929,
+      "sha256": "6a26a10bde7755e82fb5be1b5ee057f7a57023e15d40c34452e99a76ee229920",
+      "description": "Auditor initial JSON results"
+    },
+    {
+      "path": "WEEK5_CHECKPOINT_HASHES.txt",
+      "category": "REPORT",
+      "status": "EXISTS",
+      "size_bytes": 2109,
+      "sha256": "a8f89761156646d07bbd4c013595b8d446973db6cdf49092807205647a56ea1a",
+      "description": "Auditor checkpoint hashes manifest"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/independent_dfire_eval_results.json",
+      "category": "EVALUATION_OUTPUT",
+      "status": "EXISTS",
+      "size_bytes": 1368,
+      "sha256": "75d8d1c62cc68fa323cf1c57d7d406a369e24424ab51c2c217f5efe82422e0a0",
+      "description": "Independent replication results on D-Fire Val"
+    }
+  ]
+}
