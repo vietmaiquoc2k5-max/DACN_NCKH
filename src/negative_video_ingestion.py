@@ -2,18 +2,17 @@
 """Negative Video Ingestion and Validation Cohort Expansion Pipeline.
 
 FireWatch - Computer Vision Fire & Smoke Detection.
-Implements the rigorous 11-step negative video ingestion pipeline:
-1. Import video (non-destructive staging, unique ID assignment)
-2. Validate file format & container headers
-3. Compute streaming SHA-256
-4. Extract technical metadata (FPS, resolution, frame counts, duration)
-5. Decode audit & boundary verification
-6. Check multi-signal EOF integrity (NORMAL_EOF, TRUNCATED_STREAM, DECODE_ERROR, UNKNOWN_EOF)
-7. Duplicate detection (checksum and content matching)
-8. Source provenance recording (location, camera ID, environmental conditions)
-9. Dataset split eligibility review (strict Train/Test leakage prevention)
-10. Human content review support (initializes PENDING_HUMAN_REVIEW)
-11. Final cohort approval & FAR eligibility determination
+Scientific Integrity Hardened Pipeline:
+1. Non-destructive import & unique ID assignment
+2. Container format & header validation
+3. Full streaming SHA-256 computation
+4. Full stream sequential decode (NO boundary probe substitution)
+5. Multi-signal EOF determination (NORMAL_EOF, TRUNCATED_STREAM, DECODE_ERROR, UNKNOWN_EOF)
+6. Duplicate detection against existing inventory AND intra-batch candidates
+7. Rigorous source provenance verification (camera ID, acquisition time, environment)
+8. Strict split isolation to prevent Train/Test contamination
+9. Human review initialization (PENDING_HUMAN_REVIEW)
+10. Final cohort exposure calculation and gate eligibility determination
 """
 from __future__ import annotations
 
@@ -37,6 +36,16 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 
 ROOT = Path(__file__).resolve().parent.parent
 
+DISALLOWED_PROVENANCE_VALUES = {
+    "", "none", "null", "unknown", "n/a", "cam_acquired", "surveillance camera feed",
+    "unassigned", "pending", "default", "temp"
+}
+
+DISALLOWED_REVIEWERS = {
+    "", "none", "null", "system", "auto", "script", "bot", "unassigned",
+    "n/a", "pending", "annotator_pending", "unknown", "reviewer_pending"
+}
+
 
 class EOFStatus(str, Enum):
     NORMAL_EOF = "NORMAL_EOF"
@@ -58,6 +67,26 @@ class ContentDecision(str, Enum):
     FIRE_PRESENT = "FIRE_PRESENT"
     SMOKE_PRESENT = "SMOKE_PRESENT"
     UNCERTAIN = "UNCERTAIN"
+
+
+def validate_provenance(source_metadata: dict[str, Any]) -> tuple[bool, list[str]]:
+    """Validate that video provenance metadata meets strict scientific authenticity rules."""
+    reasons: list[str] = []
+    source_origin = str(source_metadata.get("source_origin") or "").strip()
+    camera_id = str(source_metadata.get("camera_id") or "").strip()
+    acq_time = str(source_metadata.get("acquisition_time") or source_metadata.get("collection_time") or "").strip()
+    env = str(source_metadata.get("environmental_condition") or "").strip()
+
+    if not source_origin or source_origin.lower() in DISALLOWED_PROVENANCE_VALUES:
+        reasons.append(f"Invalid or missing source_origin ('{source_origin}')")
+    if not camera_id or camera_id.lower() in DISALLOWED_PROVENANCE_VALUES:
+        reasons.append(f"Invalid or missing camera_id ('{camera_id}')")
+    if not acq_time or acq_time.lower() in DISALLOWED_PROVENANCE_VALUES:
+        reasons.append(f"Invalid or missing acquisition_time ('{acq_time}')")
+    if not env or env.lower() in DISALLOWED_PROVENANCE_VALUES:
+        reasons.append(f"Invalid or missing environmental_condition ('{env}')")
+
+    return len(reasons) == 0, reasons
 
 
 @dataclass
@@ -84,6 +113,7 @@ class VideoIngestionRecord:
     split_eligibility: str
     current_split: str
     duplicate_flag: str
+    acquisition_time: str = ""
     human_content_verdict: str = ContentDecision.PENDING_HUMAN_REVIEW.value
     reviewer_id: str = ""
     review_timestamp: str = ""
@@ -133,6 +163,9 @@ class NegativeVideoIngestionPipeline:
         self.existing_inventory_hashes = self._load_existing_hashes()
         self.train_split_ids, self.val_split_ids, self.test_split_ids = self._load_split_ids()
 
+        # Intra-batch duplicate tracking: sha256 -> video_id
+        self.batch_hashes: dict[str, str] = {}
+
     def _load_config(self, path: Path) -> dict[str, Any]:
         if path.exists():
             with open(path, "r", encoding="utf-8") as f:
@@ -146,7 +179,7 @@ class NegativeVideoIngestionPipeline:
             "validation": {
                 "target_exposure_seconds": 18000.0,
                 "allowed_extensions": [".mp4", ".avi", ".mkv", ".mov"],
-                "container_tolerance_frames": 15,
+                "container_tolerance_frames": 10,
             },
             "manifests": {
                 "negative_inventory_csv": "runs/audits/week6/negative_video_inventory.csv",
@@ -165,9 +198,9 @@ class NegativeVideoIngestionPipeline:
                 with open(inv_path, "r", encoding="utf-8") as f:
                     reader = csv.DictReader(f)
                     for row in reader:
-                        h = row.get("sha256", "").strip()
+                        h = row.get("sha256", "").strip().lower()
                         vid = row.get("video_id", "").strip()
-                        if h and h != "MISSING":
+                        if h and h != "missing" and len(h) >= 8:
                             hashes[h] = vid
             except Exception as e:
                 LOG.warning("Could not read existing inventory hashes: %s", e)
@@ -205,7 +238,7 @@ class NegativeVideoIngestionPipeline:
         with open(path, "rb") as f:
             while chunk := f.read(65536):
                 h.update(chunk)
-        return h.hexdigest()
+        return h.hexdigest().lower()
 
     def validate_file_format(self, path: Path) -> tuple[bool, str]:
         """Validate container format and readability."""
@@ -217,112 +250,225 @@ class NegativeVideoIngestionPipeline:
             return False, "FAIL_ZERO_BYTE_FILE"
         return True, "PASS_FORMAT"
 
-    def extract_technical_metadata(self, path: Path) -> dict[str, Any]:
-        """Extract physical stream metadata using OpenCV."""
+    def decode_full_stream(self, path: Path) -> dict[str, Any]:
+        """Full stream sequential decode: reads frame-by-frame without seek substitution.
+
+        Performs:
+        - Exact sequential frame counting
+        - Detection of premature stream termination (TRUNCATED_STREAM)
+        - Detection of mid-stream corruptions
+        - Reconciliation of declared frames, decoded frames, and duration
+        """
+        if not path.exists():
+            return {
+                "fps": 0.0, "width": 0, "height": 0, "resolution": "0x0",
+                "declared_frame_count": 0, "decoded_frame_count": 0,
+                "declared_duration_sec": 0.0, "calculated_duration_sec": 0.0,
+                "eof_status": EOFStatus.DECODE_ERROR.value,
+                "technical_verdict": "FAIL_FILE_NOT_FOUND",
+                "is_readable": False, "notes": ["File does not exist on disk"]
+            }
+
         cap = cv2.VideoCapture(str(path))
         if not cap.isOpened():
             return {
                 "fps": 0.0, "width": 0, "height": 0, "resolution": "0x0",
                 "declared_frame_count": 0, "decoded_frame_count": 0,
                 "declared_duration_sec": 0.0, "calculated_duration_sec": 0.0,
-                "is_readable": False
+                "eof_status": EOFStatus.DECODE_ERROR.value,
+                "technical_verdict": "FAIL_CANNOT_OPEN_STREAM",
+                "is_readable": False, "notes": ["OpenCV could not open stream"]
             }
 
         fps = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) or 0)
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 0)
         declared_fc = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+        fps = round(fps, 2) if fps > 0.0 else 25.0
+        calc_dur = round(declared_fc / fps, 2) if (declared_fc > 0 and fps > 0) else 0.0
 
-        # Probe boundary frame
-        boundary_ok = False
-        if declared_fc > 0:
-            target_pos = max(0, declared_fc - 1)
-            cap.set(cv2.CAP_PROP_POS_FRAMES, target_pos)
+        if declared_fc <= 0 or width <= 0 or height <= 0:
+            cap.release()
+            return {
+                "fps": fps, "width": width, "height": height, "resolution": f"{width}x{height}",
+                "declared_frame_count": declared_fc, "decoded_frame_count": 0,
+                "declared_duration_sec": calc_dur, "calculated_duration_sec": 0.0,
+                "eof_status": EOFStatus.DECODE_ERROR.value,
+                "technical_verdict": "FAIL_INVALID_HEADER_METADATA",
+                "is_readable": False, "notes": ["Declared frame count or resolution non-positive"]
+            }
+
+        # Sequential full-stream decoding: read every frame until EOF
+        decoded_fc = 0
+        decoder_errors: list[str] = []
+
+        while True:
             ret, frame = cap.read()
-            if ret and frame is not None and frame.size > 0:
-                boundary_ok = True
-            else:
-                alt_pos = max(0, declared_fc - 10)
-                cap.set(cv2.CAP_PROP_POS_FRAMES, alt_pos)
-                ret, frame = cap.read()
-                if ret and frame is not None and frame.size > 0:
-                    boundary_ok = True
+            if not ret or frame is None:
+                break
+            if frame.size == 0:
+                decoder_errors.append(f"Empty decoded frame encountered at index {decoded_fc}")
+                break
+            decoded_fc += 1
+
+        # Check for mid-stream corruption: if sequential read stopped early, can tail be sought?
+        can_read_tail = False
+        if decoded_fc < declared_fc:
+            cap.set(cv2.CAP_PROP_POS_FRAMES, max(0, declared_fc - 1))
+            ret_tail, frame_tail = cap.read()
+            if ret_tail and frame_tail is not None and frame_tail.size > 0:
+                can_read_tail = True
+                decoder_errors.append(
+                    f"Mid-stream corruption: sequential decode stopped at {decoded_fc}/{declared_fc}, "
+                    f"yet tail frame {declared_fc - 1} was reachable via seek."
+                )
 
         cap.release()
 
-        calc_dur = round(declared_fc / fps, 2) if fps > 0 else 0.0
+        actual_dur = round(decoded_fc / fps, 2) if fps > 0 else 0.0
+        diff = declared_fc - decoded_fc
+        diff_pct = (diff / declared_fc) * 100.0 if declared_fc > 0 else 0.0
+
+        notes = list(decoder_errors)
+
+        # Strict EOF evaluation
+        if can_read_tail:
+            eof_status = EOFStatus.DECODE_ERROR.value
+            tech_verdict = f"FAIL_MID_STREAM_CORRUPTION_AT_FRAME_{decoded_fc}"
+        elif decoded_fc == 0:
+            eof_status = EOFStatus.DECODE_ERROR.value
+            tech_verdict = "FAIL_ZERO_FRAMES_DECODED"
+        elif diff < 0:
+            eof_status = EOFStatus.NORMAL_EOF.value
+            tech_verdict = "PASS_NORMAL_EOF_EXCEEDS_HEADER"
+        elif diff == 0:
+            eof_status = EOFStatus.NORMAL_EOF.value
+            tech_verdict = "PASS_NORMAL_EOF"
+        else:
+            # diff > 0: Some declared frames missing
+            # Only confirm NORMAL_EOF if verified genuine container timescale padding:
+            is_genuine_padding = (
+                len(decoder_errors) == 0
+                and diff <= 2
+                and abs(calc_dur - actual_dur) <= (2.0 / fps)
+            )
+            if is_genuine_padding:
+                eof_status = EOFStatus.NORMAL_EOF.value
+                tech_verdict = "PASS_NORMAL_EOF_CONTAINER_PADDING"
+            elif diff <= 10 or diff_pct <= 0.5:
+                eof_status = EOFStatus.UNKNOWN_EOF.value
+                tech_verdict = f"FAIL_UNKNOWN_EOF_MISSING_{diff}_FRAMES"
+                notes.append(f"Insufficient proof of normal EOF: missing {diff} frames ({diff_pct:.2f}%)")
+            else:
+                eof_status = EOFStatus.TRUNCATED_STREAM.value
+                tech_verdict = f"FAIL_TRUNCATED_STREAM_MISSING_{diff}_FRAMES"
+                notes.append(f"Premature stream cut: missing {diff}/{declared_fc} frames ({diff_pct:.2f}%)")
+
+        # Duration mismatch check
+        duration_mismatch = abs(calc_dur - actual_dur) > 2.0 and diff > 10
+        if duration_mismatch and tech_verdict.startswith("PASS"):
+            tech_verdict = f"FAIL_DURATION_MISMATCH_{calc_dur}s_vs_{actual_dur}s"
 
         return {
-            "fps": round(fps, 2),
+            "fps": fps,
             "width": width,
             "height": height,
             "resolution": f"{width}x{height}",
             "declared_frame_count": declared_fc,
-            "decoded_frame_count": declared_fc if boundary_ok else 0,
+            "decoded_frame_count": decoded_fc,
             "declared_duration_sec": calc_dur,
-            "calculated_duration_sec": calc_dur,
-            "boundary_ok": boundary_ok,
-            "is_readable": True
+            "calculated_duration_sec": actual_dur,
+            "eof_status": eof_status,
+            "technical_verdict": tech_verdict,
+            "is_readable": decoded_fc > 0,
+            "notes": notes,
+            "diff_frames": diff,
+            "diff_pct": round(diff_pct, 2)
         }
 
+    def extract_technical_metadata(self, path: Path) -> dict[str, Any]:
+        """Backward-compatible wrapper that runs full sequential stream decode."""
+        return self.decode_full_stream(path)
+
     def evaluate_eof_status(self, path: Path, meta: dict[str, Any]) -> tuple[EOFStatus, str]:
-        """Multi-signal EOF classification."""
+        """Multi-signal EOF classification based on full decode results."""
         if not meta.get("is_readable", False):
-            return EOFStatus.DECODE_ERROR, "FAIL_CANNOT_DECODE"
+            return EOFStatus.DECODE_ERROR, meta.get("technical_verdict", "FAIL_DECODE_ERROR")
 
-        declared_fc = meta.get("declared_frame_count", 0)
-        boundary_ok = meta.get("boundary_ok", False)
+        eof_str = meta.get("eof_status", EOFStatus.UNKNOWN_EOF.value)
+        verdict = meta.get("technical_verdict", "FAIL_UNKNOWN_EOF")
 
-        if "VN_NEG_48" in path.name:
-            return EOFStatus.TRUNCATED_STREAM, "FAIL_TRUNCATED_STREAM"
+        try:
+            return EOFStatus(eof_str), verdict
+        except ValueError:
+            return EOFStatus.UNKNOWN_EOF, verdict
 
-        if declared_fc <= 0:
-            return EOFStatus.DECODE_ERROR, "FAIL_NO_FRAMES"
+    def detect_duplicates(
+        self, sha256: str, filename: str = "", video_id: str = ""
+    ) -> str:
+        """Check duplicate checksums against existing inventory AND intra-batch items."""
+        clean_sha = sha256.strip().lower()
+        if not clean_sha or clean_sha in ("file_not_found", "n/a", ""):
+            return "UNKNOWN"
 
-        if not boundary_ok and declared_fc > 15:
-            return EOFStatus.UNKNOWN_EOF, "FAIL_CORRUPT_BOUNDARY"
+        # 1. Check against existing inventory
+        if clean_sha in self.existing_inventory_hashes:
+            existing_vid = self.existing_inventory_hashes[clean_sha]
+            return f"DUPLICATE_SHA256_OF_{existing_vid}"
 
-        return EOFStatus.NORMAL_EOF, "PASS_NORMAL_EOF"
+        # 2. Check within current ingestion batch
+        if clean_sha in self.batch_hashes:
+            batch_prev_vid = self.batch_hashes[clean_sha]
+            return f"DUPLICATE_BATCH_OF_{batch_prev_vid}"
 
-    def detect_duplicates(self, sha256: str, filename: str) -> str:
-        """Check duplicate checksums against existing inventory."""
-        if sha256 in self.existing_inventory_hashes:
-            return f"DUPLICATE_SHA256_OF_{self.existing_inventory_hashes[sha256]}"
+        # Register hash in batch lookup
+        self.batch_hashes[clean_sha] = video_id or filename
         return "UNIQUE"
 
     def evaluate_split_eligibility(
         self, video_id: str, sha256: str, source_metadata: dict[str, Any]
     ) -> SplitEligibility:
-        """Enforce strict split isolation to eliminate Train/Test contamination."""
+        """Enforce strict split isolation, Train/Test leakage guard, and provenance check."""
         clean_vid = video_id.replace("datasets/", "").replace("negative_videos/", "").replace(".mp4", "")
 
+        # 1. Train leakage guard
         if clean_vid in self.train_split_ids:
             return SplitEligibility.LEAKAGE_TRAIN_CONTAMINATED
+
+        # 2. Test leakage guard
         if clean_vid in self.test_split_ids:
             return SplitEligibility.LEAKAGE_TEST_CONTAMINATED
 
-        # Check if source comes from test pool
+        # 3. Test pool path guard
         src_path = str(source_metadata.get("source_path", "")).lower()
         if "test_videos" in src_path or "test" in clean_vid.lower():
             if clean_vid not in self.val_split_ids:
                 return SplitEligibility.UNRESOLVED_PROVENANCE
 
+        # 4. Known official validation membership
         if clean_vid in self.val_split_ids:
             return SplitEligibility.ELIGIBLE_FOR_VALIDATION
 
-        if source_metadata.get("is_newly_acquired", False):
-            return SplitEligibility.ELIGIBLE_FOR_VALIDATION
+        # 5. Candidate for new acquisition: strictly verify provenance and explicit flag
+        is_new = bool(source_metadata.get("is_new_acquisition") or source_metadata.get("is_newly_acquired", False))
+        if not is_new:
+            return SplitEligibility.UNRESOLVED_PROVENANCE
 
-        return SplitEligibility.UNRESOLVED_PROVENANCE
+        prov_ok, _ = validate_provenance(source_metadata)
+        if not prov_ok:
+            return SplitEligibility.UNRESOLVED_PROVENANCE
+
+        return SplitEligibility.ELIGIBLE_FOR_VALIDATION
 
     def ingest_single_video(
         self,
         source_path: Path,
         assigned_id: str,
-        source_origin: str = "Surveillance Camera Feed",
-        camera_id: str = "CAM_ACQUIRED",
-        environmental_condition: str = "Outdoor/Daylight",
-        is_new_acquisition: bool = True
+        source_origin: str = "",
+        camera_id: str = "",
+        environmental_condition: str = "",
+        acquisition_time: str = "",
+        is_new_acquisition: bool = False
     ) -> VideoIngestionRecord:
         """Execute full 11-step ingestion pipeline for a candidate video."""
         LOG.info("Ingesting video candidate: %s as ID %s", source_path, assigned_id)
@@ -333,7 +479,7 @@ class NegativeVideoIngestionPipeline:
             return VideoIngestionRecord(
                 video_id=assigned_id,
                 filename=source_path.name,
-                relative_path=str(source_path),
+                relative_path=str(source_path).replace("\\", "/"),
                 sha256="N/A",
                 file_size_bytes=0,
                 fps=0.0,
@@ -349,6 +495,7 @@ class NegativeVideoIngestionPipeline:
                 source_origin=source_origin,
                 camera_id=camera_id,
                 environmental_condition=environmental_condition,
+                acquisition_time=acquisition_time,
                 split_eligibility=SplitEligibility.UNRESOLVED_PROVENANCE.value,
                 current_split="UNRESOLVED",
                 duplicate_flag="UNKNOWN",
@@ -359,19 +506,20 @@ class NegativeVideoIngestionPipeline:
         sha = self.compute_sha256(source_path)
         file_size = source_path.stat().st_size
 
-        # 3. Technical metadata extraction
-        meta = self.extract_technical_metadata(source_path)
+        # 3. Duplicate detection (inventory & batch)
+        dup_status = self.detect_duplicates(sha, filename=source_path.name, video_id=assigned_id)
 
-        # 4. EOF Classification
-        eof, tech_verdict = self.evaluate_eof_status(source_path, meta)
+        # 4. Full stream sequential decode (NO boundary probe)
+        meta = self.decode_full_stream(source_path)
 
-        # 5. Duplicate detection
-        dup_status = self.detect_duplicates(sha, source_path.name)
-
-        # 6. Split eligibility & leakage guard
+        # 5. Provenance & split eligibility
         src_meta = {
             "source_path": str(source_path),
-            "is_newly_acquired": is_new_acquisition
+            "source_origin": source_origin,
+            "camera_id": camera_id,
+            "environmental_condition": environmental_condition,
+            "acquisition_time": acquisition_time,
+            "is_new_acquisition": is_new_acquisition,
         }
         eligibility = self.evaluate_split_eligibility(assigned_id, sha, src_meta)
 
@@ -380,6 +528,10 @@ class NegativeVideoIngestionPipeline:
                 "test" if eligibility == SplitEligibility.LEAKAGE_TEST_CONTAMINATED else "UNRESOLVED"
             )
         )
+
+        tech_verdict = meta["technical_verdict"]
+        if dup_status != "UNIQUE":
+            tech_verdict = f"{tech_verdict}; {dup_status}"
 
         return VideoIngestionRecord(
             video_id=assigned_id,
@@ -395,11 +547,12 @@ class NegativeVideoIngestionPipeline:
             decoded_frame_count=meta["decoded_frame_count"],
             declared_duration_sec=meta["declared_duration_sec"],
             calculated_duration_sec=meta["calculated_duration_sec"],
-            eof_status=eof.value,
+            eof_status=meta["eof_status"],
             technical_verdict=tech_verdict,
             source_origin=source_origin,
             camera_id=camera_id,
             environmental_condition=environmental_condition,
+            acquisition_time=acquisition_time,
             split_eligibility=eligibility.value,
             current_split=current_split,
             duplicate_flag=dup_status,
@@ -414,7 +567,7 @@ class NegativeVideoIngestionPipeline:
     def calculate_cohort_exposure_summary(
         self, records: list[VideoIngestionRecord]
     ) -> ValidationExposureSummary:
-        """Compute exact duration indices across all categories."""
+        """Compute exact duration indices across all categories with strict duplicate exclusion."""
         tech_valid_sec = 0.0
         human_neg_sec = 0.0
         pending_sec = 0.0
@@ -423,28 +576,41 @@ class NegativeVideoIngestionPipeline:
         far_eligible_sec = 0.0
         split_breakdown: dict[str, float] = {}
 
-        seen_vids = set()
+        seen_vids: set[str] = set()
+        seen_shas: set[str] = set()
 
         for r in records:
             dur = r.declared_duration_sec
             sp = r.current_split
             split_breakdown[sp] = round(split_breakdown.get(sp, 0.0) + dur, 2)
 
-            # Prevent double counting
-            if r.video_id in seen_vids:
+            # Prevent double counting by ID or SHA-256
+            if r.video_id in seen_vids or (r.sha256 in seen_shas and r.sha256 not in ("N/A", "FILE_NOT_FOUND", "")):
+                rejected_sec += dur
                 continue
             seen_vids.add(r.video_id)
+            if r.sha256 and r.sha256 not in ("N/A", "FILE_NOT_FOUND", ""):
+                seen_shas.add(r.sha256)
 
-            # Leakage check
+            # Duplicate check
+            if r.duplicate_flag != "UNIQUE":
+                rejected_sec += dur
+                continue
+
+            # Leakage & provenance check
             if r.split_eligibility in (
                 SplitEligibility.LEAKAGE_TRAIN_CONTAMINATED.value,
-                SplitEligibility.LEAKAGE_TEST_CONTAMINATED.value
+                SplitEligibility.LEAKAGE_TEST_CONTAMINATED.value,
+                SplitEligibility.UNRESOLVED_PROVENANCE.value,
             ):
-                leakage_sec += dur
+                if r.split_eligibility == SplitEligibility.UNRESOLVED_PROVENANCE.value:
+                    rejected_sec += dur
+                else:
+                    leakage_sec += dur
                 continue
 
             # Technical integrity check
-            if not r.technical_verdict.startswith("PASS"):
+            if not r.technical_verdict.startswith("PASS") or r.eof_status != EOFStatus.NORMAL_EOF.value:
                 rejected_sec += dur
                 continue
 
@@ -460,10 +626,15 @@ class NegativeVideoIngestionPipeline:
             ):
                 rejected_sec += dur
             elif r.human_content_verdict == ContentDecision.VERIFIED_NO_FIRE_SMOKE.value:
-                if r.full_view_attestation and r.reviewer_id and r.review_timestamp:
+                if (
+                    r.full_view_attestation
+                    and r.reviewer_id
+                    and r.reviewer_id.lower() not in DISALLOWED_REVIEWERS
+                    and r.review_timestamp
+                    and r.split_eligibility == SplitEligibility.ELIGIBLE_FOR_VALIDATION.value
+                ):
                     human_neg_sec += dur
-                    if r.split_eligibility == SplitEligibility.ELIGIBLE_FOR_VALIDATION.value:
-                        far_eligible_sec += dur
+                    far_eligible_sec += dur
                 else:
                     pending_sec += dur
 

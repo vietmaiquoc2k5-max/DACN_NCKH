@@ -414,13 +414,31 @@ class ValidationGateAuditor:
             fname = row.get("filename", "").strip()
             sha_actual = row.get("sha256_actual", "").strip().lower()
             sha_expected = row.get("sha256_expected", "").strip().lower()
-            if sha_actual and sha_expected:
-                sha_match = (sha_actual == sha_expected) and len(sha_actual) == 64
+            # Fail-closed: missing actual or expected SHA-256 evidence
+            if not sha_actual or not sha_expected:
+                sha_match = False
+                errors.append(f"MISSING_HASH_PROOF: Video {vid} lacks verified sha256_actual or sha256_expected")
+            elif sha_actual != sha_expected:
+                sha_match = False
+                errors.append(f"SHA256_MISMATCH: Video {vid} sha256_actual ({sha_actual[:12]}) != sha256_expected ({sha_expected[:12]})")
+            elif row.get("sha256_match", "").strip().upper() in ("FALSE", "0", "NO"):
+                sha_match = False
+                errors.append(f"SHA256_MISMATCH: Video {vid} sha256_match flagged as FALSE")
             else:
-                sha_match = row.get("sha256_match", "").strip().upper() in ("TRUE", "1", "YES")
+                # Check actual physical file on disk if available
+                resolved_vid = self._resolve_video_path(fname)
+                if resolved_vid and resolved_vid.exists():
+                    disk_sha = sha256_file(resolved_vid).lower()
+                    if disk_sha != sha_expected:
+                        sha_match = False
+                        errors.append(f"SHA256_MISMATCH: Video {vid} on-disk hash ({disk_sha[:12]}) != manifest expected ({sha_expected[:12]})")
+                    else:
+                        sha_match = True
+                else:
+                    sha_match = True
 
             # Check duplicate hash within cohort
-            if sha_actual and len(sha_actual) == 64:
+            if sha_actual and len(sha_actual) >= 8:
                 if sha_actual in seen_shas:
                     errors.append(f"DUPLICATE_SHA256: Video {vid} shares hash {sha_actual[:12]} with another cohort video")
                     sha_match = False
