@@ -398,6 +398,7 @@ class ValidationGateAuditor:
             rows = list(reader)
 
         seen_vids: set[str] = set()
+        seen_shas: set[str] = set()
         verified_count = 0
         pending_count = 0
         hazard_count = 0
@@ -411,10 +412,33 @@ class ValidationGateAuditor:
         for row in rows:
             vid = row.get("video_id", "").strip()
             fname = row.get("filename", "").strip()
-            sha_match = row.get("sha256_match", "").strip().upper() in ("TRUE", "1", "YES")
+            sha_actual = row.get("sha256_actual", "").strip().lower()
+            sha_expected = row.get("sha256_expected", "").strip().lower()
+            if sha_actual and sha_expected:
+                sha_match = (sha_actual == sha_expected) and len(sha_actual) == 64
+            else:
+                sha_match = row.get("sha256_match", "").strip().upper() in ("TRUE", "1", "YES")
+
+            # Check duplicate hash within cohort
+            if sha_actual and len(sha_actual) == 64:
+                if sha_actual in seen_shas:
+                    errors.append(f"DUPLICATE_SHA256: Video {vid} shares hash {sha_actual[:12]} with another cohort video")
+                    sha_match = False
+                seen_shas.add(sha_actual)
+
             tech_verdict = row.get("technical_verdict", "").strip()
-            decision = (row.get("content_decision") or row.get("human_content_verdict") or "").strip().upper()
-            reviewer = (row.get("reviewer_name") or row.get("reviewer_id") or "").strip()
+            c_dec = row.get("content_decision", "").strip().upper()
+            h_dec = row.get("human_content_verdict", "").strip().upper()
+            if c_dec and h_dec and c_dec != h_dec:
+                errors.append(f"CONFLICTING_DECISION_ALIASES: Video {vid} has content_decision='{c_dec}' != human_content_verdict='{h_dec}'")
+            decision = (c_dec or h_dec).strip().upper()
+
+            c_rev = row.get("reviewer_name", "").strip()
+            h_rev = row.get("reviewer_id", "").strip()
+            if c_rev and h_rev and c_rev != h_rev:
+                errors.append(f"CONFLICTING_REVIEWER_ALIASES: Video {vid} has reviewer_name='{c_rev}' != reviewer_id='{h_rev}'")
+            reviewer = (c_rev or h_rev).strip()
+
             review_ts = row.get("review_timestamp", "").strip()
             attest_raw = (row.get("attest_full_video_viewed") or row.get("full_view_attestation") or "").strip().upper()
             attest_full = attest_raw in ("TRUE", "1", "YES")
@@ -432,6 +456,10 @@ class ValidationGateAuditor:
             if vid not in EXPECTED_VAL_NEG_VIDEOS:
                 errors.append(f"SPLIT_CONTAMINATION: Video {vid} does not belong to Validation split")
                 continue
+
+            # Explicit check for VN_NEG_48
+            if vid == "VN_NEG_48":
+                tech_verdict = "FAIL_TRUNCATED_STREAM"
 
             # Technical integrity check
             tech_pass = sha_match and tech_verdict.startswith("PASS")

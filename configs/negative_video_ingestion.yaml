@@ -1,0 +1,30 @@
+# Configuration for Negative Video Ingestion Pipeline
+# Project: FireWatch - Computer Vision Fire & Smoke Detection
+version: "1.0.0"
+
+storage:
+  incoming_staging_dir: "datasets/incoming_staging"
+  negative_videos_dir: "datasets/negative_videos"
+  audit_output_dir: "runs/audits/week6"
+
+validation:
+  target_exposure_seconds: 18000.0  # 5.0 hours required by De Cuong NCKH MT1
+  allowed_codecs: ["h264", "hevc", "mpeg4", "mjpeg", "avc1"]
+  allowed_extensions: [".mp4", ".avi", ".mkv", ".mov"]
+  min_duration_seconds: 5.0
+  max_duration_seconds: 7200.0
+  container_tolerance_frames: 15
+  boundary_probe_depth_frames: 10
+
+manifests:
+  negative_inventory_csv: "runs/audits/week6/negative_video_inventory.csv"
+  split_manifest_csv: "datasets/vn_dataset/split_manifest.csv"
+  ingestion_manifest_csv: "runs/audits/week6/negative_video_ingestion_manifest.csv"
+  exposure_status_json: "runs/audits/week6/validation_exposure_status.json"
+  heldout_avi_csv: "runs/audits/week6/heldout_avi_provenance_audit.csv"
+
+provenance_policy:
+  require_source_metadata: true
+  prevent_train_leakage: true
+  prevent_test_leakage: true
+  strict_non_destructive_import: true
