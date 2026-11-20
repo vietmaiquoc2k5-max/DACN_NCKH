@@ -2,26 +2,28 @@
 """Negative Video Technical Integrity, EOF Determination, and FAR Exposure Auditor.
 
 Performs rigorous technical audit of negative videos for the FireWatch project:
-1. Multi-signal EOF determination (NORMAL_EOF, TRUNCATED_STREAM, DECODE_ERROR, UNKNOWN_EOF).
-   - Does NOT infer NORMAL_EOF solely from VideoCapture.grab() == False.
-   - Cross-checks declared container duration, decoded frame count, native FPS,
-     boundary frame readability, and last frame timestamp.
-2. FAR eligibility enforcement:
-   - Requires physical file existence, SHA-256 match, technical PASS, verified NORMAL_EOF,
-     full video view attestation, human content verification ('VERIFIED_NEGATIVE'),
-     valid reviewer identity & timestamp, and zero training split contamination.
-3. Duration reconciliation across 6 key indices:
-   - declared_duration_sec
-   - decoded_duration_sec
-   - verified_technical_duration_sec
-   - human_verified_negative_duration_sec
-   - far_eligible_duration_sec
-   - remaining_duration_to_5h_sec (target: >= 18000s / 5.0h)
-4. Generates:
-   - runs/audits/week6/negative_video_technical_audit_report.md
-   - runs/audits/week6/negative_video_integrity_manifest.csv
-   - runs/audits/week6/negative_video_integrity_manifest.json
-   - runs/audits/week6/far_exposure_reconciliation.json
+1. Multi-signal sequential decode & EOF determination:
+   - Full sequential decoding (no seek probing or binary search substitution).
+   - VFR timestamp tracking & stream duration reconciliation.
+   - Detects mid-stream corruptions even when tail frame can be sought.
+   - Distinguishes TRUNCATED_STREAM, DECODE_ERROR, UNKNOWN_EOF, and NORMAL_EOF.
+   - Disallows unsafe tolerance heuristics (deficit <= 10 or <= 0.5% without duration proof).
+2. Safe no-probe enforcement:
+   - --no-probe mode strictly requires an existing verified audit receipt with matching SHA256.
+   - Cannot create new technical PASS from metadata alone.
+3. Strict FAR eligibility enforcement:
+   - Separates Validation FAR exposure, Independent Test exposure, Train-contaminated videos,
+     and Unresolved/Held-out inventory.
+   - Enforces duplicate SHA-256 detection and exclusion.
+   - Requires valid reviewer identity, ISO 8601 timestamp, full-view attestation, and zero leakage.
+4. Human review conflict prevention:
+   - Rejects review records with conflicting alias fields or SHA256 mismatches.
+   - Prevents field-stitching across disparate sources.
+5. Generates:
+   - negative_video_technical_audit_report.md
+   - negative_video_integrity_manifest.csv
+   - negative_video_integrity_manifest.json
+   - far_exposure_reconciliation.json
 """
 from __future__ import annotations
 
@@ -34,6 +36,7 @@ import logging
 import os
 import re
 import shutil
+import subprocess
 import tempfile
 from dataclasses import asdict, dataclass
 from enum import Enum
@@ -70,6 +73,7 @@ class TechnicalVerdict(str, Enum):
     """Technical verification verdict."""
     PASS = "PASS"
     FAIL = "FAIL"
+    NOT_VERIFIED = "NOT_VERIFIED"
 
 
 class ContentDecision(str, Enum):
@@ -171,6 +175,11 @@ class VideoIntegrityRecord:
     split_membership: str
     eligible_for_far: bool
     ineligibility_reasons: str
+    is_vfr: bool = False
+    stream_duration_sec: float = 0.0
+    decoder_errors: str = ""
+    process_return_code: int = 0
+    is_duplicate_sha: bool = False
 
 
 class NegativeVideoTechnicalAuditor:
@@ -183,7 +192,8 @@ class NegativeVideoTechnicalAuditor:
         video_dirs: list[Path],
         output_dir: Path,
         val_review_manifest_path: Path | None = None,
-        target_hours: float = 5.0
+        target_hours: float = 5.0,
+        trusted_receipt_path: Path | None = None,
     ) -> None:
         self.manifest_path = manifest_path
         self.split_manifest_path = split_manifest_path
@@ -193,10 +203,12 @@ class NegativeVideoTechnicalAuditor:
         self.val_review_manifest_path = val_review_manifest_path
         self.target_hours = target_hours
         self.target_exposure_sec = target_hours * 3600.0
+        self.trusted_receipt_path = trusted_receipt_path
 
         self.ffmpeg_available = bool(shutil.which("ffmpeg") and shutil.which("ffprobe"))
         self.split_membership = self._index_split_membership()
         self.val_human_reviews = self._load_validation_human_reviews()
+        self.trusted_receipts = self._load_trusted_receipts()
 
     def _index_split_membership(self) -> dict[str, set[str]]:
         """Map negative video IDs to their sampled dataset splits."""
@@ -210,6 +222,9 @@ class NegativeVideoTechnicalAuditor:
             for row in reader:
                 split = row.get("split", "").strip().lower()
                 vid = row.get("video_id", "").strip()
+                if not vid or not split:
+                    continue
+                membership.setdefault(vid, set()).add(split)
                 m = re.match(r"((?:VN_)?NEG_[0-9]+)", vid)
                 if m:
                     base_id = m.group(1)
@@ -227,10 +242,38 @@ class NegativeVideoTechnicalAuditor:
                 reader = csv.DictReader(f)
                 for row in reader:
                     vid = row.get("video_id", "").strip()
-                    reviews[vid] = row
-                    norm_id = vid.replace("VN_", "")
-                    reviews[norm_id] = row
+                    if vid:
+                        reviews[vid] = dict(row)
+                        norm_id = vid.replace("VN_", "")
+                        reviews[norm_id] = dict(row)
         return reviews
+
+    def _load_trusted_receipts(self) -> dict[str, dict[str, Any]]:
+        """Load verified technical receipts for safe --no-probe mode."""
+        receipts: dict[str, dict[str, Any]] = {}
+        candidate_paths = []
+        if self.trusted_receipt_path and self.trusted_receipt_path.exists():
+            candidate_paths.append(self.trusted_receipt_path)
+        candidate_paths.extend([
+            self.output_dir / "negative_video_integrity_manifest.json",
+            ROOT / "runs/audits/week6/negative_video_integrity_manifest.json",
+        ])
+
+        for p in candidate_paths:
+            if p.exists():
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    videos = data.get("videos", [])
+                    for item in videos:
+                        vid = item.get("video_id")
+                        if vid and item.get("technical_verdict") == TechnicalVerdict.PASS.value:
+                            receipts[vid] = item
+                    if receipts:
+                        break
+                except Exception as err:
+                    LOG.debug("Could not parse receipt at %s: %s", p, err)
+        return receipts
 
     def probe_video_stream(
         self,
@@ -239,16 +282,17 @@ class NegativeVideoTechnicalAuditor:
         expected_fps: float,
         expected_duration: float
     ) -> tuple[int, int, float, int, int, float, str, list[str]]:
-        """Multi-signal stream decode and EOF determination.
+        """Full sequential stream decode, VFR timestamp extraction, and strict EOF determination.
 
-        Does NOT infer NORMAL_EOF solely from grab() == False.
-        Probes container header, start frame, intermediate checkpoints (25%, 50%, 75%),
-        tail boundary (95%), and searches for last decodable frame.
+        Does NOT substitute binary search or seek probing for actual decoding.
+        Detects mid-stream corruptions where sequential decode stops but tail frame can be sought.
+        Disallows unsafe heuristic tolerances without verified duration proof.
 
         Returns:
             Tuple of (decoded_fc, declared_fc, fps, width, height, last_pts, eof_status, notes).
         """
         notes: list[str] = []
+        decoder_errors: list[str] = []
         if not video_path.exists():
             return 0, 0, 0.0, 0, 0, 0.0, EOFStatus.DECODE_ERROR.value, ["File not found on disk"]
 
@@ -261,7 +305,6 @@ class NegativeVideoTechnicalAuditor:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 0)
         container_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
 
-        # Effective declared frame count takes manifest or container (whichever is declared higher)
         effective_declared_fc = max(container_frames, expected_frames) if (container_frames > 0 or expected_frames > 0) else 0
         effective_fps = fps if fps > 0.0 else (expected_fps if expected_fps > 0.0 else 25.0)
 
@@ -271,96 +314,189 @@ class NegativeVideoTechnicalAuditor:
                 "Invalid container header metadata (non-positive frames, fps, or resolution)"
             ]
 
-        # 1. Probe Frame 0 (Head)
-        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        # 1. Full Sequential Decode
+        decoded_fc = 0
+        last_pts_sec = 0.0
+        prev_pts_sec = -1.0
+        pts_deltas: list[float] = []
+
+        # Read Frame 0
         ret0, frame0 = cap.read()
         if not ret0 or frame0 is None:
             cap.release()
             return 0, effective_declared_fc, effective_fps, width, height, 0.0, EOFStatus.DECODE_ERROR.value, [
                 "Failed to decode initial frame (Frame 0)"
             ]
+        decoded_fc = 1
+        pos0 = cap.get(cv2.CAP_PROP_POS_MSEC)
+        if pos0 is not None and pos0 >= 0:
+            last_pts_sec = pos0 / 1000.0
+            prev_pts_sec = last_pts_sec
 
-        # 2. Probe intermediate checkpoints: 25%, 50%, 75%
-        p25 = effective_declared_fc // 4
-        p50 = effective_declared_fc // 2
-        p75 = (3 * effective_declared_fc) // 4
-        p95 = max(0, int(effective_declared_fc * 0.95))
+        # Sequential loop over subsequent frames
+        while True:
+            ret, frame = cap.read()
+            if not ret or frame is None:
+                break
+            decoded_fc += 1
+            pos_msec = cap.get(cv2.CAP_PROP_POS_MSEC)
+            if pos_msec is not None and pos_msec >= 0:
+                current_pts = pos_msec / 1000.0
+                last_pts_sec = current_pts
+                if prev_pts_sec >= 0.0:
+                    pts_deltas.append(current_pts - prev_pts_sec)
+                prev_pts_sec = current_pts
 
-        cap.set(cv2.CAP_PROP_POS_FRAMES, p50)
-        ret50, _ = cap.read()
-        cap.set(cv2.CAP_PROP_POS_FRAMES, p95)
-        ret95, _ = cap.read()
+        # If timestamp wasn't available via POS_MSEC, estimate from decoded frames & fps
+        if last_pts_sec <= 0.0 and effective_fps > 0.0:
+            last_pts_sec = decoded_fc / effective_fps
 
-        if not ret50 or not ret95:
-            # Video terminates prematurely before reaching 50% or 95%
-            # Find exact last decodable frame using binary search
-            low = 0
-            high = effective_declared_fc - 1
-            last_ok = 0
-            while low <= high:
-                mid = (low + high) // 2
-                cap.set(cv2.CAP_PROP_POS_FRAMES, mid)
-                ret_m, frame_m = cap.read()
-                if ret_m and frame_m is not None:
-                    last_ok = max(last_ok, mid)
-                    low = mid + 1
-                else:
-                    high = mid - 1
-            decoded_fc = last_ok + 1
-            last_pts = (decoded_fc / effective_fps) if effective_fps > 0 else 0.0
-            cap.release()
+        # 2. Check for mid-stream corruption: if sequential decode halted early, can tail be read via seek?
+        can_read_tail = False
+        if decoded_fc < effective_declared_fc:
+            cap.set(cv2.CAP_PROP_POS_FRAMES, effective_declared_fc - 1)
+            ret_tail, frame_tail = cap.read()
+            if ret_tail and frame_tail is not None:
+                can_read_tail = True
+                decoder_errors.append(
+                    f"Mid-stream corruption: sequential decode failed at frame {decoded_fc}/{effective_declared_fc}, "
+                    f"yet tail frame {effective_declared_fc - 1} was readable via seek."
+                )
 
-            missing = effective_declared_fc - decoded_fc
-            missing_pct = (missing / effective_declared_fc) * 100.0 if effective_declared_fc > 0 else 100.0
-            notes.append(
-                f"Stream truncated prematurely: decoded {decoded_fc}/{effective_declared_fc} frames "
-                f"(missing {missing} frames, {missing_pct:.2f}% deficit)"
-            )
-            return (
-                decoded_fc, effective_declared_fc, effective_fps, width, height,
-                round(last_pts, 2), EOFStatus.TRUNCATED_STREAM.value, notes
-            )
-
-        # 3. Stream reached 95%. Search exact tail boundary in [p95, effective_declared_fc - 1]
-        low = p95
-        high = effective_declared_fc - 1
-        last_ok = p95
-        while low <= high:
-            mid = (low + high) // 2
-            cap.set(cv2.CAP_PROP_POS_FRAMES, mid)
-            ret_m, frame_m = cap.read()
-            if ret_m and frame_m is not None:
-                last_ok = max(last_ok, mid)
-                low = mid + 1
-            else:
-                high = mid - 1
-
-        decoded_fc = last_ok + 1
-        last_pts = (decoded_fc / effective_fps) if effective_fps > 0 else 0.0
         cap.release()
 
+        # 3. Detect Variable Frame Rate (VFR)
+        is_vfr = False
+        if len(pts_deltas) > 10:
+            mean_delta = sum(pts_deltas) / len(pts_deltas)
+            var_delta = sum((d - mean_delta) ** 2 for d in pts_deltas) / len(pts_deltas)
+            if var_delta > 0.0001:
+                is_vfr = True
+                notes.append("Variable Frame Rate (VFR) detected; duration anchored to native PTS")
+
+        # 4. FFmpeg audit for external evidence if available
+        if self.ffmpeg_available and video_path.exists():
+            try:
+                res = subprocess.run(
+                    ["ffmpeg", "-v", "error", "-i", str(video_path), "-f", "null", "-"],
+                    capture_output=True, text=True, timeout=15
+                )
+                if res.returncode != 0:
+                    decoder_errors.append(f"FFmpeg process returned non-zero code {res.returncode}")
+                if res.stderr:
+                    for err_line in res.stderr.splitlines():
+                        err_line = err_line.strip()
+                        if err_line and any(k in err_line.lower() for k in ["error", "corrupt", "invalid", "truncat", "nal", "header"]):
+                            decoder_errors.append(f"FFmpeg: {err_line}")
+            except Exception:
+                pass
+
+        # 5. Strict EOF Determination (Bug 2 Fix)
         diff = effective_declared_fc - decoded_fc
         diff_pct = (diff / effective_declared_fc) * 100.0 if effective_declared_fc > 0 else 0.0
 
-        if diff < 0:
-            # Video has slightly more packets than container header declared
+        if can_read_tail:
+            # Mid-stream corruption: unreadable block between decoded_fc and tail
+            notes.append(f"Corrupted stream mid-video (stopped at frame {decoded_fc}/{effective_declared_fc})")
+            eof_status = EOFStatus.DECODE_ERROR.value
+        elif decoded_fc == 0:
+            notes.append("Zero frames successfully decoded")
+            eof_status = EOFStatus.DECODE_ERROR.value
+        elif diff < 0:
             notes.append(f"Decoded {decoded_fc} frames exceeding header {effective_declared_fc} frames")
             eof_status = EOFStatus.NORMAL_EOF.value
-        elif diff <= CONTAINER_TOLERANCE_FRAMES or diff_pct <= CONTAINER_TOLERANCE_PERCENT:
-            # Standard container timescale rounding / audio padding
-            if diff > 0:
-                notes.append(f"Standard container timescale padding ({diff} frames, {diff_pct:.2f}%)")
-            else:
-                notes.append("Clean exact EOF decode")
+        elif diff == 0:
+            notes.append("Clean exact sequential EOF decode matching container header")
             eof_status = EOFStatus.NORMAL_EOF.value
         else:
-            notes.append(f"Premature stream cut: missing {diff} frames ({diff_pct:.2f}%)")
-            eof_status = EOFStatus.TRUNCATED_STREAM.value
+            # diff > 0: Some declared frames missing
+            # Only confirm NORMAL_EOF if verified genuine container audio-video timescale padding:
+            # zero errors, deficit <= 2 frames, and stream duration was fully reached
+            target_dur = expected_duration if expected_duration > 0 else (effective_declared_fc / effective_fps)
+            is_genuine_padding = (
+                len(decoder_errors) == 0
+                and diff <= 2
+                and (last_pts_sec >= (target_dur - (2.0 / effective_fps)) if effective_fps > 0 else False)
+            )
+
+            if is_genuine_padding:
+                notes.append(f"Verified container timescale padding: {diff} frames ({diff_pct:.2f}%) with duration reached")
+                eof_status = EOFStatus.NORMAL_EOF.value
+            elif diff <= CONTAINER_TOLERANCE_FRAMES or diff_pct <= CONTAINER_TOLERANCE_PERCENT:
+                # Deficit <= 10 or <= 0.5% without duration proof is UNKNOWN_EOF, not NORMAL_EOF
+                notes.append(f"Unsafe tolerance rejected: {diff} frames ({diff_pct:.2f}%) deficit lacks technical proof -> UNKNOWN_EOF")
+                eof_status = EOFStatus.UNKNOWN_EOF.value
+            else:
+                notes.append(f"Premature stream cut: missing {diff} frames ({diff_pct:.2f}%) -> TRUNCATED_STREAM")
+                eof_status = EOFStatus.TRUNCATED_STREAM.value
+
+        if decoder_errors:
+            notes.extend(decoder_errors)
 
         return (
             decoded_fc, effective_declared_fc, effective_fps, width, height,
-            round(last_pts, 2), eof_status, notes
+            round(last_pts_sec, 2), eof_status, notes
         )
+
+    def _resolve_human_review(
+        self,
+        vid: str,
+        item: dict[str, Any],
+        val_rev: dict[str, Any],
+        actual_sha: str
+    ) -> tuple[str, str, str, bool, list[str]]:
+        """Resolve human review record enforcing single-source authority and alias conflict checks.
+
+        Returns:
+            Tuple of (content_decision, reviewer_name, review_timestamp, attest_full, rejection_reasons).
+        """
+        rejection_reasons: list[str] = []
+
+        # Single source selection: use worksheet if available, otherwise manifest item
+        rec = val_rev if val_rev else item
+        is_from_worksheet = bool(val_rev)
+
+        # Check SHA256 binding if provided in review record
+        rec_sha = (rec.get("video_sha256") or rec.get("sha256") or "").strip()
+        if rec_sha and actual_sha and rec_sha != actual_sha:
+            rejection_reasons.append("REVIEW_SHA256_MISMATCH")
+
+        # Alias conflict check 1: Decision fields
+        canon_dec = str(rec.get("content_decision", "")).strip().upper()
+        alias_dec = str(rec.get("review_decision") or rec.get("decision") or "").strip().upper()
+        if canon_dec and alias_dec and canon_dec != alias_dec:
+            rejection_reasons.append("CONFLICTING_DECISION_FIELDS")
+
+        raw_decision = canon_dec or alias_dec or str(rec.get("human_review_status", "")).strip().upper()
+        if not raw_decision:
+            raw_decision = ContentDecision.PENDING_HUMAN_REVIEW.value
+
+        # Alias conflict check 2: Reviewer fields
+        canon_rev = str(rec.get("reviewer_name", "")).strip()
+        alias_rev = str(rec.get("reviewer") or rec.get("annotator") or "").strip()
+        if canon_rev and alias_rev and canon_rev.lower() != alias_rev.lower():
+            rejection_reasons.append("CONFLICTING_REVIEWER_FIELDS")
+        reviewer = canon_rev or alias_rev
+
+        # Alias conflict check 3: Timestamp fields
+        canon_ts = str(rec.get("review_timestamp", "")).strip()
+        alias_ts = str(rec.get("timestamp") or rec.get("reviewed_at") or "").strip()
+        if canon_ts and alias_ts and canon_ts != alias_ts:
+            rejection_reasons.append("CONFLICTING_TIMESTAMP_FIELDS")
+        rev_ts = canon_ts or alias_ts
+
+        # Alias conflict check 4: Full view attestation
+        canon_att = str(rec.get("attest_full_video_viewed", "")).strip().upper()
+        alias_att = str(rec.get("full_view_attested") or rec.get("attest_full_view") or "").strip().upper()
+        if canon_att and alias_att and canon_att != alias_att:
+            rejection_reasons.append("CONFLICTING_ATTESTATION_FIELDS")
+        raw_att = canon_att or alias_att
+        attest_full = (raw_att == "TRUE")
+
+        if rejection_reasons:
+            raw_decision = ContentDecision.PENDING_HUMAN_REVIEW.value
+
+        return raw_decision, reviewer, rev_ts, attest_full, rejection_reasons
 
     def audit_all(self, probe_decode: bool = True) -> tuple[list[VideoIntegrityRecord], dict[str, Any]]:
         """Run full audit over all negative videos declared in manifest."""
@@ -374,13 +510,18 @@ class NegativeVideoTechnicalAuditor:
         LOG.info("Auditing %d negative videos from manifest...", len(declared_videos))
 
         records: list[VideoIntegrityRecord] = []
-        seen_vids: set[str] = set()
+        seen_shas: dict[str, str] = {}
 
         total_declared_sec = 0.0
         total_decoded_sec = 0.0
         verified_tech_sec = 0.0
         human_verified_sec = 0.0
-        far_eligible_sec = 0.0
+
+        # Separate FAR exposures across splits
+        val_far_eligible_sec = 0.0
+        test_far_eligible_sec = 0.0
+        train_contaminated_sec = 0.0
+        unresolved_held_out_sec = 0.0
 
         for item in declared_videos:
             vid = item.get("video_id", "").strip()
@@ -402,6 +543,16 @@ class NegativeVideoTechnicalAuditor:
             actual_sha = sha256_file(actual_path) if file_exists else ""
             sha_match = (actual_sha == expected_sha) if (file_exists and expected_sha) else False
 
+            # Check duplicate SHA-256
+            is_duplicate_sha = False
+            duplicate_note = ""
+            if actual_sha and actual_sha != "FILE_NOT_FOUND":
+                if actual_sha in seen_shas:
+                    is_duplicate_sha = True
+                    duplicate_note = f"DUPLICATE_SHA256_OF_{seen_shas[actual_sha]}"
+                else:
+                    seen_shas[actual_sha] = vid
+
             # Stream probing & EOF determination
             if file_exists and probe_decode:
                 (
@@ -409,32 +560,47 @@ class NegativeVideoTechnicalAuditor:
                 ) = self.probe_video_stream(
                     actual_path, item_decl_fc, item_decl_fps, item_decl_dur
                 )
-            else:
-                # Fallback to manifest metadata if probe skipped
+                tech_notes: list[str] = list(probe_notes)
+                tech_verdict = TechnicalVerdict.PASS.value if eof_status == EOFStatus.NORMAL_EOF.value else TechnicalVerdict.FAIL.value
+            elif file_exists and not probe_decode:
+                # Bug 3: Safe --no-probe mode: strictly requires trusted audit receipt
                 decl_fc = item_decl_fc
-                dec_fc = int(item.get("decoded_frames", item_decl_fc) or item_decl_fc)
                 fps = item_decl_fps if item_decl_fps > 0 else 25.0
                 w = int(item.get("width", 0) or 0)
                 h = int(item.get("height", 0) or 0)
-                last_pts = dec_fc / fps if fps > 0 else 0.0
-                raw_eof = item.get("decode_status", "NEEDS_REVIEW")
-                if raw_eof == "TRUNCATED_STREAM":
-                    eof_status = EOFStatus.TRUNCATED_STREAM.value
-                elif raw_eof == "NORMAL_EOF":
-                    eof_status = EOFStatus.NORMAL_EOF.value
+
+                trusted = self.trusted_receipts.get(vid)
+                if (
+                    trusted
+                    and trusted.get("sha256_actual") == actual_sha
+                    and trusted.get("technical_verdict") == TechnicalVerdict.PASS.value
+                ):
+                    tech_verdict = TechnicalVerdict.PASS.value
+                    eof_status = trusted.get("eof_status", EOFStatus.NORMAL_EOF.value)
+                    dec_fc = int(trusted.get("decoded_frame_count", decl_fc))
+                    last_pts = float(trusted.get("last_frame_timestamp_sec", 0.0))
+                    tech_notes = ["Loaded verified audit from trusted receipt"]
                 else:
+                    tech_verdict = TechnicalVerdict.NOT_VERIFIED.value
                     eof_status = EOFStatus.UNKNOWN_EOF.value
-                probe_notes = ["Probe skipped; metadata sourced from manifest"]
+                    dec_fc = decl_fc
+                    last_pts = 0.0
+                    tech_notes = ["NO_PROBE_WITHOUT_TRUSTED_RECEIPT: Technical integrity unverified"]
+            else:
+                decl_fc = item_decl_fc
+                dec_fc = 0
+                fps = item_decl_fps if item_decl_fps > 0 else 25.0
+                w = 0
+                h = 0
+                last_pts = 0.0
+                eof_status = EOFStatus.DECODE_ERROR.value
+                tech_verdict = TechnicalVerdict.FAIL.value
+                tech_notes = ["File missing on disk"]
 
             frame_diff = decl_fc - dec_fc
             frame_diff_pct = (frame_diff / decl_fc) * 100.0 if decl_fc > 0 else 0.0
-
             declared_dur = item_decl_dur if item_decl_dur > 0 else (decl_fc / fps if fps > 0 else 0.0)
             decoded_dur = (dec_fc / fps) if fps > 0 else 0.0
-
-            # Technical Verdict
-            tech_notes: list[str] = list(probe_notes)
-            tech_verdict = TechnicalVerdict.PASS.value
 
             if not file_exists:
                 tech_verdict = TechnicalVerdict.FAIL.value
@@ -443,21 +609,14 @@ class NegativeVideoTechnicalAuditor:
                 tech_verdict = TechnicalVerdict.FAIL.value
                 tech_notes.append("SHA256 checksum mismatch against manifest")
             if eof_status != EOFStatus.NORMAL_EOF.value:
-                tech_verdict = TechnicalVerdict.FAIL.value
+                tech_verdict = TechnicalVerdict.FAIL.value if tech_verdict != TechnicalVerdict.NOT_VERIFIED.value else tech_verdict
                 tech_notes.append(f"Non-normal EOF status: {eof_status}")
 
-            # Check human content review state
-            # Check validation worksheet first, else item metadata
+            # Bug 5: Resolve human review with conflict prevention
             val_rev = self.val_human_reviews.get(vid, {})
-            content_dec = (
-                val_rev.get("content_decision") or item.get("human_review_status") or ContentDecision.PENDING_HUMAN_REVIEW.value
-            ).strip().upper()
-            reviewer = (val_rev.get("reviewer_name") or item.get("reviewer_name", "")).strip()
-            rev_ts = (val_rev.get("review_timestamp") or item.get("review_timestamp", "")).strip()
-            attest_full = (
-                str(val_rev.get("attest_full_video_viewed", "")).strip().upper() == "TRUE"
-                or str(item.get("attest_full_video_viewed", "")).strip().upper() == "TRUE"
-            )
+            (
+                content_dec, reviewer, rev_ts, attest_full, review_conflicts
+            ) = self._resolve_human_review(vid, item, val_rev, actual_sha)
 
             # Split membership
             splits = sorted(list(self.split_membership.get(vid, [])))
@@ -476,8 +635,12 @@ class NegativeVideoTechnicalAuditor:
                 ineligibility_reasons.append("FILE_MISSING")
             if not sha_match:
                 ineligibility_reasons.append("SHA256_MISMATCH")
+            if is_duplicate_sha:
+                ineligibility_reasons.append(duplicate_note)
             if tech_verdict != TechnicalVerdict.PASS.value:
-                ineligibility_reasons.append(f"TECHNICAL_FAILURE_{eof_status}")
+                ineligibility_reasons.append(f"TECHNICAL_FAILURE_{tech_verdict}_{eof_status}")
+            if review_conflicts:
+                ineligibility_reasons.extend(review_conflicts)
             if content_dec == ContentDecision.PENDING_HUMAN_REVIEW.value or not content_dec:
                 ineligibility_reasons.append("PENDING_HUMAN_CONTENT_REVIEW")
             elif content_dec in (ContentDecision.FIRE_PRESENT.value, ContentDecision.SMOKE_PRESENT.value):
@@ -508,8 +671,15 @@ class NegativeVideoTechnicalAuditor:
             if content_dec == ContentDecision.VERIFIED_NEGATIVE.value and "PENDING_HUMAN_CONTENT_REVIEW" not in ineligibility_reasons:
                 human_verified_sec += decoded_dur
 
-            if eligible_for_far:
-                far_eligible_sec += decoded_dur
+            # Bug 4: Separate FAR split scopes
+            if split_cat == "VAL" and eligible_for_far:
+                val_far_eligible_sec += decoded_dur
+            elif split_cat == "TEST" and eligible_for_far:
+                test_far_eligible_sec += decoded_dur
+            elif split_cat == "TRAIN":
+                train_contaminated_sec += decoded_dur
+            else:
+                unresolved_held_out_sec += decoded_dur
 
             records.append(VideoIntegrityRecord(
                 video_id=vid,
@@ -540,15 +710,16 @@ class NegativeVideoTechnicalAuditor:
                 attest_full_video_viewed=attest_full,
                 split_membership=split_cat,
                 eligible_for_far=eligible_for_far,
-                ineligibility_reasons="; ".join(ineligibility_reasons) if ineligibility_reasons else "NONE"
+                ineligibility_reasons="; ".join(ineligibility_reasons) if ineligibility_reasons else "NONE",
+                is_duplicate_sha=is_duplicate_sha
             ))
 
-        remaining_to_5h_sec = max(0.0, self.target_exposure_sec - far_eligible_sec)
+        remaining_to_5h_sec = max(0.0, self.target_exposure_sec - val_far_eligible_sec)
 
-        # Build reconciliation summary
+        # Build comprehensive reconciliation summary
         reconciliation = {
             "target_exposure_standard": {
-                "specification_source": "DeCuong_NCKH_PhatHienChay_Camera.docx (MT1)",
+                "specification_source": "DeCuong_NCKH_PhatHienChay_Camera.docx (MT1 & MT3)",
                 "required_minimum_hours": self.target_hours,
                 "required_minimum_seconds": self.target_exposure_sec,
             },
@@ -557,7 +728,11 @@ class NegativeVideoTechnicalAuditor:
                 "decoded_duration_sec": round(total_decoded_sec, 2),
                 "verified_technical_duration_sec": round(verified_tech_sec, 2),
                 "human_verified_negative_duration_sec": round(human_verified_sec, 2),
-                "far_eligible_duration_sec": round(far_eligible_sec, 2),
+                "val_far_eligible_duration_sec": round(val_far_eligible_sec, 2),
+                "test_far_eligible_duration_sec": round(test_far_eligible_sec, 2),
+                "train_contaminated_duration_sec": round(train_contaminated_sec, 2),
+                "unresolved_held_out_duration_sec": round(unresolved_held_out_sec, 2),
+                "far_eligible_duration_sec": round(val_far_eligible_sec, 2),
                 "remaining_duration_to_5h_sec": round(remaining_to_5h_sec, 2),
             },
             "duration_indices_hours": {
@@ -565,15 +740,21 @@ class NegativeVideoTechnicalAuditor:
                 "decoded_duration_hours": round(total_decoded_sec / 3600.0, 4),
                 "verified_technical_duration_hours": round(verified_tech_sec / 3600.0, 4),
                 "human_verified_negative_duration_hours": round(human_verified_sec / 3600.0, 4),
-                "far_eligible_duration_hours": round(far_eligible_sec / 3600.0, 4),
+                "val_far_eligible_duration_hours": round(val_far_eligible_sec / 3600.0, 4),
+                "test_far_eligible_duration_hours": round(test_far_eligible_sec / 3600.0, 4),
+                "train_contaminated_duration_hours": round(train_contaminated_sec / 3600.0, 4),
+                "unresolved_held_out_duration_hours": round(unresolved_held_out_sec / 3600.0, 4),
+                "far_eligible_duration_hours": round(val_far_eligible_sec / 3600.0, 4),
                 "remaining_duration_to_5h_hours": round(remaining_to_5h_sec / 3600.0, 4),
             },
             "audit_statistics": {
                 "total_negative_videos_manifest": len(declared_videos),
                 "files_existing_on_disk": sum(1 for r in records if r.file_exists),
                 "sha256_verified_matches": sum(1 for r in records if r.sha256_match),
+                "duplicate_sha256_count": sum(1 for r in records if r.is_duplicate_sha),
                 "technical_pass_count": sum(1 for r in records if r.technical_verdict == TechnicalVerdict.PASS.value),
                 "technical_fail_count": sum(1 for r in records if r.technical_verdict == TechnicalVerdict.FAIL.value),
+                "technical_not_verified_count": sum(1 for r in records if r.technical_verdict == TechnicalVerdict.NOT_VERIFIED.value),
                 "eof_classification_breakdown": {
                     "NORMAL_EOF": sum(1 for r in records if r.eof_status == EOFStatus.NORMAL_EOF.value),
                     "TRUNCATED_STREAM": sum(1 for r in records if r.eof_status == EOFStatus.TRUNCATED_STREAM.value),
@@ -591,15 +772,17 @@ class NegativeVideoTechnicalAuditor:
                     "TEST_SPLIT": sum(1 for r in records if r.split_membership == "TEST"),
                     "CLEAN_HELD_OUT": sum(1 for r in records if r.split_membership == "HELD_OUT"),
                 },
-                "far_eligible_videos_count": sum(1 for r in records if r.eligible_for_far),
+                "val_far_eligible_videos_count": sum(1 for r in records if r.split_membership == "VAL" and r.eligible_for_far),
+                "test_far_eligible_videos_count": sum(1 for r in records if r.split_membership == "TEST" and r.eligible_for_far),
+                "far_eligible_videos_count": sum(1 for r in records if r.split_membership == "VAL" and r.eligible_for_far),
             },
             "gate_evaluation": {
-                "status": "PASSED" if far_eligible_sec >= self.target_exposure_sec else "BLOCKED",
+                "status": "PASSED" if val_far_eligible_sec >= self.target_exposure_sec else "BLOCKED",
                 "verdict_reason": (
-                    f"FAR exposure requirement is {self.target_hours:.1f}h (18,000s). Current valid FAR exposure is "
-                    f"{far_eligible_sec / 3600.0:.4f}h ({far_eligible_sec:.1f}s), leaving a deficit of "
-                    f"{remaining_to_5h_sec / 3600.0:.4f}h ({remaining_to_5h_sec:.1f}s). All negative videos are pending "
-                    f"human content verification, 1 video (VN_NEG_48) is truncated, and 37 videos are contaminated by Train split."
+                    f"Validation FAR exposure requirement is {self.target_hours:.1f}h (18,000s). "
+                    f"Current valid Validation FAR exposure is {val_far_eligible_sec / 3600.0:.4f}h ({val_far_eligible_sec:.1f}s), "
+                    f"leaving a deficit of {remaining_to_5h_sec / 3600.0:.4f}h ({remaining_to_5h_sec:.1f}s). "
+                    "Independent Test videos (2.10h) are strictly held-out and cannot be merged into Validation."
                 ),
             },
             "excluded_videos": [
@@ -633,9 +816,9 @@ class NegativeVideoTechnicalAuditor:
         self._write_markdown_report(md_report_path, reconciliation, records)
 
         LOG.info(
-            "Audit complete. Declared: %.2fh, Decoded: %.2fh, Tech Valid: %.2fh, FAR Eligible: %.2fh, Shortfall: %.2fh",
+            "Audit complete. Declared: %.2fh, Decoded: %.2fh, Tech Valid: %.2fh, Val FAR: %.2fh, Shortfall to 5h: %.2fh",
             total_declared_sec / 3600.0, total_decoded_sec / 3600.0,
-            verified_tech_sec / 3600.0, far_eligible_sec / 3600.0,
+            verified_tech_sec / 3600.0, val_far_eligible_sec / 3600.0,
             remaining_to_5h_sec / 3600.0
         )
         return records, reconciliation
@@ -656,43 +839,36 @@ class NegativeVideoTechnicalAuditor:
         lines = [
             "# BÁO CÁO KIỂM ĐỊNH KỸ THUẬT VÀ TÍNH TOÀN VẸN VIDEO ÂM TÍNH (TUẦN 6)",
             "",
-            "> **Tiêu chuẩn nghiên cứu:** Đề cương NCKH mục tiêu MT1 & MT3 ($\ge 5$ giờ video âm tính cảnh nhiễu).  ",
+            r"> **Tiêu chuẩn nghiên cứu:** Đề cương NCKH mục tiêu MT1 & MT3 ($\ge 5$ giờ video âm tính cảnh nhiễu).  ",
             f"> **Thời điểm kiểm định:** `{datetime.datetime.now(datetime.timezone.utc).isoformat()}`  ",
             f"> **Trạng thái cổng FAR Exposure:** **`{gate['status']}`**  ",
-            f"> **Thời lượng phơi nhiễm FAR hợp lệ:** **`{dur_h['far_eligible_duration_hours']} giờ`** / Yêu cầu **`{summary['target_exposure_standard']['required_minimum_hours']} giờ`**  ",
+            f"> **Thời lượng phơi nhiễm Validation FAR hợp lệ:** **`{dur_h['val_far_eligible_duration_hours']} giờ`** / Yêu cầu **`{summary['target_exposure_standard']['required_minimum_hours']} giờ`**  ",
             "",
             "---",
             "",
-            "## 1. BẢNG ĐỐI CHIẾU 6 CHỈ SỐ THỜI LƯỢNG VÀ PHƠI NHIỄM (DURATION RECONCILIATION)",
+            "## 1. BẢNG ĐỐI CHIẾU PHÂN PHỐI THỜI LƯỢNG THEO PHÂN CHIA TẬP DỮ LIỆU",
             "",
-            "Để đảm bảo tính trung thực khoa học tuyệt đối, hệ thống phân tách nghiêm ngặt 6 tầng thời lượng:",
-            "",
-            "| Chỉ số thời lượng | Thời lượng (giây) | Thời lượng (giờ) | Định nghĩa & Ý nghĩa kiểm toán |",
+            "| Phân tầng phơi nhiễm | Thời lượng (giây) | Thời lượng (giờ) | Trạng thái bảo vệ khoa học |",
             "| :--- | :---: | :---: | :--- |",
-            f"| `declared_duration_sec` | **{dur['declared_duration_sec']:.2f} s** | **{dur_h['declared_duration_hours']:.4f} h** | Tổng thời lượng khai báo trong metadata container / manifest ban đầu. |",
-            f"| `decoded_duration_sec` | **{dur['decoded_duration_sec']:.2f} s** | **{dur_h['decoded_duration_hours']:.4f} h** | Thời lượng giải mã thực tế ($N_\\text{{decoded}} / \\text{{fps}}$). |",
-            f"| `verified_technical_duration_sec` | **{dur['verified_technical_duration_sec']:.2f} s** | **{dur_h['verified_technical_duration_hours']:.4f} h** | Thời lượng các video vượt qua kiểm định kỹ thuật (`PASS`, `NORMAL_EOF`, checksum khớp). Loại trừ `VN_NEG_48`. |",
-            f"| `human_verified_negative_duration_sec` | **{dur['human_verified_negative_duration_sec']:.2f} s** | **{dur_h['human_verified_negative_duration_hours']:.4f} h** | Thời lượng video đã được con người xem toàn bộ và xác nhận không có lửa/khói (`VERIFIED_NEGATIVE`). |",
-            f"| `far_eligible_duration_sec` | **{dur['far_eligible_duration_sec']:.2f} s** | **{dur_h['far_eligible_duration_hours']:.4f} h** | **Thời lượng phơi nhiễm hợp lệ đưa vào mẫu số FAR Test** (Hội đủ cả 3 điều kiện: Kỹ thuật PASS + Con người VERIFIED + Không rò rỉ Train). |",
-            f"| `remaining_duration_to_5h_sec` | **{dur['remaining_duration_to_5h_sec']:.2f} s** | **{dur_h['remaining_duration_to_5h_hours']:.4f} h** | **Thời lượng âm tính còn thiếu để đạt chỉ tiêu 5.0 giờ của Đề cương NCKH.** |",
-            "",
-            "> [!IMPORTANT]",
-            f"> Hiện tại `far_eligible_duration_sec = 0.0 s`. Số giờ phơi nhiễm còn thiếu là **`{dur_h['remaining_duration_to_5h_hours']} giờ`** ({dur['remaining_duration_to_5h_sec']:.1f}s) do **100% video âm tính hiện tại đang chờ xác minh nội dung bởi con người (`PENDING_HUMAN_REVIEW`)**.",
+            f"| `val_far_eligible_duration_sec` | **{dur['val_far_eligible_duration_sec']:.2f} s** | **{dur_h['val_far_eligible_duration_hours']:.4f} h** | Phơi nhiễm hợp lệ chọn Operating Point trên tập Validation. |",
+            f"| `test_far_eligible_duration_sec` | **{dur['test_far_eligible_duration_sec']:.2f} s** | **{dur_h['test_far_eligible_duration_hours']:.4f} h** | **Tập Test độc lập (Held-Out)**, giữ nguyên vẹn cho nghiệm thu cuối cùng. |",
+            f"| `train_contaminated_duration_sec` | **{dur['train_contaminated_duration_sec']:.2f} s** | **{dur_h['train_contaminated_duration_hours']:.4f} h** | **Bị loại trừ (37 videos)** do khung hình đã dùng trong tập train `vn_dataset`. |",
+            f"| `unresolved_held_out_duration_sec` | **{dur['unresolved_held_out_duration_sec']:.2f} s** | **{dur_h['unresolved_held_out_duration_hours']:.4f} h** | Video chưa gắn phân chia, cấm gộp tự do vào Validation/Test. |",
+            f"| `remaining_duration_to_5h_sec` | **{dur['remaining_duration_to_5h_sec']:.2f} s** | **{dur_h['remaining_duration_to_5h_hours']:.4f} h** | **Thâm hụt tới mốc 5.0h trên tập Validation.** |",
             "",
             "---",
             "",
-            "## 2. KẾT QUẢ XÁC ĐỊNH EOF ĐA TÍN HIỆU (MULTI-SIGNAL EOF DETERMINATION)",
+            "## 2. KẾT QUẢ XÁC ĐỊNH EOF VÀ GIẢI MÃ TUẦN TỰ (SEQUENTIAL EOF DETERMINATION)",
             "",
-            "Hệ thống kiểm định không suy luận `NORMAL_EOF` từ một tín hiệu đơn lẻ (như `grab() == False`), mà phối hợp đa chiều:",
-            "- **Tín hiệu 1 (Container Metadata):** Kiểm tra header atom, frame count, FPS, độ phân giải.",
-            "- **Tín hiệu 2 (Boundary Probing):** Kiểm tra giải mã Frame 0 (head), 25%, 50%, 75% và 95% (tail).",
-            "- **Tín hiệu 3 (Binary Search Boundary):** Định vị chính xác frame giải mã được cuối cùng và timestamp PTS.",
-            "- **Tín hiệu 4 (Container Tolerance):** Phân biệt chênh lệch audio padding hợp lệ ($\le 10$ frames / $\le 0.5\%$) với đứt luồng bất thường.",
+            "Hệ thống kiểm định giải mã tuần tự 100% khung hình và phối hợp đa chiều:",
+            "- **Sequential Frame Walk:** Giải mã liên tục từng khung hình từ frame 0 đến frame cuối, ghi nhận PTS và phát hiện điểm gián đoạn.",
+            "- **Mid-Stream Corruption Probe:** Phát hiện lỗi hỏng giữa luồng ngay cả khi frame cuối cùng vẫn seek được.",
+            r"- **Strict Padding Proof:** Chỉ chấp nhận chênh lệch timescale ($\le 2$ frames) khi có bằng chứng PTS đạt tới thời lượng stream.",
             "",
             "### Phân loại trạng thái EOF:",
-            f"- **`NORMAL_EOF` (Đạt chuẩn):** **{eof_stat['NORMAL_EOF']}** video (Giải mã trọn vẹn tới mốc $\ge 99\%$ thời lượng).",
-            f"- **`TRUNCATED_STREAM` (Đứt luồng):** **{eof_stat['TRUNCATED_STREAM']}** video (`VN_NEG_48` - đứt tại frame 2.533/8.445, thiếu 5.912 frames, hụt 70% luồng).",
-            f"- **`DECODE_ERROR` (Lỗi giải mã):** **{eof_stat['DECODE_ERROR']}** video.",
+            f"- **`NORMAL_EOF` (Đạt chuẩn):** **{eof_stat['NORMAL_EOF']}** video.",
+            f"- **`TRUNCATED_STREAM` (Đứt luồng):** **{eof_stat['TRUNCATED_STREAM']}** video.",
+            f"- **`DECODE_ERROR` (Lỗi giải mã/Hỏng giữa luồng):** **{eof_stat['DECODE_ERROR']}** video.",
             f"- **`UNKNOWN_EOF` (Không xác định):** **{eof_stat['UNKNOWN_EOF']}** video.",
             "",
             "---",
@@ -703,14 +879,13 @@ class NegativeVideoTechnicalAuditor:
             "| :--- | :--- | :---: | :---: | :---: | :--- |",
         ]
 
-        # List first 20 excluded videos
         for ex in summary["excluded_videos"][:25]:
             lines.append(
                 f"| **{ex['video_id']}** | `{ex['filename']}` | `{ex['split_membership']}` | `{ex['eof_status']}` | `{ex['technical_verdict']}` | `{ex['reasons']}` |"
             )
 
         if len(summary["excluded_videos"]) > 25:
-            lines.append(f"| ... | *(và {len(summary['excluded_videos']) - 25} video khác bị loại trừ do đang chờ xác minh nội dung)* | | | | |")
+            lines.append(f"| ... | *(và {len(summary['excluded_videos']) - 25} video khác bị loại trừ do đang chờ xác minh hoặc rò rỉ Train)* | | | | |")
 
         lines.extend([
             "",
@@ -720,12 +895,11 @@ class NegativeVideoTechnicalAuditor:
             "",
             f"1. **Cổng FAR Exposure hiện tại:** **`{gate['status']}`**.",
             f"2. **Nguyên nhân chính:**",
-            "   - Toàn bộ 79 video âm tính chưa được con người nghiệm thu nội dung (`human_review_status: PENDING_HUMAN_REVIEW`).",
-            "   - Video `VN_NEG_48` bị lỗi cắt ngắn luồng (`TRUNCATED_STREAM`), bị loại vĩnh viễn khỏi mẫu số FAR.",
-            "   - 37 video âm tính đã bị rò rỉ vào tập huấn luyện (`TRAIN_CONTAMINATED`), bị cấm dùng làm mẫu số đánh giá Test.",
+            f"   - {gate['verdict_reason']}",
+            f"   - Số video trùng lặp SHA256 bị phát hiện và loại trừ: **{stats['duplicate_sha256_count']}**.",
             "3. **Hành động bắt buộc:**",
             "   - Thực hiện quy trình review nội dung cho 13 video Validation âm tính.",
-            "   - Triển khai kế hoạch thu thập bổ sung video âm tính có cảnh gây nhiễu để bù đắp lượng thời lượng còn thiếu."
+            "   - Giữ nguyên 13 video Test âm tính (2.10h) độc lập cho nghiệm thu Tuần 8, không di chuyển sang Validation."
         ])
 
         path.write_text("\n".join(lines), encoding="utf-8")
@@ -739,6 +913,7 @@ def main() -> int:
     parser.add_argument("--val-review-manifest", type=Path, default=ROOT / "runs/audits/week6/validation_negative_review_manifest.csv")
     parser.add_argument("--target-hours", type=float, default=5.0)
     parser.add_argument("--no-probe", action="store_true", help="Skip stream decode probe")
+    parser.add_argument("--trusted-receipt", type=Path, default=None, help="Path to trusted audit receipt for --no-probe")
     args = parser.parse_args()
 
     video_dirs = [
@@ -754,7 +929,8 @@ def main() -> int:
             video_dirs=video_dirs,
             output_dir=args.output_dir,
             val_review_manifest_path=args.val_review_manifest,
-            target_hours=args.target_hours
+            target_hours=args.target_hours,
+            trusted_receipt_path=args.trusted_receipt
         )
         auditor.audit_all(probe_decode=not args.no_probe)
         return 0

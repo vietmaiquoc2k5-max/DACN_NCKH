@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-11-20T08:14:31Z",
+  "baseline_model": "D:\\workspace\\DACN_NCKH\\runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
+  "baseline_backend": "pytorch_cpu",
+  "tolerance": {
+    "fp32_max_abs_diff": 0.001,
+    "fp16_max_abs_diff": 0.01,
+    "relative_diff_tolerance": 0.01
+  },
+  "comparisons": {
+    "onnx": {
+      "status": "SKIPPED_BACKEND_UNAVAILABLE",
+      "reason": "onnx runtime is not installed in current environment",
+      "install_command": "pip install onnx>=1.14.0"
+    },
+    "openvino": {
+      "status": "SKIPPED_BACKEND_UNAVAILABLE",
+      "reason": "openvino runtime is not installed in current environment",
+      "install_command": "pip install openvino>=2023.2.0"
+    },
+    "tensorrt": {
+      "status": "SKIPPED_BACKEND_UNAVAILABLE",
+      "reason": "tensorrt runtime is not installed in current environment",
+      "install_command": "pip install tensorrt (requires NVIDIA TensorRT CUDA libraries)"
+    }
+  },
+  "pytorch_deterministic_self_parity": {
+    "status": "VERIFIED",
+    "max_abs_diff": 0.0,
+    "max_rel_diff": 0.0,
+    "is_close": true
+  }
+}

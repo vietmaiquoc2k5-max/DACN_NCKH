@@ -1,0 +1,138 @@
+{
+  "inventory_metadata": {
+    "title": "Week 6 Scientific Artifact Sync Inventory and Lineage Ledger",
+    "timestamp": "2026-11-20T08:18:00Z",
+    "git_head_commit": "3701d2e03b899778fe8ed5fa2f7d4f84527b4187",
+    "branch": "fix-4",
+    "operating_system": "Windows 11 / PowerShell",
+    "python_version": "3.11.9",
+    "auditor_role": "Senior Computer Vision Engineer & Independent Research Auditor"
+  },
+  "artifacts": [
+    {
+      "artifact_name": "validate_week6_gate_engine",
+      "relative_path": "scripts/validate_week6_gate.py",
+      "exists": true,
+      "size_bytes": 37708,
+      "sha256": "41db5feea4416947e6cbfc156a275cb0190796db5e6e8cd925a9ffa5de491e8c",
+      "git_status": "TRACKED",
+      "gitignore_status": "NOT_IGNORED",
+      "gitignore_rule": null,
+      "role": "Core validation gate engine verifying positive double-blind consensus, negative video integrity, FAR exposure reconciliation, and provenance."
+    },
+    {
+      "artifact_name": "test_validation_gate_suite",
+      "relative_path": "tests/test_validation_gate.py",
+      "exists": true,
+      "size_bytes": 24060,
+      "sha256": "f9a23d7d60c49f23f7bcd3bc1881c3c3ab558f13da91a9ae9fd8ef7fd304dd30",
+      "git_status": "TRACKED",
+      "gitignore_status": "NOT_IGNORED",
+      "gitignore_rule": null,
+      "role": "Pytest suite consisting of 13 rigorous test cases covering all validation gate scenarios, boundary violations, and blocker assertions."
+    },
+    {
+      "artifact_name": "validation_gate_result_json",
+      "relative_path": "runs/audits/week6/validation_gate_result.json",
+      "exists": true,
+      "generated_by": "scripts/validate_week6_gate.py",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "IGNORED",
+      "gitignore_rule": ".gitignore:55:/runs/*",
+      "role": "Machine-readable certificate output by ValidationGateAuditor certifying status (BLOCKED/PARTIAL/PASSED)."
+    },
+    {
+      "artifact_name": "validation_gate_final_report_md",
+      "relative_path": "runs/audits/week6/validation_gate_final_report.md",
+      "exists": true,
+      "generated_by": "scripts/validate_week6_gate.py",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "IGNORED",
+      "gitignore_rule": ".gitignore:55:/runs/*",
+      "role": "Formal human-readable markdown validation report summarizing 4 audit dimensions, active blockers, and action plan."
+    },
+    {
+      "artifact_name": "far_exposure_reconciliation_json",
+      "relative_path": "runs/audits/week6/far_exposure_reconciliation.json",
+      "exists": true,
+      "generated_by": "scripts/audit_negative_video_technical_integrity.py",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "IGNORED",
+      "gitignore_rule": ".gitignore:55:/runs/*",
+      "role": "5-way disjoint split reconciliation ledger isolating Validation, Test, Train-contaminated, and Held-out durations."
+    },
+    {
+      "artifact_name": "human_review_completion_support_md",
+      "relative_path": "runs/audits/week6/human_review_completion_support.md",
+      "exists": true,
+      "generated_by": "scripts/prepare_week6_error_review.py",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "IGNORED",
+      "gitignore_rule": ".gitignore:55:/runs/*",
+      "role": "SOP and operational guide enabling Annotator 2 and content reviewers to complete double-blind review packages."
+    },
+    {
+      "artifact_name": "negative_video_expansion_result_json",
+      "relative_path": "runs/audits/week6/negative_video_expansion_result.json",
+      "exists": true,
+      "generated_by": "scripts/expand_negative_dataset.py",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "IGNORED",
+      "gitignore_rule": ".gitignore:55:/runs/*",
+      "role": "Audited metrics on negative video search, physical verification, and duration shortfall to MT1 5.0h requirement."
+    },
+    {
+      "artifact_name": "backend_export_manifest_json",
+      "relative_path": "backend_export_manifest.json",
+      "mirror_path": "runs/benchmarks/week6_export_benchmarks/backend_export_manifest.json",
+      "exists": true,
+      "size_bytes": 1318,
+      "sha256": "1861d536eebe4f32d5da623d18c64d19724e81dbce7ddc27c2f488a632dfd602",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "NOT_IGNORED_ROOT",
+      "gitignore_rule": null,
+      "role": "Manifest of exported deployment backends (PyTorch, ONNX, OpenVINO, TensorRT) with checksums and dependency statuses."
+    },
+    {
+      "artifact_name": "backend_parity_report_json",
+      "relative_path": "backend_parity_report.json",
+      "mirror_path": "runs/benchmarks/week6_export_benchmarks/backend_parity_report.json",
+      "exists": true,
+      "size_bytes": 1147,
+      "sha256": "36dea25858a8755c25a8ca1ccfa1652bbbb51c3c9f0cedd7133d222fc9c4506a",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "NOT_IGNORED_ROOT",
+      "gitignore_rule": null,
+      "role": "Numerical tolerance and output parity comparison report across PyTorch baseline and alternative runtimes."
+    },
+    {
+      "artifact_name": "backend_benchmark_csv",
+      "relative_path": "backend_benchmark.csv",
+      "mirror_path": "runs/benchmarks/week6_export_benchmarks/backend_benchmark.csv",
+      "exists": true,
+      "size_bytes": 991,
+      "sha256": "b6f67f6cae077f2f7344223a05590fa9757e3796607f44dff3b882bc4d387ccd",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "NOT_IGNORED_ROOT",
+      "gitignore_rule": null,
+      "role": "Comparative performance table documenting mean latency, p50, p95, FPS, RAM, VRAM, and CPU load for each backend."
+    },
+    {
+      "artifact_name": "week6_protocol_reconciliation_md",
+      "relative_path": "week6_protocol_reconciliation.md",
+      "exists": true,
+      "size_bytes": 8561,
+      "sha256": "fe03be879a3bf94347e5097b6114550f8605e3a1e1e8b828a891a91f9fa31114",
+      "git_status": "UNTRACKED_LOCAL",
+      "gitignore_status": "NOT_IGNORED_ROOT",
+      "gitignore_rule": null,
+      "role": "Formal scientific protocol defense explaining the 5 disjoint scopes and proving why the Validation Gate must remain BLOCKED."
+    }
+  ],
+  "gitignore_reconciliation_summary": {
+    "rule_applied": "/runs/* (line 55 of .gitignore)",
+    "effect": "All generated benchmark and audit artifacts placed in runs/audits/ or runs/benchmarks/ are properly excluded from Git commits by default, preventing repository bloat.",
+    "policy_recommendation": "Maintain /runs/* in .gitignore. Keep deliverable copies in repository root or explicitly track only audited schema templates and code scripts."
+  }
+}
+

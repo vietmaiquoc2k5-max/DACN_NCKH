@@ -1,0 +1,6 @@
+backend,precision,device,batch_size,imgsz,model_only_mean_lat_ms,model_only_p50_ms,model_only_p95_ms,model_only_fps,e2e_mean_lat_ms,e2e_p50_ms,e2e_p95_ms,e2e_fps,ram_mb,peak_vram_mb,cpu_usage_pct,status,notes
+pytorch_cpu,FP32,cpu,1,640,63.809,58.716,113.591,15.67,43.469,41.225,59.131,23.0,290.61,0.0,0.0,MEASURED,PyTorch native CPU execution
+pytorch_cuda,FP16,cuda:0,1,640,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,UNAVAILABLE_NO_CUDA,No CUDA hardware or PyTorch CPU-only build
+onnx,FP32/FP16,N/A,1,640,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,BLOCKED_DEPENDENCY_UNAVAILABLE,Missing onnx library (pip install onnx>=1.14.0)
+openvino,FP32/FP16,N/A,1,640,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,BLOCKED_DEPENDENCY_UNAVAILABLE,Missing openvino library (pip install openvino>=2023.2.0)
+tensorrt,FP16/INT8,N/A,1,640,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,BLOCKED_DEPENDENCY_UNAVAILABLE,Missing tensorrt library (pip install tensorrt (requires NVIDIA TensorRT CUDA libraries))

@@ -184,10 +184,13 @@ class ValidationGateAuditor:
         if not self.gt_worksheet_path.exists():
             return {
                 "status": "BLOCKED",
-                "errors": [f"Worksheet not found: {self.gt_worksheet_path}"],
+                "blind_intact": False,
+                "target_events_count": len(TARGET_POSITIVE_EVENTS),
                 "agreed_count": 0,
-                "pending_count": 5,
+                "pending_count": len(TARGET_POSITIVE_EVENTS),
                 "disputed_count": 0,
+                "invalid_count": 0,
+                "errors": [f"Worksheet not found: {self.gt_worksheet_path}"],
                 "records": []
             }
 
@@ -377,10 +380,16 @@ class ValidationGateAuditor:
             return {
                 "status": "BLOCKED",
                 "errors": [f"Negative review manifest not found: {self.neg_manifest_path}"],
+                "expected_count": len(EXPECTED_VAL_NEG_VIDEOS),
+                "audited_count": 0,
                 "verified_count": 0,
-                "pending_count": 13,
+                "pending_count": len(EXPECTED_VAL_NEG_VIDEOS),
+                "hazard_count": 0,
                 "technical_fail_count": 0,
-                "exposure_sec": 0.0,
+                "total_exposure_sec": 0.0,
+                "verified_exposure_sec": 0.0,
+                "total_exposure_hours": 0.0,
+                "verified_exposure_hours": 0.0,
                 "records": []
             }
 
@@ -576,7 +585,7 @@ class ValidationGateAuditor:
             blockers.append(
                 f"POSITIVE_GROUND_TRUTH_BLOCKED: {pos_report['agreed_count']}/5 events agreed. "
                 f"({pos_report['pending_count']} pending, {pos_report['disputed_count']} disputed, "
-                f"{pos_report['invalid_count']} invalid)."
+                f"{pos_report.get('invalid_count', 0)} invalid)."
             )
 
         if neg_report["status"] != "PASSED":

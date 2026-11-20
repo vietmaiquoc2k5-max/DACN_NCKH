@@ -1,0 +1,37 @@
+{
+  "model_name": "best.pt",
+  "checkpoint_path": "D:\\workspace\\DACN_NCKH\\runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
+  "checkpoint_sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+  "checkpoint_size_bytes": 6247332,
+  "timestamp": "2026-11-20T08:14:31Z",
+  "backends": {
+    "pytorch": {
+      "format": "pytorch_pt",
+      "status": "AVAILABLE",
+      "path": "D:\\workspace\\DACN_NCKH\\runs\\detect\\runs\\benchmarks\\yolov8n_seed42\\weights\\best.pt",
+      "sha256": "f3631798de1cbc5742add6d81eadec055821ee59d7dec431fd9e71a377662eb6",
+      "precision": [
+        "FP32",
+        "FP16"
+      ]
+    },
+    "onnx": {
+      "format": "onnx",
+      "status": "BLOCKED_DEPENDENCY_UNAVAILABLE",
+      "missing_dependency": "onnx",
+      "install_command": "pip install onnx>=1.14.0"
+    },
+    "openvino": {
+      "format": "openvino",
+      "status": "BLOCKED_DEPENDENCY_UNAVAILABLE",
+      "missing_dependency": "openvino",
+      "install_command": "pip install openvino>=2023.2.0"
+    },
+    "tensorrt": {
+      "format": "tensorrt",
+      "status": "BLOCKED_DEPENDENCY_UNAVAILABLE",
+      "missing_dependency": "tensorrt",
+      "install_command": "pip install tensorrt (requires NVIDIA TensorRT CUDA libraries)"
+    }
+  }
+}

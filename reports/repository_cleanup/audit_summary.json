@@ -1,0 +1,622 @@
+{
+  "total_tracked_files": 35369,
+  "total_tracked_bytes": 2088001341,
+  "total_tracked_mb": 1991.27,
+  "total_tracked_gb": 1.945,
+  "git_object_database": {
+    "count": "54",
+    "size": "40.03 MiB",
+    "in-pack": "33214",
+    "packs": "5",
+    "size-pack": "1.91 GiB",
+    "prune-packable": "0",
+    "garbage": "0",
+    "size-garbage": "0 bytes"
+  },
+  "top_directories_by_bytes": [
+    {
+      "directory": "datasets",
+      "files": 6244,
+      "bytes": 938475532,
+      "mb": 895.0,
+      "pct": 44.95
+    },
+    {
+      "directory": "FireSmokeLabeler",
+      "files": 7103,
+      "bytes": 355468231,
+      "mb": 339.0,
+      "pct": 17.02
+    },
+    {
+      "directory": "dataset",
+      "files": 15161,
+      "bytes": 314597017,
+      "mb": 300.02,
+      "pct": 15.07
+    },
+    {
+      "directory": "uploads",
+      "files": 6,
+      "bytes": 231739139,
+      "mb": 221.0,
+      "pct": 11.1
+    },
+    {
+      "directory": "runs",
+      "files": 4107,
+      "bytes": 196211488,
+      "mb": 187.12,
+      "pct": 9.4
+    },
+    {
+      "directory": "handoff",
+      "files": 2368,
+      "bytes": 24678543,
+      "mb": 23.54,
+      "pct": 1.18
+    },
+    {
+      "directory": ".",
+      "files": 26,
+      "bytes": 20973970,
+      "mb": 20.0,
+      "pct": 1.0
+    },
+    {
+      "directory": "docs",
+      "files": 107,
+      "bytes": 2396610,
+      "mb": 2.29,
+      "pct": 0.11
+    },
+    {
+      "directory": "data",
+      "files": 22,
+      "bytes": 1360206,
+      "mb": 1.3,
+      "pct": 0.07
+    },
+    {
+      "directory": "scripts",
+      "files": 86,
+      "bytes": 988291,
+      "mb": 0.94,
+      "pct": 0.05
+    },
+    {
+      "directory": "tests",
+      "files": 48,
+      "bytes": 371714,
+      "mb": 0.35,
+      "pct": 0.02
+    },
+    {
+      "directory": "src",
+      "files": 31,
+      "bytes": 353254,
+      "mb": 0.34,
+      "pct": 0.02
+    },
+    {
+      "directory": "ground_truth_studio",
+      "files": 31,
+      "bytes": 230463,
+      "mb": 0.22,
+      "pct": 0.01
+    },
+    {
+      "directory": "week4_recovery_toolkit",
+      "files": 5,
+      "bytes": 62259,
+      "mb": 0.06,
+      "pct": 0.0
+    },
+    {
+      "directory": "baselines",
+      "files": 7,
+      "bytes": 61921,
+      "mb": 0.06,
+      "pct": 0.0
+    },
+    {
+      "directory": "configs",
+      "files": 10,
+      "bytes": 17284,
+      "mb": 0.02,
+      "pct": 0.0
+    },
+    {
+      "directory": ".agents",
+      "files": 3,
+      "bytes": 10032,
+      "mb": 0.01,
+      "pct": 0.0
+    },
+    {
+      "directory": "studio_catalog_fix",
+      "files": 3,
+      "bytes": 4296,
+      "mb": 0.0,
+      "pct": 0.0
+    },
+    {
+      "directory": ".github",
+      "files": 1,
+      "bytes": 1091,
+      "mb": 0.0,
+      "pct": 0.0
+    }
+  ],
+  "top_extensions_by_bytes": [
+    {
+      "extension": ".jpg",
+      "files": 14423,
+      "bytes": 1381473429,
+      "mb": 1317.48
+    },
+    {
+      "extension": ".mp4",
+      "files": 6,
+      "bytes": 231739139,
+      "mb": 221.0
+    },
+    {
+      "extension": ".avi",
+      "files": 24,
+      "bytes": 226470032,
+      "mb": 215.98
+    },
+    {
+      "extension": ".json",
+      "files": 4909,
+      "bytes": 92533854,
+      "mb": 88.25
+    },
+    {
+      "extension": ".stdout",
+      "files": 174,
+      "bytes": 57857790,
+      "mb": 55.18
+    },
+    {
+      "extension": ".pt",
+      "files": 8,
+      "bytes": 48517859,
+      "mb": 46.27
+    },
+    {
+      "extension": ".csv",
+      "files": 88,
+      "bytes": 31651404,
+      "mb": 30.19
+    },
+    {
+      "extension": ".png",
+      "files": 39,
+      "bytes": 5750254,
+      "mb": 5.48
+    },
+    {
+      "extension": ".jsonl",
+      "files": 10,
+      "bytes": 3428452,
+      "mb": 3.27
+    },
+    {
+      "extension": ".py",
+      "files": 208,
+      "bytes": 2272317,
+      "mb": 2.17
+    },
+    {
+      "extension": ".wav",
+      "files": 1,
+      "bytes": 2053983,
+      "mb": 1.96
+    },
+    {
+      "extension": ".txt",
+      "files": 14861,
+      "bytes": 1293782,
+      "mb": 1.23
+    },
+    {
+      "extension": ".log",
+      "files": 170,
+      "bytes": 1211079,
+      "mb": 1.15
+    },
+    {
+      "extension": ".md",
+      "files": 108,
+      "bytes": 956539,
+      "mb": 0.91
+    },
+    {
+      "extension": ".sha256",
+      "files": 141,
+      "bytes": 356954,
+      "mb": 0.34
+    },
+    {
+      "extension": ".docx",
+      "files": 1,
+      "bytes": 318419,
+      "mb": 0.3
+    },
+    {
+      "extension": ".patch",
+      "files": 1,
+      "bytes": 66026,
+      "mb": 0.06
+    },
+    {
+      "extension": ".single_reviewer_backup",
+      "files": 1,
+      "bytes": 18683,
+      "mb": 0.02
+    },
+    {
+      "extension": ".yaml",
+      "files": 10,
+      "bytes": 10001,
+      "mb": 0.01
+    },
+    {
+      "extension": "(none)",
+      "files": 2,
+      "bytes": 8293,
+      "mb": 0.01
+    }
+  ],
+  "category_summary": [
+    {
+      "category": "IMAGE_DATASET",
+      "files": 14413,
+      "bytes": 1380354370,
+      "mb": 1316.41,
+      "pct": 66.11
+    },
+    {
+      "category": "VIDEO",
+      "files": 30,
+      "bytes": 458209171,
+      "mb": 436.98,
+      "pct": 21.94
+    },
+    {
+      "category": "TRAINING_OUTPUT",
+      "files": 4102,
+      "bytes": 166017680,
+      "mb": 158.33,
+      "pct": 7.95
+    },
+    {
+      "category": "MODEL_WEIGHTS",
+      "files": 8,
+      "bytes": 48517859,
+      "mb": 46.27,
+      "pct": 2.32
+    },
+    {
+      "category": "MISC",
+      "files": 1649,
+      "bytes": 30420787,
+      "mb": 29.01,
+      "pct": 1.46
+    },
+    {
+      "category": "SOURCE_CODE",
+      "files": 210,
+      "bytes": 1986156,
+      "mb": 1.89,
+      "pct": 0.1
+    },
+    {
+      "category": "DOCUMENTATION",
+      "files": 103,
+      "bytes": 1251651,
+      "mb": 1.19,
+      "pct": 0.06
+    },
+    {
+      "category": "LABEL_DATASET",
+      "files": 14852,
+      "bytes": 1241566,
+      "mb": 1.18,
+      "pct": 0.06
+    },
+    {
+      "category": "CACHE_TEMP",
+      "files": 2,
+      "bytes": 2101,
+      "mb": 0.0,
+      "pct": 0.0
+    }
+  ],
+  "action_summary": [
+    {
+      "action": "UNTRACK_KEEP_LOCAL",
+      "files": 12005,
+      "bytes": 992739319,
+      "mb": 946.75,
+      "pct": 47.54
+    },
+    {
+      "action": "MANUAL_REVIEW",
+      "files": 14084,
+      "bytes": 965882946,
+      "mb": 921.14,
+      "pct": 46.26
+    },
+    {
+      "action": "KEEP_TRACKED",
+      "files": 9274,
+      "bytes": 128737649,
+      "mb": 122.77,
+      "pct": 6.17
+    },
+    {
+      "action": "DELETE_CANDIDATE",
+      "files": 6,
+      "bytes": 641427,
+      "mb": 0.61,
+      "pct": 0.03
+    }
+  ],
+  "duplicate_summary": {
+    "unique_duplicate_hashes": 1361,
+    "total_duplicate_file_entries": 3271,
+    "total_wasted_bytes": 14112102,
+    "total_wasted_mb": 13.46
+  },
+  "tracked_files_matching_gitignore": {
+    "count": 0,
+    "sample": []
+  },
+  "top_20_largest_tracked_files": [
+    {
+      "path": "uploads/VN_POS_20.mp4",
+      "size_mb": 96.4389,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/testpos03.819.avi",
+      "size_mb": 70.7676,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "uploads/VN_POS_15.mp4",
+      "size_mb": 37.5918,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "uploads/VN_POS_11.mp4",
+      "size_mb": 36.7112,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "uploads/VN_POS_06.mp4",
+      "size_mb": 33.7536,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/testpos04.820.avi",
+      "size_mb": 24.0393,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/testpos10.826.avi",
+      "size_mb": 14.9088,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/posVideo9.878.avi",
+      "size_mb": 13.1807,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "uploads/VN_POS_04.mp4",
+      "size_mb": 12.6364,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "runs/benchmarks/week4_decode_audit_v2/run_20261113/records/VN_NEG_47/timeline.stdout",
+      "size_mb": 11.2955,
+      "category": "TRAINING_OUTPUT",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/testpos02.818.avi",
+      "size_mb": 10.5152,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "handoff/week5/dataset_manifest.json",
+      "size_mb": 10.4192,
+      "category": "MISC",
+      "action": "MANUAL_REVIEW"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/posVideo8.877.avi",
+      "size_mb": 10.3103,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/dfire_train_manifest.json",
+      "size_mb": 9.7554,
+      "category": "TRAINING_OUTPUT",
+      "action": "KEEP_TRACKED"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/posVideo5.874.avi",
+      "size_mb": 8.8125,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/testpos09.825.avi",
+      "size_mb": 8.2613,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "FireSmokeLabeler/videos/testpos11.827.avi",
+      "size_mb": 8.2126,
+      "category": "VIDEO",
+      "action": "UNTRACK_KEEP_LOCAL"
+    },
+    {
+      "path": "handoff/week5/manifests/clean_dfire_manifest.json",
+      "size_mb": 7.9542,
+      "category": "MISC",
+      "action": "MANUAL_REVIEW"
+    },
+    {
+      "path": "runs/benchmarks/week5_domain_adaptation/recovery_20261114_5df62d8a/dfire_image_manifest.csv",
+      "size_mb": 6.7667,
+      "category": "TRAINING_OUTPUT",
+      "action": "KEEP_TRACKED"
+    },
+    {
+      "path": "runs/benchmarks/week4_decode_audit_v2/run_20261113/records/VN_NEG_20/timeline.stdout",
+      "size_mb": 6.2849,
+      "category": "TRAINING_OUTPUT",
+      "action": "UNTRACK_KEEP_LOCAL"
+    }
+  ],
+  "top_20_historical_blobs": [
+    {
+      "size_bytes": 101123513,
+      "size_mb": 96.44,
+      "sha": "435d2bb954b9d4a2e9c87001b010604f30d5898b",
+      "path": "uploads/VN_POS_20.mp4"
+    },
+    {
+      "size_bytes": 74205184,
+      "size_mb": 70.77,
+      "sha": "46f2f6955f7e37c19e8c30237112da87168d76b4",
+      "path": "FireSmokeLabeler/videos/testpos03.819.avi"
+    },
+    {
+      "size_bytes": 39417859,
+      "size_mb": 37.59,
+      "sha": "a6c24797c9872d5fff2eeffa2e61d94095d36bb8",
+      "path": "uploads/VN_POS_15.mp4"
+    },
+    {
+      "size_bytes": 38494432,
+      "size_mb": 36.71,
+      "sha": "e74f8c8ea659168a32d0294aa8243278fb67f93c",
+      "path": "uploads/VN_POS_11.mp4"
+    },
+    {
+      "size_bytes": 35393171,
+      "size_mb": 33.75,
+      "sha": "671cc792d02b876607483fb58902621754368741",
+      "path": "uploads/VN_POS_06.mp4"
+    },
+    {
+      "size_bytes": 25978922,
+      "size_mb": 24.78,
+      "sha": "ce72c5b2e99ac8943cb7056986fd460391f3a01b",
+      "path": "uploads/VN_POS_10.mp4"
+    },
+    {
+      "size_bytes": 25206992,
+      "size_mb": 24.04,
+      "sha": "ffaae4e513493793769c18e4eb8ae4ed86cb650c",
+      "path": "FireSmokeLabeler/videos/testpos04.820.avi"
+    },
+    {
+      "size_bytes": 24491670,
+      "size_mb": 23.36,
+      "sha": "67282e0e73ba9dcb74944010b1a327890d95bf17",
+      "path": "runs/detect/runs/detect/train_fire-2/weights/last.pt"
+    },
+    {
+      "size_bytes": 24491542,
+      "size_mb": 23.36,
+      "sha": "9a57bece8dd48afabb7fbc87f9a80f905d5c6143",
+      "path": "runs/detect/runs/detect/train_fire-2/weights/best.pt"
+    },
+    {
+      "size_bytes": 15932651,
+      "size_mb": 15.19,
+      "sha": "d47d035e948a581108e7e4d434872ed945429bc3",
+      "path": "uploads/VN_POS_07.mp4"
+    },
+    {
+      "size_bytes": 15633040,
+      "size_mb": 14.91,
+      "sha": "d7fe21082e340d0883f1f935a573f82e91bdf58c",
+      "path": "FireSmokeLabeler/videos/testpos10.826.avi"
+    },
+    {
+      "size_bytes": 13820952,
+      "size_mb": 13.18,
+      "sha": "67438b82a303313eb7d04801cdab8e6209776288",
+      "path": "FireSmokeLabeler/videos/posVideo9.878.avi"
+    },
+    {
+      "size_bytes": 13250239,
+      "size_mb": 12.64,
+      "sha": "1a05f18b45c2f35790ea5c636e761d25828ebf30",
+      "path": "uploads/VN_POS_04.mp4"
+    },
+    {
+      "size_bytes": 11646954,
+      "size_mb": 11.11,
+      "sha": "e469b227638ebf3af887a7eebfdf87250b7d711d",
+      "path": "runs/benchmarks/week4_decode_audit_v2/run_20261113/records/VN_NEG_47/timeline.stdout"
+    },
+    {
+      "size_bytes": 11025982,
+      "size_mb": 10.52,
+      "sha": "81c68cff6d2a78e014cf4d0d33ec92aa53f73764",
+      "path": "FireSmokeLabeler/videos/testpos02.818.avi"
+    },
+    {
+      "size_bytes": 10811130,
+      "size_mb": 10.31,
+      "sha": "1b4d9375bdf960e0b0222be294645a8d6750cc66",
+      "path": "FireSmokeLabeler/videos/posVideo8.877.avi"
+    },
+    {
+      "size_bytes": 10710887,
+      "size_mb": 10.21,
+      "sha": "8a63bd280630a7139534b48c773c364ead536c5c",
+      "path": "handoff/week5/dataset_manifest.json"
+    },
+    {
+      "size_bytes": 10229270,
+      "size_mb": 9.76,
+      "sha": "4b0a7b4e2a72c0992335edb319833941aac7cf60",
+      "path": "runs/benchmarks/week5_domain_adaptation/readiness_20261115_ed406cca_v2/dfire_train_manifest.json"
+    },
+    {
+      "size_bytes": 9240580,
+      "size_mb": 8.81,
+      "sha": "74616841a0653db75d63a9bafc2bf22f449a0b4b",
+      "path": "FireSmokeLabeler/videos/posVideo5.874.avi"
+    },
+    {
+      "size_bytes": 8662620,
+      "size_mb": 8.26,
+      "sha": "7ff43a5741fcc08928c390d5332eed793d0cf926",
+      "path": "FireSmokeLabeler/videos/testpos09.825.avi"
+    }
+  ]
+}

@@ -35,6 +35,14 @@ STANDARD_TAXONOMY = [
 ]
 
 
+def _safe_rel(p: Path) -> str:
+    """Return path relative to ROOT if possible, otherwise absolute path."""
+    try:
+        return str(p.relative_to(ROOT)).replace('\\', '/')
+    except ValueError:
+        return str(p).replace('\\', '/')
+
+
 def prepare_review_package(
     catalog_csv: Path,
     video_dir: Path,
@@ -97,7 +105,7 @@ def prepare_review_package(
             'timestamp': ts_str,
             'frame_index': frame_idx,
             'checkpoint_sha256': ckpt_sha,
-            'evidence_path': str(evidence_path.relative_to(ROOT)).replace('\\', '/') if evidence_path.exists() else 'NOT_EXTRACTED',
+            'evidence_path': _safe_rel(evidence_path) if evidence_path.exists() else 'NOT_EXTRACTED',
             'suspected_cause': 'UNASSIGNED',
             'reviewer_name': '',
             'review_timestamp': '',
@@ -125,8 +133,8 @@ def prepare_review_package(
         'total_cases': len(manifest_rows),
         'extracted_evidence_frames': extracted_frames_count,
         'missing_video_count': missing_video_count,
-        'manifest_csv_path': str(manifest_csv.relative_to(ROOT)).replace('\\', '/'),
-        'evidence_dir': str(evidence_dir.relative_to(ROOT)).replace('\\', '/'),
+        'manifest_csv_path': _safe_rel(manifest_csv),
+        'evidence_dir': _safe_rel(evidence_dir),
         'status': 'READY_FOR_HUMAN_REVIEW',
         'taxonomy': STANDARD_TAXONOMY
     }
