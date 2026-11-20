@@ -69,6 +69,23 @@ class ContentDecision(str, Enum):
     UNCERTAIN = "UNCERTAIN"
 
 
+def parse_iso_timestamp(ts_str: str) -> bool:
+    """Validate whether a string is a valid ISO 8601 date or timestamp."""
+    if not ts_str or not isinstance(ts_str, str):
+        return False
+    clean = ts_str.strip().replace("Z", "+00:00")
+    try:
+        datetime.datetime.fromisoformat(clean)
+        return True
+    except ValueError:
+        pass
+    try:
+        datetime.datetime.strptime(clean, "%Y-%m-%d")
+        return True
+    except ValueError:
+        return False
+
+
 def validate_provenance(source_metadata: dict[str, Any]) -> tuple[bool, list[str]]:
     """Validate that video provenance metadata meets strict scientific authenticity rules."""
     reasons: list[str] = []
@@ -83,6 +100,8 @@ def validate_provenance(source_metadata: dict[str, Any]) -> tuple[bool, list[str
         reasons.append(f"Invalid or missing camera_id ('{camera_id}')")
     if not acq_time or acq_time.lower() in DISALLOWED_PROVENANCE_VALUES:
         reasons.append(f"Invalid or missing acquisition_time ('{acq_time}')")
+    elif not parse_iso_timestamp(acq_time):
+        reasons.append(f"Invalid acquisition_time format '{acq_time}'. Must be valid ISO 8601 date/timestamp")
     if not env or env.lower() in DISALLOWED_PROVENANCE_VALUES:
         reasons.append(f"Invalid or missing environmental_condition ('{env}')")
 
@@ -113,6 +132,8 @@ class VideoIngestionRecord:
     split_eligibility: str
     current_split: str
     duplicate_flag: str
+    duration_diff_sec: float = 0.0
+    has_duration_mismatch: bool = False
     acquisition_time: str = ""
     human_content_verdict: str = ContentDecision.PENDING_HUMAN_REVIEW.value
     reviewer_id: str = ""
@@ -250,7 +271,9 @@ class NegativeVideoIngestionPipeline:
             return False, "FAIL_ZERO_BYTE_FILE"
         return True, "PASS_FORMAT"
 
-    def decode_full_stream(self, path: Path) -> dict[str, Any]:
+    def decode_full_stream(
+        self, path: Path, expected_duration_sec: float | None = None
+    ) -> dict[str, Any]:
         """Full stream sequential decode: reads frame-by-frame without seek substitution.
 
         Performs:
@@ -264,6 +287,8 @@ class NegativeVideoIngestionPipeline:
                 "fps": 0.0, "width": 0, "height": 0, "resolution": "0x0",
                 "declared_frame_count": 0, "decoded_frame_count": 0,
                 "declared_duration_sec": 0.0, "calculated_duration_sec": 0.0,
+                "duration_diff_sec": 0.0,
+                "has_duration_mismatch": False,
                 "eof_status": EOFStatus.DECODE_ERROR.value,
                 "technical_verdict": "FAIL_FILE_NOT_FOUND",
                 "is_readable": False, "notes": ["File does not exist on disk"]
@@ -275,6 +300,8 @@ class NegativeVideoIngestionPipeline:
                 "fps": 0.0, "width": 0, "height": 0, "resolution": "0x0",
                 "declared_frame_count": 0, "decoded_frame_count": 0,
                 "declared_duration_sec": 0.0, "calculated_duration_sec": 0.0,
+                "duration_diff_sec": 0.0,
+                "has_duration_mismatch": False,
                 "eof_status": EOFStatus.DECODE_ERROR.value,
                 "technical_verdict": "FAIL_CANNOT_OPEN_STREAM",
                 "is_readable": False, "notes": ["OpenCV could not open stream"]
@@ -285,14 +312,21 @@ class NegativeVideoIngestionPipeline:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 0)
         declared_fc = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
         fps = round(fps, 2) if fps > 0.0 else 25.0
-        calc_dur = round(declared_fc / fps, 2) if (declared_fc > 0 and fps > 0) else 0.0
+        header_dur = round(declared_fc / fps, 2) if (declared_fc > 0 and fps > 0) else 0.0
+
+        if expected_duration_sec is not None and expected_duration_sec > 0:
+            declared_dur = round(expected_duration_sec, 2)
+        else:
+            declared_dur = header_dur
 
         if declared_fc <= 0 or width <= 0 or height <= 0:
             cap.release()
             return {
                 "fps": fps, "width": width, "height": height, "resolution": f"{width}x{height}",
                 "declared_frame_count": declared_fc, "decoded_frame_count": 0,
-                "declared_duration_sec": calc_dur, "calculated_duration_sec": 0.0,
+                "declared_duration_sec": declared_dur, "calculated_duration_sec": 0.0,
+                "duration_diff_sec": declared_dur,
+                "has_duration_mismatch": declared_dur > 0,
                 "eof_status": EOFStatus.DECODE_ERROR.value,
                 "technical_verdict": "FAIL_INVALID_HEADER_METADATA",
                 "is_readable": False, "notes": ["Declared frame count or resolution non-positive"]
@@ -331,7 +365,7 @@ class NegativeVideoIngestionPipeline:
 
         notes = list(decoder_errors)
 
-        # Strict EOF evaluation
+        # Strict EOF evaluation (independent of duration mismatch)
         if can_read_tail:
             eof_status = EOFStatus.DECODE_ERROR.value
             tech_verdict = f"FAIL_MID_STREAM_CORRUPTION_AT_FRAME_{decoded_fc}"
@@ -350,7 +384,7 @@ class NegativeVideoIngestionPipeline:
             is_genuine_padding = (
                 len(decoder_errors) == 0
                 and diff <= 2
-                and abs(calc_dur - actual_dur) <= (2.0 / fps)
+                and abs(header_dur - actual_dur) <= (2.0 / fps)
             )
             if is_genuine_padding:
                 eof_status = EOFStatus.NORMAL_EOF.value
@@ -364,10 +398,18 @@ class NegativeVideoIngestionPipeline:
                 tech_verdict = f"FAIL_TRUNCATED_STREAM_MISSING_{diff}_FRAMES"
                 notes.append(f"Premature stream cut: missing {diff}/{declared_fc} frames ({diff_pct:.2f}%)")
 
-        # Duration mismatch check
-        duration_mismatch = abs(calc_dur - actual_dur) > 2.0 and diff > 10
-        if duration_mismatch and tech_verdict.startswith("PASS"):
-            tech_verdict = f"FAIL_DURATION_MISMATCH_{calc_dur}s_vs_{actual_dur}s"
+        # Independent duration mismatch check
+        duration_diff = round(abs(declared_dur - actual_dur), 2)
+        has_duration_mismatch = (duration_diff > 1.0)
+        if has_duration_mismatch:
+            notes.append(
+                f"Duration mismatch: declared {declared_dur:.2f}s vs decoded {actual_dur:.2f}s "
+                f"(delta: {duration_diff:.2f}s)"
+            )
+            if tech_verdict.startswith("PASS"):
+                tech_verdict = f"FAIL_DURATION_MISMATCH_{declared_dur}s_vs_{actual_dur}s"
+            else:
+                tech_verdict = f"{tech_verdict}; DURATION_MISMATCH_{declared_dur}s_vs_{actual_dur}s"
 
         return {
             "fps": fps,
@@ -376,8 +418,10 @@ class NegativeVideoIngestionPipeline:
             "resolution": f"{width}x{height}",
             "declared_frame_count": declared_fc,
             "decoded_frame_count": decoded_fc,
-            "declared_duration_sec": calc_dur,
+            "declared_duration_sec": declared_dur,
             "calculated_duration_sec": actual_dur,
+            "duration_diff_sec": duration_diff,
+            "has_duration_mismatch": has_duration_mismatch,
             "eof_status": eof_status,
             "technical_verdict": tech_verdict,
             "is_readable": decoded_fc > 0,
@@ -468,6 +512,7 @@ class NegativeVideoIngestionPipeline:
         camera_id: str = "",
         environmental_condition: str = "",
         acquisition_time: str = "",
+        declared_duration: float | None = None,
         is_new_acquisition: bool = False
     ) -> VideoIngestionRecord:
         """Execute full 11-step ingestion pipeline for a candidate video."""
@@ -510,7 +555,7 @@ class NegativeVideoIngestionPipeline:
         dup_status = self.detect_duplicates(sha, filename=source_path.name, video_id=assigned_id)
 
         # 4. Full stream sequential decode (NO boundary probe)
-        meta = self.decode_full_stream(source_path)
+        meta = self.decode_full_stream(source_path, expected_duration_sec=declared_duration)
 
         # 5. Provenance & split eligibility
         src_meta = {
@@ -547,6 +592,8 @@ class NegativeVideoIngestionPipeline:
             decoded_frame_count=meta["decoded_frame_count"],
             declared_duration_sec=meta["declared_duration_sec"],
             calculated_duration_sec=meta["calculated_duration_sec"],
+            duration_diff_sec=meta.get("duration_diff_sec", 0.0),
+            has_duration_mismatch=meta.get("has_duration_mismatch", False),
             eof_status=meta["eof_status"],
             technical_verdict=tech_verdict,
             source_origin=source_origin,

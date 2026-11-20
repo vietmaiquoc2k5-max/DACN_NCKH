@@ -19,6 +19,7 @@ Verifies all 13 mandatory scientific gate conditions:
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import shutil
 import sys
@@ -40,6 +41,23 @@ from scripts.validate_week6_gate import (
     get_video_duration,
     sha256_file,
 )
+
+
+REAL_VAL_NEG_HASHES = {
+    "VN_NEG_03": "25fda9ea2b1ca96ca51b74fa34b6b75e67ffb06daa0fc0cb4f7eeb1f840e6b94",
+    "VN_NEG_42": "0ee3d9e16ed5eaedbdbc47afb5f2f3d954e1c154a31ee8f96ffd7c5995655bb6",
+    "VN_NEG_43": "b2eb931d53b51f412a7eb40714d193715399fe486fc4343c6dc3603265607ad4",
+    "VN_NEG_44": "f258e18b51540801e26ac2e8053aa92a34db8c8daf66ae16f965db83d53bcc4e",
+    "VN_NEG_45": "0e6a343c81cea59e54551cee61d30df97d921b9e9c98cf674db91fea57649c28",
+    "VN_NEG_46": "346db12914a5f2d51b8681bd33fb494f6f54e84543f071ac281e674d91f65b22",
+    "VN_NEG_47": "3b6f4e6cda8b6662072408828e020dc9818f76f394a613e5f810b54f120e9bad",
+    "VN_NEG_48": "d1d098b094d507acf1247a25af855d8ee2cd518cb27363f282b774de31354942",
+    "VN_NEG_49": "e0a2599f06c7a9774a1ff391b38828e09d36464d58fe8131eb35a27cfaf75b74",
+    "VN_NEG_50": "712ab0b474690b047bca2bfc83c30d405f76374dd0add83259ec45145bc9f361",
+    "VN_NEG_51": "90c0a880490c9c7219c366355ef46603c219db3c8479d070975d5029d8297339",
+    "VN_NEG_52": "273294e4a2c3e2c8ec5902b4c5848e45b7b2a74d3f0079516ac3b68ca44fc160",
+    "VN_NEG_53": "2c1a0dababe5a006d657d40b28ddc526f0d8e21da28027f4fd944594241ffadb",
+}
 
 
 @pytest.fixture
@@ -102,13 +120,14 @@ def gate_env(tmp_path: Path):
     neg_rows = []
     for vid in sorted(list(EXPECTED_VAL_NEG_VIDEOS)):
         is_48 = (vid == "VN_NEG_48")
+        h = REAL_VAL_NEG_HASHES.get(vid, hashlib.sha256(vid.encode("utf-8")).hexdigest())
         neg_rows.append({
             "video_id": vid,
             "filename": f"{vid}.mp4",
             "file_path": f"datasets/negative_videos/{vid}.mp4",
             "file_size_bytes": 1000000,
-            "sha256_actual": "abc",
-            "sha256_expected": "abc",
+            "sha256_actual": h,
+            "sha256_expected": h,
             "sha256_match": "TRUE",
             "split_provenance": "datasets/vn_dataset/split_manifest.csv::val",
             "native_fps": 30.0,
@@ -326,6 +345,7 @@ class TestValidationGateAuditor:
     def test_case_08_sha256_mismatch(self, gate_env):
         """Case 8: Hash mismatch in negative review manifest fails technical integrity."""
         rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["sha256_expected"] = "f" * 64
         rows[0]["sha256_match"] = "FALSE"
         rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
         rows[0]["reviewer_name"] = "researcher_01"
@@ -381,6 +401,7 @@ class TestValidationGateAuditor:
         rows[0]["reviewer_name"] = "researcher_01"
         rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
         rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
 
         with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
@@ -415,8 +436,8 @@ class TestValidationGateAuditor:
             "filename": "VN_NEG_04.mp4",
             "file_path": "datasets/negative_videos/VN_NEG_04.mp4",
             "file_size_bytes": 1000000,
-            "sha256_actual": "abc",
-            "sha256_expected": "abc",
+            "sha256_actual": hashlib.sha256(b"VN_NEG_04").hexdigest(),
+            "sha256_expected": hashlib.sha256(b"VN_NEG_04").hexdigest(),
             "sha256_match": "TRUE",
             "split_provenance": "datasets/vn_dataset/split_manifest.csv::test",
             "native_fps": 30.0,
@@ -458,3 +479,315 @@ class TestValidationGateAuditor:
         prov = auditor.audit_provenance()
         assert prov["status"] == "INVALID"
         assert len(prov["errors"]) >= 1
+
+    # --- Task 7.1 Follow-up Hardening: SHA-256 Tests ---
+
+    def test_sha256_missing_actual_hash(self, gate_env):
+        """Negative video manifest with empty sha256_actual is blocked."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["sha256_actual"] = ""
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("MISSING_ACTUAL_SHA256" in err for err in report["errors"])
+
+    def test_sha256_missing_expected_hash(self, gate_env):
+        """Negative video manifest with empty sha256_expected is blocked."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["sha256_expected"] = ""
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("MISSING_EXPECTED_SHA256" in err for err in report["errors"])
+
+    def test_sha256_invalid_length(self, gate_env):
+        """Negative video manifest with non-64-character hash is blocked."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["sha256_actual"] = "abcd1234ef"  # 10 chars
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("INVALID_ACTUAL_SHA256_FORMAT" in err for err in report["errors"])
+
+    def test_sha256_non_hexadecimal(self, gate_env):
+        """Negative video manifest with non-hexadecimal characters in hash is blocked."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["sha256_actual"] = "g" * 64
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("INVALID_ACTUAL_SHA256_FORMAT" in err for err in report["errors"])
+
+    def test_sha256_hashes_do_not_match(self, gate_env):
+        """Negative video manifest where actual != expected hash is blocked."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["sha256_actual"] = "0" * 64
+        rows[0]["sha256_expected"] = "1" * 64
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("SHA256_MISMATCH" in err for err in report["errors"])
+
+    def test_sha256_on_disk_file_mismatch(self, gate_env, tmp_path: Path):
+        """Physical file on disk with hash differing from manifest triggers on-disk mismatch error."""
+        dummy_video = tmp_path / "dummy_mismatch.mp4"
+        dummy_video.write_bytes(b"actual video content on disk")
+
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["file_path"] = str(dummy_video).replace("\\", "/")
+        rows[0]["sha256_actual"] = "a" * 64
+        rows[0]["sha256_expected"] = "a" * 64
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("ON_DISK_SHA256_MISMATCH" in err for err in report["errors"])
+
+    def test_sha256_valid_matching_with_file_on_disk(self, gate_env, tmp_path: Path):
+        """Physical file on disk matching valid 64-hex actual and expected hash passes SHA integrity."""
+        dummy_video = tmp_path / "dummy_matching.mp4"
+        dummy_video.write_bytes(b"verified physical video bytes")
+        matching_sha = hashlib.sha256(b"verified physical video bytes").hexdigest()
+
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["filename"] = "dummy_matching.mp4"
+        rows[0]["file_path"] = str(dummy_video).replace("\\", "/")
+        rows[0]["sha256_actual"] = matching_sha
+        rows[0]["sha256_expected"] = matching_sha
+        rows[0]["decode_status"] = "NORMAL_EOF"
+        rows[0]["technical_verdict"] = "PASS_NORMAL_EOF"
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is True
+        assert not any("SHA256" in err for err in report["errors"])
+
+    # --- Task 7.1 Follow-up Hardening: EOF & Technical Integrity Tests ---
+
+    def test_eof_truncated_stream_with_pass_verdict_blocked(self, gate_env):
+        """Contradictory state: TRUNCATED_STREAM with PASS_NORMAL_EOF verdict is rejected."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["decode_status"] = "TRUNCATED_STREAM"
+        rows[0]["technical_verdict"] = "PASS_NORMAL_EOF"
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("FAIL_STATUS_TRUNCATED_STREAM" in err or "INVALID_STATUS_VERDICT_COMBINATION" in err for err in report["errors"])
+
+    def test_eof_normal_eof_with_fail_truncated_verdict_blocked(self, gate_env):
+        """Contradictory state: NORMAL_EOF with FAIL_TRUNCATED_STREAM verdict is rejected."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["decode_status"] = "NORMAL_EOF"
+        rows[0]["technical_verdict"] = "FAIL_TRUNCATED_STREAM"
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("FAIL_VERDICT_FAIL_TRUNCATED_STREAM" in err or "INVALID_STATUS_VERDICT_COMBINATION" in err for err in report["errors"])
+
+    def test_eof_unknown_eof_blocked(self, gate_env):
+        """Video with UNKNOWN_EOF status is rejected from FAR admissibility."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["decode_status"] = "UNKNOWN_EOF"
+        rows[0]["technical_verdict"] = "FAIL_UNKNOWN_EOF"
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("FAIL_STATUS_UNKNOWN_EOF" in err for err in report["errors"])
+
+    def test_eof_decode_error_blocked(self, gate_env):
+        """Video with DECODE_ERROR status is rejected from FAR admissibility."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["decode_status"] = "DECODE_ERROR"
+        rows[0]["technical_verdict"] = "FAIL_DECODE_ERROR"
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is False
+        assert any("FAIL_STATUS_DECODE_ERROR" in err for err in report["errors"])
+
+    def test_eof_normal_eof_pass_verdict_accepted(self, gate_env):
+        """Video with NORMAL_EOF and PASS verdict passes technical integrity and is admitted."""
+        rows = list(csv.DictReader(open(gate_env["neg_manifest"], "r", encoding="utf-8")))
+        rows[0]["decode_status"] = "NORMAL_EOF"
+        rows[0]["technical_verdict"] = "PASS_NORMAL_EOF"
+        rows[0]["content_decision"] = "VERIFIED_NEGATIVE"
+        rows[0]["reviewer_name"] = "researcher_01"
+        rows[0]["review_timestamp"] = "2026-11-17T18:00:00Z"
+        rows[0]["attest_full_video_viewed"] = "TRUE"
+        rows[0]["sha256_match"] = "TRUE"
+
+        with open(gate_env["neg_manifest"], "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(rows)
+
+        auditor = ValidationGateAuditor(
+            gate_env["gt_worksheet"], gate_env["events_jsonl"],
+            gate_env["neg_manifest"], gate_env["split_manifest"],
+            gate_env["far_recon"], gate_env["output_dir"]
+        )
+        report = auditor.audit_negative_videos()
+        assert report["records"][0]["admissible_far"] is True

@@ -172,6 +172,30 @@ class TestNegativeVideoIngestionPipeline:
         )
         assert rec_placeholder.split_eligibility == SplitEligibility.UNRESOLVED_PROVENANCE.value
 
+        # Ingest with invalid non-ISO acquisition time
+        rec_bad_time = pipeline.ingest_single_video(
+            vid_path,
+            assigned_id="VN_BAD_TIME",
+            source_origin="Surveillance Camera Feed",
+            camera_id="CAM_01",
+            environmental_condition="Clear",
+            acquisition_time="invalid-date-string",
+            is_new_acquisition=True
+        )
+        assert rec_bad_time.split_eligibility == SplitEligibility.UNRESOLVED_PROVENANCE.value
+
+        # Ingest with valid ISO 8601 acquisition time passes provenance
+        rec_valid = pipeline.ingest_single_video(
+            vid_path,
+            assigned_id="VN_VALID_PROV",
+            source_origin="Intersection CCTV",
+            camera_id="CAM_01",
+            environmental_condition="Clear",
+            acquisition_time="2026-11-20T10:00:00Z",
+            is_new_acquisition=True
+        )
+        assert rec_valid.split_eligibility == SplitEligibility.ELIGIBLE_FOR_VALIDATION.value
+
     def test_case_05_train_leakage_prevention(self, pipeline, tmp_path: Path):
         """Test Case 5: Videos belonging to Train split are blocked from Validation."""
         vid_path = tmp_path / "VN_NEG_01.mp4"
@@ -261,9 +285,9 @@ class TestNegativeVideoIngestionPipeline:
     def test_case_11_duration_mismatch_detection(self, pipeline, tmp_path: Path):
         """Test Case 11: Detects significant mismatch between declared duration and decodable frames."""
         vid_path = tmp_path / "dur_mismatch.mp4"
-        create_synthetic_mp4(vid_path, num_frames=30, fps=10.0)
+        create_synthetic_mp4(vid_path, num_frames=20, fps=10.0)  # Actual duration: 2.0s
 
-        # Ingest record and evaluate duration consistency
+        # Ingest record with declared duration inconsistent with actual stream (60.0s vs 2.0s)
         rec = pipeline.ingest_single_video(
             vid_path,
             assigned_id="VN_DUR_CHECK",
@@ -271,9 +295,21 @@ class TestNegativeVideoIngestionPipeline:
             camera_id="ST_01",
             environmental_condition="Clear",
             acquisition_time="2026-11-20T10:00:00Z",
-            is_new_acquisition=True
+            is_new_acquisition=True,
+            declared_duration=60.0
         )
-        assert abs(rec.declared_duration_sec - rec.calculated_duration_sec) <= 0.1
+        assert rec.declared_duration_sec == 60.0
+        assert abs(rec.calculated_duration_sec - 2.0) <= 0.1
+        assert rec.has_duration_mismatch is True
+        assert rec.technical_verdict.startswith("FAIL_DURATION_MISMATCH")
+        assert "60.0" in rec.technical_verdict
+        assert rec.far_eligible is False
+
+        # Direct sequential decode check with expected_duration_sec
+        meta = pipeline.decode_full_stream(vid_path, expected_duration_sec=60.0)
+        assert meta["has_duration_mismatch"] is True
+        assert meta["duration_diff_sec"] == 58.0
+        assert any("Duration mismatch" in note for note in meta["notes"])
 
     def test_case_12_pending_human_review_excluded(self, pipeline, tmp_path: Path):
         """Test Case 12: PENDING_HUMAN_REVIEW counts 0.0 towards FAR exposure."""

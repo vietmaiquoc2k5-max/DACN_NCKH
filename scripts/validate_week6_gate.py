@@ -26,6 +26,7 @@ import hashlib
 import json
 import logging
 import os
+import re
 import subprocess
 import tempfile
 from dataclasses import asdict, dataclass
@@ -88,6 +89,16 @@ def parse_iso_timestamp(ts_str: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+SHA256_HEX_REGEX = re.compile(r"^[0-9a-fA-F]{64}$")
+
+
+def is_valid_sha256_hex(val: str) -> bool:
+    """Validate whether string is a valid 64-character hexadecimal SHA-256 hash."""
+    if not val or not isinstance(val, str):
+        return False
+    return bool(SHA256_HEX_REGEX.match(val.strip()))
 
 
 def get_video_duration(video_path: Path) -> float:
@@ -412,39 +423,66 @@ class ValidationGateAuditor:
         for row in rows:
             vid = row.get("video_id", "").strip()
             fname = row.get("filename", "").strip()
+            fpath_str = row.get("file_path", "").strip()
             sha_actual = row.get("sha256_actual", "").strip().lower()
             sha_expected = row.get("sha256_expected", "").strip().lower()
-            # Fail-closed: missing actual or expected SHA-256 evidence
-            if not sha_actual or not sha_expected:
+
+            sha_match = True
+            if not sha_actual:
                 sha_match = False
-                errors.append(f"MISSING_HASH_PROOF: Video {vid} lacks verified sha256_actual or sha256_expected")
-            elif sha_actual != sha_expected:
+                errors.append(f"MISSING_ACTUAL_SHA256: Video {vid} lacks sha256_actual (MISSING_ACTUAL_HASH)")
+            elif not is_valid_sha256_hex(sha_actual):
                 sha_match = False
-                errors.append(f"SHA256_MISMATCH: Video {vid} sha256_actual ({sha_actual[:12]}) != sha256_expected ({sha_expected[:12]})")
-            elif row.get("sha256_match", "").strip().upper() in ("FALSE", "0", "NO"):
+                if len(sha_actual) != 64:
+                    errors.append(f"INVALID_ACTUAL_SHA256_FORMAT: Video {vid} sha256_actual length {len(sha_actual)} != 64 (INVALID_HASH_LENGTH)")
+                else:
+                    errors.append(f"INVALID_ACTUAL_SHA256_FORMAT: Video {vid} sha256_actual contains non-hexadecimal characters (NON_HEX_HASH)")
+
+            if not sha_expected:
                 sha_match = False
-                errors.append(f"SHA256_MISMATCH: Video {vid} sha256_match flagged as FALSE")
-            else:
-                # Check actual physical file on disk if available
-                resolved_vid = self._resolve_video_path(fname)
-                if resolved_vid and resolved_vid.exists():
-                    disk_sha = sha256_file(resolved_vid).lower()
-                    if disk_sha != sha_expected:
-                        sha_match = False
-                        errors.append(f"SHA256_MISMATCH: Video {vid} on-disk hash ({disk_sha[:12]}) != manifest expected ({sha_expected[:12]})")
+                errors.append(f"MISSING_EXPECTED_SHA256: Video {vid} lacks sha256_expected (MISSING_EXPECTED_HASH)")
+            elif not is_valid_sha256_hex(sha_expected):
+                sha_match = False
+                if len(sha_expected) != 64:
+                    errors.append(f"INVALID_EXPECTED_SHA256_FORMAT: Video {vid} sha256_expected length {len(sha_expected)} != 64 (INVALID_HASH_LENGTH)")
+                else:
+                    errors.append(f"INVALID_EXPECTED_SHA256_FORMAT: Video {vid} sha256_expected contains non-hexadecimal characters (NON_HEX_HASH)")
+
+            if is_valid_sha256_hex(sha_actual) and is_valid_sha256_hex(sha_expected):
+                if sha_actual != sha_expected:
+                    sha_match = False
+                    errors.append(f"SHA256_MISMATCH: Video {vid} actual {sha_actual[:12]} != expected {sha_expected[:12]}")
+                elif row.get("sha256_match", "").strip().upper() in ("FALSE", "0", "NO"):
+                    sha_match = False
+                    errors.append(f"SHA256_MISMATCH: Video {vid} sha256_match flagged as FALSE")
+                else:
+                    resolved_vid = None
+                    if fpath_str:
+                        p_direct = Path(fpath_str)
+                        if p_direct.is_file():
+                            resolved_vid = p_direct
+                        elif (ROOT / fpath_str).is_file():
+                            resolved_vid = ROOT / fpath_str
+                    if not resolved_vid:
+                        resolved_vid = self._resolve_video_path(fname)
+
+                    if resolved_vid and resolved_vid.exists():
+                        disk_sha = sha256_file(resolved_vid).lower()
+                        if disk_sha != sha_expected or disk_sha != sha_actual:
+                            sha_match = False
+                            errors.append(f"ON_DISK_SHA256_MISMATCH: Video {vid} on-disk hash ({disk_sha[:12]}) != manifest expected ({sha_expected[:12]}) (SHA256_DISK_MISMATCH)")
+                        else:
+                            sha_match = True
                     else:
                         sha_match = True
-                else:
-                    sha_match = True
 
             # Check duplicate hash within cohort
-            if sha_actual and len(sha_actual) >= 8:
+            if sha_actual and is_valid_sha256_hex(sha_actual):
                 if sha_actual in seen_shas:
                     errors.append(f"DUPLICATE_SHA256: Video {vid} shares hash {sha_actual[:12]} with another cohort video")
                     sha_match = False
                 seen_shas.add(sha_actual)
 
-            tech_verdict = row.get("technical_verdict", "").strip()
             c_dec = row.get("content_decision", "").strip().upper()
             h_dec = row.get("human_content_verdict", "").strip().upper()
             if c_dec and h_dec and c_dec != h_dec:
@@ -475,18 +513,44 @@ class ValidationGateAuditor:
                 errors.append(f"SPLIT_CONTAMINATION: Video {vid} does not belong to Validation split")
                 continue
 
-            # Explicit check for VN_NEG_48
-            if vid == "VN_NEG_48":
-                tech_verdict = "FAIL_TRUNCATED_STREAM"
+            tech_verdict = row.get("technical_verdict", "").strip()
+            decode_status = row.get("decode_status", "").strip().upper()
+            tech_verdict_upper = tech_verdict.upper()
 
-            # Technical integrity check
-            tech_pass = sha_match and tech_verdict.startswith("PASS")
+            is_valid_normal_eof = decode_status in ("NORMAL_EOF", "PASS_NORMAL_EOF", "PROBED_OPENCV_OK_UNVERIFIED_EOF")
+            has_corrupt_status = (
+                decode_status in ("TRUNCATED_STREAM", "DECODE_ERROR", "UNKNOWN_EOF")
+                or any(k in decode_status for k in ("TRUNCAT", "DECODE_ERROR"))
+                or not is_valid_normal_eof
+            )
+            has_corrupt_verdict = (
+                not tech_verdict.startswith("PASS")
+                or any(k in tech_verdict_upper for k in ("TRUNCATED", "DECODE_ERROR", "UNKNOWN_EOF", "FAIL"))
+            )
+
+            tech_pass = (
+                sha_match
+                and not has_corrupt_status
+                and not has_corrupt_verdict
+            )
+
             if not tech_pass:
                 technical_fail_count += 1
                 if not sha_match:
-                    errors.append(f"SHA256_MISMATCH: Video {vid} hash mismatch against manifest")
-                if "TRUNCATED" in tech_verdict:
-                    errors.append(f"TRUNCATED_STREAM: Video {vid} is truncated; permanently ineligible")
+                    errors.append(f"SHA256_MISMATCH: Video {vid} hash verification failed")
+                if "TRUNCATED" in decode_status or "TRUNCATED" in tech_verdict_upper:
+                    errors.append(f"TRUNCATED_STREAM: Video {vid} is truncated ({decode_status}/{tech_verdict}); permanently ineligible (FAIL_STATUS_TRUNCATED_STREAM)")
+                elif "DECODE_ERROR" in decode_status or "DECODE_ERROR" in tech_verdict_upper:
+                    errors.append(f"DECODE_ERROR: Video {vid} encountered decode failure ({decode_status}/{tech_verdict}) (FAIL_STATUS_DECODE_ERROR)")
+                elif "UNKNOWN_EOF" in decode_status or "UNKNOWN_EOF" in tech_verdict_upper:
+                    errors.append(f"UNKNOWN_EOF: Video {vid} has unknown EOF ({decode_status}/{tech_verdict}) (FAIL_STATUS_UNKNOWN_EOF)")
+                elif not is_valid_normal_eof:
+                    errors.append(f"INVALID_DECODE_STATUS: Video {vid} has invalid decode status '{decode_status}' (FAIL_STATUS_{decode_status})")
+                elif not tech_verdict.startswith("PASS"):
+                    errors.append(f"TECHNICAL_VERDICT_FAIL: Video {vid} technical verdict '{tech_verdict}' does not start with PASS (FAIL_VERDICT_{tech_verdict})")
+
+                if (is_valid_normal_eof and not tech_verdict.startswith("PASS")) or (tech_verdict.startswith("PASS") and not is_valid_normal_eof):
+                    errors.append(f"INVALID_STATUS_VERDICT_COMBINATION: Video {vid} contradictory decode_status='{decode_status}' and technical_verdict='{tech_verdict}'")
 
             if decision == "PENDING_HUMAN_REVIEW" or not decision:
                 pending_count += 1
